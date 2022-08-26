@@ -97,25 +97,146 @@ class _StockTable2State extends State<StockTable2> {
                   },
                 ),
               ),
-              child: CupertinoTextField(
-                prefix: Icon(CupertinoIcons.add),
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        CupertinoSearchTextField(
+                          controller:
+                              textControllers.stocktableController.value,
+                          itemSize: 30,
+                          itemColor: HexColor('#F4A62A'),
+                          prefixInsets: EdgeInsets.only(left: 8, right: 8),
+                          suffixInsets: EdgeInsets.only(right: 8),
+                          suffixMode: OverlayVisibilityMode.notEditing,
+                          suffixIcon: Icon(CupertinoIcons.barcode_viewfinder),
+                          // onSuffixTap: Get.to(ScanSTable()),
+                          onSubmitted: (value) {
+                            searchProcess();
+                            setState(() {
+                              textControllers.stocktableController.value
+                                  .clear();
+                            });
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        Divider(
+                          color: Colors.black,
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.8,
+                          // color: Colors.black,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: ListView.separated(
+                            separatorBuilder: ((context, index) {
+                              return SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02,
+                              );
+                            }),
+                            itemCount: dataaa.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                clipBehavior: Clip.antiAlias,
+                                elevation: 5,
+                                // color: HexColor('#F4A62A'),
+                                color: Colors.white,
+                                child: Row(
+                                  children: [
+                                    InkWell(
+                                      onDoubleTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => GalleryWidget(
+                                                urlImages: urlImages),
+                                          ),
+                                        );
+                                        setState(() {
+                                          selectedIndex = index;
+                                        });
+                                        getImage();
+                                        print(selectedIndex);
+                                      },
+                                      splashColor: Colors.blue,
+                                      child: Ink.image(
+                                        image: NetworkImage(
+                                          'https://www.v2rp.net' +
+                                              dataaa[index]['image'][0],
+                                        ),
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.20,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.40,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Text(
+                                            dataaa[index]['itemname'],
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            dataaa[index]['stockid'],
+                                            style: TextStyle(
+                                                color: Colors.black54),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 30,
+                                              right: 15,
+                                            ),
+                                            child: Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    selectedIndex = index;
+                                                  });
+                                                  dialogImage();
+                                                },
+                                                child: Text(
+                                                  'Add Image',
+                                                  style: TextStyle(
+                                                    color: HexColor('#F4A62A'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              // child: CupertinoScrollbar(
-              //   thickness: 5,
-              //   radius: Radius.circular(10),
-              //   thicknessWhileDragging: 2,
-              //   thumbVisibility: true,
-              //   child: Padding(
-              //     padding:
-              //         EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0),
-              //     child: Column(
-              //       children: [
-              //         const SizedBox(height: 15),
-              //         Text("HIiiiiiiiiii"),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             )
           //-----------------------------------ANDROID
           : Scaffold(
