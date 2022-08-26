@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -62,6 +63,7 @@ class _StockTable2State extends State<StockTable2> {
 
   @override
   Widget build(BuildContext context) {
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
     return WillPopScope(
       onWillPop: () {
         showDialog(
@@ -83,215 +85,256 @@ class _StockTable2State extends State<StockTable2> {
         );
         throw (e);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Stock Table"),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 1,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Navbar()),
-              );
-            },
-          ),
-        ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'Stock Table',
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: textControllers.stocktableController.value,
-                  onSubmitted: (value) {
-                    searchProcess();
-                    setState(() {
-                      textControllers.stocktableController.value.clear();
-                    });
+      child: isIOS
+          ? CupertinoPageScaffold(
+              navigationBar: CupertinoNavigationBar(
+                transitionBetweenRoutes: true,
+                middle: Text("Stock Table"),
+                leading: GestureDetector(
+                  child: Icon(CupertinoIcons.back),
+                  onTap: () {
+                    Get.to(Navbar());
                   },
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.assignment),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.qr_code_2),
-                      color: HexColor('#F4A62A'),
-                      onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ScanSTable(),
-                        ));
-                      },
-                      splashColor: HexColor('#F4A62A'),
-                      tooltip: 'Scan',
-                      hoverColor: HexColor('#F4A62A'),
-                    ),
-                    hintText: 'Stock Code / Item Name',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: const BorderSide(color: Colors.black)),
-                  ),
                 ),
-                const SizedBox(
-                  height: 10,
+              ),
+              child: CupertinoTextField(
+                prefix: Icon(CupertinoIcons.add),
+              ),
+              // child: CupertinoScrollbar(
+              //   thickness: 5,
+              //   radius: Radius.circular(10),
+              //   thicknessWhileDragging: 2,
+              //   thumbVisibility: true,
+              //   child: Padding(
+              //     padding:
+              //         EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0),
+              //     child: Column(
+              //       children: [
+              //         const SizedBox(height: 15),
+              //         Text("HIiiiiiiiiii"),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+            )
+          //-----------------------------------ANDROID
+          : Scaffold(
+              appBar: AppBar(
+                title: const Text("Stock Table"),
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 1,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Navbar()),
+                    );
+                  },
                 ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.8,
-                  height: 25,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Item List'),
-                    const SizedBox(height: 15.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.65,
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) {
-                              return SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.02,
-                              );
+              ),
+              body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 20.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            'Stock Table',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextField(
+                        controller: textControllers.stocktableController.value,
+                        onSubmitted: (value) {
+                          searchProcess();
+                          setState(() {
+                            textControllers.stocktableController.value.clear();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.assignment),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.qr_code_2),
+                            color: HexColor('#F4A62A'),
+                            onPressed: () async {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const ScanSTable(),
+                              ));
                             },
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: dataaa.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                clipBehavior: Clip.antiAlias,
-                                elevation: 5,
-                                // color: HexColor('#F4A62A'),
-                                color: Colors.white,
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      onDoubleTap: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => GalleryWidget(
-                                                urlImages: urlImages),
-                                          ),
-                                        );
-                                        setState(() {
-                                          selectedIndex = index;
-                                        });
-                                        getImage();
-                                        print(selectedIndex);
-                                      },
-                                      splashColor: Colors.blue,
-                                      child: Ink.image(
-                                        image: NetworkImage(
-                                          'https://www.v2rp.net' +
-                                              dataaa[index]['image'][0],
-                                        ),
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.20,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.40,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                            splashColor: HexColor('#F4A62A'),
+                            tooltip: 'Scan',
+                            hoverColor: HexColor('#F4A62A'),
+                          ),
+                          hintText: 'Stock Code / Item Name',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide:
+                                  const BorderSide(color: Colors.black)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 0.8,
+                        height: 25,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Item List'),
+                          const SizedBox(height: 15.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.65,
+                                child: ListView.separated(
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                    );
+                                  },
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: dataaa.length,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      clipBehavior: Clip.antiAlias,
+                                      elevation: 5,
+                                      // color: HexColor('#F4A62A'),
+                                      color: Colors.white,
+                                      child: Row(
                                         children: [
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Text(
-                                            dataaa[index]['itemname'],
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            dataaa[index]['stockid'],
-                                            style: TextStyle(
-                                                color: Colors.black54),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 30,
-                                              right: 15,
+                                          InkWell(
+                                            onDoubleTap: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (_) => GalleryWidget(
+                                                      urlImages: urlImages),
+                                                ),
+                                              );
+                                              setState(() {
+                                                selectedIndex = index;
+                                              });
+                                              getImage();
+                                              print(selectedIndex);
+                                            },
+                                            splashColor: Colors.blue,
+                                            child: Ink.image(
+                                              image: NetworkImage(
+                                                'https://www.v2rp.net' +
+                                                    dataaa[index]['image'][0],
+                                              ),
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.20,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.40,
+                                              fit: BoxFit.cover,
                                             ),
-                                            child: Align(
-                                              alignment: Alignment.bottomRight,
-                                              child:
-                                                  // ElevatedButton(
-                                                  //   onPressed: () {
-                                                  //     setState(() {
-                                                  //       selectedIndex = index;
-                                                  //     });
-                                                  //     dialogImage();
-                                                  //   },
-                                                  //   child: Text('Add Image'),
-                                                  // ),
-                                                  TextButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    selectedIndex = index;
-                                                  });
-                                                  dialogImage();
-                                                },
-                                                child: Text(
-                                                  'Add Image',
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Text(
+                                                  dataaa[index]['itemname'],
                                                   style: TextStyle(
-                                                    color: HexColor('#F4A62A'),
+                                                      color: Colors.black),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  dataaa[index]['stockid'],
+                                                  style: TextStyle(
+                                                      color: Colors.black54),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    top: 30,
+                                                    right: 15,
+                                                  ),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.bottomRight,
+                                                    child:
+                                                        // ElevatedButton(
+                                                        //   onPressed: () {
+                                                        //     setState(() {
+                                                        //       selectedIndex = index;
+                                                        //     });
+                                                        //     dialogImage();
+                                                        //   },
+                                                        //   child: Text('Add Image'),
+                                                        // ),
+                                                        TextButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          selectedIndex = index;
+                                                        });
+                                                        dialogImage();
+                                                      },
+                                                      child: Text(
+                                                        'Add Image',
+                                                        style: TextStyle(
+                                                          color: HexColor(
+                                                              '#F4A62A'),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 
