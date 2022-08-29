@@ -6,6 +6,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -112,7 +113,7 @@ class _StockTable2State extends State<StockTable2> {
                           suffixInsets: EdgeInsets.only(right: 8),
                           suffixMode: OverlayVisibilityMode.notEditing,
                           suffixIcon: Icon(CupertinoIcons.barcode_viewfinder),
-                          // onSuffixTap: Get.to(ScanSTable()),
+                          // onSuffixTap: goToScan(),
                           onSubmitted: (value) {
                             searchProcess();
                             setState(() {
@@ -121,6 +122,10 @@ class _StockTable2State extends State<StockTable2> {
                             });
                           },
                         ),
+                        // GestureDetector(
+                        //   child: Icon(CupertinoIcons.barcode_viewfinder),
+                        //   onTap: (() => Get.to(ScanSTable())),
+                        // ),
                         SizedBox(height: 10),
                         Divider(
                           color: Colors.black,
@@ -411,17 +416,7 @@ class _StockTable2State extends State<StockTable2> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.bottomRight,
-                                                    child:
-                                                        // ElevatedButton(
-                                                        //   onPressed: () {
-                                                        //     setState(() {
-                                                        //       selectedIndex = index;
-                                                        //     });
-                                                        //     dialogImage();
-                                                        //   },
-                                                        //   child: Text('Add Image'),
-                                                        // ),
-                                                        TextButton(
+                                                    child: TextButton(
                                                       onPressed: () {
                                                         setState(() {
                                                           selectedIndex = index;
@@ -459,51 +454,81 @@ class _StockTable2State extends State<StockTable2> {
     );
   }
 
-  // runBarcode() {
-  //   if (textControllers.stocktableController.value.text != null) {
-  //     getData();
-  //   }
-  // }
-
   dialogImage() {
-    Get.defaultDialog(
-      radius: 5,
-      title: "Upload Image",
-      middleText: "Please Click Button Below",
-      backgroundColor: Colors.white,
-      confirm: SizedBox(
-        width: 125.0,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: HexColor('#F4A62A'),
-          ),
-          onPressed: () {
-            pilihGambar();
-            Get.back();
-          },
-          child: Text(
-            'Choose Image',
-            style: TextStyle(fontSize: 12),
-          ),
-        ),
-      ),
-      cancel: SizedBox(
-        width: 125.0,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: HexColor('#F4A62A'),
-          ),
-          onPressed: () {
-            takeImage();
-            Get.back();
-          },
-          child: Text(
-            'Take Picture',
-            style: TextStyle(fontSize: 12),
-          ),
-        ),
-      ),
-    );
+    Platform.isIOS
+        ? showCupertinoDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: Text("Upload Image"),
+                content: Text("Please Click Button Below"),
+                actions: [
+                  CupertinoDialogAction(
+                    child: Text(
+                      "Choose Image",
+                      style: TextStyle(
+                        color: HexColor('#F4A62A'),
+                      ),
+                    ),
+                    onPressed: () {
+                      pilihGambar();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: Text(
+                      "Take Picture",
+                      style: TextStyle(
+                        color: HexColor('#F4A62A'),
+                      ),
+                    ),
+                    onPressed: () {
+                      takeImage();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          )
+        : Get.defaultDialog(
+            radius: 5,
+            title: "Upload Image",
+            middleText: "Please Click Button Below",
+            backgroundColor: Colors.white,
+            confirm: SizedBox(
+              width: 125.0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: HexColor('#F4A62A'),
+                ),
+                onPressed: () {
+                  pilihGambar();
+                  Get.back();
+                },
+                child: Text(
+                  'Choose Image',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+            cancel: SizedBox(
+              width: 125.0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: HexColor('#F4A62A'),
+                ),
+                onPressed: () {
+                  takeImage();
+                  Get.back();
+                },
+                child: Text(
+                  'Take Picture',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+          );
   }
 
   Future<void> pilihGambar() async {
