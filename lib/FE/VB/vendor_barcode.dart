@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -80,6 +81,8 @@ class _VendorBarcodeState extends State<VendorBarcode> {
 
   @override
   Widget build(BuildContext context) {
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return WillPopScope(
       onWillPop: () {
         showDialog(
@@ -101,127 +104,213 @@ class _VendorBarcodeState extends State<VendorBarcode> {
         );
         throw (e);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Vendor Barcode"),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 1,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Get.to(Navbar());
-            },
-          ),
-        ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'Vendor Barcode Registration',
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: textControllers.vendor1Controller.value,
-                  onSubmitted: (value) {
-                    searchProcess();
-                    setState(() {
-                      textControllers.vendor1Controller.value.clear();
-                    });
+      child: isIOS
+          ? CupertinoPageScaffold(
+              navigationBar: CupertinoNavigationBar(
+                transitionBetweenRoutes: true,
+                middle: Text("Vendor Barcode"),
+                leading: GestureDetector(
+                  child: Icon(CupertinoIcons.back),
+                  onTap: () {
+                    Get.to(Navbar());
                   },
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.assignment),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.search),
-                      color: HexColor('#F4A62A'),
-                      onPressed: () async {
-                        searchProcess();
-                        setState(() {
-                          textControllers.vendor1Controller.value.clear();
-                        });
-                      },
-                      splashColor: Colors.green,
-                      tooltip: 'Search',
-                      hoverColor: Colors.green,
+                ),
+              ),
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        CupertinoSearchTextField(
+                          controller: textControllers.vendor1Controller.value,
+                          itemSize: 30,
+                          itemColor: HexColor('#F4A62A'),
+                          prefixInsets: EdgeInsets.only(left: 8, right: 8),
+                          suffixInsets: EdgeInsets.only(right: 8),
+                          suffixMode: OverlayVisibilityMode.notEditing,
+                          suffixIcon: Icon(CupertinoIcons.barcode_viewfinder),
+                          // onSuffixTap: () => Get.to(ScanFixAsset()),
+                          onSubmitted: (value) {
+                            searchProcess();
+                            setState(() {
+                              textControllers.vendor1Controller.value.clear();
+                            });
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        Divider(
+                          color: Colors.black,
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _dataaa == null ? 0 : _dataaa.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 5,
+                                child: ListTile(
+                                  title: Text(
+                                    _dataaa[index]['itemname'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(_dataaa[index]['stockid']),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.qr_code_2),
+                                    onPressed: () {
+                                      Get.to(ScanVb(
+                                        idstock: _dataaa[index]['stockid'],
+                                        itemname: _dataaa[index]['itemname'],
+                                        serverKeyVal: serverKeyValue,
+                                      ));
+                                    },
+                                    color: HexColor('#F4A62A'),
+                                    hoverColor: HexColor('#F4A62A'),
+                                    splashColor: HexColor('#F4A62A'),
+                                  ),
+                                  tileColor: Colors.white,
+                                  textColor: Colors.black,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    hintText: 'Stock Code / Stock Name',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: const BorderSide(color: Colors.black)),
+                  ),
+                ],
+              ),
+            )
+          : Scaffold(
+              appBar: AppBar(
+                title: const Text("Vendor Barcode"),
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 1,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Get.to(Navbar());
+                  },
+                ),
+              ),
+              body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 20.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            'Vendor Barcode Registration',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextField(
+                        controller: textControllers.vendor1Controller.value,
+                        onSubmitted: (value) {
+                          searchProcess();
+                          setState(() {
+                            textControllers.vendor1Controller.value.clear();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.assignment),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            color: HexColor('#F4A62A'),
+                            onPressed: () async {
+                              searchProcess();
+                              setState(() {
+                                textControllers.vendor1Controller.value.clear();
+                              });
+                            },
+                            splashColor: Colors.green,
+                            tooltip: 'Search',
+                            hoverColor: Colors.green,
+                          ),
+                          hintText: 'Stock Code / Stock Name',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide:
+                                  const BorderSide(color: Colors.black)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 0.8,
+                        height: 25,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Item List'),
+                          const SizedBox(height: 15.0),
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _dataaa == null ? 0 : _dataaa.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 5,
+                                child: ListTile(
+                                  title: Text(
+                                    _dataaa[index]['itemname'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(_dataaa[index]['stockid']),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.qr_code_2),
+                                    onPressed: () {
+                                      Get.to(ScanVb(
+                                        idstock: _dataaa[index]['stockid'],
+                                        itemname: _dataaa[index]['itemname'],
+                                        serverKeyVal: serverKeyValue,
+                                      ));
+                                    },
+                                    color: HexColor('#F4A62A'),
+                                    hoverColor: HexColor('#F4A62A'),
+                                    splashColor: HexColor('#F4A62A'),
+                                  ),
+                                  tileColor: Colors.white,
+                                  textColor: Colors.black,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.8,
-                  height: 25,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Item List'),
-                    const SizedBox(height: 15.0),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _dataaa == null ? 0 : _dataaa.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 5,
-                          child: ListTile(
-                            title: Text(
-                              _dataaa[index]['itemname'],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(_dataaa[index]['stockid']),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.qr_code_2),
-                              onPressed: () {
-                                Get.to(ScanVb(
-                                  idstock: _dataaa[index]['stockid'],
-                                  itemname: _dataaa[index]['itemname'],
-                                  serverKeyVal: serverKeyValue,
-                                ));
-                              },
-                              color: HexColor('#F4A62A'),
-                              hoverColor: HexColor('#F4A62A'),
-                              splashColor: HexColor('#F4A62A'),
-                            ),
-                            tileColor: Colors.white,
-                            textColor: Colors.black,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 
