@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -110,6 +111,8 @@ class _FixAsset2State extends State<FixAsset2> {
 
   @override
   Widget build(BuildContext context) {
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return WillPopScope(
       onWillPop: () {
         showDialog(
@@ -131,370 +134,454 @@ class _FixAsset2State extends State<FixAsset2> {
         );
         throw (e);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Fixed Assets"),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 1,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Get.to(() => Navbar());
-            },
-          ),
-        ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 15,
+      child: isIOS
+          ? CupertinoPageScaffold(
+              navigationBar: CupertinoNavigationBar(
+                transitionBetweenRoutes: true,
+                middle: Text("Fixed Assets"),
+                leading: GestureDetector(
+                  child: Icon(CupertinoIcons.back),
+                  onTap: () {
+                    Get.to(Navbar());
+                  },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'Fixed Assets',
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              child: ListView(children: [
+                Column(
+                  children: [
+                    CupertinoSearchTextField(
+                      controller: textControllers.fixassetController.value,
+                      itemSize: 30,
+                      itemColor: HexColor('#F4A62A'),
+                      prefixInsets: EdgeInsets.only(left: 8, right: 8),
+                      suffixInsets: EdgeInsets.only(right: 8),
+                      suffixMode: OverlayVisibilityMode.notEditing,
+                      suffixIcon: Icon(CupertinoIcons.barcode_viewfinder),
+                      onSuffixTap: () => Get.to(ScanFixAsset()),
+                      onSubmitted: (value) {
+                        searchProcess();
+                        setState(() {
+                          textControllers.fixassetController.value.clear();
+                        });
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    Divider(
+                      color: Colors.black,
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: textControllers.fixassetController.value,
-                  onSubmitted: (value) {
-                    searchProcess();
-                    setState(() {
-                      textControllers.fixassetController.value.clear();
-                    });
+              ]),
+            )
+          : Scaffold(
+              appBar: AppBar(
+                title: const Text("Fixed Assets"),
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 1,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Get.to(() => Navbar());
                   },
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.assignment),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.qr_code_2),
-                      color: HexColor('#F4A62A'),
-                      onPressed: () async {
-                        Get.to(() => ScanFixAsset());
-                      },
-                      splashColor: HexColor('#F4A62A'),
-                      tooltip: 'Scan',
-                      hoverColor: HexColor('#F4A62A'),
-                    ),
-                    hintText: 'FA Number / Item Name',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: const BorderSide(color: Colors.black)),
-                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.8,
-                  height: 25,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Item List'),
-                    const SizedBox(height: 25.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.65,
-                          // width: MediaQuery.of(context).size.width * 0.2,
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) {
-                              return SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
-                                // width: MediaQuery.of(context).size.width * 0.2,
-                              );
+              ),
+              body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            'Fixed Assets',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextField(
+                        controller: textControllers.fixassetController.value,
+                        onSubmitted: (value) {
+                          searchProcess();
+                          setState(() {
+                            textControllers.fixassetController.value.clear();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.assignment),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.qr_code_2),
+                            color: HexColor('#F4A62A'),
+                            onPressed: () async {
+                              Get.to(() => ScanFixAsset());
                             },
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: _dataaa.length,
-                            // shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                clipBehavior: Clip.antiAlias,
-                                // elevation: 5,
-                                elevation: 10,
-                                // color: HexColor('#F4A62A'),
-                                color: Colors.white,
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        InkWell(
-                                          onDoubleTap: () {
-                                            dialogImage();
-
-                                            setState(() {
-                                              selectedIndex = index;
-                                            });
-                                          },
-                                          child: Ink.image(
-                                            image: NetworkImage(
-                                              'https://v2rp.net/' +
-                                                  _dataaa[index]['imagedir'],
-                                            ),
-                                            height: 300,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                1,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: 0,
-                                          right: 0,
-                                          left: 0,
-                                          child: Container(
-                                            // color: HexColor('#F4A62A'),
-                                            color: Colors.white,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8, top: 10),
-                                              child: Text(
-                                                _dataaa[index]['description'],
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 24,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                            splashColor: HexColor('#F4A62A'),
+                            tooltip: 'Scan',
+                            hoverColor: HexColor('#F4A62A'),
+                          ),
+                          hintText: 'FA Number / Item Name',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide:
+                                  const BorderSide(color: Colors.black)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 0.8,
+                        height: 25,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Item List'),
+                          const SizedBox(height: 25.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.65,
+                                // width: MediaQuery.of(context).size.width * 0.2,
+                                child: ListView.separated(
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      // width: MediaQuery.of(context).size.width * 0.2,
+                                    );
+                                  },
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: _dataaa.length,
+                                  // shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      clipBehavior: Clip.antiAlias,
+                                      // elevation: 5,
+                                      elevation: 10,
+                                      // color: HexColor('#F4A62A'),
+                                      color: Colors.white,
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.stretch,
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 0,
-                                              top: 10,
-                                              bottom: 0,
-                                              right: 0,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: const [
-                                                    Text(
-                                                      'F/Assets No.    ',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Description',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Category',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Brand',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Made In',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Reff.No.',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Req.No.',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'P/O No.',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Request By',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Serial No.',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Location',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                  ],
+                                          Stack(
+                                            children: [
+                                              InkWell(
+                                                onDoubleTap: () {
+                                                  dialogImage();
+
+                                                  setState(() {
+                                                    selectedIndex = index;
+                                                  });
+                                                },
+                                                child: Ink.image(
+                                                  image: NetworkImage(
+                                                    'https://v2rp.net/' +
+                                                        _dataaa[index]
+                                                            ['imagedir'],
+                                                  ),
+                                                  height: 300,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      1,
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                Flexible(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
+                                              ),
+                                              Positioned(
+                                                bottom: 0,
+                                                right: 0,
+                                                left: 0,
+                                                child: Container(
+                                                  // color: HexColor('#F4A62A'),
+                                                  color: Colors.white,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8, top: 10),
+                                                    child: Text(
+                                                      _dataaa[index]
+                                                          ['description'],
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                        fontSize: 24,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 0,
+                                                    top: 10,
+                                                    bottom: 0,
+                                                    right: 0,
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
                                                     children: [
-                                                      Text(
-                                                        _dataaa[index]
-                                                            ['fadatano'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        _dataaa[index]
-                                                            ['description'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: const [
                                                           Text(
-                                                            _dataaa[index][
-                                                                'categoryname'],
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 15,
-                                                            ),
-                                                          ),
-                                                          const Text(
-                                                            ' - ',
+                                                            'F/Assets No.    ',
                                                             style: TextStyle(
                                                               fontSize: 15,
                                                             ),
                                                           ),
                                                           Text(
-                                                            _dataaa[index][
-                                                                'subcategoryname'],
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Text(
-                                                            _dataaa[index]
-                                                                ['brandname'],
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 15,
-                                                            ),
-                                                          ),
-                                                          const Text(
-                                                            ' - ',
+                                                            'Description',
                                                             style: TextStyle(
                                                               fontSize: 15,
                                                             ),
                                                           ),
                                                           Text(
-                                                            _dataaa[index][
-                                                                'brandtipename'],
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
+                                                            'Category',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Brand',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Made In',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Reff.No.',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Req.No.',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'P/O No.',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Request By',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Serial No.',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Location',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                      Text(
-                                                        _dataaa[index]
-                                                            ['countryname'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        _dataaa[index]
-                                                            ['reffno'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        _dataaa[index]['reqno'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        _dataaa[index]['pono'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        _dataaa[index]
-                                                            ['requestby'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        _dataaa[index]
-                                                            ['serialno'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        _dataaa[index]
-                                                            ['locationname'],
-                                                        style: const TextStyle(
-                                                          fontSize: 15,
+                                                      Flexible(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Text(
+                                                              _dataaa[index]
+                                                                  ['fadatano'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                  'description'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Text(
+                                                                  _dataaa[index]
+                                                                      [
+                                                                      'categoryname'],
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ),
+                                                                const Text(
+                                                                  ' - ',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  _dataaa[index]
+                                                                      [
+                                                                      'subcategoryname'],
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Text(
+                                                                  _dataaa[index]
+                                                                      [
+                                                                      'brandname'],
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ),
+                                                                const Text(
+                                                                  ' - ',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  _dataaa[index]
+                                                                      [
+                                                                      'brandtipename'],
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                  'countryname'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index]
+                                                                  ['reffno'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index]
+                                                                  ['reqno'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index]
+                                                                  ['pono'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index]
+                                                                  ['requestby'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index]
+                                                                  ['serialno'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                  'locationname'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ],
@@ -505,25 +592,22 @@ class _FixAsset2State extends State<FixAsset2> {
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 
