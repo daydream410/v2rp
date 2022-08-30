@@ -117,30 +117,79 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
               ),
               child: ListView(
                 children: [
-                  Column(
-                    children: [
-                      CupertinoSearchTextField(
-                        controller: textControllers.vendor1Controller.value,
-                        itemSize: 30,
-                        itemColor: HexColor('#F4A62A'),
-                        prefixInsets: EdgeInsets.only(left: 8, right: 8),
-                        suffixInsets: EdgeInsets.only(right: 8),
-                        suffixMode: OverlayVisibilityMode.notEditing,
-                        suffixIcon: Icon(CupertinoIcons.search),
-                        // onSuffixTap: () => Get.to(ScanFixAsset()),
-                        onSubmitted: (value) {
-                          searchProcess();
-                          setState(() {
-                            textControllers.vendor1Controller.value.clear();
-                          });
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      Divider(
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: 10),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        CupertinoSearchTextField(
+                          controller: textControllers.vendor1Controller.value,
+                          itemSize: 30,
+                          itemColor: HexColor('#F4A62A'),
+                          prefixInsets: EdgeInsets.only(left: 8, right: 8),
+                          suffixInsets: EdgeInsets.only(right: 8),
+                          // suffixMode: OverlayVisibilityMode.notEditing,
+                          // suffixIcon: Icon(CupertinoIcons.search),
+                          // onSuffixTap: () => Get.to(ScanFixAsset()),
+                          onSubmitted: (value) {
+                            searchProcess();
+                            setState(() {
+                              textControllers.vendor1Controller.value.clear();
+                            });
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        Divider(
+                          color: Colors.black,
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: ListView.separated(
+                            // shrinkWrap: true,
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01,
+                              );
+                            },
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: _dataaa.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 5,
+                                child: ListTile(
+                                  title: Text(
+                                    _dataaa[index]['itemname'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(_dataaa[index]['stockid']),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.qr_code_2),
+                                    onPressed: () {
+                                      Get.to(ScanVb(
+                                        idstock: _dataaa[index]['stockid'],
+                                        itemname: _dataaa[index]['itemname'],
+                                        serverKeyVal: serverKeyValue,
+                                      ));
+                                    },
+                                    color: HexColor('#F4A62A'),
+                                    hoverColor: HexColor('#F4A62A'),
+                                    splashColor: HexColor('#F4A62A'),
+                                  ),
+                                  tileColor: Colors.white,
+                                  textColor: Colors.black,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

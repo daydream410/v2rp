@@ -584,7 +584,7 @@ class _StockTable2State extends State<StockTable2> {
       if (responseCode == '00') {
         Get.snackbar(
           "Success",
-          "Berhasil Upload Image",
+          "Successfull Uploading Image",
           icon: Icon(
             Icons.check,
             color: Colors.white,

@@ -1039,7 +1039,7 @@ class _FixAsset2State extends State<FixAsset2> {
       if (responseCode == '00') {
         Get.snackbar(
           "Success",
-          "Berhasil Upload Image",
+          "Successfull Uploading Image",
           icon: Icon(Icons.check),
           backgroundColor: Color.fromARGB(255, 58, 245, 11),
           isDismissible: true,
