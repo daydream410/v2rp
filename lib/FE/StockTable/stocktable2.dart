@@ -723,19 +723,47 @@ class GalleryWidget extends StatefulWidget {
 
 class _GalleryWidgetState extends State<GalleryWidget> {
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: PhotoViewGallery.builder(
-          itemCount: widget.urlImages.length,
-          builder: (context, index) {
-            final dataGambar = widget.urlImages;
-            return PhotoViewGalleryPageOptions(
-              imageProvider:
-                  NetworkImage("https://www.v2rp.net" + dataGambar[index]),
-              minScale: PhotoViewComputedScale.contained,
-              maxScale: PhotoViewComputedScale.contained * 4,
-            );
-          },
-          backgroundDecoration: BoxDecoration(color: Colors.white),
-        ),
-      );
+  Widget build(BuildContext context) {
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    return isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: Text("Gallery Photo"),
+              leading: GestureDetector(
+                child: Icon(
+                  CupertinoIcons.back,
+                ),
+                onTap: () => Get.to(StockTable2()),
+              ),
+            ),
+            child: PhotoViewGallery.builder(
+              itemCount: widget.urlImages.length,
+              builder: (context, index) {
+                final dataGambar = widget.urlImages;
+                return PhotoViewGalleryPageOptions(
+                  imageProvider:
+                      NetworkImage("https://www.v2rp.net" + dataGambar[index]),
+                  minScale: PhotoViewComputedScale.contained,
+                  maxScale: PhotoViewComputedScale.contained * 4,
+                );
+              },
+              backgroundDecoration: BoxDecoration(color: Colors.white),
+            ),
+          )
+        : Scaffold(
+            body: PhotoViewGallery.builder(
+              itemCount: widget.urlImages.length,
+              builder: (context, index) {
+                final dataGambar = widget.urlImages;
+                return PhotoViewGalleryPageOptions(
+                  imageProvider:
+                      NetworkImage("https://www.v2rp.net" + dataGambar[index]),
+                  minScale: PhotoViewComputedScale.contained,
+                  maxScale: PhotoViewComputedScale.contained * 4,
+                );
+              },
+              backgroundDecoration: BoxDecoration(color: Colors.white),
+            ),
+          );
+  }
 }
