@@ -113,7 +113,7 @@ class _StockTable2State extends State<StockTable2> {
                           suffixInsets: EdgeInsets.only(right: 8),
                           suffixMode: OverlayVisibilityMode.notEditing,
                           suffixIcon: Icon(CupertinoIcons.barcode_viewfinder),
-                          // onSuffixTap: goToScan(),
+                          onSuffixTap: () => Get.to(ScanSTable()),
                           onSubmitted: (value) {
                             searchProcess();
                             setState(() {
@@ -122,10 +122,6 @@ class _StockTable2State extends State<StockTable2> {
                             });
                           },
                         ),
-                        // GestureDetector(
-                        //   child: Icon(CupertinoIcons.barcode_viewfinder),
-                        //   onTap: (() => Get.to(ScanSTable())),
-                        // ),
                         SizedBox(height: 10),
                         Divider(
                           color: Colors.black,
