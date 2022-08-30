@@ -147,35 +147,330 @@ class _FixAsset2State extends State<FixAsset2> {
                 ),
               ),
               child: ListView(children: [
-                Column(
-                  children: [
-                    CupertinoSearchTextField(
-                      controller: textControllers.fixassetController.value,
-                      itemSize: 30,
-                      itemColor: HexColor('#F4A62A'),
-                      prefixInsets: EdgeInsets.only(left: 8, right: 8),
-                      suffixInsets: EdgeInsets.only(right: 8),
-                      suffixMode: OverlayVisibilityMode.notEditing,
-                      suffixIcon: Icon(CupertinoIcons.barcode_viewfinder),
-                      onSuffixTap: () => Get.to(ScanFixAsset()),
-                      onSubmitted: (value) {
-                        searchProcess();
-                        setState(() {
-                          textControllers.fixassetController.value.clear();
-                        });
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    Divider(
-                      color: Colors.black,
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      CupertinoSearchTextField(
+                        controller: textControllers.fixassetController.value,
+                        itemSize: 30,
+                        itemColor: HexColor('#F4A62A'),
+                        prefixInsets: EdgeInsets.only(left: 8, right: 8),
+                        suffixInsets: EdgeInsets.only(right: 8),
+                        suffixMode: OverlayVisibilityMode.notEditing,
+                        suffixIcon: Icon(CupertinoIcons.barcode_viewfinder),
+                        onSuffixTap: () => Get.to(ScanFixAsset()),
+                        onSubmitted: (value) {
+                          searchProcess();
+                          setState(() {
+                            textControllers.fixassetController.value.clear();
+                          });
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              // width: MediaQuery.of(context).size.width * 0.2,
+                            );
+                          },
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: _dataaa.length,
+                          // shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              clipBehavior: Clip.antiAlias,
+                              // elevation: 5,
+                              elevation: 10,
+                              // color: HexColor('#F4A62A'),
+                              color: Colors.white,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      InkWell(
+                                        onDoubleTap: () {
+                                          dialogImage();
+
+                                          setState(() {
+                                            selectedIndex = index;
+                                          });
+                                        },
+                                        child: Ink.image(
+                                          image: NetworkImage(
+                                            'https://v2rp.net/' +
+                                                _dataaa[index]['imagedir'],
+                                          ),
+                                          height: 300,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              1,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        left: 0,
+                                        child: Container(
+                                          // color: HexColor('#F4A62A'),
+                                          color: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8, top: 10),
+                                            child: Text(
+                                              _dataaa[index]['description'],
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontSize: 24,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 0,
+                                            top: 10,
+                                            bottom: 0,
+                                            right: 0,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: const [
+                                                  Text(
+                                                    'F/Assets No.    ',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Description',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Category',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Brand',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Made In',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Reff.No.',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Req.No.',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'P/O No.',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Request By',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Serial No.',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Location',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Flexible(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      _dataaa[index]
+                                                          ['fadatano'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]
+                                                          ['description'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          _dataaa[index]
+                                                              ['categoryname'],
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                        const Text(
+                                                          ' - ',
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          _dataaa[index][
+                                                              'subcategoryname'],
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          _dataaa[index]
+                                                              ['brandname'],
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                        const Text(
+                                                          ' - ',
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          _dataaa[index]
+                                                              ['brandtipename'],
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]
+                                                          ['countryname'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]['reffno'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]['reqno'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]['pono'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]
+                                                          ['requestby'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]
+                                                          ['serialno'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]
+                                                          ['locationname'],
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ]),
             )
@@ -612,44 +907,80 @@ class _FixAsset2State extends State<FixAsset2> {
   }
 
   dialogImage() {
-    Get.defaultDialog(
-      radius: 5,
-      title: "Upload Image",
-      middleText: "Please Click Button Below",
-      backgroundColor: Colors.white,
-      confirm: SizedBox(
-        width: 115.0,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: HexColor('#F4A62A'),
-          ),
-          onPressed: () {
-            pilihGambar();
-            Get.back();
-          },
-          child: Text(
-            'Choose Image',
-            style: TextStyle(fontSize: 12),
-          ),
-        ),
-      ),
-      cancel: SizedBox(
-        width: 115.0,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: HexColor('#F4A62A'),
-          ),
-          onPressed: () {
-            takeImage();
-            Get.back();
-          },
-          child: Text(
-            'Take Picture',
-            style: TextStyle(fontSize: 12),
-          ),
-        ),
-      ),
-    );
+    Platform.isIOS
+        ? showCupertinoDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: Text("Upload Image"),
+                content: Text("Please Click Button Below"),
+                actions: [
+                  CupertinoDialogAction(
+                    child: Text(
+                      "Choose Image",
+                      style: TextStyle(
+                        color: HexColor('#F4A62A'),
+                      ),
+                    ),
+                    onPressed: () {
+                      pilihGambar();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: Text(
+                      "Take Picture",
+                      style: TextStyle(
+                        color: HexColor('#F4A62A'),
+                      ),
+                    ),
+                    onPressed: () {
+                      takeImage();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          )
+        : Get.defaultDialog(
+            radius: 5,
+            title: "Upload Image",
+            middleText: "Please Click Button Below",
+            backgroundColor: Colors.white,
+            confirm: SizedBox(
+              width: 115.0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: HexColor('#F4A62A'),
+                ),
+                onPressed: () {
+                  pilihGambar();
+                  Get.back();
+                },
+                child: Text(
+                  'Choose Image',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+            cancel: SizedBox(
+              width: 115.0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: HexColor('#F4A62A'),
+                ),
+                onPressed: () {
+                  takeImage();
+                  Get.back();
+                },
+                child: Text(
+                  'Take Picture',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+          );
   }
 
   Future<void> pilihGambar() async {
