@@ -15,6 +15,7 @@ import 'package:v2rp1/FE/FA/fixasset2.dart';
 // import 'package:v2rp1/FE/ST/stock_transfer.dart';
 import 'package:v2rp1/FE/StockTable/stocktable2.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode.dart';
+import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/additional/mt_screen.dart';
 
 // ignore: must_be_immutable
@@ -316,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        Get.to(() => VendorBarcode());
+                                        Get.to(() => VendorBarcode1());
                                       },
                                     ),
                                   ),

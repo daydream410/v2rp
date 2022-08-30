@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode.dart';
+import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 
 import '../../additional/constants.dart';
@@ -103,7 +104,7 @@ class _CustomDialogBoxVbState extends State<CustomDialogBoxVb> {
                           //     builder: (context) => const VendorBarcode(),
                           //   ),
                           // );
-                          Get.to(VendorBarcode());
+                          Get.to(VendorBarcode1());
                         },
                         child: Text(
                           widget.home,

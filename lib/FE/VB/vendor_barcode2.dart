@@ -12,6 +12,7 @@ import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/VB/dialog_box_vb.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 
 class VendorBarcode2 extends StatefulWidget {
   final barcodeResult;
@@ -69,7 +70,7 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Get.to(VendorBarcode());
+              Get.to(VendorBarcode1());
             },
           ),
         ),
