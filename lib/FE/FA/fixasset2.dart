@@ -180,18 +180,14 @@ class _FixAsset2State extends State<FixAsset2> {
                           separatorBuilder: (context, index) {
                             return SizedBox(
                               height: MediaQuery.of(context).size.height * 0.07,
-                              // width: MediaQuery.of(context).size.width * 0.2,
                             );
                           },
                           physics: const BouncingScrollPhysics(),
                           itemCount: _dataaa.length,
-                          // shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Card(
                               clipBehavior: Clip.antiAlias,
-                              // elevation: 5,
                               elevation: 10,
-                              // color: HexColor('#F4A62A'),
                               color: Colors.white,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -201,7 +197,6 @@ class _FixAsset2State extends State<FixAsset2> {
                                       InkWell(
                                         onDoubleTap: () {
                                           dialogImage();
-
                                           setState(() {
                                             selectedIndex = index;
                                           });
@@ -224,7 +219,6 @@ class _FixAsset2State extends State<FixAsset2> {
                                         right: 0,
                                         left: 0,
                                         child: Container(
-                                          // color: HexColor('#F4A62A'),
                                           color: Colors.white,
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -257,7 +251,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                           ),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Column(
                                                 crossAxisAlignment:
@@ -334,7 +328,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                               Flexible(
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       _dataaa[index]
@@ -354,7 +348,8 @@ class _FixAsset2State extends State<FixAsset2> {
                                                     ),
                                                     Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.end,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
                                                           _dataaa[index]
@@ -382,7 +377,8 @@ class _FixAsset2State extends State<FixAsset2> {
                                                     ),
                                                     Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.end,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
                                                           _dataaa[index]
@@ -559,25 +555,20 @@ class _FixAsset2State extends State<FixAsset2> {
                               SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.65,
-                                // width: MediaQuery.of(context).size.width * 0.2,
                                 child: ListView.separated(
                                   separatorBuilder: (context, index) {
                                     return SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.07,
-                                      // width: MediaQuery.of(context).size.width * 0.2,
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: _dataaa.length,
-                                  // shrinkWrap: true,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       clipBehavior: Clip.antiAlias,
-                                      // elevation: 5,
                                       elevation: 10,
-                                      // color: HexColor('#F4A62A'),
                                       color: Colors.white,
                                       child: Column(
                                         crossAxisAlignment:
@@ -588,7 +579,6 @@ class _FixAsset2State extends State<FixAsset2> {
                                               InkWell(
                                                 onDoubleTap: () {
                                                   dialogImage();
-
                                                   setState(() {
                                                     selectedIndex = index;
                                                   });
@@ -612,7 +602,6 @@ class _FixAsset2State extends State<FixAsset2> {
                                                 right: 0,
                                                 left: 0,
                                                 child: Container(
-                                                  // color: HexColor('#F4A62A'),
                                                   color: Colors.white,
                                                   child: Padding(
                                                     padding:
@@ -650,7 +639,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .spaceEvenly,
+                                                            .spaceBetween,
                                                     children: [
                                                       Column(
                                                         crossAxisAlignment:
@@ -729,7 +718,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                         child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
-                                                                  .end,
+                                                                  .start,
                                                           children: [
                                                             Text(
                                                               _dataaa[index]
@@ -753,7 +742,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                             Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
-                                                                      .end,
+                                                                      .start,
                                                               children: [
                                                                 Text(
                                                                   _dataaa[index]
@@ -788,7 +777,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                             Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
-                                                                      .end,
+                                                                      .start,
                                                               children: [
                                                                 Text(
                                                                   _dataaa[index]
