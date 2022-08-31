@@ -50,7 +50,6 @@ dependencies:
   full_screen_image_null_safe: ^2.0.0
   modal_bottom_sheet: ^2.1.0
   photo_view: ^0.14.0
-  # mac_address: ^1.0.0
   cupertino_icons: ^1.0.0
 
 dev_dependencies:

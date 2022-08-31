@@ -728,7 +728,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
     return isIOS
         ? CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
-              middle: Text("Gallery Photo"),
+              middle: Text("Photo Gallery"),
               leading: GestureDetector(
                 child: Icon(
                   CupertinoIcons.back,
