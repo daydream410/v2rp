@@ -54,10 +54,6 @@ class _MaterialUseState extends State<MaterialUse> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Navbar()),
-              // );
               Get.to(Navbar());
             },
           ),
@@ -72,7 +68,6 @@ class _MaterialUseState extends State<MaterialUse> {
                     height: 15,
                   ),
                   Row(
-                    // alignment: MainAxisAlignment.spaceBetween,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text(
@@ -86,12 +81,6 @@ class _MaterialUseState extends State<MaterialUse> {
                   const SizedBox(
                     height: 15,
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 2.0, right: 8.0),
-                  //   child: CupertinoSearchTextField(
-                  //     borderRadius: BorderRadius.circular(7),
-                  //   ),
-                  // ),
                   TextField(
                     controller: controller,
                     decoration: InputDecoration(
@@ -102,41 +91,24 @@ class _MaterialUseState extends State<MaterialUse> {
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),
-                  // Expanded(
-                  //   child: ListView.builder(
-                  //     itemCount: muList.length,
-                  //     itemBuilder: (context, index) {
-                  //       final ListMU = muList[index];
-                  //       return ListTile(
-                  //         title: Text(ListMU.noSPPBJ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
             ),
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: TextButton(
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text('CREATE NEW'),
             ),
             onPressed: () async {
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const MaterialUse2(),
-              //   ),
-              // );
               Get.to(MaterialUse2());
             },
             style: TextButton.styleFrom(
               primary: Colors.white,
-              backgroundColor: HexColor('#E6BF00'),
+              backgroundColor: HexColor('#F4A62A'),
             ),
           ),
         ),
