@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:hexcolor/hexcolor.dart';
+import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../navbar/navbar.dart';
 
@@ -21,7 +22,7 @@ class _OtpScreen2State extends State<OtpScreen2> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -37,155 +38,173 @@ class _OtpScreen2State extends State<OtpScreen2> {
         );
         throw (e);
       },
-      child: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.purple, Colors.orange])),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: const Text("OTP Verification"),
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            foregroundColor: Colors.white,
-            elevation: 1,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Navbar()),
-                );
-              },
-            ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("OTP Verification"),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 1,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Navbar()),
+              );
+            },
           ),
-          body: SafeArea(
+        ),
+        body: SingleChildScrollView(
+          child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 68,
-                        width: 64,
-                        child: TextFormField(
-                          onChanged: (value) {
-                            if (value.length == 1) {
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
+                child: Column(
+                  children: [
+                    Image.asset('images/otp1.png'),
+                    const Text("Please Enter The OTP Sent To Your Telegram."),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            height: 68,
+                            width: 64,
+                            child: TextFormField(
+                              onChanged: (value) {
+                                if (value.length == 1) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                hintText: '0',
+                              ),
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(1),
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
                             ),
-                            hintText: '0',
                           ),
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
+                          SizedBox(
+                            height: 68,
+                            width: 64,
+                            child: TextFormField(
+                              onChanged: (value) {
+                                if (value.length == 1) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                hintText: '0',
+                              ),
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(1),
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 68,
+                            width: 64,
+                            child: TextFormField(
+                              onChanged: (value) {
+                                if (value.length == 1) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                hintText: '0',
+                              ),
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(1),
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 68,
+                            width: 64,
+                            child: TextFormField(
+                              onChanged: (value) {
+                                if (value.length == 1) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                hintText: '0',
+                              ),
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(1),
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      "Didn't receive an OTP?",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    TextButton(
+                      child: Text(
+                        "Resend OTP",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: HexColor("#F4A62A"),
+                          fontSize: 15,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
-                      SizedBox(
-                        height: 68,
-                        width: 64,
-                        child: TextFormField(
-                          onChanged: (value) {
-                            if (value.length == 1) {
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            hintText: '0',
-                          ),
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 68,
-                        width: 64,
-                        child: TextFormField(
-                          onChanged: (value) {
-                            if (value.length == 1) {
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            hintText: '0',
-                          ),
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 68,
-                        width: 64,
-                        child: TextFormField(
-                          onChanged: (value) {
-                            if (value.length == 1) {
-                              FocusScope.of(context).nextFocus();
-                            }
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            hintText: '0',
-                          ),
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(1),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                      onPressed: () {},
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Submit OTP'),
-              ),
-              onPressed: () async {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (contepotatoxt) => const GoodsReceive3(),
-                //   ),
-                // );
-              },
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: Colors.transparent,
-              ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: TextButton(
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Submit OTP'),
+            ),
+            onPressed: () async {
+              Get.to(const Navbar());
+            },
+            style: TextButton.styleFrom(
+              primary: Colors.white,
+              backgroundColor: HexColor("#F4A62A"),
             ),
           ),
         ),
