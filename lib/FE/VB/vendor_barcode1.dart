@@ -269,7 +269,7 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Item Listttt'),
+                          const Text('Item List'),
                           const SizedBox(height: 25.0),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

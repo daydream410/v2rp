@@ -83,12 +83,6 @@ class _CustomDialogBoxVbState extends State<CustomDialogBoxVb> {
                   children: [
                     TextButton(
                         onPressed: () {
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const Navbar(),
-                          //   ),
-                          // );
                           Get.to(Navbar());
                         },
                         child: Text(
@@ -98,12 +92,6 @@ class _CustomDialogBoxVbState extends State<CustomDialogBoxVb> {
                         )),
                     TextButton(
                         onPressed: () {
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const VendorBarcode(),
-                          //   ),
-                          // );
                           Get.to(VendorBarcode1());
                         },
                         child: Text(

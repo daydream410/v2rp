@@ -157,8 +157,8 @@ class HomeScreen extends StatelessWidget {
                                       splashColor: Colors.black38,
                                       onTap: () async {
                                         // Get.to(ScanWh());
-                                        // Get.to(MaintenanceScreen());
-                                        Get.to(OtpScreen2());
+                                        Get.to(MaintenanceScreen());
+                                        // Get.to(OtpScreen2());
                                       },
                                     ),
                                   ),

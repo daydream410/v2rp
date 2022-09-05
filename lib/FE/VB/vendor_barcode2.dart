@@ -19,12 +19,14 @@ class VendorBarcode2 extends StatefulWidget {
   final idstock2;
   final itemname2;
   final serverKeyVal2;
+  final message2;
   const VendorBarcode2({
     Key? key,
     required this.barcodeResult,
     this.idstock2,
     this.itemname2,
     this.serverKeyVal2,
+    this.message2,
   }) : super(key: key);
 
   @override
@@ -231,10 +233,11 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
           context: context,
           builder: (BuildContext context) {
             return CustomDialogBoxVb(
-              title: "SUBMIT DATA SUCCESFUL",
-              descriptions: "Data Barcode Pada item " +
-                  widget.idstock2 +
-                  " Telah Berhasil Di Update",
+              title: "SUCCESSFUL DATA SUBMIT",
+              // descriptions: "Data Barcode Pada item " +
+              //     widget.idstock2 +
+              //     " Telah Berhasil Di Update",
+              descriptions: widget.idstock2 + " " + responseMessage,
               text: "Home",
               home: "OK",
               img: Image.asset("images/success.gif"),
