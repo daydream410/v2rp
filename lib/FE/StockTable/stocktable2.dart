@@ -591,7 +591,7 @@ class _StockTable2State extends State<StockTable2> {
           ),
           backgroundColor: Color.fromARGB(255, 58, 245, 11),
           isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
+          dismissDirection: DismissDirection.vertical,
         );
       } else {
         Get.snackbar(
@@ -603,7 +603,7 @@ class _StockTable2State extends State<StockTable2> {
           ),
           backgroundColor: Colors.red,
           isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
+          dismissDirection: DismissDirection.vertical,
         );
       }
     } catch (e) {
@@ -626,7 +626,7 @@ class _StockTable2State extends State<StockTable2> {
           ),
           backgroundColor: Colors.red,
           isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
+          dismissDirection: DismissDirection.vertical,
         );
       }
     } catch (e) {
@@ -672,7 +672,7 @@ class _StockTable2State extends State<StockTable2> {
         ),
         backgroundColor: HexColor('#F4A62A'),
         isDismissible: true,
-        dismissDirection: DismissDirection.horizontal,
+        dismissDirection: DismissDirection.vertical,
       );
     } else {
       Get.snackbar(
@@ -685,7 +685,7 @@ class _StockTable2State extends State<StockTable2> {
         ),
         backgroundColor: Colors.red,
         isDismissible: true,
-        dismissDirection: DismissDirection.horizontal,
+        dismissDirection: DismissDirection.vertical,
       );
       setState(() {
         dataaa.clear();

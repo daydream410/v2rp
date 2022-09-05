@@ -83,7 +83,7 @@ class _FixAsset2State extends State<FixAsset2> {
         ),
         backgroundColor: HexColor('#F4A62A'),
         isDismissible: true,
-        dismissDirection: DismissDirection.horizontal,
+        dismissDirection: DismissDirection.vertical,
       );
     } else {
       Get.snackbar(
@@ -96,7 +96,7 @@ class _FixAsset2State extends State<FixAsset2> {
         ),
         backgroundColor: Colors.red,
         isDismissible: true,
-        dismissDirection: DismissDirection.horizontal,
+        dismissDirection: DismissDirection.vertical,
       );
       setState(() {
         _dataaa.clear();
@@ -1032,7 +1032,7 @@ class _FixAsset2State extends State<FixAsset2> {
           icon: Icon(Icons.check),
           backgroundColor: Color.fromARGB(255, 58, 245, 11),
           isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
+          dismissDirection: DismissDirection.vertical,
         );
       } else {
         Get.snackbar(
@@ -1041,7 +1041,7 @@ class _FixAsset2State extends State<FixAsset2> {
           icon: Icon(Icons.close),
           backgroundColor: Colors.red,
           isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
+          dismissDirection: DismissDirection.vertical,
         );
       }
       print(tesA);
@@ -1062,7 +1062,7 @@ class _FixAsset2State extends State<FixAsset2> {
           icon: Icon(Icons.close),
           backgroundColor: Colors.red,
           isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
+          dismissDirection: DismissDirection.vertical,
         );
       }
     } catch (e) {

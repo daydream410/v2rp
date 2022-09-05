@@ -235,10 +235,11 @@ class _LoginPage4State extends State<LoginPage4>
           Get.snackbar(
             "$messageRes",
             "",
+            colorText: Colors.white,
             icon: Icon(Icons.check),
             backgroundColor: Colors.green,
             isDismissible: true,
-            dismissDirection: DismissDirection.horizontal,
+            dismissDirection: DismissDirection.vertical,
           );
 
           // Get.to(() => Navbar());
@@ -250,21 +251,29 @@ class _LoginPage4State extends State<LoginPage4>
           Get.snackbar(
             "Please Wait",
             "Connecting To Server...",
-            icon: Icon(Icons.timer),
+            colorText: Colors.white,
+            icon: Icon(
+              Icons.timer,
+              color: Colors.white,
+            ),
             backgroundColor: HexColor("#F4A62A"),
             isDismissible: true,
             duration: Duration(seconds: 2),
-            dismissDirection: DismissDirection.horizontal,
+            dismissDirection: DismissDirection.vertical,
           );
         } else if (loginResult.toString() == '{05}') {
           Get.snackbar(
             "$messageRes",
-            "a",
+            "",
+            colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.close),
+            icon: Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
             backgroundColor: Colors.red,
             isDismissible: true,
-            dismissDirection: DismissDirection.horizontal,
+            dismissDirection: DismissDirection.vertical,
           );
           // _timer = Timer(Duration(seconds: 3), (() {
           //   SystemNavigator.pop();

@@ -250,7 +250,7 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
         icon: Icon(Icons.warning),
         backgroundColor: Colors.red,
         isDismissible: true,
-        dismissDirection: DismissDirection.horizontal,
+        dismissDirection: DismissDirection.vertical,
       );
     }
   }

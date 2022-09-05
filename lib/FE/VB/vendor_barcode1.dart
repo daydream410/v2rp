@@ -61,7 +61,7 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
         icon: Icon(Icons.warning),
         backgroundColor: Colors.red,
         isDismissible: true,
-        dismissDirection: DismissDirection.horizontal,
+        dismissDirection: DismissDirection.vertical,
       );
       setState(() {
         _dataaa.clear();

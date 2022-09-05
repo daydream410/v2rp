@@ -75,7 +75,7 @@ class _ScanFixAssetState extends State<ScanFixAsset> {
             icon: const Icon(Icons.qr_code),
             backgroundColor: Colors.green,
             isDismissible: true,
-            dismissDirection: DismissDirection.horizontal,
+            dismissDirection: DismissDirection.vertical,
             snackPosition: SnackPosition.BOTTOM,
           );
           Get.to(() => const FixAsset2());
