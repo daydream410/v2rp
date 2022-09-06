@@ -11,6 +11,7 @@ class TextControllers extends GetxController {
     stocktableController.value.clear();
     fixassetController.value.clear();
     remarksController.value.clear();
+    materialusedController.value.clear();
   }
 
   Rx<TextEditingController> usernameController = TextEditingController().obs;
@@ -19,4 +20,8 @@ class TextControllers extends GetxController {
   Rx<TextEditingController> stocktableController = TextEditingController().obs;
   Rx<TextEditingController> fixassetController = TextEditingController().obs;
   Rx<TextEditingController> remarksController = TextEditingController().obs;
+  Rx<TextEditingController> materialusedController =
+      TextEditingController().obs;
+  Rx<TextEditingController> MuWarehouseController = TextEditingController().obs;
+  Rx<TextEditingController> MuSppbjController = TextEditingController().obs;
 }

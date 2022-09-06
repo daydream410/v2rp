@@ -21,7 +21,7 @@ class MaterialUse3 extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -64,12 +64,12 @@ class MaterialUse3 extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Material Use Detail'),
+                      const Text('Material Used Detail'),
                       const SizedBox(height: 10.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
-                          Text('Material Use No.'),
+                          Text('Material Used No.'),
                           Text('NEP/IJ2200003'),
                         ],
                       ),
@@ -157,7 +157,7 @@ class MaterialUse3 extends StatelessWidget {
                           trailing: Text(
                             '20x',
                             style: TextStyle(
-                              color: HexColor('#E6BF00'),
+                              color: HexColor('#F4A62A'),
                               fontSize: 20.0,
                               fontWeight: FontWeight.w600,
                             ),
@@ -196,7 +196,7 @@ class MaterialUse3 extends StatelessWidget {
                           trailing: Text(
                             '10x',
                             style: TextStyle(
-                              color: HexColor('#E6BF00'),
+                              color: HexColor('#F4A62A'),
                               fontSize: 20.0,
                               fontWeight: FontWeight.w600,
                             ),
@@ -233,7 +233,7 @@ class MaterialUse3 extends StatelessWidget {
             },
             style: TextButton.styleFrom(
               primary: Colors.white,
-              backgroundColor: HexColor('#E6BF00'),
+              backgroundColor: HexColor('#F4A62A'),
             ),
           ),
         ),

@@ -10,6 +10,8 @@ import 'package:v2rp1/FE/MU/material_use2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:v2rp1/additional/list_MU.dart';
 
+import '../../BE/controller.dart';
+
 class MaterialUse extends StatefulWidget {
   const MaterialUse({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class MaterialUse extends StatefulWidget {
 }
 
 class _MaterialUseState extends State<MaterialUse> {
-  final controller = TextEditingController();
+  static TextControllers textControllers = Get.put(TextControllers());
   List<ListMU> muList = allListMU;
 
   @override
@@ -28,7 +30,7 @@ class _MaterialUseState extends State<MaterialUse> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -46,7 +48,7 @@ class _MaterialUseState extends State<MaterialUse> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Material Use"),
+          title: const Text("Material Used"),
           centerTitle: true,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
@@ -82,12 +84,21 @@ class _MaterialUseState extends State<MaterialUse> {
                     height: 15,
                   ),
                   TextField(
-                    controller: controller,
+                    controller: textControllers.materialusedController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: 'Search',
+                      prefixIcon: const Icon(Icons.assignment),
+                      // suffixIcon: IconButton(
+                      //   icon: const Icon(Icons.qr_code_2),
+                      //   color: HexColor('#F4A62A'),
+                      //   onPressed: () async {},
+                      //   splashColor: HexColor('#F4A62A'),
+                      //   tooltip: 'Scan',
+                      //   hoverColor: HexColor('#F4A62A'),
+                      // ),
+                      hintText: 'Material Used No / SPPBJ No',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),

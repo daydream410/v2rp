@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/FA/fixasset2.dart';
+import 'package:v2rp1/FE/MU/material_use.dart';
 import 'package:v2rp1/FE/OTP/otp.dart';
 import 'package:v2rp1/FE/OTP/otp2.dart';
 // import 'package:v2rp1/FE/GR/goods_receive.dart';
@@ -157,8 +158,9 @@ class HomeScreen extends StatelessWidget {
                                       splashColor: Colors.black38,
                                       onTap: () async {
                                         // Get.to(ScanWh());
-                                        Get.to(MaintenanceScreen());
+                                        // Get.to(MaintenanceScreen());
                                         // Get.to(OtpScreen2());
+                                        Get.to(MaterialUse());
                                       },
                                     ),
                                   ),

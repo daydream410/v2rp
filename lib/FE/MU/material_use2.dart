@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/FE/MU/detail_mu.dart';
 import 'package:v2rp1/FE/MU/material_use.dart';
 import 'package:v2rp1/FE/MU/material_use3.dart';
@@ -21,8 +22,7 @@ class MaterialUse2 extends StatefulWidget {
 }
 
 class _MaterialUse2State extends State<MaterialUse2> {
-  final controller_wh = TextEditingController();
-  final controller_sppbj = TextEditingController();
+  static TextControllers textControllers = Get.put(TextControllers());
 
   bool isVisible = false;
 
@@ -33,7 +33,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -69,7 +69,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
         //   ),
         // ),
         appBar: AppBar(
-          title: const Text("Material Use"),
+          title: const Text("Material Used"),
           centerTitle: true,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
@@ -91,36 +91,63 @@ class _MaterialUse2State extends State<MaterialUse2> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // TextField(
+                //   // controller: controller_wh,
+                //   decoration: InputDecoration(
+                //     prefixIcon: const Icon(Icons.warehouse),
+                //     hintText: 'Warehouse',
+                //     suffixIcon: IconButton(
+                //       icon: const Icon(Icons.qr_code_scanner),
+                //       onPressed: () {
+                //         Get.to(ScanWh2());
+                //       },
+                //     ),
+                //     border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(15),
+                //         borderSide: const BorderSide(color: Colors.black)),
+                //   ),
+                // ),
                 TextField(
-                  // controller: controller_wh,
+                  controller: textControllers.MuWarehouseController.value,
+                  onSubmitted: (value) {},
                   decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.warehouse),
-                    hintText: 'Warehouse',
+                    prefixIcon: const Icon(Icons.assignment),
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.qr_code_scanner),
-                      onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => const ScanWh2(),
-                        // ));
-                        Get.to(ScanWh2());
-                      },
+                      icon: const Icon(Icons.qr_code_2),
+                      color: HexColor('#F4A62A'),
+                      onPressed: () async {},
+                      splashColor: HexColor('#F4A62A'),
+                      tooltip: 'Scan',
+                      hoverColor: HexColor('#F4A62A'),
                     ),
+                    hintText: 'Warehouse',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: const BorderSide(color: Colors.black)),
                   ),
                 ),
                 const SizedBox(height: 10.0),
                 TextField(
-                  controller: controller_sppbj,
+                  controller: textControllers.MuSppbjController.value,
+                  onSubmitted: (value) {},
                   decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.article),
+                    prefixIcon: const Icon(Icons.assignment),
                     hintText: 'SPPBJ No.',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: const BorderSide(color: Colors.black)),
                   ),
                 ),
+                // TextField(
+                //   controller: controller_sppbj,
+                //   decoration: InputDecoration(
+                //     prefixIcon: const Icon(Icons.article),
+                //     hintText: 'SPPBJ No.',
+                //     border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(15),
+                //         borderSide: const BorderSide(color: Colors.black)),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 10.0,
                 ),
@@ -129,7 +156,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
                   child: const Text('Load Data'),
                   style: TextButton.styleFrom(
                     primary: Colors.white,
-                    backgroundColor: HexColor('#E6BF00'),
+                    backgroundColor: HexColor('#F4A62A'),
                   ),
                 ),
                 Visibility(
@@ -167,7 +194,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
                               },
                               child: Text(
                                 "Detail",
-                                style: TextStyle(color: HexColor("#E6BF00")),
+                                style: TextStyle(color: HexColor("#F4A62A")),
                               ),
                             ),
                           ],
@@ -213,7 +240,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
               },
               style: TextButton.styleFrom(
                 primary: Colors.white,
-                backgroundColor: HexColor('#E6BF00'),
+                backgroundColor: HexColor('#F4A62A'),
               ),
             ),
           ),
