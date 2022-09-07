@@ -135,7 +135,7 @@ class _StockTransferState extends State<StockTransfer> {
               Get.to(StockTransfer2());
             },
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor('#E6BF00'),
             ),
           ),

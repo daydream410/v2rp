@@ -231,7 +231,7 @@ class GoodsReceive3 extends StatelessWidget {
                   });
             },
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor('#F4A62A'),
             ),
           ),

@@ -10,8 +10,6 @@ import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/FE/MU/detail_mu.dart';
 import 'package:v2rp1/FE/MU/material_use.dart';
 import 'package:v2rp1/FE/MU/material_use3.dart';
-import 'package:v2rp1/FE/MU/scan_mu2.dart';
-
 // import 'package:v2rp1/additional/scanner.dart';
 
 class MaterialUse2 extends StatefulWidget {
@@ -108,7 +106,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
                 //   ),
                 // ),
                 TextField(
-                  controller: textControllers.MuWarehouseController.value,
+                  controller: textControllers.muWarehouseController.value,
                   onSubmitted: (value) {},
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.assignment),
@@ -128,7 +126,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
                 ),
                 const SizedBox(height: 10.0),
                 TextField(
-                  controller: textControllers.MuSppbjController.value,
+                  controller: textControllers.muSppbjController.value,
                   onSubmitted: (value) {},
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.assignment),
@@ -155,7 +153,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
                   onPressed: () => setState(() => isVisible = !isVisible),
                   child: const Text('Load Data'),
                   style: TextButton.styleFrom(
-                    primary: Colors.white,
+                    foregroundColor: Colors.white,
                     backgroundColor: HexColor('#F4A62A'),
                   ),
                 ),
@@ -239,7 +237,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
                 Get.to(MaterialUse3());
               },
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: HexColor('#F4A62A'),
               ),
             ),

@@ -31,7 +31,7 @@ class _GoodsReceiveState extends State<GoodsReceive> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -122,23 +122,17 @@ class _GoodsReceiveState extends State<GoodsReceive> {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: TextButton(
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text('CREATE NEW'),
             ),
             onPressed: () async {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const GoodsReceive2(),
-              //   ),
-              // );
               Get.to(GoodsReceive2());
             },
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor('#F4A62A'),
             ),
           ),

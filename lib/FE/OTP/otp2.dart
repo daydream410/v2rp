@@ -203,7 +203,7 @@ class _OtpScreen2State extends State<OtpScreen2> {
               Get.to(const Navbar());
             },
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor("#F4A62A"),
             ),
           ),

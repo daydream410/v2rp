@@ -136,7 +136,7 @@ class _InternalTransferState extends State<InternalTransfer> {
               Get.to(InternalTransfer2());
             },
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor('#F4A62A'),
             ),
           ),

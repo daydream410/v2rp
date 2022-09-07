@@ -135,7 +135,7 @@ class _StockMovementState extends State<StockMovement> {
               Get.to(StockMovement2());
             },
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor('#F4A62A'),
             ),
           ),

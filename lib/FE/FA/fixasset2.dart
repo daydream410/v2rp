@@ -941,7 +941,7 @@ class _FixAsset2State extends State<FixAsset2> {
               width: 115.0,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: HexColor('#F4A62A'),
+                  backgroundColor: HexColor('#F4A62A'),
                 ),
                 onPressed: () {
                   pilihGambar();
@@ -957,7 +957,7 @@ class _FixAsset2State extends State<FixAsset2> {
               width: 115.0,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: HexColor('#F4A62A'),
+                  foregroundColor: HexColor('#F4A62A'),
                 ),
                 onPressed: () {
                   takeImage();

@@ -98,7 +98,7 @@ class _InternalTransfer2State extends State<InternalTransfer2> {
                     onPressed: () => setState(() => isVisible = !isVisible),
                     child: const Text('Load Data'),
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
+                      foregroundColor: Colors.white,
                       backgroundColor: HexColor('#F4A62A'),
                     ),
                   ),
@@ -193,7 +193,7 @@ class _InternalTransfer2State extends State<InternalTransfer2> {
                 Get.to(InternalTransfer3());
               },
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: HexColor('#F4A62A'),
               ),
             ),

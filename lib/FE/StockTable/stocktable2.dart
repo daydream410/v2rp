@@ -6,7 +6,6 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -496,7 +495,7 @@ class _StockTable2State extends State<StockTable2> {
               width: 125.0,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: HexColor('#F4A62A'),
+                  backgroundColor: HexColor('#F4A62A'),
                 ),
                 onPressed: () {
                   pilihGambar();
@@ -512,7 +511,7 @@ class _StockTable2State extends State<StockTable2> {
               width: 125.0,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: HexColor('#F4A62A'),
+                  backgroundColor: HexColor('#F4A62A'),
                 ),
                 onPressed: () {
                   takeImage();

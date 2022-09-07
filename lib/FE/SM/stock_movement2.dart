@@ -97,7 +97,7 @@ class _StockMovement2State extends State<StockMovement2> {
                     onPressed: () => setState(() => isVisible = !isVisible),
                     child: const Text('Load Data'),
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
+                      foregroundColor: Colors.white,
                       backgroundColor: HexColor('#F4A62A'),
                     ),
                   ),
@@ -192,7 +192,7 @@ class _StockMovement2State extends State<StockMovement2> {
                 Get.to(StockMovement3());
               },
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: HexColor('#F4A62A'),
               ),
             ),

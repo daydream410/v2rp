@@ -10,7 +10,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/VB/dialog_box_vb.dart';
-import 'package:v2rp1/FE/VB/vendor_barcode.dart';
 import 'package:http/http.dart' as http;
 import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 
@@ -201,7 +200,7 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
               child: Text('SUBMIT DATA'),
             ),
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor('#E6BF00'),
             ),
           ),

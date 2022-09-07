@@ -7,19 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/FA/fixasset2.dart';
-import 'package:v2rp1/FE/MU/material_use.dart';
-import 'package:v2rp1/FE/OTP/otp.dart';
-import 'package:v2rp1/FE/OTP/otp2.dart';
-// import 'package:v2rp1/FE/GR/goods_receive.dart';
-// import 'package:v2rp1/FE/IT/internal_transfer.dart';
-// import 'package:v2rp1/FE/MU/scan_mu.dart';
-// import 'package:v2rp1/FE/SM/stock_movement.dart';
-// import 'package:v2rp1/FE/SO/stock_opname.dart';
-// import 'package:v2rp1/FE/ST/stock_transfer.dart';
 import 'package:v2rp1/FE/StockTable/stocktable2.dart';
-import 'package:v2rp1/FE/VB/vendor_barcode.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/additional/mt_screen.dart';
+
+import '../GR/goods_receive.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -129,8 +121,8 @@ class HomeScreen extends StatelessWidget {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        // Get.to(GoodsReceive());
-                                        Get.to(MaintenanceScreen());
+                                        Get.to(GoodsReceive());
+                                        // Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),
@@ -158,9 +150,9 @@ class HomeScreen extends StatelessWidget {
                                       splashColor: Colors.black38,
                                       onTap: () async {
                                         // Get.to(ScanWh());
-                                        // Get.to(MaintenanceScreen());
+                                        Get.to(MaintenanceScreen());
                                         // Get.to(OtpScreen2());
-                                        Get.to(MaterialUse());
+                                        // Get.to(MaterialUse());
                                       },
                                     ),
                                   ),

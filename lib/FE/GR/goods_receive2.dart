@@ -108,7 +108,7 @@ class _GoodsReceive2State extends State<GoodsReceive2> {
                     onPressed: () => setState(() => isVisible = !isVisible),
                     child: const Text('Load Data'),
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
+                      foregroundColor: Colors.white,
                       backgroundColor: HexColor('#F4A62A'),
                     ),
                   ),
@@ -200,7 +200,7 @@ class _GoodsReceive2State extends State<GoodsReceive2> {
                 Get.to(GoodsReceive3());
               },
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: HexColor('#F4A62A'),
               ),
             ),

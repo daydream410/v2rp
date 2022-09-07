@@ -136,7 +136,7 @@ class _StockOpnameState extends State<StockOpname> {
               Get.to(StockOpname2());
             },
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
               backgroundColor: HexColor('#E6BF00'),
             ),
           ),

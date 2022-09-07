@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:v2rp1/FE/VB/vendor_barcode.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 

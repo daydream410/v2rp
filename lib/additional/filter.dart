@@ -87,7 +87,7 @@ class _FilterDataState extends State<FilterData> {
                         // ),
                         /////////////////
                         style: TextButton.styleFrom(
-                          primary: HexColor('#E6BF00'),
+                          foregroundColor: HexColor('#E6BF00'),
                         ),
                         icon: const Icon(Icons.calendar_month),
                         label: Text(
@@ -108,7 +108,7 @@ class _FilterDataState extends State<FilterData> {
                       // ),
                       TextButton.icon(
                         style: TextButton.styleFrom(
-                          primary: HexColor('#E6BF00'),
+                          foregroundColor: HexColor('#E6BF00'),
                         ),
                         icon: const Icon(Icons.calendar_month),
                         label: Text(

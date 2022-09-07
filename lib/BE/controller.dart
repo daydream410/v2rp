@@ -22,6 +22,6 @@ class TextControllers extends GetxController {
   Rx<TextEditingController> remarksController = TextEditingController().obs;
   Rx<TextEditingController> materialusedController =
       TextEditingController().obs;
-  Rx<TextEditingController> MuWarehouseController = TextEditingController().obs;
-  Rx<TextEditingController> MuSppbjController = TextEditingController().obs;
+  Rx<TextEditingController> muWarehouseController = TextEditingController().obs;
+  Rx<TextEditingController> muSppbjController = TextEditingController().obs;
 }

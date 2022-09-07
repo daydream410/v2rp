@@ -54,7 +54,7 @@ class SettingScreen extends StatelessWidget {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                    primary: Colors.teal,
+                    foregroundColor: Colors.teal,
                   ),
                   onPressed: () async {
                     final SharedPreferences sharedPreferences =

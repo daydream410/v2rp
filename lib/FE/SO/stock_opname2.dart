@@ -129,7 +129,7 @@ class _StockOpname2State extends State<StockOpname2> {
                   onPressed: () => setState(() => isVisible = !isVisible),
                   child: const Text('Load Data'),
                   style: TextButton.styleFrom(
-                    primary: Colors.white,
+                    foregroundColor: Colors.white,
                     backgroundColor: HexColor('#E6BF00'),
                   ),
                 ),
@@ -226,7 +226,7 @@ class _StockOpname2State extends State<StockOpname2> {
                 Get.to(StockOpname3());
               },
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: HexColor('#E6BF00'),
               ),
             ),
