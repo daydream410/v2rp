@@ -24,4 +24,8 @@ class TextControllers extends GetxController {
       TextEditingController().obs;
   Rx<TextEditingController> muWarehouseController = TextEditingController().obs;
   Rx<TextEditingController> muSppbjController = TextEditingController().obs;
+  Rx<TextEditingController> grController = TextEditingController().obs;
+  Rx<TextEditingController> grSupController = TextEditingController().obs;
+  Rx<TextEditingController> grWhController = TextEditingController().obs;
+  Rx<TextEditingController> grPoController = TextEditingController().obs;
 }

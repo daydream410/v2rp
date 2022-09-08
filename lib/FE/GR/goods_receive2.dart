@@ -10,6 +10,8 @@ import 'package:v2rp1/FE/GR/allocation_gr.dart';
 import 'package:v2rp1/FE/GR/goods_receive.dart';
 import 'package:v2rp1/FE/GR/goods_receive3.dart';
 
+import '../../BE/controller.dart';
+
 class GoodsReceive2 extends StatefulWidget {
   const GoodsReceive2({Key? key}) : super(key: key);
 
@@ -19,9 +21,8 @@ class GoodsReceive2 extends StatefulWidget {
 
 class _GoodsReceive2State extends State<GoodsReceive2> {
   bool isVisible = false;
-  final controllerSupplier = TextEditingController();
-  final controllerWh = TextEditingController();
-  final controllerPo = TextEditingController();
+
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class _GoodsReceive2State extends State<GoodsReceive2> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -56,10 +57,6 @@ class _GoodsReceive2State extends State<GoodsReceive2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const GoodsReceive()),
-              // );
               Get.to(GoodsReceive());
             },
           ),
@@ -72,34 +69,37 @@ class _GoodsReceive2State extends State<GoodsReceive2> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextField(
-                    controller: controllerSupplier,
+                    controller: textControllers.grSupController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.assignment_ind),
                       hintText: 'Supplier',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),
                   const SizedBox(height: 10.0),
                   TextField(
-                    controller: controllerWh,
+                    controller: textControllers.grWhController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.warehouse),
                       hintText: 'Warehouse',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),
                   const SizedBox(height: 10.0),
                   TextField(
-                    controller: controllerPo,
+                    controller: textControllers.grPoController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.article),
                       hintText: 'Purchase Order No.',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),

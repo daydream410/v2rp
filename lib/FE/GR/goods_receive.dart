@@ -12,6 +12,8 @@ import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:v2rp1/additional/filter.dart';
 import 'package:v2rp1/additional/list_MU.dart';
 
+import '../../BE/controller.dart';
+
 class GoodsReceive extends StatefulWidget {
   const GoodsReceive({Key? key}) : super(key: key);
 
@@ -20,7 +22,7 @@ class GoodsReceive extends StatefulWidget {
 }
 
 class _GoodsReceiveState extends State<GoodsReceive> {
-  final controller = TextEditingController();
+  static TextControllers textControllers = Get.put(TextControllers());
   List<ListMU> muList = allListMU;
   bool isVisible = false;
 
@@ -57,10 +59,6 @@ class _GoodsReceiveState extends State<GoodsReceive> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              //   Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => const Navbar()),
-              //   );
               Get.to(Navbar());
             },
           ),
@@ -71,48 +69,53 @@ class _GoodsReceiveState extends State<GoodsReceive> {
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     // alignment: MainAxisAlignment.spaceBetween,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "Goods Receive List",
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextButton(
-                        // onPressed: () => setState(() => isVisible = !isVisible),
-                        onPressed: () async {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const FilterData(
-                                  reload: 'Reload',
-                                );
-                              });
-                        },
-                        child: Text(
-                          'Filter',
-                          style: TextStyle(
+                            color: Colors.black,
                             fontSize: 15,
-                            color: HexColor('#F4A62A'),
-                          ),
-                        ),
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold),
                       ),
+
+                      // TextButton(
+                      //   onPressed: () async {
+                      //     showDialog(
+                      //         context: context,
+                      //         builder: (BuildContext context) {
+                      //           return const FilterData(
+                      //             reload: 'Reload',
+                      //           );
+                      //         });
+                      //   },
+                      //   child: Text(
+                      //     'Filter',
+                      //     style: TextStyle(
+                      //       fontSize: 15,
+                      //       color: HexColor('#F4A62A'),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 15,
                   ),
                   TextField(
-                    controller: controller,
+                    controller: textControllers.grController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: 'Search',
+                      prefixIcon: const Icon(Icons.assignment),
+                      hintText: 'Goods Receive No / SPPBJ No',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),
