@@ -221,7 +221,7 @@ class _MaterialUse2State extends State<MaterialUse2> {
         bottomNavigationBar: Visibility(
           visible: isVisible,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: TextButton(
               child: const Padding(
                 padding: EdgeInsets.all(8.0),

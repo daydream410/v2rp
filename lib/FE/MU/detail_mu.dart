@@ -39,7 +39,6 @@ class _AddDetailMuState extends State<AddDetailMu> {
               top: Constants.padding,
               right: Constants.padding,
               bottom: Constants.padding),
-          // margin: const EdgeInsets.only(top: Constants.avatarRadius),
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
@@ -52,23 +51,9 @@ class _AddDetailMuState extends State<AddDetailMu> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // const Text(
-              //   "Add Detail",
-              //   style: TextStyle(fontWeight: FontWeight.w800),
-              // ),
               const SizedBox(
                 height: 15,
               ),
-              // TextField(
-              //   decoration: InputDecoration(
-              //     border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(10)),
-              //     labelText: 'Rack',
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
               const Text(
                 "Edit Quantity",
                 style: TextStyle(fontWeight: FontWeight.w800),
@@ -79,40 +64,13 @@ class _AddDetailMuState extends State<AddDetailMu> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // SizedBox(
-                  //   width: 150,
-                  //   height: 40,
-                  //   child: TextField(
-                  //     decoration: InputDecoration(
-                  //       border: OutlineInputBorder(
-                  //           borderRadius: BorderRadius.circular(10)),
-                  //       labelText: 'Stock Card',
-                  //     ),
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // SizedBox(
-                  //   width: 150,
-                  //   height: 40,
-                  //   child: TextField(
-                  //     decoration: InputDecoration(
-                  //         border: OutlineInputBorder(
-                  //             borderRadius: BorderRadius.circular(10)),
-                  //         labelText: 'OpName'),
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
                   SizedBox(
                     width: 150,
                     height: 40,
                     child: TextField(
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(5)),
                           labelText: 'Edit Quantity'),
                     ),
                   ),
@@ -127,7 +85,7 @@ class _AddDetailMuState extends State<AddDetailMu> {
                     child: TextButton(
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(8.0),
-                        backgroundColor: HexColor('#E6BF00'),
+                        backgroundColor: HexColor('#F4A62A'),
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();

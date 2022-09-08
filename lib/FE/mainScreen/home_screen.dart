@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/FA/fixasset2.dart';
+import 'package:v2rp1/FE/MU/material_use.dart';
 import 'package:v2rp1/FE/StockTable/stocktable2.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/additional/mt_screen.dart';
 
 import '../GR/goods_receive.dart';
+import '../OTP/otp2.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -150,9 +152,9 @@ class HomeScreen extends StatelessWidget {
                                       splashColor: Colors.black38,
                                       onTap: () async {
                                         // Get.to(ScanWh());
-                                        Get.to(MaintenanceScreen());
+                                        // Get.to(MaintenanceScreen());
                                         // Get.to(OtpScreen2());
-                                        // Get.to(MaterialUse());
+                                        Get.to(MaterialUse());
                                       },
                                     ),
                                   ),
@@ -385,251 +387,6 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Column(
-                      //     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //     children: [
-                      //       ///////////////////row pertama
-                      //       SizedBox(height: 10.0),
-                      //       Text(
-                      //         'Main Menu',
-                      //         textAlign: TextAlign.left,
-                      //         style: TextStyle(
-                      //             fontWeight: FontWeight.bold, fontSize: 20.0),
-                      //       ),
-                      //       SizedBox(height: 30.0),
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Column(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               Material(
-                      //                 borderRadius: BorderRadius.circular(20),
-                      //                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                 child: Ink.image(
-                      //                   image: AssetImage('images/ic_gr.png'),
-                      //                   height: 80,
-                      //                   width: 80,
-                      //                   fit: BoxFit.fill,
-                      //                   child: InkWell(
-                      //                     splashColor: Colors.black38,
-                      //                     onTap: () async {
-                      //                       Get.to(GoodsReceive());
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Text('Goods Received')
-                      //             ],
-                      //           ),
-                      //           Column(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               Material(
-                      //                 borderRadius: BorderRadius.circular(20),
-                      //                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                 child: Ink.image(
-                      //                   image: AssetImage('images/ic_mu.png'),
-                      //                   height: 80,
-                      //                   width: 80,
-                      //                   fit: BoxFit.fill,
-                      //                   child: InkWell(
-                      //                     splashColor: Colors.black38,
-                      //                     onTap: () async {
-                      //                       Get.to(ScanWh());
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Text('Material Use')
-                      //             ],
-                      //           ),
-                      //           Column(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               Material(
-                      //                 borderRadius: BorderRadius.circular(20),
-                      //                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                 child: Ink.image(
-                      //                   image: AssetImage('images/ic_it.png'),
-                      //                   height: 80,
-                      //                   width: 80,
-                      //                   fit: BoxFit.fill,
-                      //                   child: InkWell(
-                      //                     splashColor: Colors.black38,
-                      //                     onTap: () async {
-                      //                       Get.to(InternalTransfer());
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Text('Internal Transfer')
-                      //             ],
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       /////////////////////////Row kedua
-                      //       SizedBox(
-                      //         height: 20,
-                      //       ),
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Column(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               Material(
-                      //                 borderRadius: BorderRadius.circular(20),
-                      //                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                 child: Ink.image(
-                      //                   image: AssetImage('images/ic_sm.png'),
-                      //                   height: 80,
-                      //                   width: 80,
-                      //                   fit: BoxFit.fill,
-                      //                   child: InkWell(
-                      //                     splashColor: Colors.black38,
-                      //                     onTap: () async {
-                      //                       Get.to(StockMovement());
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Text('Stock Movement')
-                      //             ],
-                      //           ),
-                      //           Column(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               Material(
-                      //                 borderRadius: BorderRadius.circular(20),
-                      //                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                 child: Ink.image(
-                      //                   image: AssetImage('images/ic_st.png'),
-                      //                   height: 80,
-                      //                   width: 80,
-                      //                   fit: BoxFit.fill,
-                      //                   child: InkWell(
-                      //                     splashColor: Colors.black38,
-                      //                     onTap: () async {
-                      //                       Get.to(StockTransfer());
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Text('Stock Transfer')
-                      //             ],
-                      //           ),
-                      //           Column(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               Material(
-                      //                 borderRadius: BorderRadius.circular(20),
-                      //                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                 child: Ink.image(
-                      //                   image: AssetImage('images/ic_st.png'),
-                      //                   height: 80,
-                      //                   width: 80,
-                      //                   fit: BoxFit.fill,
-                      //                   child: InkWell(
-                      //                     splashColor: Colors.black38,
-                      //                     onTap: () async {
-                      //                       Get.to(StockOpname());
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Text('Stock Opname')
-                      //             ],
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       SizedBox(
-                      //         height: 20,
-                      //       ),
-                      //       Padding(
-                      //         padding: const EdgeInsets.only(left: 12),
-                      //         child: Row(
-                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             Column(
-                      //               mainAxisSize: MainAxisSize.min,
-                      //               children: [
-                      //                 Material(
-                      //                   borderRadius: BorderRadius.circular(20),
-                      //                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                   child: Ink.image(
-                      //                     image: AssetImage(
-                      //                         'images/barcoderegist.png'),
-                      //                     height: 80,
-                      //                     width: 80,
-                      //                     fit: BoxFit.fill,
-                      //                     child: InkWell(
-                      //                       splashColor: Colors.black38,
-                      //                       onTap: () async {
-                      //                         Get.to(() => VendorBarcode());
-                      //                       },
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 Text('Barcode'),
-                      //                 Text('Registration'),
-                      //               ],
-                      //             ),
-                      //             Column(
-                      //               mainAxisSize: MainAxisSize.min,
-                      //               children: [
-                      //                 Material(
-                      //                   borderRadius: BorderRadius.circular(20),
-                      //                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                   child: Ink.image(
-                      //                     image: AssetImage('images/ic_st.png'),
-                      //                     height: 80,
-                      //                     width: 80,
-                      //                     fit: BoxFit.fill,
-                      //                     child: InkWell(
-                      //                       splashColor: Colors.black38,
-                      //                       onTap: () async {
-                      //                         Get.to(() => StockTable2());
-                      //                       },
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 Text('Stock'),
-                      //                 Text('Table'),
-                      //               ],
-                      //             ),
-                      //             Column(
-                      //               mainAxisSize: MainAxisSize.min,
-                      //               children: [
-                      //                 Material(
-                      //                   borderRadius: BorderRadius.circular(20),
-                      //                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //                   child: Ink.image(
-                      //                     image:
-                      //                         AssetImage('images/fixedassets.png'),
-                      //                     height: 80,
-                      //                     width: 80,
-                      //                     fit: BoxFit.fill,
-                      //                     child: InkWell(
-                      //                       splashColor: Colors.black38,
-                      //                       onTap: () async {
-                      //                         Get.to(() => FixAsset2());
-                      //                       },
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 Text('Fixed'),
-                      //                 Text('Assets'),
-                      //               ],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
