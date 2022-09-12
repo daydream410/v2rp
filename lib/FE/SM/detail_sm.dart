@@ -62,7 +62,7 @@ class _AddDetailSmState extends State<AddDetailSm> {
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(5)),
                   labelText: 'From Warehouse',
                 ),
               ),
@@ -72,7 +72,7 @@ class _AddDetailSmState extends State<AddDetailSm> {
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(5)),
                   labelText: 'To Warehouse',
                 ),
               ),
@@ -88,7 +88,7 @@ class _AddDetailSmState extends State<AddDetailSm> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(5)),
                         labelText: 'Unit',
                       ),
                     ),
@@ -99,7 +99,7 @@ class _AddDetailSmState extends State<AddDetailSm> {
                     child: TextField(
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(5)),
                           labelText: 'QTY'),
                     ),
                   ),
