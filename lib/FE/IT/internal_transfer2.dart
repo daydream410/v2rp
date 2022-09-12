@@ -9,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/IT/detail_it.dart';
 import 'package:v2rp1/FE/IT/internal_transfer.dart';
 
+import '../../BE/controller.dart';
 import 'internal_transfer3.dart';
 
 class InternalTransfer2 extends StatefulWidget {
@@ -20,8 +21,9 @@ class InternalTransfer2 extends StatefulWidget {
 
 class _InternalTransfer2State extends State<InternalTransfer2> {
   bool isVisible = false;
-  final controllerSppbj = TextEditingController();
-  final controllerWh = TextEditingController();
+  // final controllerSppbj = TextEditingController();
+  // final controllerWh = TextEditingController();
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class _InternalTransfer2State extends State<InternalTransfer2> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -56,11 +58,6 @@ class _InternalTransfer2State extends State<InternalTransfer2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => const InternalTransfer()),
-              // );
               Get.to(InternalTransfer());
             },
           ),
@@ -73,23 +70,25 @@ class _InternalTransfer2State extends State<InternalTransfer2> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextField(
-                    controller: controllerWh,
+                    controller: textControllers.itWhController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.warehouse),
                       hintText: 'Warehouse',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),
                   const SizedBox(height: 10.0),
                   TextField(
-                    controller: controllerSppbj,
+                    controller: textControllers.itSppbjController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.article),
                       hintText: 'SPPBJ No.',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),
@@ -177,7 +176,7 @@ class _InternalTransfer2State extends State<InternalTransfer2> {
         bottomNavigationBar: Visibility(
           visible: isVisible,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: TextButton(
               child: const Padding(
                 padding: EdgeInsets.all(8.0),

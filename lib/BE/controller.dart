@@ -14,18 +14,34 @@ class TextControllers extends GetxController {
     materialusedController.value.clear();
   }
 
+//login
   Rx<TextEditingController> usernameController = TextEditingController().obs;
   Rx<TextEditingController> passwordController = TextEditingController().obs;
+
+  //barcode regist
   Rx<TextEditingController> vendor1Controller = TextEditingController().obs;
-  Rx<TextEditingController> stocktableController = TextEditingController().obs;
-  Rx<TextEditingController> fixassetController = TextEditingController().obs;
   Rx<TextEditingController> remarksController = TextEditingController().obs;
+
+  //stock table
+  Rx<TextEditingController> stocktableController = TextEditingController().obs;
+
+  //fix assets
+  Rx<TextEditingController> fixassetController = TextEditingController().obs;
+
+  //material used
   Rx<TextEditingController> materialusedController =
       TextEditingController().obs;
   Rx<TextEditingController> muWarehouseController = TextEditingController().obs;
   Rx<TextEditingController> muSppbjController = TextEditingController().obs;
+
+  //goods reveiced
   Rx<TextEditingController> grController = TextEditingController().obs;
   Rx<TextEditingController> grSupController = TextEditingController().obs;
   Rx<TextEditingController> grWhController = TextEditingController().obs;
   Rx<TextEditingController> grPoController = TextEditingController().obs;
+
+  //it
+  Rx<TextEditingController> itReffController = TextEditingController().obs;
+  Rx<TextEditingController> itWhController = TextEditingController().obs;
+  Rx<TextEditingController> itSppbjController = TextEditingController().obs;
 }

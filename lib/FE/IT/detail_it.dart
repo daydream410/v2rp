@@ -68,7 +68,7 @@ class _AddDetailState extends State<AddDetail> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(5)),
                         labelText: 'Input QTY',
                       ),
                     ),
@@ -79,8 +79,8 @@ class _AddDetailState extends State<AddDetail> {
                     child: TextField(
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          labelText: 'Warehous / Rack'),
+                              borderRadius: BorderRadius.circular(5)),
+                          labelText: 'Warehouse/Rack'),
                     ),
                   ),
                 ],
@@ -97,7 +97,7 @@ class _AddDetailState extends State<AddDetail> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(5)),
                         labelText: 'Unit',
                       ),
                     ),
@@ -108,7 +108,7 @@ class _AddDetailState extends State<AddDetail> {
                     child: TextField(
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(5)),
                           labelText: 'Cost Per Unit'),
                     ),
                   ),

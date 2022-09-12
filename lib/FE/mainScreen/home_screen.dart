@@ -13,6 +13,7 @@ import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/additional/mt_screen.dart';
 
 import '../GR/goods_receive.dart';
+import '../IT/internal_transfer.dart';
 import '../OTP/otp2.dart';
 
 // ignore: must_be_immutable
@@ -181,8 +182,8 @@ class HomeScreen extends StatelessWidget {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        // Get.to(InternalTransfer());
-                                        Get.to(MaintenanceScreen());
+                                        Get.to(InternalTransfer());
+                                        // Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),

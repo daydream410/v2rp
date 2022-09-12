@@ -10,7 +10,8 @@ import 'package:v2rp1/FE/IT/internal_transfer2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:v2rp1/additional/list_MU.dart';
 
-import '../../additional/filter.dart';
+import '../../BE/controller.dart';
+// import '../../additional/filter.dart';
 
 class InternalTransfer extends StatefulWidget {
   const InternalTransfer({Key? key}) : super(key: key);
@@ -20,7 +21,9 @@ class InternalTransfer extends StatefulWidget {
 }
 
 class _InternalTransferState extends State<InternalTransfer> {
-  final controller = TextEditingController();
+  // final controller = TextEditingController();
+  static TextControllers textControllers = Get.put(TextControllers());
+
   List<ListMU> muList = allListMU;
 
   @override
@@ -30,7 +33,7 @@ class _InternalTransferState extends State<InternalTransfer> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -56,10 +59,6 @@ class _InternalTransferState extends State<InternalTransfer> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Navbar()),
-              // );
               Get.to(Navbar());
             },
           ),
@@ -70,47 +69,51 @@ class _InternalTransferState extends State<InternalTransfer> {
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Row(
-                    // alignment: MainAxisAlignment.spaceBetween,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "Internal Transfer List",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const FilterData(
-                                  reload: 'Reload',
-                                );
-                              });
-                        },
-                        child: Text(
-                          'Filter',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: HexColor('#F4A62A'),
-                          ),
-                        ),
-                      ),
+
+                      // TextButton(
+                      //   onPressed: () {
+                      //     showDialog(
+                      //         context: context,
+                      //         builder: (BuildContext context) {
+                      //           return const FilterData(
+                      //             reload: 'Reload',
+                      //           );
+                      //         });
+                      //   },
+                      //   child: Text(
+                      //     'Filter',
+                      //     style: TextStyle(
+                      //       fontSize: 15,
+                      //       color: HexColor('#F4A62A'),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 15,
                   ),
                   TextField(
-                    controller: controller,
+                    controller: textControllers.itReffController.value,
+                    onSubmitted: (value) {},
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: 'Search',
+                      prefixIcon: const Icon(Icons.assignment),
+                      hintText: 'Reff No',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: Colors.black)),
                     ),
                   ),
@@ -120,19 +123,13 @@ class _InternalTransferState extends State<InternalTransfer> {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: TextButton(
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text('CREATE NEW'),
             ),
             onPressed: () async {
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const InternalTransfer2(),
-              //   ),
-              // );
               Get.to(InternalTransfer2());
             },
             style: TextButton.styleFrom(
