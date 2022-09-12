@@ -20,7 +20,7 @@ class StockTransfer3 extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -46,10 +46,6 @@ class StockTransfer3 extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const StockTransfer2()),
-              // );
               Get.to(StockTransfer2());
             },
           ),
@@ -63,163 +59,188 @@ class StockTransfer3 extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Stock Transfer Detail'),
-                      const SizedBox(height: 10.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Stock Transfer No.'),
-                          Text('STTR/NEP/2022/03-000132'),
-                        ],
+                      const Image(
+                        image: AssetImage('images/vb_conf.jpg'),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Warehouse'),
-                          Text('Samarinda'),
-                        ],
+                      const SizedBox(
+                        height: 15.0,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Warehouse Destination'),
-                          Text('Kantor Surabaya'),
-                        ],
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 0.8,
-                        height: 25,
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     Text('SPPBJ No.'),
-                      //     Text('SPPBJ/2022/03-0003'),
-                      //   ],
-                      // ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Requestor'),
-                          Text('BM Crewing 1'),
-                        ],
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 0.8,
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('QTY Deliver'),
-                          Text('20'),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Amount Deliver'),
-                          Text('485.884,80'),
-                        ],
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 0.8,
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Item List'),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Delete All',
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Slidable(
-                        key: const ValueKey(0),
-                        startActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          dismissible: DismissiblePane(
-                            onDismissed: () {},
-                          ),
-                          children: const [
-                            SlidableAction(
-                              onPressed: null,
-                              backgroundColor: Color(0xFFFE4A49),
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete,
-                              label: 'Delete',
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 5.0),
-                          title: const Text('SEPATUSAFETY001'),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('Sepatu Safety Caterpillar High Ankle'),
-                              Text('Untuk kru kapal'),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Stock Transfer No.'),
+                                  Text('STTR/NEP/2022/03-000132'),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Warehouse'),
+                                  Text('Samarinda'),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Warehouse Destination'),
+                                  Text('Kantor Surabaya'),
+                                ],
+                              ),
                             ],
                           ),
-                          trailing: Text(
-                            '20x',
-                            style: TextStyle(
-                              color: HexColor('#E6BF00'),
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          onTap: () {},
                         ),
                       ),
-                      Slidable(
-                        key: const ValueKey(1),
-                        startActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          dismissible: DismissiblePane(
-                            onDismissed: () {},
-                          ),
-                          children: const [
-                            SlidableAction(
-                              onPressed: null,
-                              backgroundColor: Color(0xFFFE4A49),
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete,
-                              label: 'Delete',
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 5.0),
-                          title: const Text('BUKU001'),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('Buku Panduan K3'),
-                              Text('Untuk pelatihan kru baru'),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Requestor'),
+                                  Text('BM Crewing 1'),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('QTY Deliver'),
+                                  Text('20'),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Amount Deliver'),
+                                  Text('485.884,80'),
+                                ],
+                              ),
                             ],
                           ),
-                          trailing: Text(
-                            '10x',
-                            style: TextStyle(
-                              color: HexColor('#E6BF00'),
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Item List'),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Delete All',
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          onTap: () {},
+                            Slidable(
+                              key: const ValueKey(0),
+                              startActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                dismissible: DismissiblePane(
+                                  onDismissed: () {},
+                                ),
+                                children: const [
+                                  SlidableAction(
+                                    onPressed: null,
+                                    backgroundColor: Color(0xFFFE4A49),
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 5.0),
+                                title: const Text('SEPATUSAFETY001'),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                        'Sepatu Safety Caterpillar High Ankle'),
+                                    Text('Untuk kru kapal'),
+                                  ],
+                                ),
+                                trailing: Text(
+                                  '20x',
+                                  style: TextStyle(
+                                    color: HexColor('#F4A62A'),
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                onTap: () {},
+                              ),
+                            ),
+                            Slidable(
+                              key: const ValueKey(1),
+                              startActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                dismissible: DismissiblePane(
+                                  onDismissed: () {},
+                                ),
+                                children: const [
+                                  SlidableAction(
+                                    onPressed: null,
+                                    backgroundColor: Color(0xFFFE4A49),
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 5.0),
+                                title: const Text('BUKU001'),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text('Buku Panduan K3'),
+                                    Text('Untuk pelatihan kru baru'),
+                                  ],
+                                ),
+                                trailing: Text(
+                                  '10x',
+                                  style: TextStyle(
+                                    color: HexColor('#F4A62A'),
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                onTap: () {},
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -230,7 +251,7 @@ class StockTransfer3 extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: TextButton(
             child: const Padding(
               padding: EdgeInsets.all(8.0),
@@ -241,7 +262,7 @@ class StockTransfer3 extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return CustomDialogBoxST(
-                      title: "SUBMIT DATA SUCCESFUL",
+                      title: "SUCCESSFUL DATA SUBMIT",
                       descriptions: "Stock Transfer No.STTR/NEP/2022/03-000132",
                       text: "Home",
                       home: "OK",
@@ -251,7 +272,7 @@ class StockTransfer3 extends StatelessWidget {
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: HexColor('#E6BF00'),
+              backgroundColor: HexColor('#F4A62A'),
             ),
           ),
         ),

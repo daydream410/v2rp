@@ -7,7 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/ST/detail_st.dart';
+import 'package:v2rp1/FE/ST/stock_transfer.dart';
 import 'package:v2rp1/FE/ST/stock_transfer3.dart';
+
+import '../../BE/controller.dart';
 
 class StockTransfer2 extends StatefulWidget {
   const StockTransfer2({Key? key}) : super(key: key);
@@ -18,8 +21,7 @@ class StockTransfer2 extends StatefulWidget {
 
 class _StockTransfer2State extends State<StockTransfer2> {
   bool isVisible = false;
-  final controllerReff = TextEditingController();
-  final controllerWh = TextEditingController();
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _StockTransfer2State extends State<StockTransfer2> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -54,11 +56,7 @@ class _StockTransfer2State extends State<StockTransfer2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const StockTransfer()),
-              // );
-              Get.to(StockTransfer3());
+              Get.to(StockTransfer());
             },
           ),
         ),
@@ -69,34 +67,34 @@ class _StockTransfer2State extends State<StockTransfer2> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TextField(
-                    controller: controllerWh,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.warehouse),
-                      hintText: 'Warehouse',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(color: Colors.black)),
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
                   // TextField(
-                  //   controller: controllerReff,
+                  //   controller: controllerWh,
                   //   decoration: InputDecoration(
-                  //     prefixIcon: const Icon(Icons.article),
-                  //     hintText: 'Reff No.',
+                  //     prefixIcon: const Icon(Icons.warehouse),
+                  //     hintText: 'Warehouse',
                   //     border: OutlineInputBorder(
                   //         borderRadius: BorderRadius.circular(15),
                   //         borderSide: const BorderSide(color: Colors.black)),
                   //   ),
                   // ),
-                  // const SizedBox(height: 10.0),
+                  TextField(
+                    controller: textControllers.smWhController.value,
+                    onSubmitted: (value) {},
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.warehouse),
+                      hintText: 'Warehouse',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(color: Colors.black)),
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
                   TextButton(
                     onPressed: () => setState(() => isVisible = !isVisible),
                     child: const Text('Load Data'),
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: HexColor('#E6BF00'),
+                      backgroundColor: HexColor('#F4A62A'),
                     ),
                   ),
                   Visibility(
@@ -135,7 +133,7 @@ class _StockTransfer2State extends State<StockTransfer2> {
                                 },
                                 child: Text(
                                   "Detail",
-                                  style: TextStyle(color: HexColor("#E6BF00")),
+                                  style: TextStyle(color: HexColor("#F4A62A")),
                                 ),
                               ),
                             ],
@@ -177,7 +175,7 @@ class _StockTransfer2State extends State<StockTransfer2> {
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: HexColor('#E6BF00'),
+                backgroundColor: HexColor('#F4A62A'),
               ),
             ),
           ),

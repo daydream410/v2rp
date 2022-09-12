@@ -48,4 +48,8 @@ class TextControllers extends GetxController {
   //sm
   Rx<TextEditingController> smReffController = TextEditingController().obs;
   Rx<TextEditingController> smWhController = TextEditingController().obs;
+
+  //st
+  Rx<TextEditingController> stReffController = TextEditingController().obs;
+  Rx<TextEditingController> stWhController = TextEditingController().obs;
 }

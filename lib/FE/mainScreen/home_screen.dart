@@ -16,6 +16,7 @@ import '../GR/goods_receive.dart';
 import '../IT/internal_transfer.dart';
 import '../OTP/otp2.dart';
 import '../SM/stock_movement.dart';
+import '../ST/stock_transfer.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -250,8 +251,8 @@ class HomeScreen extends StatelessWidget {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        // Get.to(StockTransfer());
-                                        Get.to(MaintenanceScreen());
+                                        Get.to(StockTransfer());
+                                        // Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),
