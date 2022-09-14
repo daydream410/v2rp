@@ -10,6 +10,7 @@ import 'package:v2rp1/FE/SO/detail_so.dart';
 import 'package:v2rp1/FE/SO/stock_opname.dart';
 import 'package:v2rp1/FE/SO/stock_opname3.dart';
 
+import '../../BE/controller.dart';
 import '../../additional/scanner.dart';
 
 class StockOpname2 extends StatefulWidget {
@@ -20,8 +21,7 @@ class StockOpname2 extends StatefulWidget {
 }
 
 class _StockOpname2State extends State<StockOpname2> {
-  final controller_wh = TextEditingController();
-  final controller_sppbj = TextEditingController();
+  static TextControllers textControllers = Get.put(TextControllers());
 
   bool isVisible = false;
 
@@ -61,7 +61,7 @@ class _StockOpname2State extends State<StockOpname2> {
             elevation: 12,
             tooltip: 'Add Item',
             hoverColor: Colors.blue,
-            backgroundColor: HexColor('#E6BF00'),
+            backgroundColor: HexColor('#F4A62A'),
             foregroundColor: Colors.white,
             splashColor: Colors.black45,
             child: const Icon(Icons.add),
@@ -91,46 +91,52 @@ class _StockOpname2State extends State<StockOpname2> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextField(
-                  controller: controller_wh,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.warehouse),
-                    hintText: 'Warehouse',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.qr_code_scanner),
-                      onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) =>
-                        //       const BarcodeScannerWithController(),
-                        // ));
-                        Get.to(BarcodeScannerWithController());
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: const BorderSide(color: Colors.black)),
-                  ),
-                ),
-                const SizedBox(height: 10.0),
                 // TextField(
-                //   controller: controller_sppbj,
+                //   controller: controller_wh,
                 //   decoration: InputDecoration(
-                //     prefixIcon: const Icon(Icons.article),
-                //     hintText: 'Reff No.',
+                //     prefixIcon: const Icon(Icons.warehouse),
+                //     hintText: 'Warehouse',
+                //     suffixIcon: IconButton(
+                //       icon: const Icon(Icons.qr_code_scanner),
+                //       onPressed: () {
+                //         // Navigator.of(context).push(MaterialPageRoute(
+                //         //   builder: (context) =>
+                //         //       const BarcodeScannerWithController(),
+                //         // ));
+                //         Get.to(BarcodeScannerWithController());
+                //       },
+                //     ),
                 //     border: OutlineInputBorder(
                 //         borderRadius: BorderRadius.circular(15),
                 //         borderSide: const BorderSide(color: Colors.black)),
                 //   ),
                 // ),
-                // const SizedBox(
-                //   height: 10.0,
-                // ),
+                TextField(
+                  controller: textControllers.smWhController.value,
+                  onSubmitted: (value) {},
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.warehouse),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.qr_code_2),
+                      color: HexColor('#F4A62A'),
+                      onPressed: () async {},
+                      splashColor: HexColor('#F4A62A'),
+                      tooltip: 'Scan',
+                      hoverColor: HexColor('#F4A62A'),
+                    ),
+                    hintText: 'Warehouse',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(color: Colors.black)),
+                  ),
+                ),
+                const SizedBox(height: 10.0),
                 TextButton(
                   onPressed: () => setState(() => isVisible = !isVisible),
                   child: const Text('Load Data'),
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: HexColor('#E6BF00'),
+                    backgroundColor: HexColor('#F4A62A'),
                   ),
                 ),
                 Visibility(
@@ -168,7 +174,7 @@ class _StockOpname2State extends State<StockOpname2> {
                               },
                               child: Text(
                                 "Detail",
-                                style: TextStyle(color: HexColor("#E6BF00")),
+                                style: TextStyle(color: HexColor("#F4A62A")),
                               ),
                             ),
                           ],
@@ -209,25 +215,18 @@ class _StockOpname2State extends State<StockOpname2> {
         bottomNavigationBar: Visibility(
           visible: isVisible,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: TextButton(
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text('SAVE DATA'),
               ),
               onPressed: () async {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(
-                //     // builder: (context) => const StockOpname3(),
-                //     builder: (context) => const StockOpname3(),
-                //   ),
-                // );
                 Get.to(StockOpname3());
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: HexColor('#E6BF00'),
+                backgroundColor: HexColor('#F4A62A'),
               ),
             ),
           ),

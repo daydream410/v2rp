@@ -86,7 +86,7 @@ class _AddDetailSoState extends State<AddDetailSo> {
                     child: TextButton(
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(8.0),
-                        backgroundColor: HexColor('#E6BF00'),
+                        backgroundColor: HexColor('#F4A62A'),
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();

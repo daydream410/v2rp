@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/FA/fixasset2.dart';
 import 'package:v2rp1/FE/MU/material_use.dart';
+import 'package:v2rp1/FE/SO/stock_opname.dart';
 import 'package:v2rp1/FE/StockTable/stocktable2.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/additional/mt_screen.dart';
@@ -279,8 +280,8 @@ class HomeScreen extends StatelessWidget {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        // Get.to(StockOpname());
-                                        Get.to(MaintenanceScreen());
+                                        Get.to(StockOpname());
+                                        // Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),

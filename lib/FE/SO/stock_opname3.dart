@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:v2rp1/FE/SM/stock_movement2.dart';
+import 'package:v2rp1/FE/SO/stock_opname2.dart';
 
 import 'dialog_box_so.dart';
 
@@ -26,7 +26,7 @@ class _StockOpname3State extends State<StockOpname3> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Are u sure?'),
+            title: const Text('Are You sure?'),
             content: const Text('Do you want to exit the App?'),
             actions: [
               TextButton(
@@ -52,168 +52,165 @@ class _StockOpname3State extends State<StockOpname3> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const StockOpname2()),
-              // );
-              Get.to(StockMovement2());
+              Get.to(StockOpname2());
             },
           ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Stock Opname Detail'),
-                      const SizedBox(height: 10.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Reff No.'),
-                          Text('STNM/202111-0031'),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Warehouse'),
-                          Text('Samarinda'),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Rack No.'),
-                          Text('JWASBY'),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Requestor'),
-                          Text('Warehouse Admin'),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Total Amount'),
-                          Text('108,311.12'),
-                        ],
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 0.8,
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Item List'),
-                          // TextButton(
-                          //   onPressed: () {},
-                          //   child: const Text(
-                          //     'Delete All',
-                          //     style: TextStyle(
-                          //         color: Colors.red, fontWeight: FontWeight.bold),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                      Slidable(
-                        key: const ValueKey(0),
-                        startActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          dismissible: DismissiblePane(
-                            onDismissed: () {},
-                          ),
-                          children: const [
-                            SlidableAction(
-                              onPressed: null,
-                              backgroundColor: Color(0xFFFE4A49),
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete,
-                              label: 'Delete',
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Image(
+                      image: AssetImage('images/vb_conf.jpg'),
+                    ),
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Reff No.'),
+                                Text('STNM/202111-0031'),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Warehouse'),
+                                Text('Samarinda'),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Rack No.'),
+                                Text('JWASBY'),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Requestor'),
+                                Text('Warehouse Admin'),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Total Amount'),
+                                Text('108,311.12'),
+                              ],
                             ),
                           ],
                         ),
-                        child: ListTile(
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 5.0),
-                          title: const Text('SEPATUSAFETY001'),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('QTY Stock Card : 20'),
-                              Text('QTY OpName : 20'),
-                              Text('QTY Different : 20'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Item List'),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'Delete All',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ],
                           ),
-                          // trailing: Text(
-                          //   '20x',
-                          //   style: TextStyle(
-                          //     color: HexColor('#E6BF00'),
-                          //     fontSize: 20.0,
-                          //     fontWeight: FontWeight.w600,
-                          //   ),
-                          // ),
-                          onTap: () {},
-                        ),
-                      ),
-                      Slidable(
-                        key: const ValueKey(1),
-                        startActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          dismissible: DismissiblePane(
-                            onDismissed: () {},
-                          ),
-                          children: const [
-                            SlidableAction(
-                              onPressed: null,
-                              backgroundColor: Color(0xFFFE4A49),
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete,
-                              label: 'Delete',
+                          Slidable(
+                            key: const ValueKey(0),
+                            startActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              dismissible: DismissiblePane(
+                                onDismissed: () {},
+                              ),
+                              children: const [
+                                SlidableAction(
+                                  onPressed: null,
+                                  backgroundColor: Color(0xFFFE4A49),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: ListTile(
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 5.0),
-                          title: const Text('BUKU001'),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('QTY Stock Card : 20'),
-                              Text('QTY OpName : 0'),
-                              Text('QTY Different : 20'),
-                            ],
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 5.0),
+                              title: const Text('SEPATUSAFETY001'),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text('QTY Stock Card : 20'),
+                                  Text('QTY OpName : 20'),
+                                  Text('QTY Different : 20'),
+                                ],
+                              ),
+                              onTap: () {},
+                            ),
                           ),
-                          // trailing: Text(
-                          //   '10x',
-                          //   style: TextStyle(
-                          //     color: HexColor('#E6BF00'),
-                          //     fontSize: 20.0,
-                          //     fontWeight: FontWeight.w600,
-                          //   ),
-                          // ),
-                          onTap: () {},
-                        ),
+                          Slidable(
+                            key: const ValueKey(1),
+                            startActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              dismissible: DismissiblePane(
+                                onDismissed: () {},
+                              ),
+                              children: const [
+                                SlidableAction(
+                                  onPressed: null,
+                                  backgroundColor: Color(0xFFFE4A49),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 5.0),
+                              title: const Text('BUKU001'),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text('QTY Stock Card : 20'),
+                                  Text('QTY OpName : 0'),
+                                  Text('QTY Different : 20'),
+                                ],
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: TextButton(
             child: const Padding(
               padding: EdgeInsets.all(8.0),
@@ -224,7 +221,7 @@ class _StockOpname3State extends State<StockOpname3> {
                   context: context,
                   builder: (BuildContext context) {
                     return CustomDialogBoxSO(
-                      title: "SUBMIT DATA SUCCESFUL",
+                      title: "SUCCESSFUL DATA SUBMIT",
                       descriptions: "Stock Opname No.STMV/NEP/2022/03-0024",
                       text: "Home",
                       home: "OK",
@@ -234,7 +231,7 @@ class _StockOpname3State extends State<StockOpname3> {
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: HexColor('#E6BF00'),
+              backgroundColor: HexColor('#F4A62A'),
             ),
           ),
         ),
