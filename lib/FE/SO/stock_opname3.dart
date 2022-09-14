@@ -82,35 +82,50 @@ class _StockOpname3State extends State<StockOpname3> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Reff No.'),
-                                Text('STNM/202111-0031'),
+                                Text(
+                                  'STNM/202111-0031',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Warehouse'),
-                                Text('Samarinda'),
+                                Text(
+                                  'Samarinda',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Rack No.'),
-                                Text('JWASBY'),
+                                Text(
+                                  'JWASBY',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Requestor'),
-                                Text('Warehouse Admin'),
+                                Text(
+                                  'Warehouse Admin',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Total Amount'),
-                                Text('108,311.12'),
+                                Text(
+                                  '108,311.12',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                           ],

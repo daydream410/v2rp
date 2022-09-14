@@ -76,21 +76,30 @@ class StockMovement3 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Stock Movement No.'),
-                                Text('STMV/NEP/2022/03-0024'),
+                                Text(
+                                  'STMV/NEP/2022/03-0024',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Warehouse'),
-                                Text('Samarinda'),
+                                Text(
+                                  'Samarinda',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Warehouse Destination'),
-                                Text('Kantor Surabaya'),
+                                Text(
+                                  'Kantor Surabaya',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                           ],
@@ -110,14 +119,20 @@ class StockMovement3 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('Requestor'),
-                                Text('BM Crewing 1'),
+                                Text(
+                                  'BM Crewing 1',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text('QTY Deliver'),
-                                Text('20'),
+                                Text(
+                                  '20',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                           ],
