@@ -41,7 +41,7 @@ dependencies:
   flutter_slidable: ^1.2.0
   flutter_custom_dialog: ^1.2.0
   cached_network_image: ^3.2.0
-  shared_preferences: ^2.0.13
+  shared_preferences: ^2.0.15
   get: ^4.6.1
   http: ^0.13.4
   intl: ^0.17.0
