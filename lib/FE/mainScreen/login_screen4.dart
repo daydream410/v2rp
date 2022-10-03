@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -229,6 +230,15 @@ class _LoginPage4State extends State<LoginPage4>
   Future<void> loginProcess(responseCodeResult, ipResult, messageResult) async {
     var loginResult = MsgHeader.responseCodeResult;
     var messageRes = MsgHeader.messageResult;
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.setString(
+        'username', textControllers.usernameController.value.text);
+    // sharedPreferences.setString('ip', MsgHeader.ipValue);
+    sharedPreferences.setString('conve', MsgHeader.conve);
+    sharedPreferences.setString('trxid', MsgHeader.trxid.toString());
+    sharedPreferences.setString('datetime', MsgHeader.datetime);
+
     try {
       if (_formKey.currentState!.validate()) {
         if (loginResult.toString() == '{00}') {

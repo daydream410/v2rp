@@ -11,17 +11,19 @@ import 'package:v2rp1/FE/MU/material_use.dart';
 import 'package:v2rp1/FE/SO/stock_opname.dart';
 import 'package:v2rp1/FE/StockTable/stocktable2.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
-import 'package:v2rp1/additional/mt_screen.dart';
+import 'package:v2rp1/FE/notif/notif_screen.dart';
 
+import '../../BE/controller.dart';
 import '../GR/goods_receive.dart';
 import '../IT/internal_transfer.dart';
-import '../OTP/otp2.dart';
 import '../SM/stock_movement.dart';
 import '../ST/stock_transfer.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +53,24 @@ class HomeScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text("V2RP Mobile"),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("V2RP Mobile"),
+              SizedBox(
+                height: 15,
+              ),
+              Text(textControllers.usernameController.value.text.toString()),
+            ],
+          ),
           elevation: 0,
           backgroundColor: HexColor("#F4A62A"),
           actions: [
             IconButton(
               icon: const Icon(Icons.notifications),
-              onPressed: () {},
+              onPressed: () {
+                Get.to(NotifScreen());
+              },
             ),
           ],
         ),

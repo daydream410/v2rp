@@ -5,8 +5,7 @@ class TextControllers extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    usernameController.value.clear();
-    passwordController.value.clear();
+    // passwordController.value.clear();
     vendor1Controller.value.clear();
     stocktableController.value.clear();
     fixassetController.value.clear();

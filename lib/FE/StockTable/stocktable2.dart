@@ -20,6 +20,8 @@ import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
+import '../../main.dart';
+
 class StockTable2 extends StatefulWidget {
   const StockTable2({Key? key}) : super(key: key);
 
@@ -634,6 +636,7 @@ class _StockTable2State extends State<StockTable2> {
   }
 
   Future<String> getData() async {
+    HttpOverrides.global = MyHttpOverrides();
     String? searchValue = textControllers.stocktableController.value.text;
     var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
         headers: {'x-v2rp-key': '$conve'},

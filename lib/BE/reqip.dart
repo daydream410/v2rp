@@ -13,6 +13,7 @@ import 'package:v2rp1/main.dart';
 import 'package:crypto/crypto.dart' as crypto;
 // import 'package:uuid/uuid.dart';
 // import 'package:mac_address/mac_address.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MsgHeader {
   static int trxid = DateTime.now().millisecondsSinceEpoch;
