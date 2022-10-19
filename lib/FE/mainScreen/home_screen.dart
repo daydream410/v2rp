@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -20,10 +21,17 @@ import '../SM/stock_movement.dart';
 import '../ST/stock_transfer.dart';
 
 // ignore: must_be_immutable
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   static TextControllers textControllers = Get.put(TextControllers());
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int counterNotif = NotifScreen.countNotif;
 
   @override
   Widget build(BuildContext context) {
@@ -53,24 +61,25 @@ class HomeScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("V2RP Mobile"),
-              SizedBox(
-                height: 15,
-              ),
-              Text(textControllers.usernameController.value.text.toString()),
-            ],
-          ),
+          title: Text("V2RP Mobile"),
           elevation: 0,
           backgroundColor: HexColor("#F4A62A"),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {
-                Get.to(NotifScreen());
-              },
+            Badge(
+              showBadge: counterNotif > 0 ? true : false,
+              padding: EdgeInsets.all(7),
+              position: BadgePosition.topStart(),
+              badgeContent: Text(
+                "$counterNotif",
+                style: TextStyle(fontSize: 15.0, color: Colors.white),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.notifications),
+                iconSize: 35,
+                onPressed: () {
+                  Get.to(NotifScreen());
+                },
+              ),
             ),
           ],
         ),

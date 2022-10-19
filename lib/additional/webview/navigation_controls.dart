@@ -4,7 +4,6 @@
 
 // class NavigationControls extends StatelessWidget {
 //   const NavigationControls({required this.controller, super.key});
-//   // const NavigationControls({Key? key}) : super(key: key);
 
 //   final Completer<WebViewController> controller;
 
@@ -18,8 +17,8 @@
 //             controller == null) {
 //           return Row(
 //             children: const <Widget>[
-//               Icon(Icons.arrow_back_ios),
-//               Icon(Icons.arrow_forward_ios),
+//               // Icon(Icons.arrow_back_ios),
+//               // Icon(Icons.arrow_forward_ios),
 //               Icon(Icons.replay),
 //             ],
 //           );
@@ -27,32 +26,32 @@
 
 //         return Row(
 //           children: <Widget>[
-//             IconButton(
-//               icon: const Icon(Icons.arrow_back_ios),
-//               onPressed: () async {
-//                 if (await controller.canGoBack()) {
-//                   await controller.goBack();
-//                 } else {
-//                   ScaffoldMessenger.of(context).showSnackBar(
-//                     const SnackBar(content: Text('No back history item')),
-//                   );
-//                   return;
-//                 }
-//               },
-//             ),
-//             IconButton(
-//               icon: const Icon(Icons.arrow_forward_ios),
-//               onPressed: () async {
-//                 if (await controller.canGoForward()) {
-//                   await controller.goForward();
-//                 } else {
-//                   ScaffoldMessenger.of(context).showSnackBar(
-//                     const SnackBar(content: Text('No forward history item')),
-//                   );
-//                   return;
-//                 }
-//               },
-//             ),
+//             // IconButton(
+//             //   icon: const Icon(Icons.arrow_back_ios),
+//             //   onPressed: () async {
+//             //     if (await controller.canGoBack()) {
+//             //       await controller.goBack();
+//             //     } else {
+//             //       ScaffoldMessenger.of(context).showSnackBar(
+//             //         const SnackBar(content: Text('No back history item')),
+//             //       );
+//             //       return;
+//             //     }
+//             //   },
+//             // ),
+//             // IconButton(
+//             //   icon: const Icon(Icons.arrow_forward_ios),
+//             //   onPressed: () async {
+//             //     if (await controller.canGoForward()) {
+//             //       await controller.goForward();
+//             //     } else {
+//             //       ScaffoldMessenger.of(context).showSnackBar(
+//             //         const SnackBar(content: Text('No forward history item')),
+//             //       );
+//             //       return;
+//             //     }
+//             //   },
+//             // ),
 //             IconButton(
 //               icon: const Icon(Icons.replay),
 //               onPressed: () {
@@ -65,4 +64,3 @@
 //     );
 //   }
 // }
-

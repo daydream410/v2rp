@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/resD.dart';
 // import 'package:v2rp1/BE/controller.dart';
 // import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
@@ -13,7 +14,6 @@ import 'package:v2rp1/main.dart';
 import 'package:crypto/crypto.dart' as crypto;
 // import 'package:uuid/uuid.dart';
 // import 'package:mac_address/mac_address.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MsgHeader {
   static int trxid = DateTime.now().millisecondsSinceEpoch;
@@ -58,10 +58,14 @@ class MsgHeader {
     }
   }
 
-  static convi(String userVal, String passVal) async {
+  static Future<void> convi(String? userVal, String? passVal) async {
     var userValue = userVal;
     var passValue = passVal;
-    var data = userValue + trxid.toString() + passValue + ipValue;
+
+    var data = userValue.toString() +
+        trxid.toString() +
+        passValue.toString() +
+        ipValue;
     var md5 = crypto.md5;
     conve = md5.convert(utf8.encode(data)).toString();
     var msgHead = 'x-v2rp-key:' + conve;
@@ -69,11 +73,11 @@ class MsgHeader {
     print('Your IPPP = ' + ipValue);
     print('Your MD5 = ' + conve);
     print('Your Message Header = ' + msgHead);
-    print('Your USERNAME = ' + userVal);
-    print('Your PASSWORD = ' + passVal);
+    print('Your USERNAME = ' + userVal.toString());
+    print('Your PASSWORD = ' + passVal.toString());
   }
 
-  static Future<void> Login(String userVal) async {
+  static Future<void> Login(String? userVal) async {
     // id = uuid.v5(Uuid.NAMESPACE_URL, userVal);
     // var macAddress = await GetMac.macAddress;
     // try {

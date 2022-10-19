@@ -6,6 +6,8 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/FE/FA/fixasset2.dart';
 
+import '../../additional/qr_overlay.dart';
+
 class ScanFixAsset extends StatefulWidget {
   const ScanFixAsset({Key? key}) : super(key: key);
 
@@ -63,27 +65,32 @@ class _ScanFixAssetState extends State<ScanFixAsset> {
           ),
         ],
       ),
-      body: MobileScanner(
-        allowDuplicates: false,
-        controller: cameraController,
-        onDetect: (barcode, args) {
-          codeBarcode = barcode.rawValue;
-          debugPrint('Barcode found! $codeBarcode');
-          Get.snackbar(
-            "Barcode Found!",
-            "$codeBarcode",
-            icon: const Icon(Icons.qr_code),
-            backgroundColor: Colors.green,
-            isDismissible: true,
-            dismissDirection: DismissDirection.vertical,
-            snackPosition: SnackPosition.BOTTOM,
-          );
-          Get.to(() => const FixAsset2());
-          setState(() {
-            cameraController.stop();
-            textControllers.fixassetController.value.text = codeBarcode;
-          });
-        },
+      body: Stack(
+        children: [
+          MobileScanner(
+            allowDuplicates: false,
+            controller: cameraController,
+            onDetect: (barcode, args) {
+              codeBarcode = barcode.rawValue;
+              debugPrint('Barcode found! $codeBarcode');
+              Get.snackbar(
+                "Barcode Found!",
+                "$codeBarcode",
+                icon: const Icon(Icons.qr_code),
+                backgroundColor: Colors.green,
+                isDismissible: true,
+                dismissDirection: DismissDirection.vertical,
+                snackPosition: SnackPosition.BOTTOM,
+              );
+              Get.to(() => const FixAsset2());
+              setState(() {
+                cameraController.stop();
+                textControllers.fixassetController.value.text = codeBarcode;
+              });
+            },
+          ),
+          QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.65)),
+        ],
       ),
     );
   }

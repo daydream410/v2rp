@@ -7,6 +7,8 @@ import 'package:v2rp1/BE/controller.dart';
 
 import 'package:v2rp1/FE/StockTable/stocktable2.dart';
 
+import '../../additional/qr_overlay.dart';
+
 class ScanSTable extends StatefulWidget {
   const ScanSTable({Key? key}) : super(key: key);
 
@@ -64,24 +66,29 @@ class _ScanSTableState extends State<ScanSTable> {
           ),
         ],
       ),
-      body: MobileScanner(
-        allowDuplicates: false,
-        controller: cameraController,
-        onDetect: (barcode, args) {
-          codeBarcode = barcode.rawValue;
-          debugPrint('Barcode found! $codeBarcode');
-          Get.snackbar(
-            "Barcode Found!",
-            "$codeBarcode",
-            icon: const Icon(Icons.qr_code),
-            backgroundColor: Colors.green,
-          );
-          Get.to(() => const StockTable2());
-          setState(() {
-            cameraController.stop();
-            textControllers.stocktableController.value.text = codeBarcode;
-          });
-        },
+      body: Stack(
+        children: [
+          MobileScanner(
+            allowDuplicates: false,
+            controller: cameraController,
+            onDetect: (barcode, args) {
+              codeBarcode = barcode.rawValue;
+              debugPrint('Barcode found! $codeBarcode');
+              Get.snackbar(
+                "Barcode Found!",
+                "$codeBarcode",
+                icon: const Icon(Icons.qr_code),
+                backgroundColor: Colors.green,
+              );
+              Get.to(() => const StockTable2());
+              setState(() {
+                cameraController.stop();
+                textControllers.stocktableController.value.text = codeBarcode;
+              });
+            },
+          ),
+          QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.65)),
+        ],
       ),
     );
   }

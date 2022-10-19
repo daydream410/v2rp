@@ -12,6 +12,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/BE/resD.dart';
@@ -638,6 +639,16 @@ class _StockTable2State extends State<StockTable2> {
   Future<String> getData() async {
     HttpOverrides.global = MyHttpOverrides();
     String? searchValue = textControllers.stocktableController.value.text;
+    String? finalConve;
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obtainConve = sharedPreferences.getString('conve');
+    setState(() {
+      finalConve = obtainConve;
+    });
+
+    print("final conve ==== " + finalConve.toString());
+
     var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
         headers: {'x-v2rp-key': '$conve'},
         body: jsonEncode({

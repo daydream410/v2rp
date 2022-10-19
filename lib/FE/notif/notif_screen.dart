@@ -3,14 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/additional/webview/web_view_stack.dart';
-import 'package:v2rp1/additional/webview/webview.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
 
 import '../navbar/navbar.dart';
 
 class NotifScreen extends StatefulWidget {
   const NotifScreen({Key? key}) : super(key: key);
+  static int countNotif = 5;
 
   @override
   State<NotifScreen> createState() => _NotifScreenState();
@@ -65,15 +65,28 @@ class _NotifScreenState extends State<NotifScreen> {
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.90,
               width: MediaQuery.of(context).size.width * 1,
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 10,
+                  );
+                },
                 shrinkWrap: true,
-                itemCount: 90,
+                itemCount: NotifScreen.countNotif,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
+                    tileColor: Colors.white,
+                    trailing: Icon(
+                      Icons.mark_email_unread,
+                      color: HexColor('#F4A62A'),
+                    ),
                     title: const Text('Notif'),
                     subtitle: const Text('Sub Notif'),
                     onTap: () {
                       Get.to(const WebViewStack());
+                      setState(() {
+                        NotifScreen.countNotif--;
+                      });
                     },
                   );
                 },

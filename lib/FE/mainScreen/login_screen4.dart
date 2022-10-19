@@ -219,8 +219,25 @@ class _LoginPage4State extends State<LoginPage4>
     setState(() {
       _isButtonDisabled = true;
     });
-    String userVal = textControllers.usernameController.value.text;
-    String passVal = textControllers.passwordController.value.text;
+    String? finalUsername;
+    String? finalPassowrd;
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obtainUsername = sharedPreferences.getString('username');
+    var obtainPassword = sharedPreferences.getString('password');
+    setState(() {
+      finalUsername = obtainUsername;
+      finalPassowrd = obtainPassword;
+    });
+
+    print("final pw ==== " + finalPassowrd.toString());
+    print("final usn ==== " + finalUsername.toString());
+
+    String? userVal =
+        finalUsername ?? textControllers.usernameController.value.text;
+    String? passVal =
+        finalPassowrd ?? textControllers.passwordController.value.text;
+
     MsgHeader.convi(userVal, passVal);
     MsgHeader.Login(userVal);
     loginProcess(
@@ -234,10 +251,9 @@ class _LoginPage4State extends State<LoginPage4>
         await SharedPreferences.getInstance();
     sharedPreferences.setString(
         'username', textControllers.usernameController.value.text);
-    // sharedPreferences.setString('ip', MsgHeader.ipValue);
+    sharedPreferences.setString(
+        'password', textControllers.passwordController.value.text);
     sharedPreferences.setString('conve', MsgHeader.conve);
-    sharedPreferences.setString('trxid', MsgHeader.trxid.toString());
-    sharedPreferences.setString('datetime', MsgHeader.datetime);
 
     try {
       if (_formKey.currentState!.validate()) {

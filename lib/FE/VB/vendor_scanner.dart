@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode2.dart';
 
+import '../../additional/qr_overlay.dart';
+
 class ScanVb extends StatefulWidget {
   final idstock;
   final itemname;
@@ -91,53 +93,58 @@ class _ScanVbState extends State<ScanVb> {
           ),
         ],
       ),
-      body: MobileScanner(
-        allowDuplicates: false,
-        controller: cameraController,
-        onDetect: (barcode, args) {
-          codeBarcode = barcode.rawValue;
-          debugPrint('Barcode found! $codeBarcode');
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.white,
-              elevation: 10.0,
-              shape: Border.all(
-                  color: const Color.fromARGB(255, 0, 215, 4),
-                  width: 0.5,
-                  style: BorderStyle.solid),
-              content: Text(
-                "Barcode Found! = $codeBarcode",
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.0,
+      body: Stack(
+        children: [
+          MobileScanner(
+            allowDuplicates: false,
+            controller: cameraController,
+            onDetect: (barcode, args) {
+              codeBarcode = barcode.rawValue;
+              debugPrint('Barcode found! $codeBarcode');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.white,
+                  elevation: 10.0,
+                  shape: Border.all(
+                      color: const Color.fromARGB(255, 0, 215, 4),
+                      width: 0.5,
+                      style: BorderStyle.solid),
+                  content: Text(
+                    "Barcode Found! = $codeBarcode",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-          // Navigator.of(context).push(MaterialPageRoute(
-          //   builder: (context) => VendorBarcode2(
-          //     barcodeResult: codeBarcode,
-          //     idstock2: widget.idstock,
-          //     itemname2: widget.itemname,
-          //     serverKeyVal2: widget.serverKeyVal,
-          //   ),
-          // ));
-          Get.to(VendorBarcode2(
-            barcodeResult: codeBarcode,
-            idstock2: widget.idstock,
-            itemname2: widget.itemname,
-            serverKeyVal2: widget.serverKeyVal,
-          ));
-          // Get.to(Testinggg());
+              );
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => VendorBarcode2(
+              //     barcodeResult: codeBarcode,
+              //     idstock2: widget.idstock,
+              //     itemname2: widget.itemname,
+              //     serverKeyVal2: widget.serverKeyVal,
+              //   ),
+              // ));
+              Get.to(VendorBarcode2(
+                barcodeResult: codeBarcode,
+                idstock2: widget.idstock,
+                itemname2: widget.itemname,
+                serverKeyVal2: widget.serverKeyVal,
+              ));
+              // Get.to(Testinggg());
 
-          setState(() {
-            cameraController.stop();
-          });
-        },
+              setState(() {
+                cameraController.stop();
+              });
+            },
+          ),
+          QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.65)),
+        ],
       ),
     );
   }

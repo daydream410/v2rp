@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ">=2.17.1 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -54,6 +54,11 @@ dependencies:
   flutter_native_splash: ^2.2.10+1
   video_player: ^2.4.7
   webview_flutter: ^3.0.4
+  badges: ^2.0.3
+  flutter_background_service: ^2.4.3
+  flutter_local_notifications: ^12.0.0
+  device_info_plus: ^5.0.1
+  connectivity_plus: ^2.3.9
 
 flutter_native_splash:
   color: "#FFFFFF"
@@ -103,12 +108,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: ArialNarrow
+      fonts:
+        - asset: fonts/ARIALNB.ttf
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

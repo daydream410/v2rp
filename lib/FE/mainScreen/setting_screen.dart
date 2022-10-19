@@ -83,9 +83,10 @@ class SettingScreen extends StatelessWidget {
                     final SharedPreferences sharedPreferences =
                         await SharedPreferences.getInstance();
                     sharedPreferences.remove('username');
-                    sharedPreferences.remove('conve');
-                    sharedPreferences.remove('trxid');
-                    sharedPreferences.remove('datetime');
+                    // sharedPreferences.remove('conve');
+                    // sharedPreferences.remove('trxid');
+                    // sharedPreferences.remove('datetime');
+                    sharedPreferences.remove('password');
                     await sharedPreferences.clear();
 
                     Get.offAll(() => const LoginPage4());
@@ -101,7 +102,7 @@ class SettingScreen extends StatelessWidget {
   }
 
   Widget setupAlertDialoadContainer() {
-    return Container(
+    return SizedBox(
       height: 200.0, // Change as per your requirement
       width: 200.0, // Change as per your requirement
       child: ListView.builder(
