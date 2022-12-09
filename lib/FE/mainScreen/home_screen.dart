@@ -15,6 +15,7 @@ import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/FE/notif/notif_screen.dart';
 
 import '../../BE/controller.dart';
+import '../../additional/mt_screen.dart';
 import '../GR/goods_receive.dart';
 import '../IT/internal_transfer.dart';
 import '../SM/stock_movement.dart';
@@ -149,8 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        Get.to(GoodsReceive());
-                                        // Get.to(MaintenanceScreen());
+                                        // Get.to(GoodsReceive());
+                                        Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),
@@ -178,9 +179,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       splashColor: Colors.black38,
                                       onTap: () async {
                                         // Get.to(ScanWh());
-                                        // Get.to(MaintenanceScreen());
+                                        Get.to(MaintenanceScreen());
                                         // Get.to(OtpScreen2());
-                                        Get.to(MaterialUse());
+                                        // Get.to(MaterialUse());
                                       },
                                     ),
                                   ),
@@ -207,8 +208,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        Get.to(InternalTransfer());
-                                        // Get.to(MaintenanceScreen());
+                                        // Get.to(InternalTransfer());
+                                        Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),
@@ -246,8 +247,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        Get.to(StockMovement());
-                                        // Get.to(MaintenanceScreen());
+                                        // Get.to(StockMovement());
+                                        Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),
@@ -274,8 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        Get.to(StockTransfer());
-                                        // Get.to(MaintenanceScreen());
+                                        // Get.to(StockTransfer());
+                                        Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),
@@ -302,8 +303,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: InkWell(
                                       splashColor: Colors.black38,
                                       onTap: () async {
-                                        Get.to(StockOpname());
-                                        // Get.to(MaintenanceScreen());
+                                        // Get.to(StockOpname());
+                                        Get.to(MaintenanceScreen());
                                       },
                                     ),
                                   ),

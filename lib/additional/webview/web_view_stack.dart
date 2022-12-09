@@ -55,6 +55,7 @@ class _WebViewStackState extends State<WebViewStack> {
               );
             },
           ),
+          actions: [],
         ),
         body: Stack(
           children: [

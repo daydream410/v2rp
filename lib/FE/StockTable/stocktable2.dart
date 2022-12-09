@@ -622,6 +622,7 @@ class _StockTable2State extends State<StockTable2> {
         Get.snackbar(
           "Error",
           "Please Enter Valid Stock Code / Item Name",
+          colorText: Colors.white,
           icon: Icon(
             Icons.close,
             color: Colors.white,
