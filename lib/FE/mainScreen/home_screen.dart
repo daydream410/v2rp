@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
-                                    image: AssetImage('images/ic_gr.png'),
+                                    image: AssetImage('images/ic_gr.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
-                                    image: AssetImage('images/ic_mu.png'),
+                                    image: AssetImage('images/ic_mu.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
-                                    image: AssetImage('images/ic_it.png'),
+                                    image: AssetImage('images/ic_it.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
-                                    image: AssetImage('images/ic_sm.png'),
+                                    image: AssetImage('images/ic_sm.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
-                                    image: AssetImage('images/ic_trans.png'),
+                                    image: AssetImage('images/ic_TRANS.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -336,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image:
-                                        AssetImage('images/barcoderegist.png'),
+                                        AssetImage('images/barcoderegist.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -363,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
-                                    image: AssetImage('images/ic_st.png'),
+                                    image: AssetImage('images/ic_TRANS.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -391,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
-                                    image: AssetImage('images/fixedassets.png'),
+                                    image: AssetImage('images/fixedassets.jpg'),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
