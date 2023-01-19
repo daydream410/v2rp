@@ -144,8 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/ic_gr.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -172,8 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/ic_mu.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -202,8 +202,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/ic_it.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -241,8 +241,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/ic_sm.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -269,8 +269,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/ic_TRANS.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -297,8 +297,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/is_so.png'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -337,8 +337,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Ink.image(
                                     image:
                                         AssetImage('images/barcoderegist.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -364,8 +364,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/ic_TRANS.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -392,8 +392,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Ink.image(
                                     image: AssetImage('images/fixedassets.jpg'),
-                                    height: 80,
-                                    width: 80,
+                                    height: size.height * 0.11,
+                                    width: size.width * 0.20,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
