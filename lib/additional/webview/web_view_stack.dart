@@ -15,6 +15,7 @@ class WebViewStack extends StatefulWidget {
 
 class _WebViewStackState extends State<WebViewStack> {
   var loadingPercentage = 0;
+  late WebViewController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,12 @@ class _WebViewStackState extends State<WebViewStack> {
               );
             },
           ),
-          actions: [],
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
         ),
         body: Stack(
           children: [
