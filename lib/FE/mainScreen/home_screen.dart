@@ -100,10 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 20,
-                    vertical: 90,
+                    vertical: 50,
                   ),
                   //ukuran kotak putih
-                  height: size.height * 0.60,
+                  // height: size.height * 0.70,
+                  height: size.height * 0.30,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: const BorderRadius.all(
@@ -131,195 +132,195 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: 30.0),
 
                       ///row 1---------------------------
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24, right: 24),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(20),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: Ink.image(
-                                    image: AssetImage('images/ic_gr.jpg'),
-                                    height: size.height * 0.11,
-                                    width: size.width * 0.20,
-                                    fit: BoxFit.fill,
-                                    child: InkWell(
-                                      splashColor: Colors.black38,
-                                      onTap: () async {
-                                        // Get.to(GoodsReceive());
-                                        Get.to(MaintenanceScreen());
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: const [
-                                    Text('Goods'),
-                                    Text('Received'),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(20),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: Ink.image(
-                                    image: AssetImage('images/ic_mu.jpg'),
-                                    height: size.height * 0.11,
-                                    width: size.width * 0.20,
-                                    fit: BoxFit.fill,
-                                    child: InkWell(
-                                      splashColor: Colors.black38,
-                                      onTap: () async {
-                                        // Get.to(ScanWh());
-                                        Get.to(MaintenanceScreen());
-                                        // Get.to(OtpScreen2());
-                                        // Get.to(MaterialUse());
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: const [
-                                    Text('Material'),
-                                    Text('Use'),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(20),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: Ink.image(
-                                    image: AssetImage('images/ic_it.jpg'),
-                                    height: size.height * 0.11,
-                                    width: size.width * 0.20,
-                                    fit: BoxFit.fill,
-                                    child: InkWell(
-                                      splashColor: Colors.black38,
-                                      onTap: () async {
-                                        // Get.to(InternalTransfer());
-                                        Get.to(MaintenanceScreen());
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: const [
-                                    Text('Internal'),
-                                    Text('Transfer'),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 24, right: 24),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           Material(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                      //             child: Ink.image(
+                      //               image: AssetImage('images/ic_gr.jpg'),
+                      //               height: size.height * 0.11,
+                      //               width: size.width * 0.21,
+                      //               fit: BoxFit.fill,
+                      //               child: InkWell(
+                      //                 splashColor: Colors.black38,
+                      //                 onTap: () async {
+                      //                   // Get.to(GoodsReceive());
+                      //                   Get.to(MaintenanceScreen());
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Column(
+                      //             children: const [
+                      //               Text('Goods'),
+                      //               Text('Received'),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //       Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           Material(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                      //             child: Ink.image(
+                      //               image: AssetImage('images/ic_mu.jpg'),
+                      //               height: size.height * 0.11,
+                      //               width: size.width * 0.21,
+                      //               fit: BoxFit.fill,
+                      //               child: InkWell(
+                      //                 splashColor: Colors.black38,
+                      //                 onTap: () async {
+                      //                   // Get.to(ScanWh());
+                      //                   Get.to(MaintenanceScreen());
+                      //                   // Get.to(OtpScreen2());
+                      //                   // Get.to(MaterialUse());
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Column(
+                      //             children: const [
+                      //               Text('Material'),
+                      //               Text('Use'),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //       Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           Material(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                      //             child: Ink.image(
+                      //               image: AssetImage('images/ic_it.jpg'),
+                      //               height: size.height * 0.11,
+                      //               width: size.width * 0.21,
+                      //               fit: BoxFit.fill,
+                      //               child: InkWell(
+                      //                 splashColor: Colors.black38,
+                      //                 onTap: () async {
+                      //                   // Get.to(InternalTransfer());
+                      //                   Get.to(MaintenanceScreen());
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Column(
+                      //             children: const [
+                      //               Text('Internal'),
+                      //               Text('Transfer'),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
 
-                      ///row 2----------------------
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 24, right: 24, top: 24),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(20),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: Ink.image(
-                                    image: AssetImage('images/ic_sm.jpg'),
-                                    height: size.height * 0.11,
-                                    width: size.width * 0.20,
-                                    fit: BoxFit.fill,
-                                    child: InkWell(
-                                      splashColor: Colors.black38,
-                                      onTap: () async {
-                                        // Get.to(StockMovement());
-                                        Get.to(MaintenanceScreen());
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: const [
-                                    Text('Stock'),
-                                    Text('Movement'),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(20),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: Ink.image(
-                                    image: AssetImage('images/ic_TRANS.jpg'),
-                                    height: size.height * 0.11,
-                                    width: size.width * 0.20,
-                                    fit: BoxFit.fill,
-                                    child: InkWell(
-                                      splashColor: Colors.black38,
-                                      onTap: () async {
-                                        // Get.to(StockTransfer());
-                                        Get.to(MaintenanceScreen());
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: const [
-                                    Text('Stock'),
-                                    Text('Transfer'),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(20),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: Ink.image(
-                                    image: AssetImage('images/is_so.png'),
-                                    height: size.height * 0.11,
-                                    width: size.width * 0.20,
-                                    fit: BoxFit.fill,
-                                    child: InkWell(
-                                      splashColor: Colors.black38,
-                                      onTap: () async {
-                                        // Get.to(StockOpname());
-                                        Get.to(MaintenanceScreen());
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: const [
-                                    Text('Stock'),
-                                    Text('Opname'),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      // ///row 2----------------------
+                      // Padding(
+                      //   padding:
+                      //       const EdgeInsets.only(left: 24, right: 24, top: 24),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           Material(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                      //             child: Ink.image(
+                      //               image: AssetImage('images/ic_sm.jpg'),
+                      //               height: size.height * 0.11,
+                      //               width: size.width * 0.21,
+                      //               fit: BoxFit.fill,
+                      //               child: InkWell(
+                      //                 splashColor: Colors.black38,
+                      //                 onTap: () async {
+                      //                   // Get.to(StockMovement());
+                      //                   Get.to(MaintenanceScreen());
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Column(
+                      //             children: const [
+                      //               Text('Stock'),
+                      //               Text('Movement'),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //       Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           Material(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                      //             child: Ink.image(
+                      //               image: AssetImage('images/ic_TRANS.jpg'),
+                      //               height: size.height * 0.11,
+                      //               width: size.width * 0.21,
+                      //               fit: BoxFit.fill,
+                      //               child: InkWell(
+                      //                 splashColor: Colors.black38,
+                      //                 onTap: () async {
+                      //                   // Get.to(StockTransfer());
+                      //                   Get.to(MaintenanceScreen());
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Column(
+                      //             children: const [
+                      //               Text('Stock'),
+                      //               Text('Transfer'),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //       Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           Material(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                      //             child: Ink.image(
+                      //               image: AssetImage('images/is_so.png'),
+                      //               height: size.height * 0.11,
+                      //               width: size.width * 0.21,
+                      //               fit: BoxFit.fill,
+                      //               child: InkWell(
+                      //                 splashColor: Colors.black38,
+                      //                 onTap: () async {
+                      //                   // Get.to(StockOpname());
+                      //                   Get.to(MaintenanceScreen());
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Column(
+                      //             children: const [
+                      //               Text('Stock'),
+                      //               Text('Opname'),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
 
                       ///row 3----------------------
                       Padding(
@@ -338,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     image:
                                         AssetImage('images/barcoderegist.jpg'),
                                     height: size.height * 0.11,
-                                    width: size.width * 0.20,
+                                    width: size.width * 0.21,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -365,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Ink.image(
                                     image: AssetImage('images/ic_TRANS.jpg'),
                                     height: size.height * 0.11,
-                                    width: size.width * 0.20,
+                                    width: size.width * 0.21,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,
@@ -393,7 +394,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Ink.image(
                                     image: AssetImage('images/fixedassets.jpg'),
                                     height: size.height * 0.11,
-                                    width: size.width * 0.20,
+                                    width: size.width * 0.21,
                                     fit: BoxFit.fill,
                                     child: InkWell(
                                       splashColor: Colors.black38,

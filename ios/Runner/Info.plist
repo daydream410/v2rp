@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>To capture picture please grant camera access</string>
+	<string>To capture picture for upload image to a item.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App need access to photo library</string>
+	<string>App need access to photo library to upload image to a item.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>
