@@ -8,18 +8,18 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/FA/fixasset2.dart';
-import 'package:v2rp1/FE/MU/material_use.dart';
-import 'package:v2rp1/FE/SO/stock_opname.dart';
+// import 'package:v2rp1/FE/MU/material_use.dart';
+// import 'package:v2rp1/FE/SO/stock_opname.dart';
 import 'package:v2rp1/FE/StockTable/stocktable2.dart';
 import 'package:v2rp1/FE/VB/vendor_barcode1.dart';
 import 'package:v2rp1/FE/notif/notif_screen.dart';
 
 import '../../BE/controller.dart';
-import '../../additional/mt_screen.dart';
-import '../GR/goods_receive.dart';
-import '../IT/internal_transfer.dart';
-import '../SM/stock_movement.dart';
-import '../ST/stock_transfer.dart';
+// import '../../additional/mt_screen.dart';
+// import '../GR/goods_receive.dart';
+// import '../IT/internal_transfer.dart';
+// import '../SM/stock_movement.dart';
+// import '../ST/stock_transfer.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -227,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   ),
                       // ),
 
-                      // ///row 2----------------------
+                      // // ///row 2----------------------
                       // Padding(
                       //   padding:
                       //       const EdgeInsets.only(left: 24, right: 24, top: 24),
