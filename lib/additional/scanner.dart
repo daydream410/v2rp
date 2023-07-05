@@ -58,10 +58,10 @@ class _BarcodeScannerWithControllerState
           ],
         ),
         body: MobileScanner(
-            allowDuplicates: false,
+            // allowDuplicates: false,
             controller: cameraController,
-            onDetect: (barcode, args) {
-              final String? code = barcode.rawValue;
+            onDetect: (capture) {
+              final String? code = capture.raw;
               debugPrint('Barcode found! $code');
             }));
   }

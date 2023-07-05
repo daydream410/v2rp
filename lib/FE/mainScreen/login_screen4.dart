@@ -8,7 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -74,7 +74,7 @@ class _LoginPage4State extends State<LoginPage4>
           context: context,
           builder: (context) => AlertDialog(
             title: Text('Are u sure?'),
-            content: Text('Do you want to exit the App?'),
+            content: Text('Do you want to exit V2RP Mobile?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -123,19 +123,47 @@ class _LoginPage4State extends State<LoginPage4>
                       height: 40,
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: textControllers.emailController.value,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.email),
+                        prefixIconColor: HexColor("#F4A62A"),
+                        hintText: "Email",
+                        hintStyle: const TextStyle(color: Colors.white),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.cyan),
+                        ),
+                        errorBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Enter Email';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
                       keyboardType: TextInputType.text,
                       controller: textControllers.usernameController.value,
                       style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.person),
+                        prefixIconColor: HexColor("#F4A62A"),
                         hintText: "Username",
-                        hintStyle: TextStyle(color: Colors.white),
-                        enabledBorder: UnderlineInputBorder(
+                        hintStyle: const TextStyle(color: Colors.white),
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.cyan),
                         ),
-                        errorBorder: UnderlineInputBorder(
+                        errorBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
@@ -156,8 +184,10 @@ class _LoginPage4State extends State<LoginPage4>
                       controller: textControllers.passwordController.value,
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.password_rounded),
+                        prefixIconColor: HexColor("#F4A62A"),
                         hintText: "Password",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obsecuredText
@@ -182,21 +212,29 @@ class _LoginPage4State extends State<LoginPage4>
                       ),
                       validator: (value) {
                         if (value!.isEmpty || value.length < 3) {
-                          setState(() {
-                            // _passwordController.clear();
-                          });
+                          // setState(() {
+                          // _passwordController.clear();
+                          // });
                           return 'Please Enter a valid password';
                         }
                         return null;
                       },
                     ),
+                    const SizedBox(
+                      height: 40,
+                    ),
                     TextButton(
                       onPressed: () async {
-                        _isButtonDisabled ? null : convertProcess();
-                        _timer = Timer(const Duration(milliseconds: 3000), (() {
-                          convertProcess();
-                        }));
+                        // _isButtonDisabled ? null : convertProcess();
+                        // _timer = Timer(const Duration(milliseconds: 3000), (() {
+                        //   convertProcess();
+                        // }));
+                        Get.to(Navbar()); //sementara aja
                       },
+                      style: TextButton.styleFrom(
+                        backgroundColor: HexColor("#F4A62A"),
+                        foregroundColor: Colors.white,
+                      ),
                       child: const Text(
                         'Login',
                         style: TextStyle(
@@ -221,14 +259,14 @@ class _LoginPage4State extends State<LoginPage4>
     });
     String? finalUsername;
     String? finalPassowrd;
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var obtainUsername = sharedPreferences.getString('username');
-    var obtainPassword = sharedPreferences.getString('password');
-    setState(() {
-      finalUsername = obtainUsername;
-      finalPassowrd = obtainPassword;
-    });
+    // final SharedPreferences sharedPreferences =
+    //     await SharedPreferences.getInstance();
+    // var obtainUsername = sharedPreferences.getString('username');
+    // var obtainPassword = sharedPreferences.getString('password');
+    // setState(() {
+    //   finalUsername = obtainUsername;
+    //   finalPassowrd = obtainPassword;
+    // });
 
     print("final pw ==== " + finalPassowrd.toString());
     print("final usn ==== " + finalUsername.toString());
@@ -247,13 +285,13 @@ class _LoginPage4State extends State<LoginPage4>
   Future<void> loginProcess(responseCodeResult, ipResult, messageResult) async {
     var loginResult = MsgHeader.responseCodeResult;
     var messageRes = MsgHeader.messageResult;
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    sharedPreferences.setString(
-        'username', textControllers.usernameController.value.text);
-    sharedPreferences.setString(
-        'password', textControllers.passwordController.value.text);
-    sharedPreferences.setString('conve', MsgHeader.conve);
+    // final SharedPreferences sharedPreferences =
+    //     await SharedPreferences.getInstance();
+    // sharedPreferences.setString(
+    //     'username', textControllers.usernameController.value.text);
+    // sharedPreferences.setString(
+    //     'password', textControllers.passwordController.value.text);
+    // sharedPreferences.setString('conve', MsgHeader.conve);
 
     try {
       if (_formKey.currentState!.validate()) {

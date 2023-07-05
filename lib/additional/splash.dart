@@ -2,13 +2,11 @@
 
 import 'dart:async';
 // import 'dart:ui';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
+// import 'package:flutter_background_service/flutter_background_service.dart';
 
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:video_player/video_player.dart';
@@ -22,7 +20,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _controller;
-  final service = FlutterBackgroundService();
 
   static String? finalUsername;
   // static String? finalIp;
@@ -74,22 +71,22 @@ class _SplashScreenState extends State<SplashScreen> {
   // }
 
   Future getValidationData() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var obtainUsername = sharedPreferences.getString('username');
-    // var obtainIp = sharedPreferences.getString('ip');
-    // var obtainConve = sharedPreferences.getString('conve');
-    // var obtainTrx = sharedPreferences.getString('trxid');
-    // var obtainTime = sharedPreferences.getString('datetime');
-    var obtainPassword = sharedPreferences.getString('password');
+    // final SharedPreferences sharedPreferences =
+    //     await SharedPreferences.getInstance();
+    // var obtainUsername = sharedPreferences.getString('username');
+    // // var obtainIp = sharedPreferences.getString('ip');
+    // // var obtainConve = sharedPreferences.getString('conve');
+    // // var obtainTrx = sharedPreferences.getString('trxid');
+    // // var obtainTime = sharedPreferences.getString('datetime');
+    // var obtainPassword = sharedPreferences.getString('password');
 
     setState(() {
-      finalUsername = obtainUsername;
+      // finalUsername = obtainUsername;
       // finalIp = obtainIp;
       // finalConve = obtainConve;
       // finalTrx = obtainTrx;
       // finalTime = obtainTime;
-      finalPassword = obtainPassword;
+      // finalPassword = obtainPassword;
     });
     print(finalUsername);
     // print(finalTime);

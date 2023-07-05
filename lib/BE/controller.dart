@@ -14,6 +14,7 @@ class TextControllers extends GetxController {
   }
 
 //login
+  Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> usernameController = TextEditingController().obs;
   Rx<TextEditingController> passwordController = TextEditingController().obs;
 

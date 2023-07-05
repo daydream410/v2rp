@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 // import '../mainScreen/home_screen2.dart';
-import '../mainScreen/home_screen.dart';
-import '../mainScreen/setting_screen.dart';
+import '../approval_screen/approval_screen.dart';
+import '../home_screen/home_screen.dart';
+// import '../mainScreen/setting_screen.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> {
   int selectedIndex = 0;
-  final screen = [const HomeScreen(), const SettingScreen()];
+  final screen = [const HomeScreen(), const ApprovalScreen()];
   final GlobalKey _key = GlobalKey();
   GlobalKey getKey() => _key;
 
@@ -32,7 +33,7 @@ class _NavbarState extends State<Navbar> {
             color: Colors.white,
           ),
           Icon(
-            Icons.settings,
+            Icons.my_library_books_rounded,
             size: 30,
             color: Colors.white,
           ),
@@ -40,8 +41,8 @@ class _NavbarState extends State<Navbar> {
         color: HexColor("#F4A62A"),
         buttonBackgroundColor: HexColor('##F4A62A'),
         backgroundColor: Colors.transparent,
-        animationCurve: Curves.easeInOut,
-        animationDuration: const Duration(milliseconds: 450),
+        animationCurve: Curves.easeInOutBack,
+        animationDuration: const Duration(milliseconds: 400),
         height: 70,
         onTap: (index) {
           setState(() {

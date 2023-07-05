@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -80,14 +80,14 @@ class SettingScreen extends StatelessWidget {
                     foregroundColor: Colors.teal,
                   ),
                   onPressed: () async {
-                    final SharedPreferences sharedPreferences =
-                        await SharedPreferences.getInstance();
-                    sharedPreferences.remove('username');
-                    // sharedPreferences.remove('conve');
-                    // sharedPreferences.remove('trxid');
-                    // sharedPreferences.remove('datetime');
-                    sharedPreferences.remove('password');
-                    await sharedPreferences.clear();
+                    // final SharedPreferences sharedPreferences =
+                    //     await SharedPreferences.getInstance();
+                    // sharedPreferences.remove('username');
+                    // // sharedPreferences.remove('conve');
+                    // // sharedPreferences.remove('trxid');
+                    // // sharedPreferences.remove('datetime');
+                    // sharedPreferences.remove('password');
+                    // await sharedPreferences.clear();
 
                     Get.offAll(() => const LoginPage4());
                   },
