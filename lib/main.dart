@@ -136,7 +136,7 @@ void onStart(ServiceInstance service) async {
               'V2RP MOBILE TEST',
               'V2RP MOBILE',
               icon: 'ic_bg_service_small',
-              ongoing: true,
+              ongoing: false,
             ),
           ),
         );

@@ -77,7 +77,7 @@ class MsgHeader {
     print('Your PASSWORD = ' + passVal.toString());
   }
 
-  static Future<void> Login(String? userVal) async {
+  static Future<void> Login(String? userVal, passVal) async {
     // id = uuid.v5(Uuid.NAMESPACE_URL, userVal);
     // var macAddress = await GetMac.macAddress;
     // try {
@@ -85,9 +85,25 @@ class MsgHeader {
     // } on PlatformException {
     //   macAddress = 'Failed to get Device MAC Address';
     // }
+    String encryptData(String plaintext, String secretKey) {
+      final key = utf8.encode(secretKey);
+      final text = utf8.encode(plaintext);
+
+      final hmac = crypto.Hmac(crypto.sha256, key);
+      final digest = hmac.convert(text);
+
+      final encryptedData = base64Encode(digest.bytes);
+      return encryptedData;
+    }
+
+// x-v2rp-key2: '$encoded'
     try {
       var sendLogin = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
-          headers: {'x-v2rp-key': '$conve', 'DEVICE-KEY': '$macAddress'},
+          // headers: {'x-v2rp-key': '$conve', 'DEVICE-KEY': '$macAddress'},
+          headers: {
+            'x-v2rp-key': '$conve',
+            'DEVICE-KEY': '$macAddress',
+          },
           // headers: {'x-v2rp-key': '$conve'},
           body: jsonEncode({
             "trxid": "$trxid",

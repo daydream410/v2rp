@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context: context,
           builder: (context) => AlertDialog(
             title: Text('Are You sure?'),
-            content: Text('Do you want to exit the App?'),
+            content: Text('Do you want to exit V2RP Mobile?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
