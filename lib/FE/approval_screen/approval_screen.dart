@@ -18,6 +18,13 @@ class ApprovalScreen extends StatefulWidget {
 }
 
 class _ApprovalScreenState extends State<ApprovalScreen> {
+  bool selected = false;
+  String idSelected = "";
+  bool isVisible1 = true;
+  bool isVisible2 = true;
+  bool isVisible3 = true;
+  bool isVisible4 = true;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -67,773 +74,1617 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                 Positioned(
                   child: Column(
                     children: [
-                      //kotak putih pertama (cash & bank approval)
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal:
-                              size.width * 0.03, //atur lebar kotak putih
-                          vertical:
-                              size.height * 0.02, //atur lokasi kotak putih
-                        ),
-                        height: size.height * 0.20, //atur panjang kotak putih
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
+                      //tampil filter chip
+                      Wrap(
+                        spacing: 8,
+                        direction: Axis.horizontal,
+                        children: [
+                          FilterChip(
+                            label: const Text('All'),
+                            backgroundColor: Colors.white,
+                            // checkmarkColor: HexColor("#F4A62A"),
+                            selected: (idSelected == "0") ? true : false,
+                            onSelected: (bool value) {
+                              setState(() {
+                                idSelected = "0";
+                                isVisible1 = true;
+                                isVisible2 = true;
+                                isVisible3 = true;
+                                isVisible4 = true;
+                              });
+                            },
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 10),
-                              blurRadius: 60,
-                              color: Colors.grey.withOpacity(0.40),
+                          FilterChip(
+                            label: const Text('Cash & Bank Approval'),
+                            backgroundColor: Colors.white,
+                            // checkmarkColor: HexColor("#F4A62A"),
+                            selected: (idSelected == "1") ? true : false,
+                            onSelected: (bool value) {
+                              setState(() {
+                                idSelected = "1";
+                                isVisible1 = true;
+                                isVisible2 = false;
+                                isVisible3 = false;
+                                isVisible4 = false;
+                              });
+                            },
+                          ),
+                          FilterChip(
+                            label: const Text('Sales Approval'),
+                            backgroundColor: Colors.white,
+                            // checkmarkColor: HexColor("#F4A62A"),
+                            selected: (idSelected == "2") ? true : false,
+                            onSelected: (bool value) {
+                              setState(() {
+                                idSelected = "2";
+                                isVisible1 = false;
+                                isVisible2 = true;
+                                isVisible3 = false;
+                                isVisible4 = false;
+                              });
+                            },
+                          ),
+                          FilterChip(
+                            label: const Text('Purchase Approval'),
+                            backgroundColor: Colors.white,
+                            // checkmarkColor: HexColor("#F4A62A"),
+                            selected: (idSelected == "3") ? true : false,
+                            onSelected: (bool value) {
+                              setState(() {
+                                idSelected = "3";
+                                isVisible1 = false;
+                                isVisible2 = false;
+                                isVisible3 = true;
+                                isVisible4 = false;
+                              });
+                            },
+                          ),
+                          FilterChip(
+                            label: const Text('Inventory Approval'),
+                            backgroundColor: Colors.white,
+                            // checkmarkColor: HexColor("#F4A62A"),
+                            selected: (idSelected == "4") ? true : false,
+                            onSelected: (bool value) {
+                              setState(() {
+                                idSelected = "4";
+                                isVisible1 = false;
+                                isVisible2 = false;
+                                isVisible3 = false;
+                                isVisible4 = true;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      //kotak putih pertama (cash & bank approval)
+                      Visibility(
+                        visible: isVisible1,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal:
+                                size.width * 0.03, //atur lebar kotak putih
+                            vertical:
+                                size.height * 0.02, //atur lokasi kotak putih
+                          ),
+                          height: size.height * 0.20, //atur panjang kotak putih
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
                             ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10.0),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: size.width * 0.05),
-                                  child: const Text(
-                                    'Cash & Bank Approval',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            // baris pertama
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 24, right: 24, top: 24),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 10),
+                                blurRadius: 60,
+                                color: Colors.grey.withOpacity(0.40),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 10.0),
+                              Row(
                                 children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'Cash Advance',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Confirmation',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'Cash Advance',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/salesapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              // Get.to(() => StockTable2());
-                                              // Get.offAll(() => const StockTable2());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'C/A Settlement',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Confirmation',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/purchaseapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fitWidth,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              // Get.to(() => FixAsset2());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'C/A Settlement',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: size.width * 0.05),
+                                    child: const Text(
+                                      'Cash & Bank Approval',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                              // baris pertama
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/cashbankapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Cash',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Advance',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Confirmation',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/cashadvanceapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Cash',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Advance',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/casettlement.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => StockTable2());
+                                                // Get.offAll(() => const StockTable2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'C/A',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Settlement',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Confirmation',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/casettlementapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fitWidth,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => FixAsset2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'C/A',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Settlement',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       //kotak putih kedua (sales approval)
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal:
-                              size.width * 0.03, //atur lebar kotak putih
-                          vertical:
-                              size.height * 0.02, //atur lokasi kotak putih
-                        ),
-                        height: size.height * 0.20, //atur panjang kotak putih
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
+                      Visibility(
+                        visible: isVisible2,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal:
+                                size.width * 0.03, //atur lebar kotak putih
+                            vertical:
+                                size.height * 0.02, //atur lokasi kotak putih
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 10),
-                              blurRadius: 60,
-                              color: Colors.grey.withOpacity(0.40),
+                          height: size.height * 0.20, //atur panjang kotak putih
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
                             ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10.0),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: size.width * 0.05),
-                                  child: const Text(
-                                    'Sales Approval',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            // baris pertama
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 24, right: 24, top: 24),
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 10),
+                                blurRadius: 60,
+                                color: Colors.grey.withOpacity(0.40),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 10.0),
+                              Row(
                                 children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'A/R Receipt',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Confirmation',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'Sales Order',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: size.width * 0.05),
+                                    child: const Text(
+                                      'Sales Approval',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                              // baris pertama
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 34, right: 24, top: 24),
+                                child: Row(
+                                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/arreceipt.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'A/R Receipt',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Confirmation',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/salesapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Sales Order',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       //kotak putih ketiga (purchase approval)
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal:
-                              size.width * 0.03, //atur lebar kotak putih
-                          vertical:
-                              size.height * 0.02, //atur lokasi kotak putih
-                        ),
-                        height: size.height * 0.40, //atur panjang kotak putih
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
+                      Visibility(
+                        visible: isVisible3,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal:
+                                size.width * 0.03, //atur lebar kotak putih
+                            vertical:
+                                size.height * 0.02, //atur lokasi kotak putih
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 10),
-                              blurRadius: 60,
-                              color: Colors.grey.withOpacity(0.40),
+                          height: size.height * 0.43, //atur panjang kotak putih
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
                             ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10.0),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: size.width * 0.05),
-                                  child: const Text(
-                                    'Purchase Approval',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 10),
+                                blurRadius: 60,
+                                color: Colors.grey.withOpacity(0.40),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 10.0),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: size.width * 0.05),
+                                    child: const Text(
+                                      'Purchase Approval',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
                                   ),
+                                ],
+                              ),
+                              // baris pertama
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/sppbj.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'SPPBJ',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Confirmation',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/sppbjapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'SPPBJ',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/poscm.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => StockTable2());
+                                                // Get.offAll(() => const StockTable2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'PO SCM',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/newpayable.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fitWidth,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => FixAsset2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'New Payable',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/dpreqapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'D/P',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Request',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/aprefund.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'A/P',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Refund',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/apadjustmentapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => StockTable2());
+                                                // Get.offAll(() => const StockTable2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'A/P',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Adjustment',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/dnsupplier.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fitWidth,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => FixAsset2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'D/N to',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Supplier',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/poexception.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => CashBank1());
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          const Column(
+                                            children: [
+                                              Text(
+                                                'PO Exception',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Approval',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      //kotak putih ke empat (purchase approval)
+                      Visibility(
+                        visible: isVisible4,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal:
+                                size.width * 0.03, //atur lebar kotak putih
+                            vertical:
+                                size.height * 0.02, //atur lokasi kotak putih
+                          ),
+                          height: size.height * 0.63, //atur panjang kotak putih
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
                             ),
-                            // baris pertama
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 24, right: 24, top: 24),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 10),
+                                blurRadius: 60,
+                                color: Colors.grey.withOpacity(0.40),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 10.0),
+                              Row(
                                 children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'SPPBJ',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Confirmation',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'SPPBJ',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/salesapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              // Get.to(() => StockTable2());
-                                              // Get.offAll(() => const StockTable2());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'PO SCM',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/purchaseapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fitWidth,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              // Get.to(() => FixAsset2());
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'New Payable',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: size.width * 0.05),
+                                    child: const Text(
+                                      'Inventory Approval',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 24, right: 24, top: 24),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
+                              // baris pertama
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/muapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'D/P Request',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Material',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                            Text(
+                                              'Used',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/grapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'A/P Refund',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Goods',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                            Text(
+                                              'Received',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/salesapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              // Get.to(() => StockTable2());
-                                              // Get.offAll(() => const StockTable2());
-                                            },
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/itapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => StockTable2());
+                                                // Get.offAll(() => const StockTable2());
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'A/P Adjustment',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Internal',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                            Text(
+                                              'Transfer',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/purchaseapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fitWidth,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              // Get.to(() => FixAsset2());
-                                            },
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/smapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fitWidth,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => FixAsset2());
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'D/N to Supplier',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Stock',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                            Text(
+                                              'Movement',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 24, right: 24, top: 24),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Material(
-                                        borderRadius: BorderRadius.circular(20),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Ink.image(
-                                          image: const AssetImage(
-                                              'images/cashbankapp.png'),
-                                          height: size.height * 0.05,
-                                          width: size.width * 0.15,
-                                          // fit: BoxFit.fill,
-                                          child: InkWell(
-                                            splashColor: Colors.black38,
-                                            onTap: () async {
-                                              Get.to(() => CashBank1());
-                                            },
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/stockadjapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'PO Exception',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Stock',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Adjustment',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/stockmerger.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
                                             ),
                                           ),
-                                          Text(
-                                            'Approval',
-                                            style: TextStyle(
-                                              fontSize: 12,
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Stock',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Merger',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/assembling.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => StockTable2());
+                                                // Get.offAll(() => const StockTable2());
+                                              },
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Assembling',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 12,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/materialreturnapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fitWidth,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => FixAsset2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Material',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Return',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/stocktransferapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Stock',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Transfer',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/itstockadj.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                Get.to(() => CashBank1());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'IT/Stock',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Adjustment',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/stockpriceapp.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fill,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => StockTable2());
+                                                // Get.offAll(() => const StockTable2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Stock',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Price',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Approval',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Ink.image(
+                                            image: const AssetImage(
+                                                'images/updateminmax.png'),
+                                            height: size.height * 0.05,
+                                            width: size.width * 0.15,
+                                            // fit: BoxFit.fitWidth,
+                                            child: InkWell(
+                                              splashColor: Colors.black38,
+                                              onTap: () async {
+                                                // Get.to(() => FixAsset2());
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Column(
+                                          children: [
+                                            Text(
+                                              'Update Min',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Max Stock',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Parameter',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, top: 24),
+                                child: Row(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 12),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/stocktopup.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => CashBank1());
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          const Column(
+                                            children: [
+                                              Text(
+                                                'Stock',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Top Up',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Approval',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
