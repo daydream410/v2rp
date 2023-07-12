@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:v2rp1/FE/approval_screen/cash_bank/cashbank1.dart';
+import 'package:v2rp1/FE/approval_screen/cash_bank/ca_confirm.dart';
 
 import '../../BE/controller.dart';
 
@@ -222,7 +222,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                Get.to(
+                                                    () => CashAdvanceConfirm());
                                               },
                                             ),
                                           ),
@@ -268,7 +269,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -462,7 +463,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -505,7 +506,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -601,7 +602,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -641,7 +642,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -772,7 +773,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -818,7 +819,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -969,7 +970,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => CashBank1());
+                                                  // Get.to(() => CashBank1());
                                                 },
                                               ),
                                             ),
@@ -1066,7 +1067,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -1112,7 +1113,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -1261,7 +1262,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -1307,7 +1308,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -1453,7 +1454,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -1499,7 +1500,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                Get.to(() => CashBank1());
+                                                // Get.to(() => CashBank1());
                                               },
                                             ),
                                           ),
@@ -1650,7 +1651,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => CashBank1());
+                                                  // Get.to(() => CashBank1());
                                                 },
                                               ),
                                             ),

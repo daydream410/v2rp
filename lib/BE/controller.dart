@@ -56,4 +56,9 @@ class TextControllers extends GetxController {
   //so
   Rx<TextEditingController> soReffController = TextEditingController().obs;
   Rx<TextEditingController> soWhController = TextEditingController().obs;
+
+  //approval menu
+
+  //cash advance confirmation
+  Rx<TextEditingController> caConfirmController = TextEditingController().obs;
 }
