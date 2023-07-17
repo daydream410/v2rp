@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_confirm.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:v2rp1/FE/navbar/navbar.dart';
 
 class CashAdvanceConfirm2 extends StatefulWidget {
   CashAdvanceConfirm2({Key? key}) : super(key: key);
@@ -472,7 +473,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
               child: Text('S U B M I T'),
             ),
             onPressed: () async {
-              // Get.to(MaterialUse2());
+              Get.to(const Navbar());
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
