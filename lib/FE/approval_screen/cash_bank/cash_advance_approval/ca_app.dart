@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app2.dart';
 
-import '../../../BE/controller.dart';
-import '../../navbar/navbar.dart';
-import 'ca_confirm2.dart';
+import '../../../../BE/controller.dart';
+import '../../../navbar/navbar.dart';
 
-class CashAdvanceConfirm extends StatefulWidget {
-  CashAdvanceConfirm({Key? key}) : super(key: key);
+class CashAdvanceApproval extends StatefulWidget {
+  CashAdvanceApproval({Key? key}) : super(key: key);
 
   @override
-  State<CashAdvanceConfirm> createState() => _CashAdvanceConfirmState();
+  State<CashAdvanceApproval> createState() => _CashAdvanceApprovalState();
 }
 
-class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
+class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
   static TextControllers textControllers = Get.put(TextControllers());
 
   @override
@@ -48,7 +48,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("Cash Advance Confirmation"),
+                middle: const Text("Cash Advance Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {
@@ -142,7 +142,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
             )
           : Scaffold(
               appBar: AppBar(
-                title: const Text("Cash Advance Confirmation"),
+                title: const Text("Cash Advance Approval"),
                 centerTitle: true,
                 backgroundColor: HexColor("#F4A62A"),
                 foregroundColor: Colors.white,
@@ -242,7 +242,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                       child: ListTile(
                                         title: const Text(
                                           // _dataaa[index]['itemname'],
-                                          "Cash Advance Number",
+                                          "CADV/OSY/2023/04-0075",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -254,7 +254,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(CashAdvanceConfirm2());
+                                            Get.to(CashAdvanceApproval2());
                                             // Get.to(ScanVb(
                                             //   idstock: _dataaa[index]
                                             //       ['stockid'],
