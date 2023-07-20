@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
+import 'package:v2rp1/FE/approval_screen/sales_approval/sales_order_app/sales_order_app.dart';
 
 import '../../BE/controller.dart';
 import 'cash_bank/ca_set_approval/ca_set_app.dart';
@@ -513,7 +514,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => ArApproval());
+                                                Get.to(
+                                                    () => SalesOrderApproval());
                                               },
                                             ),
                                           ),
