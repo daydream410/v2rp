@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_approval/ca_set_app2.dart';
-import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app2.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../navbar/navbar.dart';
