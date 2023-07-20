@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app.dart';
+import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_approval/ca_set_app.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 
@@ -155,7 +155,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Get.to(() => CashAdvanceApproval());
+              Get.to(() => CaSetApproval());
             },
           ),
         ),
