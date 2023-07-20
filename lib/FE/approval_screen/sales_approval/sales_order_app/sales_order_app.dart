@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:v2rp1/FE/approval_screen/sales_approval/sales_order_app/sales_order_app2.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../navbar/navbar.dart';
@@ -254,7 +255,7 @@ class _SalesOrderApprovalState extends State<SalesOrderApproval> {
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            // Get.to(CashAdvanceConfirm2());
+                                            Get.to(SalesOrderApproval2());
                                             // Get.to(ScanVb(
                                             //   idstock: _dataaa[index]
                                             //       ['stockid'],
