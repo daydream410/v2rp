@@ -117,10 +117,10 @@ class _ArApproval2State extends State<ArApproval2> {
 
     // bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
     List listRequestTo = [
-      "Kasir Surabaya",
-      "Kasir Samarinda",
-      "Kasir Gresik",
-      "Kasir - Kasiran",
+      "IDR",
+      "USD",
+      "PESO",
+      "Yen",
     ];
     List listStatus = [
       "Pending",
@@ -237,7 +237,7 @@ class _ArApproval2State extends State<ArApproval2> {
                               ),
                               DropdownButton(
                                 hint: const Text(
-                                  "Request To",
+                                  "A/P Type",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
