@@ -15,7 +15,7 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   final screen = [const HomeScreen(), const ApprovalScreen()];
   final GlobalKey _key = GlobalKey();
   GlobalKey getKey() => _key;

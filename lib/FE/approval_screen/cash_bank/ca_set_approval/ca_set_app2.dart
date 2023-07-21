@@ -273,11 +273,44 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                   children: [
                     ElevatedButton(
                       style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        'Approve Selected',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
                       onPressed: () {},
                       child: const Text(
                         'Reject',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          HexColor("#F4A62A"),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        'Send To Draft',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -524,7 +557,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
           child: TextButton(
             child: const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text('A P P R O V E'),
+              child: Text('A P P R O V E   A L L'),
             ),
             onPressed: () async {
               Get.to(const Navbar());

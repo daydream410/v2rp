@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_approval/sppbj_app.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_confirm/sppbj_confirm.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/sales_order_app/sales_order_app.dart';
 
@@ -12,6 +14,7 @@ import '../../BE/controller.dart';
 import 'cash_bank/ca_set_approval/ca_set_app.dart';
 import 'cash_bank/ca_set_confirm/ca_set_confirm.dart';
 import 'cash_bank/cash_advance_approval/ca_app.dart';
+import 'purchase_approval/po_scm_approval/poscm_app.dart';
 
 class ApprovalScreen extends StatefulWidget {
   const ApprovalScreen({super.key});
@@ -55,6 +58,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         throw (e);
       },
       child: Scaffold(
+        extendBody: true,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -611,7 +615,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => SppbjConfirm());
                                               },
                                             ),
                                           ),
@@ -651,7 +655,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => SppbjApp());
                                               },
                                             ),
                                           ),
@@ -691,7 +695,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => StockTable2());
+                                                Get.to(() => PoScmApp());
                                                 // Get.offAll(() => const StockTable2());
                                               },
                                             ),

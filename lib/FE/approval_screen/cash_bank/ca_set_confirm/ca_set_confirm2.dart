@@ -117,12 +117,12 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
     Size size = MediaQuery.of(context).size;
 
     // bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-    List listRequestTo = [
-      "Kasir Surabaya",
-      "Kasir Samarinda",
-      "Kasir Gresik",
-      "Kasir - Kasiran",
-    ];
+    // List listRequestTo = [
+    //   "Kasir Surabaya",
+    //   "Kasir Samarinda",
+    //   "Kasir Gresik",
+    //   "Kasir - Kasiran",
+    // ];
     List listStatus = [
       "Pending",
       "Approve",
@@ -236,39 +236,46 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              DropdownButton(
-                                hint: const Text(
-                                  "Request To",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.arrow_drop_down,
+                              const Text(
+                                'Kasir Surabaya',
+                                style: TextStyle(
+                                  fontSize: 15.0,
                                   color: Colors.white,
                                 ),
-                                dropdownColor: HexColor("#F4A62A"),
-                                iconSize: 30,
-                                value: valueChooseRequest.isNotEmpty
-                                    ? valueChooseRequest
-                                    : null,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    valueChooseRequest = newValue as String;
-                                  });
-                                },
-                                items: listRequestTo.map((valueRequest) {
-                                  return DropdownMenuItem(
-                                    value: valueRequest,
-                                    child: Text(
-                                      valueRequest,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
                               ),
+                              // DropdownButton(
+                              //   hint: const Text(
+                              //     "Request To",
+                              //     style: TextStyle(
+                              //       color: Colors.white,
+                              //     ),
+                              //   ),
+                              //   icon: const Icon(
+                              //     Icons.arrow_drop_down,
+                              //     color: Colors.white,
+                              //   ),
+                              //   dropdownColor: HexColor("#F4A62A"),
+                              //   iconSize: 30,
+                              //   value: valueChooseRequest.isNotEmpty
+                              //       ? valueChooseRequest
+                              //       : null,
+                              //   onChanged: (newValue) {
+                              //     setState(() {
+                              //       valueChooseRequest = newValue as String;
+                              //     });
+                              //   },
+                              //   items: listRequestTo.map((valueRequest) {
+                              //     return DropdownMenuItem(
+                              //       value: valueRequest,
+                              //       child: Text(
+                              //         valueRequest,
+                              //         style: const TextStyle(
+                              //           color: Colors.white,
+                              //         ),
+                              //       ),
+                              //     );
+                              //   }).toList(),
+                              // ),
                               DropdownButton(
                                 hint: const Text(
                                   "Request Status",

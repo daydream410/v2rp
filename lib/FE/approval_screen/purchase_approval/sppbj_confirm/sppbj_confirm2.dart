@@ -5,17 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_confirm/sppbj_confirm.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 
-class ArApproval2 extends StatefulWidget {
-  ArApproval2({Key? key}) : super(key: key);
+class SppbjConfirm2 extends StatefulWidget {
+  SppbjConfirm2({Key? key}) : super(key: key);
 
   @override
-  State<ArApproval2> createState() => _ArApproval2State();
+  State<SppbjConfirm2> createState() => _SppbjConfirm2State();
 }
 
-class _ArApproval2State extends State<ArApproval2> {
+class _SppbjConfirm2State extends State<SppbjConfirm2> {
   var valueChooseRequest = "";
   var valueStatus = "";
   List<Details> details = [
@@ -145,7 +145,7 @@ class _ArApproval2State extends State<ArApproval2> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("A/R Receipt Approval"),
+          title: const Text("SPPBJ Confirmation"),
           centerTitle: true,
           backgroundColor: HexColor("#F4A62A"),
           foregroundColor: Colors.white,
@@ -153,7 +153,7 @@ class _ArApproval2State extends State<ArApproval2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Get.to(() => ArApproval());
+              Get.to(() => SppbjConfirm());
             },
           ),
         ),
@@ -187,182 +187,183 @@ class _ArApproval2State extends State<ArApproval2> {
                       ),
                     ],
                   ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10.0),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: size.width * 0.05),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  'ARCP/OSY/2023/04-0018',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.0,
-                                    color: Colors.white,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: size.width * 0.05),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  '02/12/2023',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  'Developer 3',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  'Surf Marine Indonesia, PT',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Row(
-                                  children: [
-                                    Text(
-                                      'IDR',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    Text(
-                                      'Mandiri Bisnis 17770-4',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Row(
-                                  children: [
-                                    Text(
-                                      '1,748,434,563.00',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    Text(
-                                      '1,748,434,563.00',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                // DropdownButton(
-                                //   hint: const Text(
-                                //     "IDR",
-                                //     style: TextStyle(
-                                //       color: Colors.white,
-                                //     ),
-                                //   ),
-                                //   icon: const Icon(
-                                //     Icons.arrow_drop_down,
-                                //     color: Colors.white,
-                                //   ),
-                                //   dropdownColor: HexColor("#F4A62A"),
-                                //   iconSize: 30,
-                                //   value: valueChooseRequest.isNotEmpty
-                                //       ? valueChooseRequest
-                                //       : null,
-                                //   onChanged: null,
-                                //   items: null,
-                                // ),
-                                DropdownButton(
-                                  hint: const Text(
-                                    "Approval Status",
+                                  const Text(
+                                    'SPPBJ/EP/2023/03-02930',
                                     style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.0,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.white,
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                  dropdownColor: HexColor("#F4A62A"),
-                                  iconSize: 30,
-                                  value: valueStatus.isNotEmpty
-                                      ? valueStatus
-                                      : null,
-                                  onChanged: (newValueStatus) {
-                                    setState(() {
-                                      valueStatus = newValueStatus as String;
-                                    });
-                                  },
-                                  items: listStatus.map((valueStatuss) {
-                                    return DropdownMenuItem(
-                                      value: valueStatuss,
-                                      child: Text(
-                                        valueStatuss,
-                                        style: const TextStyle(
+                                  const Text(
+                                    '02/12/2023',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    'Developer 3',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    'Warehouse Surabaya',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Text(
+                                        'IDR',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
                                           color: Colors.white,
                                         ),
                                       ),
-                                    );
-                                  }).toList(),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  // margin: const EdgeInsets.all(15.0),
-                                  padding: const EdgeInsets.all(3.0),
-                                  width: size.width * 0.8,
-                                  height: size.height * 0.1,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                    color: Colors.white,
-                                  )),
-                                  child: Text(
-                                    'Description',
+                                      SizedBox(
+                                        width: 30,
+                                      ),
+                                      Text(
+                                        'Mandiri Bisnis 17770-4',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    'W/O Number',
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.6),
+                                      fontSize: 15.0,
+                                      color: Colors.white,
                                     ),
                                   ),
-                                )
-                              ],
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    'SCM',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  // DropdownButton(
+                                  //   hint: const Text(
+                                  //     "IDR",
+                                  //     style: TextStyle(
+                                  //       color: Colors.white,
+                                  //     ),
+                                  //   ),
+                                  //   icon: const Icon(
+                                  //     Icons.arrow_drop_down,
+                                  //     color: Colors.white,
+                                  //   ),
+                                  //   dropdownColor: HexColor("#F4A62A"),
+                                  //   iconSize: 30,
+                                  //   value: valueChooseRequest.isNotEmpty
+                                  //       ? valueChooseRequest
+                                  //       : null,
+                                  //   onChanged: null,
+                                  //   items: null,
+                                  // ),
+                                  DropdownButton(
+                                    hint: const Text(
+                                      "Approval Status",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.white,
+                                    ),
+                                    dropdownColor: HexColor("#F4A62A"),
+                                    iconSize: 30,
+                                    value: valueStatus.isNotEmpty
+                                        ? valueStatus
+                                        : null,
+                                    onChanged: (newValueStatus) {
+                                      setState(() {
+                                        valueStatus = newValueStatus as String;
+                                      });
+                                    },
+                                    items: listStatus.map((valueStatuss) {
+                                      return DropdownMenuItem(
+                                        value: valueStatuss,
+                                        child: Text(
+                                          valueStatuss,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    // margin: const EdgeInsets.all(15.0),
+                                    padding: const EdgeInsets.all(3.0),
+                                    width: size.width * 0.8,
+                                    height: size.height * 0.1,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                      color: Colors.white,
+                                    )),
+                                    child: Text(
+                                      'Description',
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.6),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

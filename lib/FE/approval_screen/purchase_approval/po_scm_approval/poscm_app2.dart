@@ -8,14 +8,14 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 
-class ArApproval2 extends StatefulWidget {
-  ArApproval2({Key? key}) : super(key: key);
+class PoScmApp2 extends StatefulWidget {
+  PoScmApp2({Key? key}) : super(key: key);
 
   @override
-  State<ArApproval2> createState() => _ArApproval2State();
+  State<PoScmApp2> createState() => _PoScmApp2State();
 }
 
-class _ArApproval2State extends State<ArApproval2> {
+class _PoScmApp2State extends State<PoScmApp2> {
   var valueChooseRequest = "";
   var valueStatus = "";
   List<Details> details = [
@@ -145,7 +145,7 @@ class _ArApproval2State extends State<ArApproval2> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("A/R Receipt Approval"),
+          title: const Text("PO SCM Approval"),
           centerTitle: true,
           backgroundColor: HexColor("#F4A62A"),
           foregroundColor: Colors.white,
@@ -201,7 +201,7 @@ class _ArApproval2State extends State<ArApproval2> {
                                   height: 10,
                                 ),
                                 const Text(
-                                  'ARCP/OSY/2023/04-0018',
+                                  'NEP/23003606',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.0,
@@ -232,7 +232,7 @@ class _ArApproval2State extends State<ArApproval2> {
                                   height: 10,
                                 ),
                                 const Text(
-                                  'Surf Marine Indonesia, PT',
+                                  'TEST V2RP',
                                   style: TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.white,
@@ -265,27 +265,7 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
-                                  children: [
-                                    Text(
-                                      '1,748,434,563.00',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    Text(
-                                      '1,748,434,563.00',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+
                                 // DropdownButton(
                                 //   hint: const Text(
                                 //     "IDR",
@@ -483,19 +463,41 @@ class _ArApproval2State extends State<ArApproval2> {
                         .toList()),
               ),
               const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    'TOTAL = ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'TOTAL = ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '500000',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '500000',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'GRAND TOTAL = ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '500000',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )

@@ -192,140 +192,200 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: size.width * 0.05),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                "INV/2022/03-0218",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: size.width * 0.05),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                '02/12/2023',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                'Developer 3',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              DropdownButton(
-                                hint: const Text(
-                                  "PPN PAID BY",
+                                const Text(
+                                  "INV/2022/03-0218",
                                   style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.0,
                                     color: Colors.white,
                                   ),
                                 ),
-                                icon: const Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.white,
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                                dropdownColor: HexColor("#F4A62A"),
-                                iconSize: 30,
-                                value: valueChooseRequest.isNotEmpty
-                                    ? valueChooseRequest
-                                    : null,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    valueChooseRequest = newValue as String;
-                                  });
-                                },
-                                items: listRequestTo.map((valueRequest) {
-                                  return DropdownMenuItem(
-                                    value: valueRequest,
-                                    child: Text(
-                                      valueRequest,
-                                      style: const TextStyle(
+                                const Row(
+                                  children: [
+                                    Text(
+                                      '02/12/2023',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
                                         color: Colors.white,
                                       ),
                                     ),
-                                  );
-                                }).toList(),
-                              ),
-                              DropdownButton(
-                                hint: const Text(
-                                  "Request Status",
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      '12/12/2023',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      '12/12/2023',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  'Surf Marine Indonesia, PT',
                                   style: TextStyle(
+                                    fontSize: 15.0,
                                     color: Colors.white,
                                   ),
                                 ),
-                                icon: const Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.white,
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                                dropdownColor: HexColor("#F4A62A"),
-                                iconSize: 30,
-                                value:
-                                    valueStatus.isNotEmpty ? valueStatus : null,
-                                onChanged: (newValueStatus) {
-                                  setState(() {
-                                    valueStatus = newValueStatus as String;
-                                  });
-                                },
-                                items: listStatus.map((valueStatuss) {
-                                  return DropdownMenuItem(
-                                    value: valueStatuss,
-                                    child: Text(
-                                      valueStatuss,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                // margin: const EdgeInsets.all(15.0),
-                                padding: const EdgeInsets.all(3.0),
-                                width: size.width * 0.8,
-                                height: size.height * 0.1,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: Colors.white,
-                                )),
-                                child: Text(
-                                  'Description',
+                                const Text(
+                                  'IDR',
                                   style: TextStyle(
-                                    color: Colors.white.withOpacity(0.6),
+                                    fontSize: 15.0,
+                                    color: Colors.white,
                                   ),
                                 ),
-                              )
-                            ],
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  'Mandiri Bisnis 17770-4',
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  'Gudang Samarinda',
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                DropdownButton(
+                                  hint: const Text(
+                                    "PPN PAID BY",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
+                                  ),
+                                  dropdownColor: HexColor("#F4A62A"),
+                                  iconSize: 30,
+                                  value: valueChooseRequest.isNotEmpty
+                                      ? valueChooseRequest
+                                      : null,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      valueChooseRequest = newValue as String;
+                                    });
+                                  },
+                                  items: listRequestTo.map((valueRequest) {
+                                    return DropdownMenuItem(
+                                      value: valueRequest,
+                                      child: Text(
+                                        valueRequest,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                                DropdownButton(
+                                  hint: const Text(
+                                    "Request Status",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
+                                  ),
+                                  dropdownColor: HexColor("#F4A62A"),
+                                  iconSize: 30,
+                                  value: valueStatus.isNotEmpty
+                                      ? valueStatus
+                                      : null,
+                                  onChanged: (newValueStatus) {
+                                    setState(() {
+                                      valueStatus = newValueStatus as String;
+                                    });
+                                  },
+                                  items: listStatus.map((valueStatuss) {
+                                    return DropdownMenuItem(
+                                      value: valueStatuss,
+                                      child: Text(
+                                        valueStatuss,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  // margin: const EdgeInsets.all(15.0),
+                                  padding: const EdgeInsets.all(3.0),
+                                  width: size.width * 0.8,
+                                  height: size.height * 0.08,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                    color: Colors.white,
+                                  )),
+                                  child: Text(
+                                    'Notes',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.6),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(

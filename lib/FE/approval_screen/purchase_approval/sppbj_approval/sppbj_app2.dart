@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_approval/sppbj_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 
-class CashAdvanceApproval2 extends StatefulWidget {
-  const CashAdvanceApproval2({Key? key}) : super(key: key);
+class SppbjApp2 extends StatefulWidget {
+  SppbjApp2({Key? key}) : super(key: key);
 
   @override
-  State<CashAdvanceApproval2> createState() => _CashAdvanceApproval2State();
+  State<SppbjApp2> createState() => _SppbjApp2State();
 }
 
-class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
+class _SppbjApp2State extends State<SppbjApp2> {
   List<Details> details = [
     Details(
       cano: 'CADV/NEP/2023/02-0161',
@@ -120,7 +120,6 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
   ];
   List<Details> selectedDetails = [];
   bool selectedGak = false;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -148,7 +147,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Cash Advance Approval"),
+          title: const Text("SPPBJ Approval"),
           centerTitle: true,
           backgroundColor: HexColor("#F4A62A"),
           foregroundColor: Colors.white,
@@ -156,7 +155,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Get.to(() => CashAdvanceApproval());
+              Get.to(() => SppbjApp());
             },
           ),
         ),
@@ -203,7 +202,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                                 height: 10,
                               ),
                               const Text(
-                                'CADV/NEP/2023/02-0161',
+                                'SPPBJ/EP/2023/03-02930',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15.0,
@@ -224,7 +223,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                                 height: 10,
                               ),
                               const Text(
-                                'Developer 3',
+                                'CNS-V2RP',
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.white,
@@ -575,14 +574,6 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
 }
 
 class Details {
-  // String? requestor;
-  // String? project;
-  // String? accname;
-  // String? desc;
-  // int? qty;
-  // int? priceunit;
-  // int? amount;
-
   String? cano;
   String? jobproject;
   String? requestor;
