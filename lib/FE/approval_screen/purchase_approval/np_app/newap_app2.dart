@@ -144,7 +144,7 @@ class _NpApp2State extends State<NpApp2> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("PO SCM Approval"),
+          title: const Text("New Payable Approval"),
           centerTitle: true,
           backgroundColor: HexColor("#F4A62A"),
           foregroundColor: Colors.white,
