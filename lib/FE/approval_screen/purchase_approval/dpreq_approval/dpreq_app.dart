@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:v2rp1/FE/approval_screen/purchase_approval/np_app/newap_app2.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/dpreq_approval/dpreq_app2.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../navbar/navbar.dart';
 
-class NpApp extends StatefulWidget {
-  NpApp({Key? key}) : super(key: key);
+class DpReqApp extends StatefulWidget {
+  DpReqApp({Key? key}) : super(key: key);
 
   @override
-  State<NpApp> createState() => _NpAppState();
+  State<DpReqApp> createState() => _DpReqAppState();
 }
 
-class _NpAppState extends State<NpApp> {
+class _DpReqAppState extends State<DpReqApp> {
   static TextControllers textControllers = Get.put(TextControllers());
 
   @override
@@ -48,7 +48,7 @@ class _NpAppState extends State<NpApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("A/R Receipt Approval"),
+                middle: const Text("D/P Request Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {
@@ -142,7 +142,7 @@ class _NpAppState extends State<NpApp> {
             )
           : Scaffold(
               appBar: AppBar(
-                title: const Text("New Payable Approval"),
+                title: const Text("D/P Request Approval"),
                 centerTitle: true,
                 backgroundColor: HexColor("#F4A62A"),
                 foregroundColor: Colors.white,
@@ -197,7 +197,7 @@ class _NpAppState extends State<NpApp> {
                             tooltip: 'Search',
                             hoverColor: HexColor('#F4A62A'),
                           ),
-                          hintText: 'Invoice No.',
+                          hintText: 'D/P Req No.',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
@@ -242,19 +242,20 @@ class _NpAppState extends State<NpApp> {
                                       child: ListTile(
                                         title: const Text(
                                           // _dataaa[index]['itemname'],
-                                          "TESTINGLOG12345",
+                                          "BPAY/2021/03-0531",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle:
                                             // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                            const Text(
+                                                "Requestor || Date || Amount"),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(NpApp2());
+                                            Get.to(DpReqApp2());
 
                                             // Get.to(ScanVb(
                                             //   idstock: _dataaa[index]
