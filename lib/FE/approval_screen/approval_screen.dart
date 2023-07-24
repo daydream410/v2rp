@@ -5,8 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_adjustment/apadj_app.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_refund/ap_refund.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/dn_approval/dn_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/dpreq_approval/dpreq_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/np_app/newap_app.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/po_ex_approval/poex_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_approval/sppbj_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_confirm/sppbj_confirm.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
@@ -16,6 +20,7 @@ import '../../BE/controller.dart';
 import 'cash_bank/ca_set_approval/ca_set_app.dart';
 import 'cash_bank/ca_set_confirm/ca_set_confirm.dart';
 import 'cash_bank/cash_advance_approval/ca_app.dart';
+import 'inventory_approval/mu_approval/mu_app.dart';
 import 'purchase_approval/po_scm_approval/poscm_app.dart';
 
 class ApprovalScreen extends StatefulWidget {
@@ -834,7 +839,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => ApRefundApp());
                                               },
                                             ),
                                           ),
@@ -880,6 +885,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
+                                                Get.to(() => ApAdjApp());
+
                                                 // Get.to(() => StockTable2());
                                                 // Get.offAll(() => const StockTable2());
                                               },
@@ -927,7 +934,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => FixAsset2());
+                                                Get.to(() => DebitNotesApp());
                                               },
                                             ),
                                           ),
@@ -985,7 +992,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  // Get.to(() => CashBank1());
+                                                  Get.to(() => PoExApp());
                                                 },
                                               ),
                                             ),
@@ -1082,7 +1089,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => MuApp());
                                               },
                                             ),
                                           ),
