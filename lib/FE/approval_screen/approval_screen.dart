@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
+import 'package:v2rp1/FE/approval_screen/inventory_approval/gr_approval/gr_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_adjustment/apadj_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_refund/ap_refund.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/dn_approval/dn_app.dart';
@@ -1135,7 +1136,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => GrApp());
                                               },
                                             ),
                                           ),

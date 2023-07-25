@@ -356,117 +356,86 @@ class _PoScmApp2State extends State<PoScmApp2> {
                         height: MediaQuery.of(context).size.height * 0.30,
                         // width: MediaQuery.of(context).size.width * 2.2,
                         child: DataTable2(
-                            columnSpacing: 12,
-                            horizontalMargin: 1,
-                            columns: const [
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Request'),
-                                    Text('By'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Project'),
-                                    Text('Name'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Item/'),
-                                    Text('Acc'),
-                                    Text('Name'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Desc'),
-                                  ],
-                                ),
-                                size: ColumnSize.M,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Qty'),
-                                  ],
-                                ),
-                                size: ColumnSize.S,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Price/'),
-                                    Text('Unit'),
-                                  ],
-                                ),
-                                size: ColumnSize.M,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Amount'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                            ],
-                            rows: details
-                                .map((e) => DataRow(cells: [
-                                      DataCell(Text(
-                                        e.requestor ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.project ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.accname ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.desc ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.qty.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.priceunit.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.amount.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                    ]))
-                                .toList()),
+                          columnSpacing: 12,
+                          horizontalMargin: 12,
+                          minWidth: 600,
+                          columns: const [
+                            DataColumn2(
+                              label: Text('Req By'),
+                              size: ColumnSize.M,
+                            ),
+                            DataColumn2(
+                              label: Text('Project Name'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text('Item/Acc Name'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text('Description'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn(
+                              label: Text('QTY'),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Text('Price/Unit'),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Text('Amount'),
+                              numeric: true,
+                            ),
+                          ],
+                          rows: details
+                              .map((e) => DataRow(cells: [
+                                    DataCell(Text(
+                                      e.requestor ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.project ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.accname ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.desc ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.qty.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.priceunit.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.amount.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                  ]))
+                              .toList(),
+                        ),
                       ),
                       Divider(
                         height: 10,
@@ -478,117 +447,86 @@ class _PoScmApp2State extends State<PoScmApp2> {
                         height: MediaQuery.of(context).size.height * 0.30,
                         // width: MediaQuery.of(context).size.width * 2.2,
                         child: DataTable2(
-                            columnSpacing: 12,
-                            horizontalMargin: 1,
-                            columns: const [
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Request'),
-                                    Text('By'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Project'),
-                                    Text('Name'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Item/'),
-                                    Text('Acc'),
-                                    Text('Name'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Desc'),
-                                  ],
-                                ),
-                                size: ColumnSize.M,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Qty'),
-                                  ],
-                                ),
-                                size: ColumnSize.S,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Price/'),
-                                    Text('Unit'),
-                                  ],
-                                ),
-                                size: ColumnSize.M,
-                              ),
-                              DataColumn2(
-                                label: Column(
-                                  children: [
-                                    Text('Amount'),
-                                  ],
-                                ),
-                                size: ColumnSize.L,
-                              ),
-                            ],
-                            rows: details
-                                .map((e) => DataRow(cells: [
-                                      DataCell(Text(
-                                        e.requestor ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.project ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.accname ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.desc ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.qty.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.priceunit.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e.amount.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      )),
-                                    ]))
-                                .toList()),
+                          columnSpacing: 12,
+                          horizontalMargin: 12,
+                          minWidth: 600,
+                          columns: const [
+                            DataColumn2(
+                              label: Text('Req By'),
+                              size: ColumnSize.M,
+                            ),
+                            DataColumn2(
+                              label: Text('Project Name'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text('Item/Acc Name'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text('Description'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn(
+                              label: Text('QTY'),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Text('Price/Unit'),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Text('Amount'),
+                              numeric: true,
+                            ),
+                          ],
+                          rows: details
+                              .map((e) => DataRow(cells: [
+                                    DataCell(Text(
+                                      e.requestor ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.project ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.accname ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.desc ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.qty.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.priceunit.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      e.amount.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )),
+                                  ]))
+                              .toList(),
+                        ),
                       ),
                     ],
                   ),

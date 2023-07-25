@@ -306,73 +306,42 @@ class _MuApp2State extends State<MuApp2> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.40,
-                // width: MediaQuery.of(context).size.width * 2.2,
-                child: DataTable2(
+              Expanded(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.30,
+                  // width: MediaQuery.of(context).size.width * 2.2,
+                  child: DataTable2(
                     columnSpacing: 12,
-                    horizontalMargin: 1,
+                    horizontalMargin: 12,
+                    minWidth: 600,
                     columns: const [
                       DataColumn2(
-                        label: Column(
-                          children: [
-                            Text('Request'),
-                            Text('By'),
-                          ],
-                        ),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn2(
-                        label: Column(
-                          children: [
-                            Text('Project'),
-                            Text('Name'),
-                          ],
-                        ),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn2(
-                        label: Column(
-                          children: [
-                            Text('Item/'),
-                            Text('Acc'),
-                            Text('Name'),
-                          ],
-                        ),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn2(
-                        label: Column(
-                          children: [
-                            Text('Desc'),
-                          ],
-                        ),
+                        label: Text('Req By'),
                         size: ColumnSize.M,
                       ),
                       DataColumn2(
-                        label: Column(
-                          children: [
-                            Text('Qty'),
-                          ],
-                        ),
-                        size: ColumnSize.S,
-                      ),
-                      DataColumn2(
-                        label: Column(
-                          children: [
-                            Text('Price/'),
-                            Text('Unit'),
-                          ],
-                        ),
-                        size: ColumnSize.M,
-                      ),
-                      DataColumn2(
-                        label: Column(
-                          children: [
-                            Text('Amount'),
-                          ],
-                        ),
+                        label: Text('Project Name'),
                         size: ColumnSize.L,
+                      ),
+                      DataColumn2(
+                        label: Text('Item/Acc Name'),
+                        size: ColumnSize.L,
+                      ),
+                      DataColumn2(
+                        label: Text('Description'),
+                        size: ColumnSize.L,
+                      ),
+                      DataColumn(
+                        label: Text('QTY'),
+                        numeric: true,
+                      ),
+                      DataColumn(
+                        label: Text('Price/Unit'),
+                        numeric: true,
+                      ),
+                      DataColumn(
+                        label: Text('Amount'),
+                        numeric: true,
                       ),
                     ],
                     rows: details
@@ -420,7 +389,9 @@ class _MuApp2State extends State<MuApp2> {
                                 ),
                               )),
                             ]))
-                        .toList()),
+                        .toList(),
+                  ),
+                ),
               ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.end,

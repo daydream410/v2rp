@@ -411,212 +411,101 @@ class _PoExApp2State extends State<PoExApp2> {
               ),
               Expanded(
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.40,
+                  height: MediaQuery.of(context).size.height * 0.30,
                   // width: MediaQuery.of(context).size.width * 2.2,
                   child: DataTable2(
-                      columnSpacing: 12,
-                      horizontalMargin: 1,
-                      columns: const [
-                        DataColumn2(
-                          label: Column(
-                            children: [
-                              Center(
-                                child: Text(
-                                  'CA',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                'NO.',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          size: ColumnSize.L,
-                        ),
-                        DataColumn2(
-                          label: Column(
-                            children: [
-                              Text(
-                                'Job',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                              Text(
-                                'Project',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          size: ColumnSize.L,
-                        ),
-                        DataColumn2(
-                          label: Center(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Req',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Text(
-                                  'By',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          size: ColumnSize.M,
-                        ),
-                        DataColumn2(
-                          label: Column(
-                            children: [
-                              Text(
-                                'Acc',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          size: ColumnSize.M,
-                        ),
-                        DataColumn2(
-                          label: Column(
-                            children: [
-                              Text(
-                                'Qty',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          size: ColumnSize.S,
-                        ),
-                        DataColumn2(
-                          label: Column(
-                            children: [
-                              Text(
-                                'Price',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          size: ColumnSize.M,
-                        ),
-                        DataColumn2(
-                          label: Column(
-                            children: [
-                              Text(
-                                'Amt',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          size: ColumnSize.M,
-                        ),
-                        DataColumn2(
-                          label: Column(
-                            children: [
-                              Text(
-                                'Budget',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                              Text(
-                                'Avail',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          size: ColumnSize.L,
-                        ),
-                      ],
-                      rows: details
-                          .map((Details details) => DataRow2(
-                                  selected: selectedDetails.contains(details),
-                                  onSelectChanged: (isSelected) => setState(() {
-                                        final isAdding =
-                                            isSelected != null && isSelected;
-                                        isAdding
-                                            ? selectedDetails.add(details)
-                                            : selectedDetails.remove(details);
-                                        if (isSelected != null) {
-                                          selectedGak = true;
-                                        }
-                                      }),
-                                  cells: [
-                                    DataCell(Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Text(
-                                        details.cano ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      details.jobproject ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      details.requestor ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      details.account ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      details.qty.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      details.price.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      details.amount.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      details.budgetavail.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                  ]))
-                          .toList()),
+                    columnSpacing: 12,
+                    horizontalMargin: 12,
+                    minWidth: 600,
+                    columns: const [
+                      DataColumn2(
+                        label: Text('Req By'),
+                        size: ColumnSize.M,
+                      ),
+                      DataColumn2(
+                        label: Text('Project Name'),
+                        size: ColumnSize.L,
+                      ),
+                      DataColumn2(
+                        label: Text('Item/Acc Name'),
+                        size: ColumnSize.L,
+                      ),
+                      DataColumn2(
+                        label: Text('Description'),
+                        size: ColumnSize.L,
+                      ),
+                      DataColumn(
+                        label: Text('QTY'),
+                        numeric: true,
+                      ),
+                      DataColumn(
+                        label: Text('Price/Unit'),
+                        numeric: true,
+                      ),
+                      DataColumn(
+                        label: Text('Amount'),
+                        numeric: true,
+                      ),
+                    ],
+                    rows: details
+                        .map((Details details) => DataRow2(
+                                selected: selectedDetails.contains(details),
+                                onSelectChanged: (isSelected) => setState(() {
+                                      final isAdding =
+                                          isSelected != null && isSelected;
+                                      isAdding
+                                          ? selectedDetails.add(details)
+                                          : selectedDetails.remove(details);
+                                      if (isSelected != null) {
+                                        selectedGak = true;
+                                      }
+                                    }),
+                                cells: [
+                                  DataCell(Text(
+                                    details.requestor ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    details.cano ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    details.jobproject ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    details.account ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    details.qty.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    details.amount.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    details.budgetavail.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                ]))
+                        .toList(),
+                  ),
                 ),
               ),
               const Row(

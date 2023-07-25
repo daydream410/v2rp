@@ -4,27 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_confirm/ca_set_confirm.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 
-class CaSettleConfirm2 extends StatefulWidget {
-  CaSettleConfirm2({Key? key}) : super(key: key);
+import 'gr_app.dart';
+
+class GrApp2 extends StatefulWidget {
+  GrApp2({Key? key}) : super(key: key);
 
   @override
-  State<CaSettleConfirm2> createState() => _CaSettleConfirm2State();
+  State<GrApp2> createState() => _GrApp2State();
 }
 
-class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
+class _GrApp2State extends State<GrApp2> {
   var valueChooseRequest = "";
   var valueStatus = "";
-
   List<Details> details = [
     Details(
       requestor: 'Developer 3',
       project: 'SMALL MARINE',
       accname: 'Sepatu Bekas',
       desc: 'Beli sepatu bekas',
+      test: 'AAAAAAAAAAAAAAAAAAAaaaaaaaaa',
       qty: 20,
       priceunit: 3000,
       amount: 200000,
@@ -34,6 +35,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
       project: 'PNEP INDUK',
       accname: 'Sepatu Sobek',
       desc: 'Beli sepatu sobek',
+      test: 'AAAAAAAAAAAAAAAAAAAaaaaaaaaa',
       qty: 2,
       priceunit: 30000,
       amount: 60000,
@@ -43,6 +45,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
       project: 'PNEP INDUK',
       accname: 'Sepatu Bekas',
       desc: 'Beli sepatu bekas',
+      test: 'AAAAAAAAAAAAAAAAAAAaaaaaaaaa',
       qty: 20,
       priceunit: 3000,
       amount: 200000,
@@ -52,6 +55,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
       project: 'PNEP INDUK',
       accname: 'Sepatu Bekas',
       desc: 'Beli sepatu bekas',
+      test: 'AAAAAAAAAAAAAAAAAAAaaaaaaaaa',
       qty: 20,
       priceunit: 3000,
       amount: 200000,
@@ -61,51 +65,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
       project: 'Op. HO',
       accname: 'Sepatu Sobek',
       desc: 'Beli sepatu sobek',
-      qty: 2,
-      priceunit: 30000,
-      amount: 60000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'Op. HO',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'Op. HO',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'SSM10',
-      project: 'Op. HO',
-      accname: 'Sepatu Sobek',
-      desc: 'Beli sepatu sobek',
-      qty: 2,
-      priceunit: 30000,
-      amount: 60000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'Op. Dir',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'SSM11',
-      project: 'Op. Dir',
-      accname: 'Sepatu Sobek',
-      desc: 'Beli sepatu sobek',
+      test: 'AAAAAAAAAAAAAAaaaaaaaa',
       qty: 2,
       priceunit: 30000,
       amount: 60000,
@@ -117,12 +77,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
     Size size = MediaQuery.of(context).size;
 
     // bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-    // List listRequestTo = [
-    //   "Kasir Surabaya",
-    //   "Kasir Samarinda",
-    //   "Kasir Gresik",
-    //   "Kasir - Kasiran",
-    // ];
+
     List listStatus = [
       "Pending",
       "Approve",
@@ -151,7 +106,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("C/A Settlement Confirmation"),
+          title: const Text("Goods Received Approval"),
           centerTitle: true,
           backgroundColor: HexColor("#F4A62A"),
           foregroundColor: Colors.white,
@@ -159,7 +114,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Get.to(() => CaSettleConfirm());
+              Get.to(() => GrApp());
             },
           ),
         ),
@@ -206,7 +161,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                                 height: 10,
                               ),
                               const Text(
-                                'CADV/NEP/2023/02-0161',
+                                'GRDV/NEP/2023/07-2933',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15.0,
@@ -237,7 +192,17 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                                 height: 10,
                               ),
                               const Text(
-                                'Kasir Surabaya',
+                                'Surf Marine Indonesia, PT',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Warehouse Samarinda',
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.white,
@@ -245,7 +210,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                               ),
                               // DropdownButton(
                               //   hint: const Text(
-                              //     "Request To",
+                              //     "IDR",
                               //     style: TextStyle(
                               //       color: Colors.white,
                               //     ),
@@ -259,26 +224,12 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                               //   value: valueChooseRequest.isNotEmpty
                               //       ? valueChooseRequest
                               //       : null,
-                              //   onChanged: (newValue) {
-                              //     setState(() {
-                              //       valueChooseRequest = newValue as String;
-                              //     });
-                              //   },
-                              //   items: listRequestTo.map((valueRequest) {
-                              //     return DropdownMenuItem(
-                              //       value: valueRequest,
-                              //       child: Text(
-                              //         valueRequest,
-                              //         style: const TextStyle(
-                              //           color: Colors.white,
-                              //         ),
-                              //       ),
-                              //     );
-                              //   }).toList(),
+                              //   onChanged: null,
+                              //   items: null,
                               // ),
                               DropdownButton(
                                 hint: const Text(
-                                  "Request Status",
+                                  "Approval Status",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -466,6 +417,7 @@ class Details {
   String? project;
   String? accname;
   String? desc;
+  String? test;
   int? qty;
   int? priceunit;
   int? amount;
@@ -475,6 +427,7 @@ class Details {
     this.project,
     this.accname,
     this.desc,
+    this.test,
     this.qty,
     this.priceunit,
     this.amount,
