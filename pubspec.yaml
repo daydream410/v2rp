@@ -54,6 +54,7 @@ dependencies:
   flutter_native_splash: ^2.2.10+1
   video_player: ^2.4.7
   data_table_2: ^2.5.3
+  syncfusion_flutter_datepicker: ^22.1.39
   # webview_flutter: ^3.0.4
   # badges: ^2.0.3
   # flutter_background_service: ^2.4.3
