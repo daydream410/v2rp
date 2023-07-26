@@ -197,7 +197,7 @@ class _AssemblingAppState extends State<AssemblingApp> {
                             tooltip: 'Search',
                             hoverColor: HexColor('#F4A62A'),
                           ),
-                          hintText: 'Reffno.',
+                          hintText: 'Reff No.',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
