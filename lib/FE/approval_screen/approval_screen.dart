@@ -8,6 +8,7 @@ import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confi
 import 'package:v2rp1/FE/approval_screen/inventory_approval/gr_approval/gr_app.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/it_approval/it_app.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/sm_approval/sm_app.dart';
+import 'package:v2rp1/FE/approval_screen/inventory_approval/stock_trf_approval/stocktrf_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_adjustment/apadj_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_refund/ap_refund.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/dn_approval/dn_app.dart';
@@ -24,8 +25,11 @@ import 'cash_bank/ca_set_approval/ca_set_app.dart';
 import 'cash_bank/ca_set_confirm/ca_set_confirm.dart';
 import 'cash_bank/cash_advance_approval/ca_app.dart';
 import 'inventory_approval/assembling_approval/asmb_app.dart';
+import 'inventory_approval/itstock_adj_approval/itstock_app.dart';
+import 'inventory_approval/mr_approval/mr_app.dart';
 import 'inventory_approval/mu_approval/mu_app.dart';
 import 'inventory_approval/stockadj_approval/stockadj_app.dart';
+import 'inventory_approval/stockprice_approval/stockprice_app.dart';
 import 'purchase_approval/po_scm_approval/poscm_app.dart';
 
 class ApprovalScreen extends StatefulWidget {
@@ -1425,7 +1429,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => FixAsset2());
+                                                Get.to(() => MrApp());
                                               },
                                             ),
                                           ),
@@ -1481,7 +1485,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => StockTrfApp());
                                               },
                                             ),
                                           ),
@@ -1527,7 +1531,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => ItStockAdjApp());
                                               },
                                             ),
                                           ),
@@ -1573,7 +1577,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => StockTable2());
+                                                Get.to(() => StockPriceApp());
                                                 // Get.offAll(() => const StockTable2());
                                               },
                                             ),
