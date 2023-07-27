@@ -28,8 +28,10 @@ import 'inventory_approval/assembling_approval/asmb_app.dart';
 import 'inventory_approval/itstock_adj_approval/itstock_app.dart';
 import 'inventory_approval/mr_approval/mr_app.dart';
 import 'inventory_approval/mu_approval/mu_app.dart';
+import 'inventory_approval/stock_topup_approval/topup_app.dart';
 import 'inventory_approval/stockadj_approval/stockadj_app.dart';
 import 'inventory_approval/stockprice_approval/stockprice_app.dart';
+import 'inventory_approval/update_minmax_approval/minmax_app.dart';
 import 'purchase_approval/po_scm_approval/poscm_app.dart';
 
 class ApprovalScreen extends StatefulWidget {
@@ -1624,7 +1626,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => FixAsset2());
+                                                Get.to(() => UpdateMinMaxApp());
                                               },
                                             ),
                                           ),
@@ -1682,7 +1684,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  // Get.to(() => CashBank1());
+                                                  Get.to(() => StockTopupApp());
                                                 },
                                               ),
                                             ),
