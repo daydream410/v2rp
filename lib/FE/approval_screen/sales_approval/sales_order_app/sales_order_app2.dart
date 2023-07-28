@@ -117,11 +117,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
     Size size = MediaQuery.of(context).size;
 
     // bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-    List listRequestTo = [
-      "Normal",
-      "WAPU",
-      "Tidak Dipungut",
-    ];
+
     List listStatus = [
       "Pending",
       "Approve",
