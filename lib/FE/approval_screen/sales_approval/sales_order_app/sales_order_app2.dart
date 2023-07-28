@@ -119,8 +119,8 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
     // bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     List listStatus = [
-      "Pending",
       "Approve",
+      "Reject",
       "Send To Draft",
     ];
 

@@ -118,7 +118,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
     // bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     List listStatus = [
-      "Pending",
+      "Reject",
       "Approve",
       "Send To Draft",
     ];
@@ -167,26 +167,26 @@ class _PoScmApp2State extends State<PoScmApp2> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.001, //atur lebar kotak putih
-                    vertical: size.height * 0.02, //atur lokasi kotak putih
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: size.width * 0.001, //atur lebar kotak putih
+                  vertical: size.height * 0.02, //atur lokasi kotak putih
+                ),
+                height: size.height * 0.30, //atur panjang kotak putih
+                decoration: BoxDecoration(
+                  color: HexColor("#F4A62A"),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
                   ),
-                  height: size.height * 0.40, //atur panjang kotak putih
-                  decoration: BoxDecoration(
-                    color: HexColor("#F4A62A"),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 10),
+                      blurRadius: 60,
+                      color: Colors.grey.withOpacity(0.40),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0, 10),
-                        blurRadius: 60,
-                        color: Colors.grey.withOpacity(0.40),
-                      ),
-                    ],
-                  ),
+                  ],
+                ),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       const SizedBox(height: 10.0),
@@ -200,64 +200,22 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
-                                  'NEP/23003606',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  '02/12/2023',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  'Developer 3',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  'TEST V2RP',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
                                 const Row(
                                   children: [
                                     Text(
-                                      'IDR',
+                                      'P/O No : ',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
                                         color: Colors.white,
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
                                     Text(
-                                      'Mandiri Bisnis 17770-4',
+                                      'PO/NEP/2023/02-0161',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -265,58 +223,177 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-
-                                // DropdownButton(
-                                //   hint: const Text(
-                                //     "IDR",
-                                //     style: TextStyle(
-                                //       color: Colors.white,
-                                //     ),
-                                //   ),
-                                //   icon: const Icon(
-                                //     Icons.arrow_drop_down,
-                                //     color: Colors.white,
-                                //   ),
-                                //   dropdownColor: HexColor("#F4A62A"),
-                                //   iconSize: 30,
-                                //   value: valueChooseRequest.isNotEmpty
-                                //       ? valueChooseRequest
-                                //       : null,
-                                //   onChanged: null,
-                                //   items: null,
-                                // ),
-                                DropdownButton(
-                                  hint: const Text(
-                                    "Approval Status",
-                                    style: TextStyle(
-                                      color: Colors.white,
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Date : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.white,
-                                  ),
-                                  dropdownColor: HexColor("#F4A62A"),
-                                  iconSize: 30,
-                                  value: valueStatus.isNotEmpty
-                                      ? valueStatus
-                                      : null,
-                                  onChanged: (newValueStatus) {
-                                    setState(() {
-                                      valueStatus = newValueStatus as String;
-                                    });
-                                  },
-                                  items: listStatus.map((valueStatuss) {
-                                    return DropdownMenuItem(
-                                      value: valueStatuss,
-                                      child: Text(
-                                        valueStatuss,
-                                        style: const TextStyle(
-                                          color: Colors.white,
+                                    Text(
+                                      '02/12/2023',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Request By : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Developer 3',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Supplier : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Kasir Surabaya',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Address : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Jalan brembeng, Mojosari',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'CCY : ',
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          'IDR',
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Discount : ',
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          '50%',
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Request Status : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    DropdownButton(
+                                      hint: const Text(
+                                        "Pending",
+                                        style: TextStyle(
+                                          color: Colors.white70,
                                         ),
                                       ),
-                                    );
-                                  }).toList(),
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Colors.black,
+                                      ),
+                                      dropdownColor: HexColor("#F4A62A"),
+                                      iconSize: 30,
+                                      value: valueStatus.isNotEmpty
+                                          ? valueStatus
+                                          : null,
+                                      onChanged: (newValueStatus) {
+                                        setState(() {
+                                          valueStatus =
+                                              newValueStatus as String;
+                                        });
+                                      },
+                                      items: listStatus.map((valueStatuss) {
+                                        return DropdownMenuItem(
+                                          value: valueStatuss,
+                                          child: Text(
+                                            valueStatuss,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -331,12 +408,15 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                     color: Colors.white,
                                   )),
                                   child: Text(
-                                    'Description',
+                                    'Notes',
                                     style: TextStyle(
                                       color: Colors.white.withOpacity(0.6),
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                               ],
                             ),
                           ),
@@ -346,189 +426,191 @@ class _PoScmApp2State extends State<PoScmApp2> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.30,
-                width: MediaQuery.of(context).size.width * 5,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.30,
-                        // width: MediaQuery.of(context).size.width * 2.2,
-                        child: DataTable2(
-                          columnSpacing: 12,
-                          horizontalMargin: 12,
-                          minWidth: 600,
-                          columns: const [
-                            DataColumn2(
-                              label: Text('Req By'),
-                              size: ColumnSize.M,
-                            ),
-                            DataColumn2(
-                              label: Text('Project Name'),
-                              size: ColumnSize.L,
-                            ),
-                            DataColumn2(
-                              label: Text('Item/Acc Name'),
-                              size: ColumnSize.L,
-                            ),
-                            DataColumn2(
-                              label: Text('Description'),
-                              size: ColumnSize.L,
-                            ),
-                            DataColumn(
-                              label: Text('QTY'),
-                              numeric: true,
-                            ),
-                            DataColumn(
-                              label: Text('Price/Unit'),
-                              numeric: true,
-                            ),
-                            DataColumn(
-                              label: Text('Amount'),
-                              numeric: true,
-                            ),
-                          ],
-                          rows: details
-                              .map((e) => DataRow(cells: [
-                                    DataCell(Text(
-                                      e.requestor ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.project ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.accname ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.desc ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.qty.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.priceunit.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.amount.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                  ]))
-                              .toList(),
+              Expanded(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.30,
+                  width: MediaQuery.of(context).size.width * 5,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.30,
+                          // width: MediaQuery.of(context).size.width * 2.2,
+                          child: DataTable2(
+                            columnSpacing: 12,
+                            horizontalMargin: 12,
+                            minWidth: 600,
+                            columns: const [
+                              DataColumn2(
+                                label: Text('Req By'),
+                                size: ColumnSize.M,
+                              ),
+                              DataColumn2(
+                                label: Text('Project Name'),
+                                size: ColumnSize.L,
+                              ),
+                              DataColumn2(
+                                label: Text('Item/Acc Name'),
+                                size: ColumnSize.L,
+                              ),
+                              DataColumn2(
+                                label: Text('Description'),
+                                size: ColumnSize.L,
+                              ),
+                              DataColumn(
+                                label: Text('QTY'),
+                                numeric: true,
+                              ),
+                              DataColumn(
+                                label: Text('Price/Unit'),
+                                numeric: true,
+                              ),
+                              DataColumn(
+                                label: Text('Amount'),
+                                numeric: true,
+                              ),
+                            ],
+                            rows: details
+                                .map((e) => DataRow(cells: [
+                                      DataCell(Text(
+                                        e.requestor ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.project ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.accname ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.desc ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.qty.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.priceunit.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.amount.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                    ]))
+                                .toList(),
+                          ),
                         ),
-                      ),
-                      Divider(
-                        height: 10,
-                        thickness: 10,
-                        color: HexColor("#F4A62A"),
-                      ),
-                      const Text('Sub-Total'),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.30,
-                        // width: MediaQuery.of(context).size.width * 2.2,
-                        child: DataTable2(
-                          columnSpacing: 12,
-                          horizontalMargin: 12,
-                          minWidth: 600,
-                          columns: const [
-                            DataColumn2(
-                              label: Text('Req By'),
-                              size: ColumnSize.M,
-                            ),
-                            DataColumn2(
-                              label: Text('Project Name'),
-                              size: ColumnSize.L,
-                            ),
-                            DataColumn2(
-                              label: Text('Item/Acc Name'),
-                              size: ColumnSize.L,
-                            ),
-                            DataColumn2(
-                              label: Text('Description'),
-                              size: ColumnSize.L,
-                            ),
-                            DataColumn(
-                              label: Text('QTY'),
-                              numeric: true,
-                            ),
-                            DataColumn(
-                              label: Text('Price/Unit'),
-                              numeric: true,
-                            ),
-                            DataColumn(
-                              label: Text('Amount'),
-                              numeric: true,
-                            ),
-                          ],
-                          rows: details
-                              .map((e) => DataRow(cells: [
-                                    DataCell(Text(
-                                      e.requestor ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.project ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.accname ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.desc ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.qty.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.priceunit.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                    DataCell(Text(
-                                      e.amount.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    )),
-                                  ]))
-                              .toList(),
+                        Divider(
+                          height: 10,
+                          thickness: 10,
+                          color: HexColor("#F4A62A"),
                         ),
-                      ),
-                    ],
+                        const Text('Tabel Sub-Total'),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.30,
+                          // width: MediaQuery.of(context).size.width * 2.2,
+                          child: DataTable2(
+                            columnSpacing: 12,
+                            horizontalMargin: 12,
+                            minWidth: 600,
+                            columns: const [
+                              DataColumn2(
+                                label: Text('Req By'),
+                                size: ColumnSize.M,
+                              ),
+                              DataColumn2(
+                                label: Text('Project Name'),
+                                size: ColumnSize.L,
+                              ),
+                              DataColumn2(
+                                label: Text('Item/Acc Name'),
+                                size: ColumnSize.L,
+                              ),
+                              DataColumn2(
+                                label: Text('Description'),
+                                size: ColumnSize.L,
+                              ),
+                              DataColumn(
+                                label: Text('QTY'),
+                                numeric: true,
+                              ),
+                              DataColumn(
+                                label: Text('Price/Unit'),
+                                numeric: true,
+                              ),
+                              DataColumn(
+                                label: Text('Amount'),
+                                numeric: true,
+                              ),
+                            ],
+                            rows: details
+                                .map((e) => DataRow(cells: [
+                                      DataCell(Text(
+                                        e.requestor ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.project ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.accname ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.desc ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.qty.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.priceunit.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.amount.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      )),
+                                    ]))
+                                .toList(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
