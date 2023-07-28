@@ -189,82 +189,174 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: size.width * 0.05),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                'CADV/NEP/2023/02-0161',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: size.width * 0.05),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                '02/12/2023',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.white,
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'CA No : ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'CADV/NEP/2023/02-0161',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                'Developer 3',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.white,
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                '50.000.000',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.white,
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Date : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      '02/12/2023',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                // margin: const EdgeInsets.all(15.0),
-                                padding: const EdgeInsets.all(3.0),
-                                width: size.width * 0.8,
-                                height: size.height * 0.1,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: Colors.white,
-                                )),
-                                child: Text(
-                                  'Description',
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.6),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Dept: ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'V2RP',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Request By : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Developer 3',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Approval Level : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      '1',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Amount : ',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      '5000000',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  // margin: const EdgeInsets.all(15.0),
+                                  padding: const EdgeInsets.all(3.0),
+                                  width: size.width * 0.8,
+                                  height: size.height * 0.1,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                    color: Colors.white,
+                                  )),
+                                  child: Text(
+                                    'Description',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.6),
+                                    ),
                                   ),
                                 ),
-                              )
-                            ],
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Visibility(
@@ -319,9 +411,6 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Expanded(
                 child: SizedBox(
