@@ -222,7 +222,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -243,7 +243,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       '02/12/2023',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -264,7 +264,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       'Developer 3',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -285,13 +285,10 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       'Kasir Surabaya',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
                                 ),
                                 Row(
                                   children: [
@@ -306,7 +303,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       hint: const Text(
                                         "Pending",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.white70,
                                         ),
                                       ),
                                       icon: const Icon(

@@ -221,7 +221,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -242,7 +242,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                                       '02/12/2023',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -263,7 +263,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                                       'Kasir Surabaya',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -284,7 +284,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                                       hint: const Text(
                                         "Pending",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.white70,
                                         ),
                                       ),
                                       icon: const Icon(

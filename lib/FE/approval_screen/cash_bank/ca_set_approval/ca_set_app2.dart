@@ -217,7 +217,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -238,7 +238,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                                       '02/12/2023',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -259,7 +259,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                                       'V2RP',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -280,7 +280,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                                       'Developer 3',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -301,7 +301,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                                       '1',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -322,7 +322,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                                       '5000000',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
