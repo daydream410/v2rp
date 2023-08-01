@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
@@ -12,10 +13,14 @@ import 'package:v2rp1/BE/resD.dart';
 // import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 import 'package:v2rp1/main.dart';
 import 'package:crypto/crypto.dart' as crypto;
+
+import 'controller.dart';
 // import 'package:uuid/uuid.dart';
 // import 'package:mac_address/mac_address.dart';
 
 class MsgHeader {
+  static TextControllers textControllers = Get.put(TextControllers());
+
   static int trxid = DateTime.now().millisecondsSinceEpoch;
   static var ipValue = '';
   static var datetime = DateFormat("yyyyMMddHHmmss").format(DateTime.now());
@@ -29,6 +34,10 @@ class MsgHeader {
   static var resultSearch;
   static var dataResult;
   static var messageResult;
+  static var kulonuwun;
+  static var monggo;
+  static var status;
+
   // static var uuid = const Uuid();
   // static var id;
   static var macAddress = 'Unknown';
@@ -42,7 +51,7 @@ class MsgHeader {
             "datetime": "$datetime",
             "requestip": "true"
           }));
-      print(response.body);
+      // print(response.body);
       var hasil = jsonDecode(response.body);
       // print('${hasil['responsecode']}');
       // print('${hasil['ip']}');
@@ -70,11 +79,11 @@ class MsgHeader {
     conve = md5.convert(utf8.encode(data)).toString();
     var msgHead = 'x-v2rp-key:' + conve;
 
-    print('Your IPPP = ' + ipValue);
-    print('Your MD5 = ' + conve);
-    print('Your Message Header = ' + msgHead);
-    print('Your USERNAME = ' + userVal.toString());
-    print('Your PASSWORD = ' + passVal.toString());
+    // print('Your IPPP = ' + ipValue);
+    // print('Your MD5 = ' + conve);
+    // print('Your Message Header = ' + msgHead);
+    // print('Your USERNAME = ' + userVal.toString());
+    // print('Your PASSWORD = ' + passVal.toString());
   }
 
   static Future<void> Login(String? userVal, passVal) async {
@@ -111,11 +120,11 @@ class MsgHeader {
             "reqid": "login",
             // "macAddress": "$macAddress",
           }));
-      print(sendLogin.body);
+      // print(sendLogin.body);
       hasilLogin = jsonDecode(sendLogin.body);
-      print('${hasilLogin['responsecode']}');
+      // print('${hasilLogin['responsecode']}');
       responseCodeResult = {hasilLogin['responsecode']};
-      print(responseCodeResult);
+      // print(responseCodeResult);
       ipResult = {hasilLogin['ip']};
       messageResult = hasilLogin['message'];
       // print('Mac Address = ' + macAddress);
@@ -136,11 +145,53 @@ class MsgHeader {
             "id": "$searchValue"
           }));
       /////////////////////////
-      print(sendSearch.body);
+      // print(sendSearch.body);
       ResultData outputResult = ResultData.fromMap(jsonDecode(sendSearch.body));
-      print(outputResult.responsecode);
+      // print(outputResult.responsecode);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future<void> loginProcessNEW() async {
+    var emailVal = textControllers.emailController.value.text;
+    var userVal = textControllers.usernameController.value.text;
+    var passVal = textControllers.passwordController.value.text;
+    print('Email =======' + emailVal);
+    print('role =======' + userVal);
+    print('pw =======' + passVal);
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var sendLogin =
+          await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/login'),
+              // await http.post(Uri.parse(Api.loginApi),
+              headers: {'Content-Type': 'application/json; charset=utf-8'},
+              body: jsonEncode({
+                "email": emailVal,
+                "role": userVal,
+                "password": passVal,
+              }));
+
+      print('sendlogin ===' + sendLogin.body);
+      var hasilLogin = jsonDecode(sendLogin.body);
+      var data = hasilLogin['data'];
+      kulonuwun = data['kulonuwun'];
+      monggo = data['monggo'];
+      status = hasilLogin['status'];
+      // print('status' + status);
+      // print('kulooo = ' + kulonuwun);
+      // print('monggo = ' + monggo);
     } catch (e) {
       print(e);
     }
   }
 }
+
+// class Api {
+//   static const _baseUrl = '156.67.217.113';
+
+//   static const loginApi = _baseUrl + '/api/v1/mobile/login';
+//   static const caConfirmApi = _baseUrl + '/api/v1/mobile/confirmation/kasbon/';
+//   static const sppbjConfirmApi =
+//       _baseUrl + '/api/v1/mobile/confirmation/sppbj/';
+// }

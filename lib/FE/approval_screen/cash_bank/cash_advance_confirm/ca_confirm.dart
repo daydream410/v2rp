@@ -1,11 +1,20 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
+import 'package:v2rp1/BE/reqip.dart';
+import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/resD.dart';
 
 import '../../../../BE/controller.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 import 'ca_confirm2.dart';
 
@@ -18,6 +27,13 @@ class CashAdvanceConfirm extends StatefulWidget {
 
 class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,14 +114,14 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            // itemCount: dataaa.length,
+                            itemCount: 2,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
                                   title: const Text(
-                                    // _dataaa[index]['itemname'],
+                                    // dataaa[index]['nokasbon'],
                                     "CADV/OSY/2023/04-0075",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -234,31 +250,50 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
+                                  // itemCount: 5,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "CADV/OSY/2023/04-0075",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['nokasbon'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(dataaa[index]['header']
+                                                ['requestorname'] +
+                                            " || " +
+                                            dataaa[index]['header']['tanggal']),
+                                        // const Text("Requestor || Date"),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(CashAdvanceConfirm2());
+                                            Get.to(CashAdvanceConfirm2(
+                                              seckey: dataaa[index]['seckey'],
+                                              nokasbon: dataaa[index]['header']
+                                                  ['nokasbon'],
+                                              ket: dataaa[index]['header']
+                                                  ['ket'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                              requestorname: dataaa[index]
+                                                  ['header']['requestorname'],
+                                              updstatus: dataaa[index]['header']
+                                                  ['updstatus'],
+                                              kasir: dataaa[index]['header']
+                                                  ['kasir'],
+                                              kasirname: dataaa[index]['header']
+                                                  ['kasirname'],
+                                            ));
                                             // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
+                                            //   idstock: dataaa[index]
                                             //       ['stockid'],
-                                            //   itemname: _dataaa[index]
+                                            //   itemname: dataaa[index]
                                             //       ['itemname'],
                                             //   serverKeyVal: serverKeyValue,
                                             // ));
@@ -284,5 +319,33 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/kasbon/'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+      // final data = caConfirmData['data'];
+      setState(() {
+        dataaa = caConfirmData['data'];
+      });
+
+      print("getdataaaa " + caConfirmData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

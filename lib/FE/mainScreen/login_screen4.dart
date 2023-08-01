@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_print, prefer_typing_uninitialized_variables, unused_field, non_constant_identifier_names, avoid_types_as_parameter_names, prefer_const_constructors
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -33,9 +33,12 @@ class _LoginPage4State extends State<LoginPage4>
 
   // static var userVal = textControllers.usernameController.value.text;
   // static var passVal = textControllers.passwordController.value.text;
+  // static var emailVal = textControllers.emailController.value.text;
   static var responseCodeResult;
   static var _timer;
   late bool _isButtonDisabled;
+  static var kulonuwun;
+  static var monggo;
 
   @override
   void dispose() {
@@ -213,7 +216,7 @@ class _LoginPage4State extends State<LoginPage4>
                       validator: (value) {
                         if (value!.isEmpty || value.length < 3) {
                           // setState(() {
-                          // _passwordController.clear();
+                          //   _passwordController.clear();
                           // });
                           return 'Please Enter a valid password';
                         }
@@ -225,11 +228,12 @@ class _LoginPage4State extends State<LoginPage4>
                     ),
                     TextButton(
                       onPressed: () async {
-                        // _isButtonDisabled ? null : convertProcess();
+                        // _isButtonDisabled ? null : loginProcessNEW();
                         // _timer = Timer(const Duration(milliseconds: 3000), (() {
-                        //   convertProcess();
+                        //   loginProcessNEW();
                         // }));
-                        Get.to(Navbar()); //sementara aja
+                        // Get.to(Navbar()); //sementara aja
+                        loginNEW();
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: HexColor("#F4A62A"),
@@ -253,51 +257,14 @@ class _LoginPage4State extends State<LoginPage4>
     );
   }
 
-  Future<void> convertProcess() async {
-    setState(() {
-      _isButtonDisabled = true;
-    });
-    String? finalUsername;
-    String? finalPassowrd;
-    // final SharedPreferences sharedPreferences =
-    //     await SharedPreferences.getInstance();
-    // var obtainUsername = sharedPreferences.getString('username');
-    // var obtainPassword = sharedPreferences.getString('password');
-    // setState(() {
-    //   finalUsername = obtainUsername;
-    //   finalPassowrd = obtainPassword;
-    // });
-
-    print("final pw ==== " + finalPassowrd.toString());
-    print("final usn ==== " + finalUsername.toString());
-
-    String? userVal =
-        finalUsername ?? textControllers.usernameController.value.text;
-    String? passVal =
-        finalPassowrd ?? textControllers.passwordController.value.text;
-
-    MsgHeader.convi(userVal, passVal);
-    MsgHeader.Login(userVal, passVal);
-    loginProcess(
-        responseCodeResult, MsgHeader.ipResult, MsgHeader.messageResult);
-  }
-
-  Future<void> loginProcess(responseCodeResult, ipResult, messageResult) async {
-    var loginResult = MsgHeader.responseCodeResult;
-    var messageRes = MsgHeader.messageResult;
-    // final SharedPreferences sharedPreferences =
-    //     await SharedPreferences.getInstance();
-    // sharedPreferences.setString(
-    //     'username', textControllers.usernameController.value.text);
-    // sharedPreferences.setString(
-    //     'password', textControllers.passwordController.value.text);
-    // sharedPreferences.setString('conve', MsgHeader.conve);
-
+  Future<void> loginNEW() async {
+    MsgHeader.loginProcessNEW();
+    var status = MsgHeader.status;
     try {
       if (_formKey.currentState!.validate()) {
-        if (loginResult.toString() == '{00}') {
+        if (status.toString() == 'success') {
           Get.snackbar(
-            "$messageRes",
+            "success",
             "",
             colorText: Colors.white,
             icon: Icon(Icons.check),
@@ -311,7 +278,7 @@ class _LoginPage4State extends State<LoginPage4>
           setState(() {
             textControllers.passwordController.value.clear();
           });
-        } else if (loginResult == null) {
+        } else if (status == null) {
           Get.snackbar(
             "Please Wait",
             "Connecting To Server...",
@@ -325,9 +292,9 @@ class _LoginPage4State extends State<LoginPage4>
             duration: Duration(seconds: 2),
             dismissDirection: DismissDirection.vertical,
           );
-        } else if (loginResult.toString() == '{05}') {
+        } else {
           Get.snackbar(
-            "$messageRes",
+            "Waiting",
             "",
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM,
@@ -348,4 +315,138 @@ class _LoginPage4State extends State<LoginPage4>
       print(e);
     }
   }
+
+  // Future<void> loginProcessNEW() async {
+  //   var emailVal = textControllers.emailController.value.text;
+  //   var userVal = textControllers.usernameController.value.text;
+  //   var passVal = textControllers.passwordController.value.text;
+  //   print('Email =======' + emailVal);
+  //   print('role =======' + userVal);
+  //   print('pw =======' + passVal);
+  //   try {
+  //     // http://156.67.217.113/api/v1/mobile
+  //     var sendLogin =
+  //         await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/login'),
+  //             headers: {'Content-Type': 'application/json; charset=utf-8'},
+  //             body: jsonEncode({
+  //               "email": emailVal,
+  //               "role": userVal,
+  //               "password": passVal,
+  //             }));
+
+  //     print('sendlogin ===' + sendLogin.body);
+  //     var hasilLogin = jsonDecode(sendLogin.body);
+  //     var data = hasilLogin['data'];
+  //     kulonuwun = data['kulonuwun'];
+  //     monggo = data['monggo'];
+  //     var status = hasilLogin['status'];
+  //     if (status == 'success') {
+  //       Get.to(Navbar());
+  //     }
+  //     // print('status' + status);
+  //     // print('kulooo = ' + kulonuwun);
+  //     // print('monggo = ' + monggo);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  // Future<void> convertProcess() async {
+  //   setState(() {
+  //     _isButtonDisabled = true;
+  //   });
+  //   String? finalemail;
+  //   String? finalUsername;
+  //   String? finalPassowrd;
+  //   final SharedPreferences sharedPreferences =
+  //       await SharedPreferences.getInstance();
+  //   var obtainemail = sharedPreferences.getString('email');
+  //   var obtainUsername = sharedPreferences.getString('username');
+  //   var obtainPassword = sharedPreferences.getString('password');
+  //   setState(() {
+  //     finalemail = obtainemail;
+  //     finalUsername = obtainUsername;
+  //     finalPassowrd = obtainPassword;
+  //   });
+
+  //   print("final pw ==== " + finalPassowrd.toString());
+  //   print("final usn ==== " + finalUsername.toString());
+
+  //   String? userVal =
+  //       finalUsername ?? textControllers.usernameController.value.text;
+  //   String? passVal =
+  //       finalPassowrd ?? textControllers.passwordController.value.text;
+
+  //   MsgHeader.convi(userVal, passVal);
+  //   MsgHeader.Login(userVal, passVal);
+  //   loginProcess(
+  //       responseCodeResult, MsgHeader.ipResult, MsgHeader.messageResult);
+  // }
+
+  // Future<void> loginProcess(responseCodeResult, ipResult, messageResult) async {
+  //   var loginResult = MsgHeader.responseCodeResult;
+  //   var messageRes = MsgHeader.messageResult;
+  //   // final SharedPreferences sharedPreferences =
+  //   //     await SharedPreferences.getInstance();
+  //   // sharedPreferences.setString(
+  //   //     'username', textControllers.usernameController.value.text);
+  //   // sharedPreferences.setString(
+  //   //     'password', textControllers.passwordController.value.text);
+  //   // sharedPreferences.setString('conve', MsgHeader.conve);
+
+  // try {
+  //   if (_formKey.currentState!.validate()) {
+  //     if (loginResult.toString() == '{00}') {
+  //       Get.snackbar(
+  //         "$messageRes",
+  //         "",
+  //         colorText: Colors.white,
+  //         icon: Icon(Icons.check),
+  //         backgroundColor: Colors.green,
+  //         isDismissible: true,
+  //         dismissDirection: DismissDirection.vertical,
+  //       );
+
+  //       // Get.to(() => Navbar());
+  //       Get.offAll(const Navbar());
+  //       setState(() {
+  //         textControllers.passwordController.value.clear();
+  //       });
+  //     } else if (loginResult == null) {
+  //       Get.snackbar(
+  //         "Please Wait",
+  //         "Connecting To Server...",
+  //         colorText: Colors.white,
+  //         icon: Icon(
+  //           Icons.timer,
+  //           color: Colors.white,
+  //         ),
+  //         backgroundColor: HexColor("#F4A62A"),
+  //         isDismissible: true,
+  //         duration: Duration(seconds: 2),
+  //         dismissDirection: DismissDirection.vertical,
+  //       );
+  //     } else if (loginResult.toString() == '{05}') {
+  //       Get.snackbar(
+  //         "$messageRes",
+  //         "",
+  //         colorText: Colors.white,
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         icon: Icon(
+  //           Icons.close,
+  //           color: Colors.white,
+  //         ),
+  //         backgroundColor: Colors.red,
+  //         isDismissible: true,
+  //         dismissDirection: DismissDirection.vertical,
+  //       );
+  //       // _timer = Timer(Duration(seconds: 3), (() {
+  //       //   SystemNavigator.pop();
+  //       // }));
+  //     }
+  //   }
+  // } catch (e) {
+  //   print(e);
+  // }
+  // }
 }

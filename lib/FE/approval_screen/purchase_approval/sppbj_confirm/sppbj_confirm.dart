@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_confirm/sppbj_confirm2.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../BE/controller.dart';
 import '../../../navbar/navbar.dart';
@@ -18,6 +20,12 @@ class SppbjConfirm extends StatefulWidget {
 
 class _SppbjConfirmState extends State<SppbjConfirm> {
   static TextControllers textControllers = Get.put(TextControllers());
+
+  @override
+  void initState() {
+    super.initState();
+    sppbjConfirm();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -285,5 +293,26 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
               ),
             ),
     );
+  }
+
+  Future<void> sppbjConfirm() async {
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/sppbj/'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      print('getData = ' + getData.body);
+      // print('monggo =' + monggo);
+      // print('kulo =' + kulonuwun);
+    } catch (e) {
+      print(e);
+    }
   }
 }
