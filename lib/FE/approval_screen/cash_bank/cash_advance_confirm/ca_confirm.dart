@@ -262,10 +262,14 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle: Text(dataaa[index]['header']
-                                                ['requestorname'] +
-                                            " || " +
-                                            dataaa[index]['header']['tanggal']),
+                                        subtitle: Text(
+                                          dataaa[index]['header']
+                                                  ['requestorname'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
                                         // const Text("Requestor || Date"),
                                         trailing: IconButton(
                                           icon: const Icon(
@@ -337,6 +341,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
         },
       );
       final caConfirmData = json.decode(getData.body);
+
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];

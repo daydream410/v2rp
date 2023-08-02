@@ -1,13 +1,14 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -201,7 +202,8 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       ),
                                     ),
                                     Text(
-                                      widget.tanggal ?? "",
+                                      DateFormat('yyyy-MM-dd').format(
+                                          DateTime.parse(widget.tanggal)),
                                       style: const TextStyle(
                                         fontSize: 15.0,
                                         color: Colors.white70,
@@ -362,10 +364,6 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           height: 20,
                         ),
                         CircularProgressIndicator(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text('Please Kindly Waiting...'),
                       ],
                     ));
                   } else {
@@ -536,190 +534,49 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                   }
                 },
               ),
-              // Expanded(
-              //   child: DataTable2(
-              //     columnSpacing: 12,
-              //     horizontalMargin: 12,
-              //     minWidth: 600,
-              //     columns: const [
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Req'),
-              //             Text('By'),
-              //           ],
-              //         ),
-              //         size: ColumnSize.M,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Project'),
-              //             Text('Name'),
-              //           ],
-              //         ),
-              //         size: ColumnSize.M,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Item/'),
-              //             Text('Acc No'),
-              //           ],
-              //         ),
-              //         size: ColumnSize.M,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Item/Acc'),
-              //             Text('Name'),
-              //           ],
-              //         ),
-              //         size: ColumnSize.L,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Desc'),
-              //           ],
-              //         ),
-              //         size: ColumnSize.L,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Unit'),
-              //           ],
-              //         ),
-              //         numeric: true,
-              //         size: ColumnSize.S,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('QTY'),
-              //           ],
-              //         ),
-              //         numeric: true,
-              //         size: ColumnSize.S,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Price/'),
-              //             Text('Unit'),
-              //           ],
-              //         ),
-              //         numeric: true,
-              //         size: ColumnSize.M,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Amt'),
-              //           ],
-              //         ),
-              //         numeric: true,
-              //         size: ColumnSize.M,
-              //       ),
-              //       DataColumn2(
-              //         label: Column(
-              //           children: [
-              //             Text('Budget'),
-              //             Text('Avail'),
-              //           ],
-              //         ),
-              //         numeric: true,
-              //         size: ColumnSize.L,
-              //       ),
-              //     ],
-              //     rows: dataaa
-              //         .map((e) => DataRow(cells: [
-              //               DataCell(Text(
-              //                 e['requestorname'] ?? '',
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['projectname'] ?? '',
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['itemcoa'] ?? '',
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['rem'] ?? '',
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['ket'] ?? '',
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['unit'].toString(),
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['qty'].toString(),
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['harga'].toString(),
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['amount'].toString(),
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //               DataCell(Text(
-              //                 e['budget']['budgetavailable'].toString(),
-              //                 style: const TextStyle(
-              //                   fontSize: 11,
-              //                 ),
-              //               )),
-              //             ]))
-              //         .toList(),
-              //   ),
-              // ),
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Text(
-                    'TOTAL = ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    totalPrice.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
+              FutureBuilder(
+                future: hitungTotal(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.error != null) {
+                    return const Center(
+                      child: Text('Error Loading Data'),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Please Kindly Waiting...'),
+                      ],
+                    ));
+                  } else {
+                    print("snapshot data " + snapshot.data.toString());
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'TOTAL = ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          totalPrice.toStringAsFixed(2),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -765,12 +622,45 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
       // setState(() {
       dataaa = caConfirmData['data']['detail'];
       //hitung total
-      double totalScores = 0.0;
-      dataaa.forEach((item) {
-        totalScores += item["amount"];
-      }); //total udah masuk cuman ga keubah di tampilan
+      // double totalScores = 0.0;
+      // dataaa.forEach((item) {
+      //   totalPrice += item["amount"];
+      // }); //total udah masuk cuman ga keubah di tampilan
       // });
-      print("totalllll  " + totalScores.toString());
+      // print("totalllll  " + totalScores.toString());
+      print("dataaa " + dataaa.toString());
+      return dataaa;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<dynamic> hitungTotal() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      var getData = await http.get(
+        Uri.http('156.67.217.113',
+            '/api/v1/mobile/confirmation/kasbon/' + widget.seckey),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+      // setState(() {
+      dataaa = caConfirmData['data']['detail'];
+      //hitung total
+      totalPrice = 0;
+      for (var item in dataaa) {
+        totalPrice += item["amount"] as int;
+      }
+
+      // });
+      print("totalllll  " + totalPrice.toString());
       print("dataaa " + dataaa.toString());
       return dataaa;
     } catch (e) {
