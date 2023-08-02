@@ -364,48 +364,37 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.green),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Approve Selected',
-                        style: TextStyle(
-                          color: Colors.white,
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'Reject Selected',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(
                       width: 20,
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Reject',
-                        style: TextStyle(
-                          color: Colors.white,
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            HexColor("#F4A62A"),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          HexColor("#F4A62A"),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Send To Draft',
-                        style: TextStyle(
-                          color: Colors.white,
+                        onPressed: () {},
+                        child: const Text(
+                          'Send To Draft (ALL)',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -510,6 +499,9 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                         .toList(),
                   ),
                 ),
+              ),
+              const SizedBox(
+                width: 20,
               ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.end,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app2.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class CashAdvanceApproval extends StatefulWidget {
@@ -18,6 +24,14 @@ class CashAdvanceApproval extends StatefulWidget {
 
 class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
   static TextControllers textControllers = Get.put(TextControllers());
+  // static late List dataaa = <CaConfirmData>[];
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,8 +248,8 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
+                                  // itemCount: 5,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
@@ -284,5 +298,34 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/kasbon/'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+      });
+
+      print("getdataaaa " + responseData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

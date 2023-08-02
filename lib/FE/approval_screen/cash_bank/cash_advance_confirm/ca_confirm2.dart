@@ -48,17 +48,20 @@ class CashAdvanceConfirm2 extends StatefulWidget {
 class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
   static late List dataaa = <CaConfirmData>[];
 
+  late Future dataFuture;
+
   @override
   void initState() {
     super.initState();
 
-    // getDataa();
+    dataFuture = getDataa();
   }
 
   var valueChooseRequest = "";
   var valueStatus = "";
   var updstatus = "0";
   double totalPrice = 0;
+  bool isVisible = false;
 
   // List<Details> details = [
   //   Details(
@@ -176,7 +179,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
@@ -184,7 +187,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -198,7 +201,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       'Date : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
@@ -206,7 +209,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                           DateTime.parse(widget.tanggal)),
                                       style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -220,14 +223,14 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       'Request By : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
                                       widget.requestorname ?? "",
                                       style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -241,17 +244,20 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       'Request To : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
                                       widget.kasirname ?? "",
                                       style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
                                 ),
                                 Row(
                                   children: [
@@ -259,60 +265,77 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                       'Request Status : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
-                                    DropdownButton(
-                                      hint: const Text(
-                                        "Pending",
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                        ),
+                                    DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            color: Colors.white, width: 1),
+                                        borderRadius: BorderRadius.circular(1),
                                       ),
-                                      icon: const Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Colors.black,
-                                      ),
-                                      dropdownColor: HexColor("#F4A62A"),
-                                      iconSize: 30,
-                                      value: valueStatus.isNotEmpty
-                                          ? valueStatus
-                                          : null,
-                                      onChanged: (newValueStatus) {
-                                        setState(() {
-                                          valueStatus =
-                                              newValueStatus as String;
-                                          if (valueStatus == "Pending") {
-                                            updstatus = "0";
-                                            print("updstatus " +
-                                                updstatus.toString());
-                                          } else if (valueStatus == "Confirm") {
-                                            updstatus = "1";
-                                            print("updstatus " +
-                                                updstatus.toString());
-                                          } else if (valueStatus ==
-                                              "Send To Draft") {
-                                            updstatus = "-9";
-                                            print("updstatus " +
-                                                updstatus.toString());
-                                          } else {
-                                            updstatus = "-1";
-                                            print("updstatus " +
-                                                updstatus.toString());
-                                          }
-                                        });
-                                      },
-                                      items: listStatus.map((valueStatuss) {
-                                        return DropdownMenuItem(
-                                          value: valueStatuss,
-                                          child: Text(
-                                            valueStatuss,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                            ),
+                                      child: DropdownButton(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        hint: const Text(
+                                          "Pending",
+                                          style: TextStyle(
+                                            color: Colors.white,
                                           ),
-                                        );
-                                      }).toList(),
+                                        ),
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.white,
+                                        ),
+                                        dropdownColor: HexColor("#F4A62A"),
+                                        underline: Container(), //empty line
+                                        iconSize: 30,
+                                        value: valueStatus.isNotEmpty
+                                            ? valueStatus
+                                            : null,
+                                        onChanged: (newValueStatus) {
+                                          setState(() {
+                                            valueStatus =
+                                                newValueStatus as String;
+
+                                            if (valueStatus == "Pending") {
+                                              updstatus = "0";
+                                              isVisible = false;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            } else if (valueStatus ==
+                                                "Confirm") {
+                                              updstatus = "1";
+                                              isVisible = true;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            } else if (valueStatus ==
+                                                "Send To Draft") {
+                                              updstatus = "-9";
+                                              isVisible = true;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            } else {
+                                              updstatus = "-1";
+                                              isVisible = true;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            }
+                                          });
+                                        },
+                                        items: listStatus.map((valueStatuss) {
+                                          return DropdownMenuItem(
+                                            value: valueStatuss,
+                                            child: Text(
+                                              valueStatuss,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -348,7 +371,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                 ),
               ),
               FutureBuilder(
-                future: getDataa(),
+                future: dataFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.error != null) {
                     return const Center(
@@ -377,8 +400,18 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Req'),
-                                Text('By'),
+                                Text(
+                                  'Request',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'By',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             size: ColumnSize.M,
@@ -386,8 +419,18 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Project'),
-                                Text('Name'),
+                                Text(
+                                  'Project',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             size: ColumnSize.M,
@@ -395,8 +438,18 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Item/'),
-                                Text('Acc No'),
+                                Text(
+                                  'Item/',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Acc No',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             size: ColumnSize.M,
@@ -404,8 +457,18 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Item/Acc'),
-                                Text('Name'),
+                                Text(
+                                  'Item/Acc',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             size: ColumnSize.L,
@@ -413,7 +476,12 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Desc'),
+                                Text(
+                                  'Desc',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             size: ColumnSize.L,
@@ -421,7 +489,12 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Unit'),
+                                Text(
+                                  'Unit',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             numeric: true,
@@ -430,7 +503,12 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('QTY'),
+                                Text(
+                                  'QTY',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             numeric: true,
@@ -439,8 +517,18 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn(
                             label: Column(
                               children: [
-                                Text('Price/'),
-                                Text('Unit'),
+                                Text(
+                                  'Price/',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Unit',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             numeric: true,
@@ -448,7 +536,12 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Amt'),
+                                Text(
+                                  'Amount',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             numeric: true,
@@ -457,8 +550,18 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           DataColumn2(
                             label: Column(
                               children: [
-                                Text('Budget'),
-                                Text('Avail'),
+                                Text(
+                                  'Budget',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Avail',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ],
                             ),
                             numeric: true,
@@ -510,19 +613,25 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                                     ),
                                   )),
                                   DataCell(Text(
-                                    e['harga'].toString(),
+                                    NumberFormat.currency(
+                                            locale: 'eu', symbol: '')
+                                        .format(e['harga']),
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),
                                   )),
                                   DataCell(Text(
-                                    e['amount'].toString(),
+                                    NumberFormat.currency(
+                                            locale: 'eu', symbol: '')
+                                        .format(e['amount']),
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),
                                   )),
                                   DataCell(Text(
-                                    e['budget']['budgetavailable'].toString(),
+                                    NumberFormat.currency(
+                                            locale: 'eu', symbol: '')
+                                        .format(e['budget']['budgetavailable']),
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),
@@ -538,7 +647,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                 height: 10,
               ),
               FutureBuilder(
-                future: hitungTotal(),
+                future: dataFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.error != null) {
                     return const Center(
@@ -567,7 +676,8 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                           ),
                         ),
                         Text(
-                          totalPrice.toStringAsFixed(2),
+                          NumberFormat.currency(locale: 'eu', symbol: '')
+                              .format(totalPrice),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -582,20 +692,23 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: TextButton(
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('S U B M I T'),
-            ),
-            onPressed: () async {
-              sendConfirm();
-              print('updstatus ' + updstatus.toString());
+          child: Visibility(
+            visible: isVisible,
+            child: TextButton(
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('S U B M I T'),
+              ),
+              onPressed: () async {
+                sendConfirm();
+                print('updstatus ' + updstatus.toString());
 
-              // Get.to(const Navbar());
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: HexColor("#F4A62A"),
+                // Get.to(const Navbar());
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: HexColor("#F4A62A"),
+              ),
             ),
           ),
         ),
@@ -621,38 +734,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
       final caConfirmData = json.decode(getData.body);
       // setState(() {
       dataaa = caConfirmData['data']['detail'];
-      //hitung total
-      // double totalScores = 0.0;
-      // dataaa.forEach((item) {
-      //   totalPrice += item["amount"];
-      // }); //total udah masuk cuman ga keubah di tampilan
-      // });
-      // print("totalllll  " + totalScores.toString());
-      print("dataaa " + dataaa.toString());
-      return dataaa;
-    } catch (e) {
-      print(e);
-    }
-  }
 
-  Future<dynamic> hitungTotal() async {
-    HttpOverrides.global = MyHttpOverrides();
-
-    var kulonuwun = MsgHeader.kulonuwun;
-    var monggo = MsgHeader.monggo;
-    try {
-      var getData = await http.get(
-        Uri.http('156.67.217.113',
-            '/api/v1/mobile/confirmation/kasbon/' + widget.seckey),
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
-        },
-      );
-      final caConfirmData = json.decode(getData.body);
-      // setState(() {
-      dataaa = caConfirmData['data']['detail'];
       //hitung total
       totalPrice = 0;
       for (var item in dataaa) {
