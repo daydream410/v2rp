@@ -782,7 +782,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         reffno = response['data']['reffno'];
         message = response['data']['message'];
       });
-      if (status = true) {
+      if (status == true) {
         Get.snackbar(
           'Success $message Data!',
           '$reffno',

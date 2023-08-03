@@ -1,125 +1,69 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
+
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../../BE/reqip.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 
 class CashAdvanceApproval2 extends StatefulWidget {
-  const CashAdvanceApproval2({Key? key}) : super(key: key);
+  final seckey;
+  final nokasbon;
+  final ket;
+  final tanggal;
+  final requestorname;
+
+  const CashAdvanceApproval2({
+    Key? key,
+    required this.seckey,
+    required this.nokasbon,
+    required this.ket,
+    required this.tanggal,
+    required this.requestorname,
+  }) : super(key: key);
 
   @override
   State<CashAdvanceApproval2> createState() => _CashAdvanceApproval2State();
 }
 
 class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
-  List<Details> details = [
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'SMALL MARINE',
-      account: 'Sepatu Bekas',
-      requestor: 'Developer 3',
-      qty: 5,
-      price: 20,
-      amount: 3000,
-      budgetavail: 200000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'PNEP INDUK',
-      account: 'Sepatu Sobek',
-      requestor: 'Developer 3',
-      qty: 5,
-      price: 2,
-      amount: 30000,
-      budgetavail: 60000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'PNEP INDUK',
-      account: 'Sepatu Bekas',
-      requestor: 'Developer 3',
-      qty: 5,
-      price: 20,
-      amount: 3000,
-      budgetavail: 200000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'PNEP INDUK',
-      account: 'Sepatu Bekas',
-      requestor: 'Developer 3',
-      qty: 23,
-      price: 20,
-      amount: 3000,
-      budgetavail: 200000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'Op. HO',
-      account: 'Sepatu Sobek',
-      requestor: 'Developer 3',
-      qty: 52,
-      price: 2,
-      amount: 30000,
-      budgetavail: 60000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'Op. HO',
-      account: 'Sepatu Bekas',
-      requestor: 'Developer 3',
-      qty: 56,
-      price: 20,
-      amount: 3000,
-      budgetavail: 200000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'Op. HO',
-      account: 'Sepatu Bekas',
-      requestor: 'Developer 3',
-      qty: 92,
-      price: 20,
-      amount: 3000,
-      budgetavail: 200000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'Op. HO',
-      account: 'Sepatu Sobek',
-      requestor: 'Developer 3',
-      qty: 924,
-      price: 2,
-      amount: 30000,
-      budgetavail: 60000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'Op. Dir',
-      account: 'Sepatu Bekas',
-      requestor: 'Developer 3',
-      qty: 102,
-      price: 20,
-      amount: 3000,
-      budgetavail: 200000,
-    ),
-    Details(
-      cano: 'CADV/NEP/2023/02-0161',
-      jobproject: 'Op. Dir',
-      account: 'Sepatu Sobek',
-      requestor: 'Developer 3',
-      qty: 523,
-      price: 2,
-      amount: 30000,
-      budgetavail: 60000,
-    ),
-  ];
-  List<Details> selectedDetails = [];
+  static late List dataaa = <CaConfirmData>[];
+  late Future dataFuture;
+  @override
+  void initState() {
+    super.initState();
+    dataFuture = getDataa();
+  }
+
+  // List<Details> details = [
+  //   Details(
+  //     cano: 'CADV/NEP/2023/02-0161',
+  //     jobproject: 'SMALL MARINE',
+  //     account: 'Sepatu Bekas',
+  //     requestor: 'Developer 3',
+  //     qty: 5,
+  //     price: 20,
+  //     amount: 3000,
+  //     budgetavail: 200000,
+  //   ),
+  // ];
+
+  List selectedDetails = [];
   bool selectedGak = false;
+  double totalPrice = 0;
+  var valueButton;
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +119,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                   horizontal: size.width * 0.001, //atur lebar kotak putih
                   vertical: size.height * 0.02, //atur lokasi kotak putih
                 ),
-                height: size.height * 0.30, //atur panjang kotak putih
+                height: size.height * 0.25, //atur panjang kotak putih
                 decoration: BoxDecoration(
                   color: HexColor("#F4A62A"),
                   borderRadius: const BorderRadius.all(
@@ -203,22 +147,22 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'CA No : ',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      'CADV/NEP/2023/02-0161',
-                                      style: TextStyle(
+                                      widget.nokasbon ?? "",
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -226,20 +170,21 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Date : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      '02/12/2023',
-                                      style: TextStyle(
+                                      DateFormat('yyyy-MM-dd').format(
+                                          DateTime.parse(widget.tanggal)),
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -247,83 +192,20 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
-                                      'Dept: ',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      'V2RP',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Row(
-                                  children: [
-                                    Text(
+                                    const Text(
                                       'Request By : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Developer 3',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
                                         color: Colors.white70,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Row(
-                                  children: [
                                     Text(
-                                      'Approval Level : ',
-                                      style: TextStyle(
+                                      widget.requestorname ?? "",
+                                      style: const TextStyle(
                                         fontSize: 15.0,
                                         color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      '1',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Row(
-                                  children: [
-                                    Text(
-                                      'Amount : ',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      '5000000',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -341,9 +223,9 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                                     color: Colors.white,
                                   )),
                                   child: Text(
-                                    'Description',
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.6),
+                                    widget.ket ?? "",
+                                    style: const TextStyle(
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -370,7 +252,13 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                           backgroundColor:
                               MaterialStateProperty.all(Colors.red),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            valueButton = '-1';
+                          });
+                          print("value button " + valueButton);
+                          submitData();
+                        },
                         child: const Text(
                           'Reject Selected',
                           style: TextStyle(
@@ -389,7 +277,13 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                             HexColor("#F4A62A"),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            valueButton = '-9';
+                          });
+                          print("value button " + valueButton);
+                          submitData();
+                        },
                         child: const Text(
                           'Send To Draft (ALL)',
                           style: TextStyle(
@@ -401,175 +295,476 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                   ],
                 ),
               ),
-              Expanded(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.30,
-                  // width: MediaQuery.of(context).size.width * 2.2,
-                  child: DataTable2(
-                    columnSpacing: 12,
-                    horizontalMargin: 12,
-                    minWidth: 600,
-                    columns: const [
-                      DataColumn2(
-                        label: Text('Req By'),
-                        size: ColumnSize.M,
+              FutureBuilder(
+                future: dataFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.error != null) {
+                    return const Center(
+                      child: Text('Error Loading Data'),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: Column(
+                      children: [
+                        Text('Loading Detail...'),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        CircularProgressIndicator(),
+                      ],
+                    ));
+                  } else {
+                    return Expanded(
+                      child: DataTable2(
+                        columnSpacing: 12,
+                        horizontalMargin: 12,
+                        minWidth: 600,
+                        columns: const [
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'CA',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.L,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Project',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.L,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Req',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'By',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.M,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Type',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.M,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Acc',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.M,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Desc',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.L,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Unit',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            numeric: true,
+                            size: ColumnSize.S,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'QTY',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            numeric: true,
+                            size: ColumnSize.S,
+                          ),
+                          DataColumn(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Price',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            numeric: true,
+                          ),
+                          DataColumn(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Amount',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            numeric: true,
+                          ),
+                          DataColumn(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Buget',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Avail',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            numeric: true,
+                          ),
+                        ],
+                        rows: dataaa
+                            .map((e) => DataRow2(
+                                    selected:
+                                        selectedDetails.contains(e["urutan"]),
+                                    onSelectChanged: (isSelected) {
+                                      setState(() {
+                                        final isAdding =
+                                            isSelected != null && isSelected;
+                                        isAdding
+                                            ? selectedDetails.add(e["urutan"])
+                                            : selectedDetails
+                                                .remove(e["urutan"]);
+                                        if (isSelected != null) {
+                                          selectedGak = true;
+                                        }
+                                      });
+                                    },
+                                    cells: [
+                                      DataCell(Text(
+                                        e['nokasbon'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['projectname'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['requestorname'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['tipe'].toString(),
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['itemcoa'],
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['ket'],
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['unit'].toString(),
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['qty'].toString(),
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(e['harga']),
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(e['amount']),
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(
+                                                e['budget']['budgetavailable']),
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                    ]))
+                            .toList(),
                       ),
-                      DataColumn2(
-                        label: Text('Project Name'),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn2(
-                        label: Text('Item/Acc Name'),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn2(
-                        label: Text('Description'),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn(
-                        label: Text('QTY'),
-                        numeric: true,
-                      ),
-                      DataColumn(
-                        label: Text('Price/Unit'),
-                        numeric: true,
-                      ),
-                      DataColumn(
-                        label: Text('Amount'),
-                        numeric: true,
-                      ),
-                    ],
-                    rows: details
-                        .map((Details details) => DataRow2(
-                                selected: selectedDetails.contains(details),
-                                onSelectChanged: (isSelected) => setState(() {
-                                      final isAdding =
-                                          isSelected != null && isSelected;
-                                      isAdding
-                                          ? selectedDetails.add(details)
-                                          : selectedDetails.remove(details);
-                                      if (isSelected != null) {
-                                        selectedGak = true;
-                                      }
-                                    }),
-                                cells: [
-                                  DataCell(Text(
-                                    details.requestor ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                    ),
-                                  )),
-                                  DataCell(Text(
-                                    details.cano ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                    ),
-                                  )),
-                                  DataCell(Text(
-                                    details.jobproject ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                    ),
-                                  )),
-                                  DataCell(Text(
-                                    details.account ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                    ),
-                                  )),
-                                  DataCell(Text(
-                                    details.qty.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                    ),
-                                  )),
-                                  DataCell(Text(
-                                    details.amount.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                    ),
-                                  )),
-                                  DataCell(Text(
-                                    details.budgetavail.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                    ),
-                                  )),
-                                ]))
-                        .toList(),
-                  ),
-                ),
+                    );
+                  }
+                },
               ),
               const SizedBox(
                 width: 20,
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'TOTAL = ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '500000',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              FutureBuilder(
+                future: dataFuture,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.error != null) {
+                    return const Center(
+                      child: Text('Error Loading Data'),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Please Kindly Waiting...'),
+                      ],
+                    ));
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'TOTAL = ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          NumberFormat.currency(locale: 'eu', symbol: '')
+                              .format(totalPrice),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
               ),
             ],
           ),
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: TextButton(
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('A P P R O V E   A L L'),
-            ),
-            onPressed: () async {
-              Get.to(const Navbar());
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: HexColor("#F4A62A"),
+          child: Visibility(
+            visible: selectedGak,
+            child: TextButton(
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('A P P R O V E   A L L'),
+              ),
+              onPressed: () async {
+                setState(() {
+                  valueButton = '1';
+                });
+                print("value button " + valueButton);
+                submitData();
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: HexColor("#F4A62A"),
+              ),
             ),
           ),
         ),
       ),
     );
   }
-}
 
-class Details {
-  // String? requestor;
-  // String? project;
-  // String? accname;
-  // String? desc;
-  // int? qty;
-  // int? priceunit;
-  // int? amount;
+  Future<dynamic> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
 
-  String? cano;
-  String? jobproject;
-  String? requestor;
-  String? account;
-  int? qty;
-  int? price;
-  int? amount;
-  int? budgetavail;
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      var getData = await http.get(
+        Uri.http('156.67.217.113',
+            '/api/v1/mobile/approval/kasbon/' + widget.seckey),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+      // setState(() {
+      dataaa = caConfirmData['data']['detail'];
 
-  Details({
-    this.cano,
-    this.jobproject,
-    this.requestor,
-    this.account,
-    this.qty,
-    this.price,
-    this.amount,
-    this.budgetavail,
-  });
+      //hitung total
+      totalPrice = 0;
+      for (var item in dataaa) {
+        totalPrice += item["amount"] as int;
+      }
+
+      // });
+      print("totalllll  " + totalPrice.toString());
+      print("dataaa " + dataaa.toString());
+      return dataaa;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+//----------------------------------------------------------------
+  Future<void> submitData() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    var status;
+    // var reffno;
+    var message;
+
+    var body = json.encode({
+      "urutan": selectedDetails,
+    });
+
+    Get.to(const Navbar());
+    try {
+      var sendData = await http.put(
+        Uri.http(
+          '156.67.217.113',
+          '/api/v1/mobile/approval/kasbon/' + widget.seckey + '/' + valueButton,
+        ),
+        body: body,
+        headers: {
+          'Content-type': 'application/json',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      print("selected = " +
+          selectedDetails.toString() +
+          selectedDetails.runtimeType.toString());
+      // print("urutan = " + urutan.toString() + urutan.runtimeType.toString());
+      final response = json.decode(sendData.body);
+      print(response.toString());
+      setState(() {
+        status = response['success'];
+        // reffno = response['data']['reffno'] ?? '';
+        message = response['data']['message'];
+        // messageDetail = response['data']['message'];
+      });
+      if (status == true) {
+        Get.snackbar(
+          'Success $message Data!',
+          widget.nokasbon,
+          icon: const Icon(Icons.check),
+          backgroundColor: Colors.green,
+          isDismissible: true,
+          dismissDirection: DismissDirection.vertical,
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Failed! ' + widget.nokasbon,
+          message,
+          icon: const Icon(Icons.warning),
+          backgroundColor: Colors.red,
+          isDismissible: true,
+          dismissDirection: DismissDirection.vertical,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

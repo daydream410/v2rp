@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app2.dart';
 import 'package:http/http.dart' as http;
 
@@ -254,28 +255,35 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "CADV/OSY/2023/04-0075",
+                                        title: Text(
+                                          dataaa[index]['header']['nokasbon'],
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']
+                                                  ['requestorname'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(CashAdvanceApproval2());
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(CashAdvanceApproval2(
+                                              seckey: dataaa[index]['seckey'],
+                                              nokasbon: dataaa[index]['header']
+                                                  ['nokasbon'],
+                                              ket: dataaa[index]['header']
+                                                  ['ket'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestorname: dataaa[index]
+                                                  ['header']['requestorname'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -322,7 +330,7 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
         dataaa = responseData['data'];
       });
 
-      print("getdataaaa " + responseData.toString());
+      // print("getdataaaa " + responseData.toString());
       print("dataaaaaaaaaaaaaaa " + dataaa.toString());
     } catch (e) {
       print(e);
