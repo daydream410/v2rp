@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +7,46 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../../BE/reqip.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 
 class ArApproval2 extends StatefulWidget {
-  ArApproval2({Key? key}) : super(key: key);
+  final seckey;
+  final arno;
+  final tanggal;
+  final requestorname;
+  final clientname;
+  final bankreceiver;
+  final bankreffno;
+  final rvno;
+  final artype;
+  final ccy;
+  final frate;
+  final amount;
+  final inIDR;
+  ArApproval2({
+    Key? key,
+    required this.seckey,
+    required this.arno,
+    required this.tanggal,
+    required this.requestorname,
+    required this.clientname,
+    required this.bankreceiver,
+    required this.bankreffno,
+    required this.rvno,
+    required this.artype,
+    required this.ccy,
+    required this.frate,
+    required this.amount,
+    required this.inIDR,
+  }) : super(key: key);
 
   @override
   State<ArApproval2> createState() => _ArApproval2State();
@@ -19,109 +55,32 @@ class ArApproval2 extends StatefulWidget {
 class _ArApproval2State extends State<ArApproval2> {
   static TextControllers textControllers = Get.put(TextControllers());
 
+  static late List dataaa = <CaConfirmData>[];
+
+  late Future dataFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    dataFuture = getDataa();
+  }
+
   var valueChooseRequest = "";
   var valueStatus = "";
-  List<Details> details = [
-    Details(
-      requestor: 'Developer 3',
-      project: 'SMALL MARINE',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'SSM10',
-      project: 'PNEP INDUK',
-      accname: 'Sepatu Sobek',
-      desc: 'Beli sepatu sobek',
-      qty: 2,
-      priceunit: 30000,
-      amount: 60000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'PNEP INDUK',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'PNEP INDUK',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'SSM10',
-      project: 'Op. HO',
-      accname: 'Sepatu Sobek',
-      desc: 'Beli sepatu sobek',
-      qty: 2,
-      priceunit: 30000,
-      amount: 60000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'Op. HO',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'Op. HO',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'SSM10',
-      project: 'Op. HO',
-      accname: 'Sepatu Sobek',
-      desc: 'Beli sepatu sobek',
-      qty: 2,
-      priceunit: 30000,
-      amount: 60000,
-    ),
-    Details(
-      requestor: 'Developer 3',
-      project: 'Op. Dir',
-      accname: 'Sepatu Bekas',
-      desc: 'Beli sepatu bekas',
-      qty: 20,
-      priceunit: 3000,
-      amount: 200000,
-    ),
-    Details(
-      requestor: 'SSM11',
-      project: 'Op. Dir',
-      accname: 'Sepatu Sobek',
-      desc: 'Beli sepatu sobek',
-      qty: 2,
-      priceunit: 30000,
-      amount: 60000,
-    ),
-  ];
+  var updstatus = "0";
+  double totalPrice = 0;
+  double totalPrice2 = 0;
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     // bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-
     List listStatus = [
-      "Approve",
+      "Pending",
+      "Confirm",
       "Reject",
       "Send To Draft",
     ];
@@ -203,22 +162,22 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'A/R No : ',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      'ARCVP/NEP/2023/02-0161',
-                                      style: TextStyle(
+                                      widget.arno ?? '',
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -226,20 +185,21 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Date : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      '02/12/2023',
-                                      style: TextStyle(
+                                      DateFormat('yyyy-MM-dd').format(
+                                          DateTime.parse(widget.tanggal)),
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -247,20 +207,20 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Request By : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      'Developer 3',
-                                      style: TextStyle(
+                                      widget.requestorname ?? '',
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -268,20 +228,20 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Client : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      'PT. Riot',
-                                      style: TextStyle(
+                                      widget.requestorname ?? '',
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -289,20 +249,20 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Bank Receiver : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      'Mandiri Bisnis 1328',
-                                      style: TextStyle(
+                                      widget.bankreceiver ?? '',
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -310,20 +270,20 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Bank Reffno : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      'blablabla',
-                                      style: TextStyle(
+                                      widget.bankreffno ?? '',
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -331,20 +291,20 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'RV No : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      'aaaaaa',
-                                      style: TextStyle(
+                                      widget.rvno ?? '',
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -352,43 +312,43 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
                                     Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           'A/R Type : ',
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          'IDR',
                                           style: TextStyle(
                                             fontSize: 15.0,
                                             color: Colors.white70,
                                           ),
                                         ),
+                                        Text(
+                                          widget.artype ?? '',
+                                          style: const TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
                                     Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           'CCY : ',
                                           style: TextStyle(
                                             fontSize: 15.0,
-                                            color: Colors.white,
+                                            color: Colors.white70,
                                           ),
                                         ),
                                         Text(
-                                          'IDR',
-                                          style: TextStyle(
+                                          widget.ccy ?? '',
+                                          style: const TextStyle(
                                             fontSize: 15.0,
-                                            color: Colors.white70,
+                                            color: Colors.white,
                                           ),
                                         ),
                                       ],
@@ -398,20 +358,22 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'F/Rate : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      '1322318',
-                                      style: TextStyle(
+                                      NumberFormat.currency(
+                                              locale: 'eu', symbol: '')
+                                          .format(widget.frate),
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -419,20 +381,22 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Amount : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      '500008',
-                                      style: TextStyle(
+                                      NumberFormat.currency(
+                                              locale: 'eu', symbol: '')
+                                          .format(widget.amount),
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -440,20 +404,22 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'in IDR : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      '5000008',
-                                      style: TextStyle(
+                                      NumberFormat.currency(
+                                              locale: 'eu', symbol: '')
+                                          .format(widget.inIDR),
+                                      style: const TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -464,42 +430,77 @@ class _ArApproval2State extends State<ArApproval2> {
                                       'Request Status : ',
                                       style: TextStyle(
                                         fontSize: 15.0,
-                                        color: Colors.white,
+                                        color: Colors.white70,
                                       ),
                                     ),
-                                    DropdownButton(
-                                      hint: const Text(
-                                        "Pending",
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                        ),
+                                    DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            color: Colors.white, width: 1),
+                                        borderRadius: BorderRadius.circular(1),
                                       ),
-                                      icon: const Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Colors.black,
-                                      ),
-                                      dropdownColor: HexColor("#F4A62A"),
-                                      iconSize: 30,
-                                      value: valueStatus.isNotEmpty
-                                          ? valueStatus
-                                          : null,
-                                      onChanged: (newValueStatus) {
-                                        setState(() {
-                                          valueStatus =
-                                              newValueStatus as String;
-                                        });
-                                      },
-                                      items: listStatus.map((valueStatuss) {
-                                        return DropdownMenuItem(
-                                          value: valueStatuss,
-                                          child: Text(
-                                            valueStatuss,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                            ),
+                                      child: DropdownButton(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        hint: const Text(
+                                          "Pending",
+                                          style: TextStyle(
+                                            color: Colors.white,
                                           ),
-                                        );
-                                      }).toList(),
+                                        ),
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.white,
+                                        ),
+                                        dropdownColor: HexColor("#F4A62A"),
+                                        underline: Container(), //empty line
+                                        iconSize: 30,
+                                        value: valueStatus.isNotEmpty
+                                            ? valueStatus
+                                            : null,
+                                        onChanged: (newValueStatus) {
+                                          setState(() {
+                                            valueStatus =
+                                                newValueStatus as String;
+
+                                            if (valueStatus == "Pending") {
+                                              updstatus = "0";
+                                              isVisible = false;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            } else if (valueStatus ==
+                                                "Confirm") {
+                                              updstatus = "1";
+                                              isVisible = true;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            } else if (valueStatus ==
+                                                "Send To Draft") {
+                                              updstatus = "-9";
+                                              isVisible = true;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            } else {
+                                              updstatus = "-1";
+                                              isVisible = true;
+                                              print("updstatus " +
+                                                  updstatus.toString());
+                                            }
+                                          });
+                                        },
+                                        items: listStatus.map((valueStatuss) {
+                                          return DropdownMenuItem(
+                                            value: valueStatuss,
+                                            child: Text(
+                                              valueStatuss,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -524,9 +525,6 @@ class _ArApproval2State extends State<ArApproval2> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
                               ],
                             ),
                           ),
@@ -536,150 +534,340 @@ class _ArApproval2State extends State<ArApproval2> {
                   ),
                 ),
               ),
-              Expanded(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.30,
-                  // width: MediaQuery.of(context).size.width * 2.2,
-                  child: DataTable2(
-                    columnSpacing: 12,
-                    horizontalMargin: 12,
-                    minWidth: 600,
-                    columns: const [
-                      DataColumn2(
-                        label: Text('Req By'),
-                        size: ColumnSize.M,
-                      ),
-                      DataColumn2(
-                        label: Text('Project Name'),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn2(
-                        label: Text('Item/Acc Name'),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn2(
-                        label: Text('Description'),
-                        size: ColumnSize.L,
-                      ),
-                      DataColumn(
-                        label: Text('QTY'),
-                        numeric: true,
-                      ),
-                      DataColumn(
-                        label: Text('Price/Unit'),
-                        numeric: true,
-                      ),
-                      DataColumn(
-                        label: Text('Amount'),
-                        numeric: true,
-                      ),
-                    ],
-                    rows: details
-                        .map((e) => DataRow(cells: [
-                              DataCell(Text(
-                                e.requestor ?? '',
-                                style: const TextStyle(
-                                  fontSize: 11,
+              FutureBuilder(
+                future: dataFuture,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.error != null) {
+                    return const Center(
+                      child: Text('Error Loading Data'),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: Column(
+                      children: [
+                        Text('Loading Detail...'),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        CircularProgressIndicator(),
+                      ],
+                    ));
+                  } else {
+                    print("snapshot data " + snapshot.data.toString());
+                    return Expanded(
+                      child: DataTable2(
+                        columnSpacing: 12,
+                        horizontalMargin: 12,
+                        minWidth: 600,
+                        columns: const [
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Type',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
                                 ),
-                              )),
-                              DataCell(Text(
-                                e.project ?? '',
-                                style: const TextStyle(
-                                  fontSize: 11,
+                              ],
+                            ),
+                            size: ColumnSize.M,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Document',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
                                 ),
-                              )),
-                              DataCell(Text(
-                                e.accname ?? '',
-                                style: const TextStyle(
-                                  fontSize: 11,
+                                Text(
+                                  'No.',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
                                 ),
-                              )),
-                              DataCell(Text(
-                                e.desc ?? '',
-                                style: const TextStyle(
-                                  fontSize: 11,
+                              ],
+                            ),
+                            size: ColumnSize.M,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Desc',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
                                 ),
-                              )),
-                              DataCell(Text(
-                                e.qty.toString(),
-                                style: const TextStyle(
-                                  fontSize: 11,
+                              ],
+                            ),
+                            size: ColumnSize.L,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Amount',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
                                 ),
-                              )),
-                              DataCell(Text(
-                                e.priceunit.toString(),
-                                style: const TextStyle(
-                                  fontSize: 11,
+                              ],
+                            ),
+                            numeric: true,
+                            size: ColumnSize.M,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Budget',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
                                 ),
-                              )),
-                              DataCell(Text(
-                                e.amount.toString(),
-                                style: const TextStyle(
-                                  fontSize: 11,
+                                Text(
+                                  'Avail',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
                                 ),
-                              )),
-                            ]))
-                        .toList(),
-                  ),
-                ),
+                              ],
+                            ),
+                            numeric: true,
+                            size: ColumnSize.M,
+                          ),
+                        ],
+                        rows: dataaa
+                            .map((e) => DataRow(cells: [
+                                  DataCell(Text(
+                                    e['tipe'].toString(),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    e['invno'] ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    e['ket'] ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    NumberFormat.currency(
+                                            locale: 'eu', symbol: '')
+                                        .format(e['amount_forex']),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    NumberFormat.currency(
+                                            locale: 'eu', symbol: '')
+                                        .format(e['amount_base']),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                ]))
+                            .toList(),
+                      ),
+                    );
+                  }
+                },
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'TOTAL = ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '500000',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
+              const SizedBox(
+                height: 10,
+              ),
+              FutureBuilder(
+                future: dataFuture,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.error != null) {
+                    return const Center(
+                      child: Text('Error Loading Data'),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Please Kindly Waiting...'),
+                      ],
+                    ));
+                  } else {
+                    print("snapshot data " + snapshot.data.toString());
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              'TOTAL Amount = ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              NumberFormat.currency(locale: 'eu', symbol: '')
+                                  .format(totalPrice),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              'TOTAL Amount IDR = ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              NumberFormat.currency(locale: 'eu', symbol: '')
+                                  .format(totalPrice2),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: TextButton(
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('S U B M I T'),
-            ),
-            onPressed: () async {
-              Get.to(const Navbar());
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: HexColor("#F4A62A"),
+          child: Visibility(
+            visible: isVisible,
+            child: TextButton(
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('S U B M I T'),
+              ),
+              onPressed: () async {
+                sendConfirm();
+                print('updstatus ' + updstatus.toString());
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: HexColor("#F4A62A"),
+              ),
             ),
           ),
         ),
       ),
     );
   }
-}
 
-class Details {
-  String? requestor;
-  String? project;
-  String? accname;
-  String? desc;
-  int? qty;
-  int? priceunit;
-  int? amount;
+  Future<dynamic> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
 
-  Details({
-    this.requestor,
-    this.project,
-    this.accname,
-    this.desc,
-    this.qty,
-    this.priceunit,
-    this.amount,
-  });
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      var getData = await http.get(
+        Uri.http('156.67.217.113',
+            '/api/v1/mobile//approval/arreceipt/' + widget.seckey),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+      // setState(() {
+      dataaa = caConfirmData['data']['detail'];
+
+      //hitung total
+      totalPrice = 0;
+      totalPrice2 = 0;
+      for (var item in dataaa) {
+        totalPrice += item["amount_forex"] as int;
+        totalPrice2 += item["amount_base"] as int;
+      }
+
+      // });
+      print("totalllll  " + totalPrice.toString());
+      print("dataaa " + dataaa.toString());
+      return dataaa;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> sendConfirm() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    var status;
+    var reffno;
+    var message;
+
+    Get.to(const Navbar());
+    try {
+      var getData = await http.put(
+        Uri.http(
+          '156.67.217.113',
+          '/api/v1/mobile/approval/arreceipt/' +
+              widget.seckey +
+              '/' +
+              updstatus,
+        ),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final response = json.decode(getData.body);
+      print(response.toString());
+      setState(() {
+        status = response['success'];
+        reffno = response['data']['reffno'];
+        message = response['data']['message'];
+      });
+      if (status == true) {
+        Get.snackbar(
+          'Success $message Data!',
+          '$reffno',
+          icon: const Icon(Icons.check),
+          backgroundColor: Colors.green,
+          isDismissible: true,
+          dismissDirection: DismissDirection.vertical,
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Failed! $reffno',
+          message,
+          icon: const Icon(Icons.warning),
+          backgroundColor: Colors.red,
+          isDismissible: true,
+          dismissDirection: DismissDirection.vertical,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

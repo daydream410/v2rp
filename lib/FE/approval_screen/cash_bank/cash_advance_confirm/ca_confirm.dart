@@ -270,7 +270,26 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                                   DateTime.parse(dataaa[index]
                                                       ['header']['tanggal'])),
                                         ),
-                                        // const Text("Requestor || Date"),
+                                        onTap: () {
+                                          Get.to(CashAdvanceConfirm2(
+                                            seckey: dataaa[index]['seckey'],
+                                            nokasbon: dataaa[index]['header']
+                                                ['nokasbon'],
+                                            ket: dataaa[index]['header']['ket'],
+                                            tanggal: dataaa[index]['header']
+                                                ['tanggal'],
+                                            requestor: dataaa[index]['header']
+                                                ['requestor'],
+                                            requestorname: dataaa[index]
+                                                ['header']['requestorname'],
+                                            updstatus: dataaa[index]['header']
+                                                ['updstatus'],
+                                            kasir: dataaa[index]['header']
+                                                ['kasir'],
+                                            kasirname: dataaa[index]['header']
+                                                ['kasirname'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
@@ -294,13 +313,6 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                               kasirname: dataaa[index]['header']
                                                   ['kasirname'],
                                             ));
-                                            // Get.to(ScanVb(
-                                            //   idstock: dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),

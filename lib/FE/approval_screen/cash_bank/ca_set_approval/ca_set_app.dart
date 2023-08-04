@@ -1,12 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_approval/ca_set_app2.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class CaSetApproval extends StatefulWidget {
@@ -18,6 +25,14 @@ class CaSetApproval extends StatefulWidget {
 
 class _CaSetApprovalState extends State<CaSetApproval> {
   static TextControllers textControllers = Get.put(TextControllers());
+
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +212,7 @@ class _CaSetApprovalState extends State<CaSetApproval> {
                             tooltip: 'Search',
                             hoverColor: HexColor('#F4A62A'),
                           ),
-                          hintText: 'Cash Advance NO',
+                          hintText: 'LPJK No.',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
@@ -235,33 +250,55 @@ class _CaSetApprovalState extends State<CaSetApproval> {
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
+                                        title: Text(
                                           // _dataaa[index]['itemname'],
-                                          "CADV/OSY/2023/04-0075",
-                                          style: TextStyle(
+                                          dataaa[index]['header']['nolpjk'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle:
                                             // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                            Text(
+                                          dataaa[index]['header']
+                                                  ['requestorname'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
+                                        onTap: () {
+                                          Get.to(CaSetApproval2(
+                                            seckey: dataaa[index]['seckey'],
+                                            lpjk: dataaa[index]['header']
+                                                ['nolpjk'],
+                                            ket: dataaa[index]['header']['ket'],
+                                            tanggal: dataaa[index]['header']
+                                                ['tanggal'],
+                                            requestorname: dataaa[index]
+                                                ['header']['requestorname'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(CaSetApproval2());
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(CaSetApproval2(
+                                              seckey: dataaa[index]['seckey'],
+                                              lpjk: dataaa[index]['header']
+                                                  ['nolpjk'],
+                                              ket: dataaa[index]['header']
+                                                  ['ket'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestorname: dataaa[index]
+                                                  ['header']['requestorname'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -284,5 +321,34 @@ class _CaSetApprovalState extends State<CaSetApproval> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/lpjk'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+      });
+
+      print("response " + responseData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -269,6 +269,18 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                                                   DateTime.parse(dataaa[index]
                                                       ['header']['tanggal'])),
                                         ),
+                                        onTap: () {
+                                          Get.to(CashAdvanceApproval2(
+                                            seckey: dataaa[index]['seckey'],
+                                            nokasbon: dataaa[index]['header']
+                                                ['nokasbon'],
+                                            ket: dataaa[index]['header']['ket'],
+                                            tanggal: dataaa[index]['header']
+                                                ['tanggal'],
+                                            requestorname: dataaa[index]
+                                                ['header']['requestorname'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),

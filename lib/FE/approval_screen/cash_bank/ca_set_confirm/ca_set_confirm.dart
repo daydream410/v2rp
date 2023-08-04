@@ -1,12 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_confirm/ca_set_confirm2.dart';
+import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/resD.dart';
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class CaSettleConfirm extends StatefulWidget {
@@ -18,6 +25,15 @@ class CaSettleConfirm extends StatefulWidget {
 
 class _CaSettleConfirmState extends State<CaSettleConfirm> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  double totalPrice = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +133,7 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      Get.to(CaSettleConfirm2());
+                                      // Get.to(CaSettleConfirm2());
                                       // Get.to(ScanVb(
                                       //   idstock: _dataaa[index]['stockid'],
                                       //   itemname: _dataaa[index]['itemname'],
@@ -198,7 +214,7 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
                             tooltip: 'Search',
                             hoverColor: HexColor('#F4A62A'),
                           ),
-                          hintText: 'Cash Advance NO',
+                          hintText: 'LPJK No.',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
@@ -235,36 +251,68 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "CADV/OSY/2023/04-0075",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['nolpjk'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']
+                                                  ['requestorname'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
+                                        onTap: () {
+                                          Get.to(CaSettleConfirm2(
+                                            seckey: dataaa[index]['seckey'],
+                                            lpjk: dataaa[index]['header']
+                                                ['nolpjk'],
+                                            ket: dataaa[index]['header']['ket'],
+                                            tanggal: dataaa[index]['header']
+                                                ['tanggal'],
+                                            requestor: dataaa[index]['header']
+                                                ['requestor'],
+                                            requestorname: dataaa[index]
+                                                ['header']['requestorname'],
+                                            updstatus: dataaa[index]['header']
+                                                ['updstatus'],
+                                            kasir: dataaa[index]['header']
+                                                ['kasir'],
+                                            kasirname: dataaa[index]['header']
+                                                ['kasirname'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(CaSettleConfirm2());
-
-                                            // Get.to(CashAdvanceConfirm2());
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(CaSettleConfirm2(
+                                              seckey: dataaa[index]['seckey'],
+                                              lpjk: dataaa[index]['header']
+                                                  ['nolpjk'],
+                                              ket: dataaa[index]['header']
+                                                  ['ket'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                              requestorname: dataaa[index]
+                                                  ['header']['requestorname'],
+                                              updstatus: dataaa[index]['header']
+                                                  ['updstatus'],
+                                              kasir: dataaa[index]['header']
+                                                  ['kasir'],
+                                              kasirname: dataaa[index]['header']
+                                                  ['kasirname'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -287,5 +335,34 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/lpjk'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final response = json.decode(getData.body);
+
+      // final data = response['data'];
+      setState(() {
+        dataaa = response['data'];
+      });
+
+      print("getdataaaa " + response.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }
