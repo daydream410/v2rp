@@ -1,11 +1,18 @@
 import 'dart:math';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:v2rp1/BE/resD.dart';
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 import 'topup_app2.dart';
 
@@ -18,6 +25,13 @@ class StockTopupApp extends StatefulWidget {
 
 class _StockTopupAppState extends State<StockTopupApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,28 +248,44 @@ class _StockTopupAppState extends State<StockTopupApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "TOPUP/SMD/JT04.05.2023",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['reffno'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text(
-                                                "Reffno || Date || Warehouse"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']['requestor'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])) +
+                                              " || " +
+                                              dataaa[index]['header']
+                                                  ['warehouse'],
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(StockTopupApp2());
+                                            Get.to(StockTopupApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              reffno: dataaa[index]['header']
+                                                  ['reffno'],
+                                              createdby: dataaa[index]['header']
+                                                  ['createdby'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                              warehouse: dataaa[index]['header']
+                                                  ['warehouse'],
+                                            ));
 
                                             // Get.to(ScanVb(
                                             //   idstock: _dataaa[index]
@@ -286,5 +316,34 @@ class _StockTopupAppState extends State<StockTopupApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/stocktopup'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+
+      // final data = caConfirmData['data'];
+      setState(() {
+        dataaa = caConfirmData['data'];
+      });
+
+      print("getdataaaa " + caConfirmData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

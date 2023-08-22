@@ -1,14 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_confirm/sppbj_confirm2.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class SppbjConfirm extends StatefulWidget {
@@ -20,11 +25,12 @@ class SppbjConfirm extends StatefulWidget {
 
 class _SppbjConfirmState extends State<SppbjConfirm> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
-    sppbjConfirm();
+    getDataa();
   }
 
   @override
@@ -243,34 +249,63 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "SPPBJ/EP/2023/03-02930",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['sppbjno'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(dataaa[index]['header']
+                                                ['requestorname'] +
+                                            " || " +
+                                            DateFormat('yyyy-MM-dd').format(
+                                                DateTime.parse(dataaa[index]
+                                                    ['header']['tanggal']))),
+                                        onTap: () {
+                                          Get.to(SppbjConfirm2(
+                                            seckey: dataaa[index]['seckey'],
+                                            sppbjno: dataaa[index]['header']
+                                                ['sppbjno'],
+                                            sppbjtype: dataaa[index]['header']
+                                                ['tipe'],
+                                            tanggal: dataaa[index]['header']
+                                                ['tanggal'],
+                                            requestorname: dataaa[index]
+                                                ['header']['requestorname'],
+                                            warehouse: dataaa[index]['header']
+                                                ['warehousename'],
+                                            wono: dataaa[index]['header']
+                                                ['wono'],
+                                            reason: dataaa[index]['header']
+                                                ['reason'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(SppbjConfirm2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(SppbjConfirm2(
+                                              seckey: dataaa[index]['seckey'],
+                                              sppbjno: dataaa[index]['header']
+                                                  ['sppbjno'],
+                                              sppbjtype: dataaa[index]['header']
+                                                  ['tipe'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestorname: dataaa[index]
+                                                  ['header']['requestorname'],
+                                              warehouse: dataaa[index]['header']
+                                                  ['warehousename'],
+                                              wono: dataaa[index]['header']
+                                                  ['wono'],
+                                              reason: dataaa[index]['header']
+                                                  ['reason'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -295,7 +330,9 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
     );
   }
 
-  Future<void> sppbjConfirm() async {
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     try {
@@ -308,9 +345,15 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
           'monggo': monggo,
         },
       );
-      print('getData = ' + getData.body);
-      // print('monggo =' + monggo);
-      // print('kulo =' + kulonuwun);
+      final caConfirmData = json.decode(getData.body);
+
+      // final data = caConfirmData['data'];
+      setState(() {
+        dataaa = caConfirmData['data'];
+      });
+
+      print("getdataaaa " + caConfirmData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
     } catch (e) {
       print(e);
     }

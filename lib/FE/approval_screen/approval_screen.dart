@@ -1334,14 +1334,14 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               Clip.antiAliasWithSaveLayer,
                                           child: Ink.image(
                                             image: const AssetImage(
-                                                'images/stockmerger.png'),
+                                                'images/stocktopup.png'),
                                             height: size.height * 0.05,
                                             width: size.width * 0.15,
                                             // fit: BoxFit.fill,
                                             child: InkWell(
                                               splashColor: Colors.black38,
                                               onTap: () async {
-                                                // Get.to(() => CashBank1());
+                                                Get.to(() => StockTopupApp());
                                               },
                                             ),
                                           ),
@@ -1355,7 +1355,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               ),
                                             ),
                                             Text(
-                                              'Merger',
+                                              'Top Up',
                                               style: TextStyle(
                                                 fontSize: 12,
                                               ),
@@ -1367,7 +1367,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               ),
                                             ),
                                           ],
-                                        )
+                                        ),
                                       ],
                                     ),
                                     Column(
@@ -1677,14 +1677,14 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                                 Clip.antiAliasWithSaveLayer,
                                             child: Ink.image(
                                               image: const AssetImage(
-                                                  'images/stocktopup.png'),
+                                                  'images/stockmerger.png'),
                                               height: size.height * 0.05,
                                               width: size.width * 0.15,
                                               // fit: BoxFit.fill,
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => StockTopupApp());
+                                                  // Get.to(() => CashBank1());
                                                 },
                                               ),
                                             ),
@@ -1698,7 +1698,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Top Up',
+                                                'Merger',
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                 ),

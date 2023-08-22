@@ -1,11 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 import 'poscm_app2.dart';
 
@@ -18,6 +25,13 @@ class PoScmApp extends StatefulWidget {
 
 class _PoScmAppState extends State<PoScmApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,35 +248,65 @@ class _PoScmAppState extends State<PoScmApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
+                                  // itemCount: 15,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "NEP/23003606",
+                                        title: Text(
+                                          dataaa[index]['header']['pono'],
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']
+                                                  ['requestorname'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
+                                        onTap: () {
+                                          Get.to(PoScmApp2(
+                                            seckey: dataaa[index]['seckey'],
+                                            pono: dataaa[index]['header']
+                                                ['pono'],
+                                            ket: dataaa[index]['header']
+                                                ['catatan'],
+                                            tanggal: dataaa[index]['header']
+                                                ['tanggal'],
+                                            requestorname: dataaa[index]
+                                                ['header']['requestorname'],
+                                            suppliername: dataaa[index]
+                                                ['header']['suppliername'],
+                                            ccy: dataaa[index]['header']['ccy'],
+                                            disc: dataaa[index]['header']
+                                                ['disc'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(PoScmApp2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(PoScmApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              pono: dataaa[index]['header']
+                                                  ['pono'],
+                                              ket: dataaa[index]['header']
+                                                  ['catatan'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestorname: dataaa[index]
+                                                  ['header']['requestorname'],
+                                              suppliername: dataaa[index]
+                                                  ['header']['suppliername'],
+                                              ccy: dataaa[index]['header']
+                                                  ['ccy'],
+                                              disc: dataaa[index]['header']
+                                                  ['disc'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -285,5 +329,34 @@ class _PoScmAppState extends State<PoScmApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/poscm'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+
+      // final data = caConfirmData['data'];
+      setState(() {
+        dataaa = caConfirmData['data'];
+      });
+
+      print("getdataaaa " + caConfirmData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

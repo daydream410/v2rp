@@ -1,12 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/po_ex_approval/poex_app2.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class PoExApp extends StatefulWidget {
@@ -18,6 +25,13 @@ class PoExApp extends StatefulWidget {
 
 class _PoExAppState extends State<PoExApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,34 +248,50 @@ class _PoExAppState extends State<PoExApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "NEP/03-02930",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['pono'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']['requestor'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(PoExApp2());
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(PoExApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              pono: dataaa[index]['header']
+                                                  ['pono'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                              projectid: dataaa[index]['header']
+                                                  ['projectid'],
+                                              itemcoa: dataaa[index]['header']
+                                                  ['itemcoa'],
+                                              sppbjamount: dataaa[index]
+                                                  ['header']['sppbjamount'],
+                                              poamount: dataaa[index]['header']
+                                                  ['poamount'],
+                                              different: dataaa[index]['header']
+                                                  ['different'],
+                                              budgetavailable: dataaa[index]
+                                                      ['header']['budget']
+                                                  ['budgetavailable'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -284,5 +314,34 @@ class _PoExAppState extends State<PoExApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/exeption/poscm/'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+      });
+
+      // print("getdataaaa " + responseData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

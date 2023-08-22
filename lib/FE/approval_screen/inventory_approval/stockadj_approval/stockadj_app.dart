@@ -1,12 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/stockadj_approval/stockadj_app2.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/resD.dart';
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class StockAdjApp extends StatefulWidget {
@@ -18,6 +24,13 @@ class StockAdjApp extends StatefulWidget {
 
 class _StockAdjAppState extends State<StockAdjApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,21 +111,24 @@ class _StockAdjAppState extends State<StockAdjApp> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: dataaa.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "ARCP/OSY/2023/04-0018",
-                                    style: TextStyle(
+                                  title: Text(
+                                    dataaa[index]['header']['reffno'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    dataaa[index]['header']['requestor'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(dataaa[index]
+                                                ['header']['tanggal'])),
+                                  ),
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
@@ -234,35 +250,39 @@ class _StockAdjAppState extends State<StockAdjApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "STADJ/OSY/2023/04-0018",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['reffno'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']['requestor'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(StockAdjApp2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(StockAdjApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              reffno: dataaa[index]['header']
+                                                  ['reffno'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                              warehouse: dataaa[index]['header']
+                                                  ['warehouse'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -285,5 +305,34 @@ class _StockAdjAppState extends State<StockAdjApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/stockadjustment'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+
+      // final data = caConfirmData['data'];
+      setState(() {
+        dataaa = caConfirmData['data'];
+      });
+
+      print("getdataaaa " + caConfirmData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

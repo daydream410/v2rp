@@ -1,12 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/mu_approval/mu_app2.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/resD.dart';
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class MuApp extends StatefulWidget {
@@ -18,6 +24,13 @@ class MuApp extends StatefulWidget {
 
 class _MuAppState extends State<MuApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,27 +247,39 @@ class _MuAppState extends State<MuApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "NEP/IJ232760",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['dono'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']['userid'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(MuApp2());
+                                            Get.to(MuApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              ket: dataaa[index]['header']
+                                                  ['ket'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              dono: dataaa[index]['header']
+                                                  ['dono'],
+                                              userid: dataaa[index]['header']
+                                                  ['userid'],
+                                            ));
 
                                             // Get.to(ScanVb(
                                             //   idstock: _dataaa[index]
@@ -285,5 +310,34 @@ class _MuAppState extends State<MuApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/materialused'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+      });
+
+      print("getdataaaa " + responseData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -1,12 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_refund/ap_refund2.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/resD.dart';
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class ApRefundApp extends StatefulWidget {
@@ -18,6 +24,14 @@ class ApRefundApp extends StatefulWidget {
 
 class _ApRefundAppState extends State<ApRefundApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,35 +248,78 @@ class _ApRefundAppState extends State<ApRefundApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "APRF/NEP/2023/07-0022",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['reffno'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle:
                                             // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                            Text(
+                                          dataaa[index]['header']['requestor'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])),
+                                        ),
+                                        onTap: () {
+                                          Get.to(ApRefundApp2(
+                                            seckey: dataaa[index]['seckey'],
+                                            reffno: dataaa[index]['header']
+                                                ['reffno'],
+                                            tanggal: dataaa[index]['header']
+                                                ['tanggal'],
+                                            requestor: dataaa[index]['header']
+                                                ['requestor'],
+                                            supplier_id: dataaa[index]['header']
+                                                ['supplier_id'],
+                                            ap_type: dataaa[index]['header']
+                                                ['ap_type'],
+                                            kasir: dataaa[index]['header']
+                                                ['kasir'],
+                                            ccy: dataaa[index]['header']
+                                                ['curr_id'],
+                                            forexrate: dataaa[index]['header']
+                                                ['forexrate'],
+                                            amount: dataaa[index]['header']
+                                                ['amount'],
+                                            amtidr: dataaa[index]['header']
+                                                ['amtidr'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(ApRefundApp2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(ApRefundApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              reffno: dataaa[index]['header']
+                                                  ['reffno'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                              supplier_id: dataaa[index]
+                                                  ['header']['supplier_id'],
+                                              ap_type: dataaa[index]['header']
+                                                  ['ap_type'],
+                                              kasir: dataaa[index]['header']
+                                                  ['kasir'],
+                                              ccy: dataaa[index]['header']
+                                                  ['curr_id'],
+                                              forexrate: dataaa[index]['header']
+                                                  ['forexrate'],
+                                              amount: dataaa[index]['header']
+                                                  ['amount'],
+                                              amtidr: dataaa[index]['header']
+                                                  ['amtidr'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -285,5 +342,34 @@ class _ApRefundAppState extends State<ApRefundApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/aprefund'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final caConfirmData = json.decode(getData.body);
+
+      // final data = caConfirmData['data'];
+      setState(() {
+        dataaa = caConfirmData['data'];
+      });
+
+      print("getdataaaa " + caConfirmData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

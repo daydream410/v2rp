@@ -1,11 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
+import 'package:v2rp1/BE/reqip.dart';
+import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/resD.dart';
 
 import '../../../../BE/controller.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 import 'stockprice_app2.dart';
 
@@ -18,6 +25,13 @@ class StockPriceApp extends StatefulWidget {
 
 class _StockPriceAppState extends State<StockPriceApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,36 +248,50 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
+
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "SCM/SMD/JT04.05.2023",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['apreff'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text(
-                                                "Requestor || Amount || Supplier"),
+                                        subtitle: Row(
+                                          children: [
+                                            Text(
+                                              dataaa[index]['header']
+                                                  ['supplierName'],
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            Text(
+                                              NumberFormat.currency(
+                                                      locale: 'eu', symbol: '')
+                                                  .format(dataaa[index]
+                                                      ['header']['amount']),
+                                            ),
+                                          ],
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(StockPriceApp2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(StockPriceApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              apreff: dataaa[index]['header']
+                                                  ['apreff'],
+                                              apjvno: dataaa[index]['header']
+                                                  ['apjvno'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              supplierName: dataaa[index]
+                                                  ['header']['supplierName'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -286,5 +314,35 @@ class _StockPriceAppState extends State<StockPriceApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http(
+            '156.67.217.113', '/api/v1/mobile/approval/stockpriceadjustment'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+      });
+
+      print("getdataaaa " + responseData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -1,12 +1,20 @@
 import 'dart:math';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
+import 'package:v2rp1/BE/reqip.dart';
+import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/resD.dart';
 
 import '../../../../BE/controller.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
+
 import 'minmax_app2.dart';
 
 class UpdateMinMaxApp extends StatefulWidget {
@@ -18,6 +26,13 @@ class UpdateMinMaxApp extends StatefulWidget {
 
 class _UpdateMinMaxAppState extends State<UpdateMinMaxApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,36 +249,43 @@ class _UpdateMinMaxAppState extends State<UpdateMinMaxApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
+
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "MINMAX/SMD/JT04.05.2023",
-                                          style: TextStyle(
+                                        title: Text(
+                                          dataaa[index]['header']['reffno'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text(
-                                                "Requestor || Amount || Supplier"),
+                                        subtitle: Text(
+                                          dataaa[index]['header']['requestor'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])) +
+                                              " || " +
+                                              dataaa[index]['header']
+                                                  ['warehouse'],
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(UpdateMinMaxApp2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(UpdateMinMaxApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              reffno: dataaa[index]['header']
+                                                  ['reffno'],
+                                              warehouse: dataaa[index]['header']
+                                                  ['warehouse'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -286,5 +308,34 @@ class _UpdateMinMaxAppState extends State<UpdateMinMaxApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/minmax'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+      });
+
+      print("getdataaaa " + responseData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

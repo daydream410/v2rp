@@ -1,12 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/dpreq_approval/dpreq_app2.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../BE/resD.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
 class DpReqApp extends StatefulWidget {
@@ -18,6 +25,13 @@ class DpReqApp extends StatefulWidget {
 
 class _DpReqAppState extends State<DpReqApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,17 +179,6 @@ class _DpReqAppState extends State<DpReqApp> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
@@ -234,36 +237,62 @@ class _DpReqAppState extends State<DpReqApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: dataaa.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "BPAY/2021/03-0531",
+                                        title: Text(
+                                          dataaa[index]['header']['reffno'],
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle:
                                             // Text(_dataaa[index]['stockid']),
-                                            const Text(
-                                                "Requestor || Date || Amount"),
+                                            Text(
+                                          dataaa[index]['header']['requestor'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(dataaa[index]
+                                                      ['header']['tanggal'])) +
+                                              " || " +
+                                              dataaa[index]['header']['amount']
+                                                  .toString(),
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(DpReqApp2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(DpReqApp2(
+                                              seckey: dataaa[index]['seckey'],
+                                              reffno: dataaa[index]['header']
+                                                  ['reffno'],
+                                              ket: dataaa[index]['header']
+                                                  ['reason'],
+                                              tanggal: dataaa[index]['header']
+                                                  ['tanggal'],
+                                              duedate: dataaa[index]['header']
+                                                  ['duedate'],
+                                              requestor: dataaa[index]['header']
+                                                  ['requestor'],
+                                              supplier: dataaa[index]['header']
+                                                  ['supplier_id'],
+                                              kasir: dataaa[index]['header']
+                                                  ['kasir'],
+                                              paidby: dataaa[index]['header']
+                                                  ['paidby'],
+                                              ccy: dataaa[index]['header']
+                                                  ['curr_id'],
+                                              ap_type: dataaa[index]['header']
+                                                  ['ap_type'],
+                                              amount: dataaa[index]['header']
+                                                  ['amount'],
+                                              amtidr: dataaa[index]['header']
+                                                  ['amtidr'],
+                                              frate: dataaa[index]['header']
+                                                  ['forexrate'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -286,5 +315,34 @@ class _DpReqAppState extends State<DpReqApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/downpayment'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+      });
+
+      print("getdataaaa " + responseData.toString());
+      print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -63,27 +63,6 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
   double totalPrice = 0;
   bool isVisible = false;
 
-  // List<Details> details = [
-  //   Details(
-  //     requestor: 'Developer 3',
-  //     project: 'SMALL MARINE',
-  //     accname: 'Sepatu Bekas',
-  //     desc: 'Beli sepatu bekas',
-  //     qty: 20,
-  //     priceunit: 3000,
-  //     amount: 200000,
-  //   ),
-  //   Details(
-  //     requestor: 'SSM10',
-  //     project: 'PNEP INDUK',
-  //     accname: 'Sepatu Sobek',
-  //     desc: 'Beli sepatu sobek',
-  //     qty: 2,
-  //     priceunit: 30000,
-  //     amount: 60000,
-  //   ),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -758,6 +737,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
     var status;
     var reffno;
     var message;
+    var messageError;
 
     Get.to(const Navbar());
     try {
@@ -779,13 +759,15 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
       print(response.toString());
       setState(() {
         status = response['success'];
-        reffno = response['data']['reffno'];
-        message = response['data']['message'];
+        messageError = response['message'];
       });
       if (status == true) {
+        setState(() {
+          message = response['data']['message'];
+        });
         Get.snackbar(
           'Success $message Data!',
-          '$reffno',
+          widget.nokasbon,
           icon: const Icon(Icons.check),
           backgroundColor: Colors.green,
           isDismissible: true,
@@ -794,8 +776,8 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         );
       } else {
         Get.snackbar(
-          'Failed!',
-          '$reffno',
+          'Failed! ' + widget.nokasbon,
+          '$messageError',
           icon: const Icon(Icons.warning),
           backgroundColor: Colors.red,
           isDismissible: true,

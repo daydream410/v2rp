@@ -1,11 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:v2rp1/BE/resD.dart';
 import '../../../../BE/controller.dart';
+import '../../../../BE/reqip.dart';
+import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 import 'itstock_app2.dart';
 
@@ -18,6 +24,15 @@ class ItStockAdjApp extends StatefulWidget {
 
 class _ItStockAdjAppState extends State<ItStockAdjApp> {
   static TextControllers textControllers = Get.put(TextControllers());
+  static late List dataaa = <CaConfirmData>[];
+  static late List dataaa2 = <CaConfirmData>[];
+  static late List gabung = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,15 +113,13 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: dataaa.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "ARCP/OSY/2023/04-0018",
+                                  title: Text(
+                                    dataaa[index]['header']['reffno'],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -234,35 +247,52 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: 15,
+                                  itemCount: gabung.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
-                                        title: const Text(
-                                          // _dataaa[index]['itemname'],
-                                          "ITST/NEP/2023/07-0629",
-                                          style: TextStyle(
+                                        title: Text(
+                                          gabung[index]['header']['reffno'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(_dataaa[index]['stockid']),
-                                            const Text("Requestor || Date"),
+                                        subtitle: Text(
+                                          gabung[index]['header']['requestor'] +
+                                              " || " +
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  DateTime.parse(gabung[index]
+                                                      ['header']['tanggal'])),
+                                        ),
+                                        onTap: () {
+                                          Get.to(ItStockAdjApp2(
+                                            seckey: gabung[index]['seckey'],
+                                            reffno: gabung[index]['header']
+                                                ['reffno'],
+                                            warehouse: gabung[index]['header']
+                                                ['towh'],
+                                            tanggal: gabung[index]['header']
+                                                ['tanggal'],
+                                            requestor: gabung[index]['header']
+                                                ['requestor'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(ItStockAdjApp2());
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
+                                            Get.to(ItStockAdjApp2(
+                                              seckey: gabung[index]['seckey'],
+                                              reffno: gabung[index]['header']
+                                                  ['reffno'],
+                                              warehouse: gabung[index]['header']
+                                                  ['towh'],
+                                              tanggal: gabung[index]['header']
+                                                  ['tanggal'],
+                                              requestor: gabung[index]['header']
+                                                  ['requestor'],
+                                            ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -285,5 +315,45 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
               ),
             ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/itadjustment'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      var getData2 = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/approval/stadjustment'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+      final responseData = json.decode(getData.body);
+      final responseData2 = json.decode(getData2.body);
+
+      // final data = responseData['data'];
+      setState(() {
+        dataaa = responseData['data'];
+        dataaa2 = responseData2['data'];
+        gabung = dataaa + dataaa2;
+      });
+
+      print("getdataaaa " + responseData.toString());
+      print("getdataaaa2 " + responseData2.toString());
+      print("dataaaaaaaaaaaaaaa " + gabung.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }
