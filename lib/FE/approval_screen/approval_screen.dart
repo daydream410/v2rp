@@ -1,5 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -19,8 +21,11 @@ import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_approval/sppbj_
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_confirm/sppbj_confirm.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/sales_order_app/sales_order_app.dart';
-
+import 'package:badges/badges.dart' as badges;
 import '../../BE/controller.dart';
+import '../../BE/reqip.dart';
+import '../../BE/resD.dart';
+import '../../main.dart';
 import 'cash_bank/ca_set_approval/ca_set_app.dart';
 import 'cash_bank/ca_set_confirm/ca_set_confirm.dart';
 import 'cash_bank/cash_advance_approval/ca_app.dart';
@@ -50,6 +55,46 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   bool isVisible2 = true;
   bool isVisible3 = true;
   bool isVisible4 = true;
+  bool notZero = true;
+  int totalSC = 0;
+  int totalSA = 0;
+  int totalPA = 0;
+  int totalPOE = 0;
+  int totalPNE = 0;
+  int totalKC = 0;
+  int totalKA = 0;
+  int totalKDA = 0;
+  int totalKD = 0;
+  int totalLC = 0;
+  int totalLA = 0;
+  int totalMUA = 0;
+  int totalITA = 0;
+  int totalMRA = 0;
+  int totalGRA = 0;
+  int totalSTA = 0;
+  int totalSMA = 0;
+  int totalSAA = 0;
+  int totalSPA = 0;
+  int totalMMU = 0;
+  int totalSTUA = 0;
+  int totalDNA = 0;
+  int totalAPRA = 0;
+  int totalDPA = 0;
+  int totalSOA = 0;
+  int totalAPAA = 0;
+  int totalAA = 0;
+  int totalNA = 0;
+  int totalARRA = 0;
+  int totalITSA = 0;
+  int totalSTSA = 0;
+
+  static late List dataaa = <CaConfirmData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getDataa();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -235,23 +280,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/cashbankapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(
-                                                    () => CashAdvanceConfirm());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalKC == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalKC.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/cashbankapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() =>
+                                                      CashAdvanceConfirm());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -282,23 +362,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/cashadvanceapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() =>
-                                                    CashAdvanceApproval());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalKA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalKA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/cashadvanceapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() =>
+                                                      CashAdvanceApproval());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -329,25 +444,61 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/casettlement.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => CaSettleConfirm());
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalLC == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalLC.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/casettlement.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() =>
+                                                      const CaSettleConfirm());
 
-                                                // Get.to(() => StockTable2());
-                                                // Get.offAll(() => const StockTable2());
-                                              },
+                                                  // Get.to(() => StockTable2());
+                                                  // Get.offAll(() => const StockTable2());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -378,22 +529,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/casettlementapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fitWidth,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => CaSetApproval());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalLA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalLA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/casettlementapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fitWidth,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => CaSetApproval());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -479,22 +665,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/arreceipt.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => ArApproval());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalARRA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalARRA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/arreceipt.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => ArApproval());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -522,23 +743,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/salesapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(
-                                                    () => SalesOrderApproval());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSOA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSOA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/salesapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() =>
+                                                      SalesOrderApproval());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -619,22 +875,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/sppbj.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => SppbjConfirm());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSC == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSC.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/sppbj.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => SppbjConfirm());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -659,22 +950,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/sppbjapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => SppbjApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/sppbjapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => SppbjApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -699,23 +1025,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/poscm.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => PoScmApp());
-                                                // Get.offAll(() => const StockTable2());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalPA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalPA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/poscm.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => PoScmApp());
+                                                  // Get.offAll(() => const StockTable2());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -740,22 +1101,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/newpayable.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fitWidth,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => NpApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalNA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalNA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/newpayable.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fitWidth,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => NpApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -790,22 +1186,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/dpreqapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => DpReqApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalDPA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalDPA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/dpreqapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => DpReqApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -836,22 +1267,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/aprefund.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => ApRefundApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalAPRA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalAPRA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/aprefund.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => ApRefundApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -882,25 +1348,60 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/apadjustmentapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => ApAdjApp());
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalAPAA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalAPAA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/apadjustmentapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => ApAdjApp());
 
-                                                // Get.to(() => StockTable2());
-                                                // Get.offAll(() => const StockTable2());
-                                              },
+                                                  // Get.to(() => StockTable2());
+                                                  // Get.offAll(() => const StockTable2());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -931,22 +1432,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/dnsupplier.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fitWidth,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => DebitNotesApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalDNA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalDNA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/dnsupplier.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fitWidth,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => DebitNotesApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -989,22 +1525,59 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Material(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            child: Ink.image(
-                                              image: const AssetImage(
-                                                  'images/poexception.png'),
-                                              height: size.height * 0.05,
-                                              width: size.width * 0.15,
-                                              // fit: BoxFit.fill,
-                                              child: InkWell(
-                                                splashColor: Colors.black38,
-                                                onTap: () async {
-                                                  Get.to(() => PoExApp());
-                                                },
+                                          badges.Badge(
+                                            position:
+                                                badges.BadgePosition.topEnd(
+                                                    top: -10, end: -12),
+                                            showBadge:
+                                                totalPOE == 0 ? false : true,
+                                            ignorePointer: false,
+                                            badgeContent: Text(
+                                              totalPOE.toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                              ),
+                                            ),
+                                            badgeAnimation: const badges
+                                                .BadgeAnimation.rotation(
+                                              animationDuration:
+                                                  Duration(seconds: 1),
+                                              colorChangeAnimationDuration:
+                                                  Duration(seconds: 1),
+                                              loopAnimation: false,
+                                              curve: Curves.fastOutSlowIn,
+                                              colorChangeAnimationCurve:
+                                                  Curves.easeInCubic,
+                                            ),
+                                            badgeStyle: badges.BadgeStyle(
+                                              shape: badges.BadgeShape.square,
+                                              badgeColor: Colors.red,
+                                              padding: const EdgeInsets.all(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: const BorderSide(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                              elevation: 0,
+                                            ),
+                                            child: Material(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              child: Ink.image(
+                                                image: const AssetImage(
+                                                    'images/poexception.png'),
+                                                height: size.height * 0.05,
+                                                width: size.width * 0.15,
+                                                // fit: BoxFit.fill,
+                                                child: InkWell(
+                                                  splashColor: Colors.black38,
+                                                  onTap: () async {
+                                                    Get.to(() => PoExApp());
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -1086,22 +1659,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/muapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => MuApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalMUA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalMUA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/muapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => MuApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1132,22 +1740,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/grapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => GrApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalGRA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalGRA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/grapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => GrApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1178,23 +1821,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/itapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => ItApp());
-                                                // Get.offAll(() => const StockTable2());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalITA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalITA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/itapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => ItApp());
+                                                  // Get.offAll(() => const StockTable2());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1225,22 +1903,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/smapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fitWidth,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => SmApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSMA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSMA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/smapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fitWidth,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => SmApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1281,22 +1994,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/stockadjapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => StockAdjApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSAA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSAA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/stockadjapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => StockAdjApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1327,22 +2075,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/stocktopup.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => StockTopupApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSTUA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSTUA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/stocktopup.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => StockTopupApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1373,23 +2156,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/assembling.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => AssemblingApp());
-                                                // Get.offAll(() => const StockTable2());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalAA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalAA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/assembling.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => AssemblingApp());
+                                                  // Get.offAll(() => const StockTable2());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1417,22 +2235,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/materialreturnapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fitWidth,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => MrApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalMRA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalMRA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/materialreturnapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fitWidth,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => MrApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1473,22 +2326,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/stocktransferapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => StockTrfApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSTA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSTA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/stocktransferapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => StockTrfApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1519,22 +2407,57 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/itstockadj.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => ItStockAdjApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalITSA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalITSA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/itstockadj.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => ItStockAdjApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1565,23 +2488,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/stockpriceapp.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fill,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => StockPriceApp());
-                                                // Get.offAll(() => const StockTable2());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalSPA == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalSPA.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/stockpriceapp.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fill,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(() => StockPriceApp());
+                                                  // Get.offAll(() => const StockTable2());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1612,22 +2570,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          child: Ink.image(
-                                            image: const AssetImage(
-                                                'images/updateminmax.png'),
-                                            height: size.height * 0.05,
-                                            width: size.width * 0.15,
-                                            // fit: BoxFit.fitWidth,
-                                            child: InkWell(
-                                              splashColor: Colors.black38,
-                                              onTap: () async {
-                                                Get.to(() => UpdateMinMaxApp());
-                                              },
+                                        badges.Badge(
+                                          position: badges.BadgePosition.topEnd(
+                                              top: -10, end: -12),
+                                          showBadge:
+                                              totalMMU == 0 ? false : true,
+                                          ignorePointer: false,
+                                          badgeContent: Text(
+                                            totalMMU.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.0,
+                                            ),
+                                          ),
+                                          badgeAnimation: const badges
+                                              .BadgeAnimation.rotation(
+                                            animationDuration:
+                                                Duration(seconds: 1),
+                                            colorChangeAnimationDuration:
+                                                Duration(seconds: 1),
+                                            loopAnimation: false,
+                                            curve: Curves.fastOutSlowIn,
+                                            colorChangeAnimationCurve:
+                                                Curves.easeInCubic,
+                                          ),
+                                          badgeStyle: badges.BadgeStyle(
+                                            shape: badges.BadgeShape.square,
+                                            badgeColor: Colors.red,
+                                            padding: const EdgeInsets.all(5),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: const BorderSide(
+                                                color: Colors.white, width: 2),
+                                            elevation: 0,
+                                          ),
+                                          child: Material(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            child: Ink.image(
+                                              image: const AssetImage(
+                                                  'images/updateminmax.png'),
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.15,
+                                              // fit: BoxFit.fitWidth,
+                                              child: InkWell(
+                                                splashColor: Colors.black38,
+                                                onTap: () async {
+                                                  Get.to(
+                                                      () => UpdateMinMaxApp());
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1670,22 +2664,58 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Material(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            child: Ink.image(
-                                              image: const AssetImage(
-                                                  'images/stockmerger.png'),
-                                              height: size.height * 0.05,
-                                              width: size.width * 0.15,
-                                              // fit: BoxFit.fill,
-                                              child: InkWell(
-                                                splashColor: Colors.black38,
-                                                onTap: () async {
-                                                  // Get.to(() => CashBank1());
-                                                },
+                                          badges.Badge(
+                                            position:
+                                                badges.BadgePosition.topEnd(
+                                                    top: -10, end: -12),
+                                            showBadge: false,
+                                            ignorePointer: false,
+                                            badgeContent: Text(
+                                              totalSA.toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                              ),
+                                            ),
+                                            badgeAnimation: const badges
+                                                .BadgeAnimation.rotation(
+                                              animationDuration:
+                                                  Duration(seconds: 1),
+                                              colorChangeAnimationDuration:
+                                                  Duration(seconds: 1),
+                                              loopAnimation: false,
+                                              curve: Curves.fastOutSlowIn,
+                                              colorChangeAnimationCurve:
+                                                  Curves.easeInCubic,
+                                            ),
+                                            badgeStyle: badges.BadgeStyle(
+                                              shape: badges.BadgeShape.square,
+                                              badgeColor: Colors.red,
+                                              padding: const EdgeInsets.all(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: const BorderSide(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                              elevation: 0,
+                                            ),
+                                            child: Material(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              child: Ink.image(
+                                                image: const AssetImage(
+                                                    'images/stockmerger.png'),
+                                                height: size.height * 0.05,
+                                                width: size.width * 0.15,
+                                                // fit: BoxFit.fill,
+                                                child: InkWell(
+                                                  splashColor: Colors.black38,
+                                                  onTap: () async {
+                                                    // Get.to(() => CashBank1());
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -1730,5 +2760,198 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> getDataa() async {
+    HttpOverrides.global = MyHttpOverrides();
+
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    try {
+      // http://156.67.217.113/api/v1/mobile
+      var getData = await http.get(
+        Uri.http('156.67.217.113', '/api/v1/mobile/notif'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': kulonuwun,
+          'monggo': monggo,
+        },
+      );
+
+      final responseData = json.decode(getData.body);
+      print("getdataaaa " + responseData.toString());
+      setState(() {
+        dataaa = responseData['data'];
+        // totalSC = dataaa.length;
+      });
+      totalSC = 0;
+      totalSA = 0;
+      totalPA = 0;
+      totalPOE = 0;
+      totalPNE = 0;
+      totalKC = 0;
+      totalKA = 0;
+      totalKDA = 0;
+      totalKD = 0;
+      totalLC = 0;
+      totalLA = 0;
+      totalMUA = 0;
+      totalITA = 0;
+      totalMRA = 0;
+      totalGRA = 0;
+      totalSTA = 0;
+      totalSMA = 0;
+      totalSAA = 0;
+      totalSPA = 0;
+      totalMMU = 0;
+      totalSTUA = 0;
+      totalDNA = 0;
+      totalAPRA = 0;
+      totalDPA = 0;
+      totalSOA = 0;
+      totalAPAA = 0;
+      totalAA = 0;
+      totalNA = 0;
+      totalARRA = 0;
+      totalITSA = 0;
+      totalSTSA = 0;
+      for (var item in dataaa) {
+        if (item['tipe'] == 'SC') {
+          totalSC += 1;
+        } else if (item['tipe'] == 'SA') {
+          totalSA += 1;
+        } else if (item['tipe'] == 'PA') {
+          totalPA += 1;
+        } else if (item['tipe'] == 'POE') {
+          totalPOE += 1;
+        } else if (item['tipe'] == 'PNE') {
+          totalPNE += 1;
+        } else if (item['tipe'] == 'KC') {
+          totalKC += 1;
+        } else if (item['tipe'] == 'KA') {
+          totalKA += 1;
+        } else if (item['tipe'] == 'KDA') {
+          totalKDA += 1;
+        } else if (item['tipe'] == 'KD') {
+          totalKD += 1;
+        } else if (item['tipe'] == 'LC') {
+          totalLC += 1;
+        } else if (item['tipe'] == 'LA') {
+          totalLA += 1;
+        } else if (item['tipe'] == 'MUA') {
+          totalMUA += 1;
+        } else if (item['tipe'] == 'ITA') {
+          totalITA += 1;
+        } else if (item['tipe'] == 'MRA') {
+          totalMRA += 1;
+        } else if (item['tipe'] == 'GRA') {
+          totalGRA += 1;
+        } else if (item['tipe'] == 'STA') {
+          totalSTA += 1;
+        } else if (item['tipe'] == 'SMA') {
+          totalSMA += 1;
+        } else if (item['tipe'] == 'SAA') {
+          totalSAA += 1;
+        } else if (item['tipe'] == 'SPA') {
+          totalSPA += 1;
+        } else if (item['tipe'] == 'MMU') {
+          totalMMU += 1;
+        } else if (item['tipe'] == 'STUA') {
+          totalSTUA += 1;
+        } else if (item['tipe'] == 'DNA') {
+          totalDNA += 1;
+        } else if (item['tipe'] == 'APRA') {
+          totalAPRA += 1;
+        } else if (item['tipe'] == 'DPA') {
+          totalDPA += 1;
+        } else if (item['tipe'] == 'SOA') {
+          totalSOA += 1;
+        } else if (item['tipe'] == 'APAA') {
+          totalAPAA += 1;
+        } else if (item['tipe'] == 'AA') {
+          totalAA += 1;
+        } else if (item['tipe'] == 'NA') {
+          totalNA += 1;
+        } else if (item['tipe'] == 'ARRA') {
+          totalARRA += 1;
+        } else if (item['tipe'] == 'ITSA') {
+          totalITSA += 1;
+        } else if (item['tipe'] == 'STSA') {
+          totalSTSA += 1;
+        }
+      }
+      //  if (totalSC == 0) {
+      //     true = false;
+      //   } else if (totalSA == 0) {
+      //     notZero = false;
+      //   } else if (totalPA == 0) {
+      //     notZero = false;
+      //   } else if (totalPOE == 0) {
+      //     notZero = false;
+      //   } else if (totalPNE == 0) {
+      //     notZero = false;
+      //   } else if (totalKC == 0) {
+      //     notZero = false;
+      //   } else if (totalKA == 0) {
+      //     notZero = false;
+      //   } else if (totalKDA == 0) {
+      //     notZero = false;
+      //   } else if (totalKD == 0) {
+      //     notZero = false;
+      //   } else if (totalLC == 0) {
+      //     notZero = false;
+      //   } else if (totalLA == 0) {
+      //     notZero = false;
+      //   } else if (totalMUA == 0) {
+      //     notZero = false;
+      //   } else if (totalITA == 0) {
+      //     notZero = false;
+      //   } else if (totalMRA == 0) {
+      //     notZero = false;
+      //   } else if (totalGRA == 0) {
+      //     notZero = false;
+      //   } else if (totalSTA == 0) {
+      //     notZero = false;
+      //   } else if (totalSMA == 0) {
+      //     notZero = false;
+      //   } else if (totalSAA == 0) {
+      //     notZero = false;
+      //   } else if (totalSPA == 0) {
+      //     notZero = false;
+      //   } else if (totalMMU == 0) {
+      //     notZero = false;
+      //   } else if (totalSTUA == 0) {
+      //     notZero = false;
+      //   } else if (totalDNA == 0) {
+      //     notZero = false;
+      //   } else if (totalAPRA == 0) {
+      //     notZero = false;
+      //   } else if (totalDPA == 0) {
+      //     notZero = false;
+      //   } else if (totalSOA == 0) {
+      //     notZero = false;
+      //   } else if (totalAPAA == 0) {
+      //     notZero = false;
+      //   } else if (totalAA == 0) {
+      //     notZero = false;
+      //   } else if (totalNA == 0) {
+      //     notZero = false;
+      //   } else if (totalARRA == 0) {
+      //     notZero = false;
+      //   } else if (totalITSA == 0) {
+      //     notZero = false;
+      //   } else if (totalSTSA == 0) {
+      //     notZero = false;
+      //   } else {
+      //     setState(() {
+      //       notZero = true;
+      //     });
+      //   }
+
+      print("totalLA = " + totalLA.toString());
+      print("dataaaa = " + dataaa.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 }

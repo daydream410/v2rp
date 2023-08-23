@@ -1,50 +1,33 @@
-header: {
-reffno: STUP/NEP/2023/05-0002,
- tanggal: 2023-05-03T00:00:00.000Z,
- requestor: SCM10,
- warehouse: KALBPN,
- updstatus: 0,
- reffno_minmax: STMX/NEP/2022/08-0002,
- remarks: null,
- tipe: 0,
- projectid: SCM STOCK,
- createdby: vindo,
- created_at: 2023-05-03T01:40:22.559Z,
- updated_at: 2023-05-03T01:40:22.559Z},
-
-
- detail: [{reffno: STUP/NEP/2023/05-0002,
- warehouse: KALBPN,
- stockcode: FPT02SP094,
- qty_avguse: 0,
- order_time: 3 months 2 days,
- qty_onhand: 0,
- qty_onreq: 0,
- qty_onorder: 0,
- qty_freeze: 0,
- qty_topup: 15,
- urutan: 2478,
- qty_onorder_allwh: 0,
- st_freeze: 0,
- allwarehouse: 10,
- created_at: 2023-08-20T19:38:34.000Z,
- updated_at: 2023-08-20T19:38:34.000Z}
-
- reffno = 
-date = 
-request by = 
-created by = 
-warehouse = 
-type = all item / selected item
-
-warehouse = warehouse
-item = stockcode
-Avg. QTY Usage (montly) = qty_avguse
-order time (days) = order_time
-current qty (All WH) = allwarehouse
-Current QTY = qty_onhand
-On Order QTY = qty_onorder
-On Request QTY = qty_onreq
-Stock Freeze QTY = qty_freeze
-S/T QTY = st_freeze
-QTY To Top-up = qty_topup
+export enum NOTIFENUM {
+  SC = "SC", // SPPBJ Confirmation
+  SA = "SA", // SPPBJ Approval
+  PA = "PA", // PO SCM Approval
+  POE = "POE", // PO SCM Exeption Approval
+  PNE = "PNE", // PO NON SCM Exeption Approval
+  KC = "KC", // kasbon confirmation
+  KA = "KA", // kasbon approval
+  KDA = "KDA", // kasbon disb. approval
+  KD = "KD", // kasbon disburstment
+  LC = "LC", // lpjk confirmation
+  LA = "LA", // lpjk approval
+  MUA = "MUA", // mu approval
+  ITA = "ITA", // it approval
+  MRA = "MRA", // mr approval
+  GRA = "GRA", // gr approval
+  STA = "STA", // stock transfer approval
+  SMA = "SMA", // stock movement approval
+  SAA = "SAA", // stock adjustment approval
+  SPA = "SPA", // stock price adj approval
+  MMU = "MMU", // min max update
+  STUA = "STUA", // stock top up approval
+  DNA = "DNA", // debit notes approval
+  APRA = "APRA", // ap refund approval
+  DPA = "DPA", // dp approval
+  SOA = "SOA", // sales order approval
+  APAA = "APAA", // ap adjustment approval
+  AA = "AA", // assembling approval
+  NA = "NA", // newap approval
+  ARRA = "ARRA", // ar receipt approval
+  ITSA = "ITSA", // it adjustment approval
+  STSA = "STSA", // st adjustment approval
+}
