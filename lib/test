@@ -1,33 +1,57 @@
-export enum NOTIFENUM {
-  SC = "SC", // SPPBJ Confirmation
-  SA = "SA", // SPPBJ Approval
-  PA = "PA", // PO SCM Approval
-  POE = "POE", // PO SCM Exeption Approval
-  PNE = "PNE", // PO NON SCM Exeption Approval
-  KC = "KC", // kasbon confirmation
-  KA = "KA", // kasbon approval
-  KDA = "KDA", // kasbon disb. approval
-  KD = "KD", // kasbon disburstment
-  LC = "LC", // lpjk confirmation
-  LA = "LA", // lpjk approval
-  MUA = "MUA", // mu approval
-  ITA = "ITA", // it approval
-  MRA = "MRA", // mr approval
-  GRA = "GRA", // gr approval
-  STA = "STA", // stock transfer approval
-  SMA = "SMA", // stock movement approval
-  SAA = "SAA", // stock adjustment approval
-  SPA = "SPA", // stock price adj approval
-  MMU = "MMU", // min max update
-  STUA = "STUA", // stock top up approval
-  DNA = "DNA", // debit notes approval
-  APRA = "APRA", // ap refund approval
-  DPA = "DPA", // dp approval
-  SOA = "SOA", // sales order approval
-  APAA = "APAA", // ap adjustment approval
-  AA = "AA", // assembling approval
-  NA = "NA", // newap approval
-  ARRA = "ARRA", // ar receipt approval
-  ITSA = "ITSA", // it adjustment approval
-  STSA = "STSA", // st adjustment approval
-}
+  Future<void> loginNEW() async {
+    MsgHeader.loginProcessNEW();
+    var status = MsgHeader.status;
+    try {
+      if (_formKey.currentState!.validate()) {
+        if (status.toString() == 'success') {
+          Get.snackbar(
+            "Success",
+            "Logged In",
+            colorText: Colors.white,
+            icon: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.green,
+            isDismissible: true,
+            dismissDirection: DismissDirection.vertical,
+          );
+
+          // Get.to(() => Navbar());
+          Get.offAll(const Navbar());
+          setState(() {
+            textControllers.passwordController.value.clear();
+          });
+        } else if (status.toString() == 'warning') {
+          Get.snackbar(
+            "Warning",
+            "Error Login",
+            colorText: Colors.white,
+            icon: Icon(
+              Icons.warning,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.red,
+            isDismissible: true,
+            dismissDirection: DismissDirection.vertical,
+          );
+        } else {
+          Get.snackbar(
+            "Please Wait",
+            "Connecting To Server...",
+            colorText: Colors.white,
+            icon: Icon(
+              Icons.timer,
+              color: Colors.white,
+            ),
+            backgroundColor: HexColor("#F4A62A"),
+            isDismissible: true,
+            duration: Duration(seconds: 2),
+            dismissDirection: DismissDirection.vertical,
+          );
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+  }

@@ -36,7 +36,7 @@ class MsgHeader {
   static var messageResult;
   static var kulonuwun;
   static var monggo;
-  static var status;
+  static var success;
 
   // static var uuid = const Uuid();
   // static var id;
@@ -175,9 +175,9 @@ class MsgHeader {
       print('sendlogin ===' + sendLogin.body);
       var hasilLogin = jsonDecode(sendLogin.body);
       var data = hasilLogin['data'];
+      success = hasilLogin['success'];
       kulonuwun = data['kulonuwun'];
       monggo = data['monggo'];
-      status = hasilLogin['status'];
       // print('status' + status);
       // print('kulooo = ' + kulonuwun);
       // print('monggo = ' + monggo);

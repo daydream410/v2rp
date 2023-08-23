@@ -235,12 +235,11 @@ class _LoginPage4State extends State<LoginPage4>
                       ),
                       TextButton(
                         onPressed: () async {
-                          // _isButtonDisabled ? null : loginProcessNEW();
-                          // _timer = Timer(const Duration(milliseconds: 3000), (() {
-                          //   loginProcessNEW();
-                          // }));
-                          // Get.to(Navbar()); //sementara aja
-                          loginNEW();
+                          _isButtonDisabled ? null : loginNEW();
+                          _timer =
+                              Timer(const Duration(milliseconds: 3000), (() {
+                            loginNEW();
+                          }));
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: HexColor("#F4A62A"),
@@ -267,15 +266,19 @@ class _LoginPage4State extends State<LoginPage4>
 
   Future<void> loginNEW() async {
     MsgHeader.loginProcessNEW();
-    var status = MsgHeader.status;
+    var success = MsgHeader.success;
     try {
+      success == null;
       if (_formKey.currentState!.validate()) {
-        if (status.toString() == 'success') {
+        if (success == true) {
           Get.snackbar(
-            "success",
-            "",
+            "Success",
+            "Logged In",
             colorText: Colors.white,
-            icon: Icon(Icons.check),
+            icon: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
             backgroundColor: Colors.green,
             isDismissible: true,
             dismissDirection: DismissDirection.vertical,
@@ -286,7 +289,20 @@ class _LoginPage4State extends State<LoginPage4>
           setState(() {
             textControllers.passwordController.value.clear();
           });
-        } else if (status == null) {
+        } else if (success == false) {
+          Get.snackbar(
+            "Warning",
+            "Error Login",
+            colorText: Colors.white,
+            icon: Icon(
+              Icons.warning,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.red,
+            isDismissible: true,
+            dismissDirection: DismissDirection.vertical,
+          );
+        } else {
           Get.snackbar(
             "Please Wait",
             "Connecting To Server...",
@@ -300,23 +316,6 @@ class _LoginPage4State extends State<LoginPage4>
             duration: Duration(seconds: 2),
             dismissDirection: DismissDirection.vertical,
           );
-        } else {
-          Get.snackbar(
-            "Waiting",
-            "",
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(
-              Icons.close,
-              color: Colors.white,
-            ),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-            dismissDirection: DismissDirection.vertical,
-          );
-          // _timer = Timer(Duration(seconds: 3), (() {
-          //   SystemNavigator.pop();
-          // }));
         }
       }
     } catch (e) {
