@@ -39,6 +39,7 @@ class _LoginPage4State extends State<LoginPage4>
   late bool _isButtonDisabled;
   static var kulonuwun;
   static var monggo;
+  static var success;
 
   @override
   void dispose() {
@@ -235,10 +236,26 @@ class _LoginPage4State extends State<LoginPage4>
                       ),
                       TextButton(
                         onPressed: () async {
-                          _isButtonDisabled ? null : loginNEW();
+                          // _isButtonDisabled ? null : loginNEW();
+                          Get.snackbar(
+                            "Please Wait",
+                            "Connecting To Server...",
+                            colorText: Colors.white,
+                            icon: Icon(
+                              Icons.timer,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: HexColor("#F4A62A"),
+                            isDismissible: true,
+                            duration: Duration(seconds: 2),
+                            dismissDirection: DismissDirection.vertical,
+                          );
+                          MsgHeader.loginProcessNEW();
+
                           _timer =
-                              Timer(const Duration(milliseconds: 3000), (() {
+                              Timer(const Duration(milliseconds: 2000), (() {
                             loginNEW();
+                            // success = null;
                           }));
                         },
                         style: TextButton.styleFrom(
@@ -265,10 +282,9 @@ class _LoginPage4State extends State<LoginPage4>
   }
 
   Future<void> loginNEW() async {
-    MsgHeader.loginProcessNEW();
-    var success = MsgHeader.success;
+    // MsgHeader.loginProcessNEW();
+    success = MsgHeader.success;
     try {
-      success == null;
       if (_formKey.currentState!.validate()) {
         if (success == true) {
           Get.snackbar(
@@ -302,6 +318,7 @@ class _LoginPage4State extends State<LoginPage4>
             isDismissible: true,
             dismissDirection: DismissDirection.vertical,
           );
+          success == null;
         } else {
           Get.snackbar(
             "Please Wait",
