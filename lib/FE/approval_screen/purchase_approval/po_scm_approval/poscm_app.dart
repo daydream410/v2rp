@@ -26,11 +26,28 @@ class PoScmApp extends StatefulWidget {
 class _PoScmAppState extends State<PoScmApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['pono']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -195,12 +212,7 @@ class _PoScmAppState extends State<PoScmApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -248,41 +260,45 @@ class _PoScmAppState extends State<PoScmApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   // itemCount: 15,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['pono'],
+                                          _foundUsers[index]['header']['pono'],
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']
+                                          _foundUsers[index]['header']
                                                   ['requestorname'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(PoScmApp2(
-                                            seckey: dataaa[index]['seckey'],
-                                            pono: dataaa[index]['header']
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            pono: _foundUsers[index]['header']
                                                 ['pono'],
-                                            ket: dataaa[index]['header']
+                                            ket: _foundUsers[index]['header']
                                                 ['catatan'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestorname: dataaa[index]
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestorname: _foundUsers[index]
                                                 ['header']['requestorname'],
-                                            suppliername: dataaa[index]
+                                            suppliername: _foundUsers[index]
                                                 ['header']['suppliername'],
-                                            ccy: dataaa[index]['header']['ccy'],
-                                            disc: dataaa[index]['header']
+                                            ccy: _foundUsers[index]['header']
+                                                ['ccy'],
+                                            disc: _foundUsers[index]['header']
                                                 ['disc'],
                                           ));
                                         },
@@ -291,20 +307,21 @@ class _PoScmAppState extends State<PoScmApp> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(PoScmApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              pono: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              pono: _foundUsers[index]['header']
                                                   ['pono'],
-                                              ket: dataaa[index]['header']
+                                              ket: _foundUsers[index]['header']
                                                   ['catatan'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestorname: dataaa[index]
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestorname: _foundUsers[index]
                                                   ['header']['requestorname'],
-                                              suppliername: dataaa[index]
+                                              suppliername: _foundUsers[index]
                                                   ['header']['suppliername'],
-                                              ccy: dataaa[index]['header']
+                                              ccy: _foundUsers[index]['header']
                                                   ['ccy'],
-                                              disc: dataaa[index]['header']
+                                              disc: _foundUsers[index]['header']
                                                   ['disc'],
                                             ));
                                           },
@@ -351,6 +368,7 @@ class _PoScmAppState extends State<PoScmApp> {
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + caConfirmData.toString());

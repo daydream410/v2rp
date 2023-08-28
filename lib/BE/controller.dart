@@ -61,4 +61,93 @@ class TextControllers extends GetxController {
 
   //cash advance confirmation
   Rx<TextEditingController> caConfirmController = TextEditingController().obs;
+
+  //cash approval confirmation
+  Rx<TextEditingController> caApprovalController = TextEditingController().obs;
+
+  //ca set confirm
+  Rx<TextEditingController> caSetConfController = TextEditingController().obs;
+
+  //ca set app
+  Rx<TextEditingController> caSetAppController = TextEditingController().obs;
+
+  //ar app
+  Rx<TextEditingController> arAppController = TextEditingController().obs;
+
+  //sales order app
+  Rx<TextEditingController> salesAppController = TextEditingController().obs;
+
+  //sppbj confirm
+  Rx<TextEditingController> sppbjConfirmController =
+      TextEditingController().obs;
+
+  //sppbj app
+  Rx<TextEditingController> sppbjAppController = TextEditingController().obs;
+
+  //po SCM APP
+  Rx<TextEditingController> poScmAppController = TextEditingController().obs;
+
+  //new ap app
+  Rx<TextEditingController> newapAppController = TextEditingController().obs;
+
+  //dpreq app
+  Rx<TextEditingController> dpreqAppController = TextEditingController().obs;
+
+  //ap refund
+  Rx<TextEditingController> aprefundAppController = TextEditingController().obs;
+
+  //apadjustment app
+  Rx<TextEditingController> apadjAppController = TextEditingController().obs;
+
+  //debit notes
+  Rx<TextEditingController> debitnotesAppController =
+      TextEditingController().obs;
+
+  //po exception
+  Rx<TextEditingController> poexAppController = TextEditingController().obs;
+
+  //mu approval
+  Rx<TextEditingController> muAppController = TextEditingController().obs;
+
+  //gr app
+  Rx<TextEditingController> grAppController = TextEditingController().obs;
+
+  //it app
+  Rx<TextEditingController> itAppController = TextEditingController().obs;
+
+  //sm app
+  Rx<TextEditingController> smAppController = TextEditingController().obs;
+
+  //stockadjApp
+  Rx<TextEditingController> stockadjAppController = TextEditingController().obs;
+
+  //stock topup
+  Rx<TextEditingController> stocktopupAppController =
+      TextEditingController().obs;
+
+  //Assembling app
+  Rx<TextEditingController> assemblingAppController =
+      TextEditingController().obs;
+
+  //mr app
+  Rx<TextEditingController> mrAppController = TextEditingController().obs;
+
+  //stocktransfer app
+  Rx<TextEditingController> stocktransferAppController =
+      TextEditingController().obs;
+
+  //it stock adj
+  Rx<TextEditingController> itstockadjAppController =
+      TextEditingController().obs;
+
+  //stock price
+  Rx<TextEditingController> stockpriceAppController =
+      TextEditingController().obs;
+
+  //minmax app
+  Rx<TextEditingController> minmaxAppController = TextEditingController().obs;
+
+  //stock merger app
+  Rx<TextEditingController> stockmergerAppController =
+      TextEditingController().obs;
 }

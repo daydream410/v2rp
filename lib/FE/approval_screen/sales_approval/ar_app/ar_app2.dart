@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:intl/intl.dart';
-import 'package:v2rp1/BE/controller.dart';
+// import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
@@ -53,7 +53,7 @@ class ArApproval2 extends StatefulWidget {
 }
 
 class _ArApproval2State extends State<ArApproval2> {
-  static TextControllers textControllers = Get.put(TextControllers());
+  // static TextControllers textControllers = Get.put(TextControllers());
 
   static late List dataaa = <CaConfirmData>[];
 
@@ -507,24 +507,24 @@ class _ArApproval2State extends State<ArApproval2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.all(3.0),
-                                  width: size.width * 0.8,
-                                  height: size.height * 0.1,
-                                  child: TextFormField(
-                                    controller:
-                                        textControllers.vendor1Controller.value,
-                                    decoration: InputDecoration(
-                                      hintText: 'Reason',
-                                      labelText: 'Reason',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white)),
-                                    ),
-                                  ),
-                                ),
+                                // Container(
+                                //   padding: const EdgeInsets.all(3.0),
+                                //   width: size.width * 0.8,
+                                //   height: size.height * 0.1,
+                                //   child: TextFormField(
+                                //     controller:
+                                //         textControllers.vendor1Controller.value,
+                                //     decoration: InputDecoration(
+                                //       hintText: 'Reason',
+                                //       labelText: 'Reason',
+                                //       border: OutlineInputBorder(
+                                //           borderRadius:
+                                //               BorderRadius.circular(5),
+                                //           borderSide: const BorderSide(
+                                //               color: Colors.white)),
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -800,8 +800,8 @@ class _ArApproval2State extends State<ArApproval2> {
       totalPrice = 0;
       totalPrice2 = 0;
       for (var item in dataaa) {
-        totalPrice += item["amount_forex"] as int;
-        totalPrice2 += item["amount_base"] as int;
+        totalPrice += item["amount_forex"];
+        totalPrice2 += item["amount_base"];
       }
 
       // });

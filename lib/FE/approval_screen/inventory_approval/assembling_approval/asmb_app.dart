@@ -26,11 +26,28 @@ class AssemblingApp extends StatefulWidget {
 class _AssemblingAppState extends State<AssemblingApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -195,12 +212,7 @@ class _AssemblingAppState extends State<AssemblingApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -248,46 +260,73 @@ class _AssemblingAppState extends State<AssemblingApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
+                                        onTap: () {
+                                          Get.to(AssemblingApp2(
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            reffno: _foundUsers[index]['header']
+                                                ['reffno'],
+                                            ket: _foundUsers[index]['header']
+                                                ['ket'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestor: _foundUsers[index]
+                                                ['header']['requestor'],
+                                            supplier: _foundUsers[index]
+                                                ['header']['supplierid'],
+                                            location: _foundUsers[index]
+                                                ['header']['locationid'],
+                                            item: _foundUsers[index]['header']
+                                                ['stockcode'],
+                                            estdate: _foundUsers[index]
+                                                ['header']['duedate'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(AssemblingApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              reffno: dataaa[index]['header']
-                                                  ['reffno'],
-                                              ket: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              reffno: _foundUsers[index]
+                                                  ['header']['reffno'],
+                                              ket: _foundUsers[index]['header']
                                                   ['ket'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestor: dataaa[index]['header']
-                                                  ['requestor'],
-                                              supplier: dataaa[index]['header']
-                                                  ['supplierid'],
-                                              location: dataaa[index]['header']
-                                                  ['locationid'],
-                                              item: dataaa[index]['header']
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
+                                              supplier: _foundUsers[index]
+                                                  ['header']['supplierid'],
+                                              location: _foundUsers[index]
+                                                  ['header']['locationid'],
+                                              item: _foundUsers[index]['header']
                                                   ['stockcode'],
-                                              estdate: dataaa[index]['header']
-                                                  ['duedate'],
+                                              estdate: _foundUsers[index]
+                                                  ['header']['duedate'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -333,6 +372,7 @@ class _AssemblingAppState extends State<AssemblingApp> {
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + caConfirmData.toString());

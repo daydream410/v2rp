@@ -26,11 +26,28 @@ class SppbjConfirm extends StatefulWidget {
 class _SppbjConfirmState extends State<SppbjConfirm> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['sppbjno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -179,28 +196,12 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -248,40 +249,42 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['sppbjno'],
+                                          _foundUsers[index]['header']
+                                              ['sppbjno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle: Text(dataaa[index]['header']
-                                                ['requestorname'] +
+                                        subtitle: Text(_foundUsers[index]
+                                                ['header']['requestorname'] +
                                             " || " +
                                             DateFormat('yyyy-MM-dd').format(
-                                                DateTime.parse(dataaa[index]
-                                                    ['header']['tanggal']))),
+                                                DateTime.parse(
+                                                    _foundUsers[index]['header']
+                                                        ['tanggal']))),
                                         onTap: () {
                                           Get.to(SppbjConfirm2(
-                                            seckey: dataaa[index]['seckey'],
-                                            sppbjno: dataaa[index]['header']
-                                                ['sppbjno'],
-                                            sppbjtype: dataaa[index]['header']
-                                                ['tipe'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestorname: dataaa[index]
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            sppbjno: _foundUsers[index]
+                                                ['header']['sppbjno'],
+                                            sppbjtype: _foundUsers[index]
+                                                ['header']['tipe'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestorname: _foundUsers[index]
                                                 ['header']['requestorname'],
-                                            warehouse: dataaa[index]['header']
-                                                ['warehousename'],
-                                            wono: dataaa[index]['header']
+                                            warehouse: _foundUsers[index]
+                                                ['header']['warehousename'],
+                                            wono: _foundUsers[index]['header']
                                                 ['wono'],
-                                            reason: dataaa[index]['header']
+                                            reason: _foundUsers[index]['header']
                                                 ['reason'],
                                           ));
                                         },
@@ -290,21 +293,22 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(SppbjConfirm2(
-                                              seckey: dataaa[index]['seckey'],
-                                              sppbjno: dataaa[index]['header']
-                                                  ['sppbjno'],
-                                              sppbjtype: dataaa[index]['header']
-                                                  ['tipe'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestorname: dataaa[index]
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              sppbjno: _foundUsers[index]
+                                                  ['header']['sppbjno'],
+                                              sppbjtype: _foundUsers[index]
+                                                  ['header']['tipe'],
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestorname: _foundUsers[index]
                                                   ['header']['requestorname'],
-                                              warehouse: dataaa[index]['header']
-                                                  ['warehousename'],
-                                              wono: dataaa[index]['header']
+                                              warehouse: _foundUsers[index]
+                                                  ['header']['warehousename'],
+                                              wono: _foundUsers[index]['header']
                                                   ['wono'],
-                                              reason: dataaa[index]['header']
-                                                  ['reason'],
+                                              reason: _foundUsers[index]
+                                                  ['header']['reason'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -350,6 +354,7 @@ class _SppbjConfirmState extends State<SppbjConfirm> {
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + caConfirmData.toString());

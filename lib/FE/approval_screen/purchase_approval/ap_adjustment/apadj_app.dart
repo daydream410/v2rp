@@ -25,11 +25,28 @@ class ApAdjApp extends StatefulWidget {
 class _ApAdjAppState extends State<ApAdjApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -177,12 +194,7 @@ class _ApAdjAppState extends State<ApAdjApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -230,32 +242,37 @@ class _ApAdjAppState extends State<ApAdjApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(ApAdjApp2(
-                                            seckey: dataaa[index]['seckey'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestor: dataaa[index]['header']
-                                                ['requestor'],
-                                            reffno: dataaa[index]['header']
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestor: _foundUsers[index]
+                                                ['header']['requestor'],
+                                            reffno: _foundUsers[index]['header']
                                                 ['reffno'],
                                           ));
                                         },
@@ -264,13 +281,14 @@ class _ApAdjAppState extends State<ApAdjApp> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(ApAdjApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestor: dataaa[index]['header']
-                                                  ['requestor'],
-                                              reffno: dataaa[index]['header']
-                                                  ['reffno'],
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
+                                              reffno: _foundUsers[index]
+                                                  ['header']['reffno'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -316,6 +334,7 @@ class _ApAdjAppState extends State<ApAdjApp> {
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + caConfirmData.toString());

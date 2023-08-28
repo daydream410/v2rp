@@ -25,11 +25,28 @@ class ArApproval extends StatefulWidget {
 class _ArApprovalState extends State<ArApproval> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -178,28 +195,12 @@ class _ArApprovalState extends State<ArApproval> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        controller: textControllers.arAppController.value,
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -248,53 +249,58 @@ class _ArApprovalState extends State<ArApproval> {
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   // itemCount: _dataaa.length,
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])) +
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])) +
                                               " || " +
-                                              dataaa[index]['header']
+                                              _foundUsers[index]['header']
                                                   ['client_id'],
                                         ),
                                         onTap: () {
                                           Get.to(ArApproval2(
-                                            seckey: dataaa[index]['seckey'],
-                                            arno: dataaa[index]['header']
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            arno: _foundUsers[index]['header']
                                                 ['reffno'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestorname: dataaa[index]
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestorname: _foundUsers[index]
                                                 ['header']['requestor'],
-                                            clientname: dataaa[index]['header']
-                                                ['client_id'],
-                                            bankreceiver: dataaa[index]
+                                            clientname: _foundUsers[index]
+                                                ['header']['client_id'],
+                                            bankreceiver: _foundUsers[index]
                                                 ['header']['kasir'],
-                                            bankreffno: dataaa[index]['header']
-                                                ['bankreffno'],
-                                            rvno: dataaa[index]['header']
+                                            bankreffno: _foundUsers[index]
+                                                ['header']['bankreffno'],
+                                            rvno: _foundUsers[index]['header']
                                                 ['contractno'],
-                                            artype: dataaa[index]['header']
+                                            artype: _foundUsers[index]['header']
                                                 ['ar_type'],
-                                            ccy: dataaa[index]['header']
+                                            ccy: _foundUsers[index]['header']
                                                 ['curr_id'],
-                                            frate: dataaa[index]['header']
+                                            frate: _foundUsers[index]['header']
                                                 ['forexrate'],
-                                            amount: dataaa[index]['header']
+                                            amount: _foundUsers[index]['header']
                                                 ['amount'],
-                                            inIDR: dataaa[index]['header']
+                                            inIDR: _foundUsers[index]['header']
                                                 ['amtidr'],
                                           ));
                                         },
@@ -303,40 +309,33 @@ class _ArApprovalState extends State<ArApproval> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(ArApproval2(
-                                              seckey: dataaa[index]['seckey'],
-                                              arno: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              arno: _foundUsers[index]['header']
                                                   ['reffno'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestorname: dataaa[index]
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestorname: _foundUsers[index]
                                                   ['header']['requestor'],
-                                              clientname: dataaa[index]
+                                              clientname: _foundUsers[index]
                                                   ['header']['client_id'],
-                                              bankreceiver: dataaa[index]
+                                              bankreceiver: _foundUsers[index]
                                                   ['header']['kasir'],
-                                              bankreffno: dataaa[index]
+                                              bankreffno: _foundUsers[index]
                                                   ['header']['bankreffno'],
-                                              rvno: dataaa[index]['header']
+                                              rvno: _foundUsers[index]['header']
                                                   ['contractno'],
-                                              artype: dataaa[index]['header']
-                                                  ['ar_type'],
-                                              ccy: dataaa[index]['header']
+                                              artype: _foundUsers[index]
+                                                  ['header']['ar_type'],
+                                              ccy: _foundUsers[index]['header']
                                                   ['curr_id'],
-                                              frate: dataaa[index]['header']
-                                                  ['forexrate'],
-                                              amount: dataaa[index]['header']
-                                                  ['amount'],
-                                              inIDR: dataaa[index]['header']
-                                                  ['amtidr'],
+                                              frate: _foundUsers[index]
+                                                  ['header']['forexrate'],
+                                              amount: _foundUsers[index]
+                                                  ['header']['amount'],
+                                              inIDR: _foundUsers[index]
+                                                  ['header']['amtidr'],
                                             ));
-
-                                            // Get.to(ScanVb(
-                                            //   idstock: _dataaa[index]
-                                            //       ['stockid'],
-                                            //   itemname: _dataaa[index]
-                                            //       ['itemname'],
-                                            //   serverKeyVal: serverKeyValue,
-                                            // ));
                                           },
                                           color: HexColor('#F4A62A'),
                                           hoverColor: HexColor('#F4A62A'),
@@ -381,6 +380,7 @@ class _ArApprovalState extends State<ArApproval> {
       // final data = response['data'];
       setState(() {
         dataaa = response['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + response.toString());

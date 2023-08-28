@@ -27,11 +27,28 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
   static TextControllers textControllers = Get.put(TextControllers());
   // static late List dataaa = <CaConfirmData>[];
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['nokasbon']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -180,28 +197,12 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        controller: textControllers.caApprovalController.value,
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -249,35 +250,40 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   // itemCount: 5,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['nokasbon'],
-                                          style: TextStyle(
+                                          _foundUsers[index]['header']
+                                              ['nokasbon'],
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']
+                                          _foundUsers[index]['header']
                                                   ['requestorname'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(CashAdvanceApproval2(
-                                            seckey: dataaa[index]['seckey'],
-                                            nokasbon: dataaa[index]['header']
-                                                ['nokasbon'],
-                                            ket: dataaa[index]['header']['ket'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestorname: dataaa[index]
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            nokasbon: _foundUsers[index]
+                                                ['header']['nokasbon'],
+                                            ket: _foundUsers[index]['header']
+                                                ['ket'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestorname: _foundUsers[index]
                                                 ['header']['requestorname'],
                                           ));
                                         },
@@ -286,14 +292,15 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(CashAdvanceApproval2(
-                                              seckey: dataaa[index]['seckey'],
-                                              nokasbon: dataaa[index]['header']
-                                                  ['nokasbon'],
-                                              ket: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              nokasbon: _foundUsers[index]
+                                                  ['header']['nokasbon'],
+                                              ket: _foundUsers[index]['header']
                                                   ['ket'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestorname: dataaa[index]
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestorname: _foundUsers[index]
                                                   ['header']['requestorname'],
                                             ));
                                           },
@@ -340,6 +347,7 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
+        _foundUsers = dataaa;
       });
 
       // print("getdataaaa " + responseData.toString());

@@ -25,11 +25,28 @@ class StockAdjApp extends StatefulWidget {
 class _StockAdjAppState extends State<StockAdjApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -197,12 +214,7 @@ class _StockAdjAppState extends State<StockAdjApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -250,38 +262,43 @@ class _StockAdjAppState extends State<StockAdjApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(StockAdjApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              reffno: dataaa[index]['header']
-                                                  ['reffno'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestor: dataaa[index]['header']
-                                                  ['requestor'],
-                                              warehouse: dataaa[index]['header']
-                                                  ['warehouse'],
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              reffno: _foundUsers[index]
+                                                  ['header']['reffno'],
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
+                                              warehouse: _foundUsers[index]
+                                                  ['header']['warehouse'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -327,6 +344,7 @@ class _StockAdjAppState extends State<StockAdjApp> {
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + caConfirmData.toString());

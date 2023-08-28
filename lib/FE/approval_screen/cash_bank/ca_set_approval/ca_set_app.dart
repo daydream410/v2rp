@@ -27,11 +27,28 @@ class _CaSetApprovalState extends State<CaSetApproval> {
   static TextControllers textControllers = Get.put(TextControllers());
 
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['nolpjk']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -180,28 +197,12 @@ class _CaSetApprovalState extends State<CaSetApproval> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        controller: textControllers.caSetAppController.value,
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -250,37 +251,42 @@ class _CaSetApprovalState extends State<CaSetApproval> {
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   // itemCount: _dataaa.length,
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          // _dataaa[index]['itemname'],
-                                          dataaa[index]['header']['nolpjk'],
+                                          // __foundUsers[index]['itemname'],
+                                          _foundUsers[index]['header']
+                                              ['nolpjk'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle:
-                                            // Text(_dataaa[index]['stockid']),
+                                            // Text(__foundUsers[index]['stockid']),
                                             Text(
-                                          dataaa[index]['header']
+                                          _foundUsers[index]['header']
                                                   ['requestorname'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(CaSetApproval2(
-                                            seckey: dataaa[index]['seckey'],
-                                            lpjk: dataaa[index]['header']
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            lpjk: _foundUsers[index]['header']
                                                 ['nolpjk'],
-                                            ket: dataaa[index]['header']['ket'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestorname: dataaa[index]
+                                            ket: _foundUsers[index]['header']
+                                                ['ket'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestorname: _foundUsers[index]
                                                 ['header']['requestorname'],
                                           ));
                                         },
@@ -289,14 +295,15 @@ class _CaSetApprovalState extends State<CaSetApproval> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(CaSetApproval2(
-                                              seckey: dataaa[index]['seckey'],
-                                              lpjk: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              lpjk: _foundUsers[index]['header']
                                                   ['nolpjk'],
-                                              ket: dataaa[index]['header']
+                                              ket: _foundUsers[index]['header']
                                                   ['ket'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestorname: dataaa[index]
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestorname: _foundUsers[index]
                                                   ['header']['requestorname'],
                                             ));
                                           },
@@ -343,6 +350,7 @@ class _CaSetApprovalState extends State<CaSetApproval> {
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
+        _foundUsers = dataaa;
       });
 
       print("response " + responseData.toString());

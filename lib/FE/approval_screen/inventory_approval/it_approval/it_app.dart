@@ -26,11 +26,28 @@ class ItApp extends StatefulWidget {
 class _ItAppState extends State<ItApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -195,12 +212,7 @@ class _ItAppState extends State<ItApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -248,34 +260,39 @@ class _ItAppState extends State<ItApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(ItApp2(
-                                            seckey: dataaa[index]['seckey'],
-                                            reffno: dataaa[index]['header']
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            reffno: _foundUsers[index]['header']
                                                 ['reffno'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestor: dataaa[index]['header']
-                                                ['requestor'],
-                                            towh: dataaa[index]['header']
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestor: _foundUsers[index]
+                                                ['header']['requestor'],
+                                            towh: _foundUsers[index]['header']
                                                 ['towh'],
                                           ));
                                         },
@@ -284,14 +301,15 @@ class _ItAppState extends State<ItApp> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(ItApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              reffno: dataaa[index]['header']
-                                                  ['reffno'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestor: dataaa[index]['header']
-                                                  ['requestor'],
-                                              towh: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              reffno: _foundUsers[index]
+                                                  ['header']['reffno'],
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
+                                              towh: _foundUsers[index]['header']
                                                   ['towh'],
                                             ));
                                           },
@@ -338,6 +356,7 @@ class _ItAppState extends State<ItApp> {
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + caConfirmData.toString());

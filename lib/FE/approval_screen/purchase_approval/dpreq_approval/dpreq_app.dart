@@ -26,11 +26,28 @@ class DpReqApp extends StatefulWidget {
 class _DpReqAppState extends State<DpReqApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -184,12 +201,7 @@ class _DpReqAppState extends State<DpReqApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -237,27 +249,32 @@ class _DpReqAppState extends State<DpReqApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle:
-                                            // Text(_dataaa[index]['stockid']),
+                                            // Text(__foundUsers[index]['stockid']),
                                             Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])) +
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])) +
                                               " || " +
-                                              dataaa[index]['header']['amount']
+                                              _foundUsers[index]['header']
+                                                      ['amount']
                                                   .toString(),
                                         ),
                                         trailing: IconButton(
@@ -265,33 +282,34 @@ class _DpReqAppState extends State<DpReqApp> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(DpReqApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              reffno: dataaa[index]['header']
-                                                  ['reffno'],
-                                              ket: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              reffno: _foundUsers[index]
+                                                  ['header']['reffno'],
+                                              ket: _foundUsers[index]['header']
                                                   ['reason'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              duedate: dataaa[index]['header']
-                                                  ['duedate'],
-                                              requestor: dataaa[index]['header']
-                                                  ['requestor'],
-                                              supplier: dataaa[index]['header']
-                                                  ['supplier_id'],
-                                              kasir: dataaa[index]['header']
-                                                  ['kasir'],
-                                              paidby: dataaa[index]['header']
-                                                  ['paidby'],
-                                              ccy: dataaa[index]['header']
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              duedate: _foundUsers[index]
+                                                  ['header']['duedate'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
+                                              supplier: _foundUsers[index]
+                                                  ['header']['supplier_id'],
+                                              kasir: _foundUsers[index]
+                                                  ['header']['kasir'],
+                                              paidby: _foundUsers[index]
+                                                  ['header']['paidby'],
+                                              ccy: _foundUsers[index]['header']
                                                   ['curr_id'],
-                                              ap_type: dataaa[index]['header']
-                                                  ['ap_type'],
-                                              amount: dataaa[index]['header']
-                                                  ['amount'],
-                                              amtidr: dataaa[index]['header']
-                                                  ['amtidr'],
-                                              frate: dataaa[index]['header']
-                                                  ['forexrate'],
+                                              ap_type: _foundUsers[index]
+                                                  ['header']['ap_type'],
+                                              amount: _foundUsers[index]
+                                                  ['header']['amount'],
+                                              amtidr: _foundUsers[index]
+                                                  ['header']['amtidr'],
+                                              frate: _foundUsers[index]
+                                                  ['header']['forexrate'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -337,6 +355,7 @@ class _DpReqAppState extends State<DpReqApp> {
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + responseData.toString());

@@ -27,11 +27,28 @@ class _SppbjAppState extends State<SppbjApp> {
   static TextControllers textControllers = Get.put(TextControllers());
 
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['sppbjno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -196,12 +213,7 @@ class _SppbjAppState extends State<SppbjApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -249,35 +261,40 @@ class _SppbjAppState extends State<SppbjApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   // itemCount: 15,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['sppbjno'],
+                                          _foundUsers[index]['header']
+                                              ['sppbjno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']
+                                          _foundUsers[index]['header']
                                                   ['requestorname'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(SppbjApp2(
-                                            seckey: dataaa[index]['seckey'],
-                                            sppbjno: dataaa[index]['header']
-                                                ['sppbjno'],
-                                            ket: dataaa[index]['header']['ket'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestorname: dataaa[index]
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            sppbjno: _foundUsers[index]
+                                                ['header']['sppbjno'],
+                                            ket: _foundUsers[index]['header']
+                                                ['ket'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestorname: _foundUsers[index]
                                                 ['header']['requestorname'],
                                           ));
                                         },
@@ -286,14 +303,15 @@ class _SppbjAppState extends State<SppbjApp> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(SppbjApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              sppbjno: dataaa[index]['header']
-                                                  ['sppbjno'],
-                                              ket: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              sppbjno: _foundUsers[index]
+                                                  ['header']['sppbjno'],
+                                              ket: _foundUsers[index]['header']
                                                   ['ket'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestorname: dataaa[index]
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestorname: _foundUsers[index]
                                                   ['header']['requestorname'],
                                             ));
                                           },
@@ -340,6 +358,7 @@ class _SppbjAppState extends State<SppbjApp> {
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
+        _foundUsers = dataaa;
       });
 
       // print("getdataaaa " + responseData.toString());

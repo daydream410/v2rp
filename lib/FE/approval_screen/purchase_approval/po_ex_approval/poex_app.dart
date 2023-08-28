@@ -26,11 +26,28 @@ class PoExApp extends StatefulWidget {
 class _PoExAppState extends State<PoExApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['pono']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -195,12 +212,7 @@ class _PoExAppState extends State<PoExApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -248,49 +260,54 @@ class _PoExAppState extends State<PoExApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['pono'],
+                                          _foundUsers[index]['header']['pono'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(PoExApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              pono: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              pono: _foundUsers[index]['header']
                                                   ['pono'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestor: dataaa[index]['header']
-                                                  ['requestor'],
-                                              projectid: dataaa[index]['header']
-                                                  ['projectid'],
-                                              itemcoa: dataaa[index]['header']
-                                                  ['itemcoa'],
-                                              sppbjamount: dataaa[index]
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
+                                              projectid: _foundUsers[index]
+                                                  ['header']['projectid'],
+                                              itemcoa: _foundUsers[index]
+                                                  ['header']['itemcoa'],
+                                              sppbjamount: _foundUsers[index]
                                                   ['header']['sppbjamount'],
-                                              poamount: dataaa[index]['header']
-                                                  ['poamount'],
-                                              different: dataaa[index]['header']
-                                                  ['different'],
-                                              budgetavailable: dataaa[index]
-                                                      ['header']['budget']
-                                                  ['budgetavailable'],
+                                              poamount: _foundUsers[index]
+                                                  ['header']['poamount'],
+                                              different: _foundUsers[index]
+                                                  ['header']['different'],
+                                              budgetavailable:
+                                                  _foundUsers[index]['header']
+                                                          ['budget']
+                                                      ['budgetavailable'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -336,6 +353,7 @@ class _PoExAppState extends State<PoExApp> {
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
+        _foundUsers = dataaa;
       });
 
       // print("getdataaaa " + responseData.toString());

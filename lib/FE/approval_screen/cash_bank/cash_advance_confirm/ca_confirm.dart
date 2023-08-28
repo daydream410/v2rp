@@ -28,11 +28,28 @@ class CashAdvanceConfirm extends StatefulWidget {
 class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['nokasbon']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -196,13 +213,8 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        controller: textControllers.caConfirmController.value,
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -250,44 +262,49 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   // itemCount: 5,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['nokasbon'],
+                                          _foundUsers[index]['header']
+                                              ['nokasbon'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']
+                                          _foundUsers[index]['header']
                                                   ['requestorname'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(CashAdvanceConfirm2(
-                                            seckey: dataaa[index]['seckey'],
-                                            nokasbon: dataaa[index]['header']
-                                                ['nokasbon'],
-                                            ket: dataaa[index]['header']['ket'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            requestor: dataaa[index]['header']
-                                                ['requestor'],
-                                            requestorname: dataaa[index]
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            nokasbon: _foundUsers[index]
+                                                ['header']['nokasbon'],
+                                            ket: _foundUsers[index]['header']
+                                                ['ket'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestor: _foundUsers[index]
+                                                ['header']['requestor'],
+                                            requestorname: _foundUsers[index]
                                                 ['header']['requestorname'],
-                                            updstatus: dataaa[index]['header']
-                                                ['updstatus'],
-                                            kasir: dataaa[index]['header']
+                                            updstatus: _foundUsers[index]
+                                                ['header']['updstatus'],
+                                            kasir: _foundUsers[index]['header']
                                                 ['kasir'],
-                                            kasirname: dataaa[index]['header']
-                                                ['kasirname'],
+                                            kasirname: _foundUsers[index]
+                                                ['header']['kasirname'],
                                           ));
                                         },
                                         trailing: IconButton(
@@ -295,23 +312,24 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(CashAdvanceConfirm2(
-                                              seckey: dataaa[index]['seckey'],
-                                              nokasbon: dataaa[index]['header']
-                                                  ['nokasbon'],
-                                              ket: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              nokasbon: _foundUsers[index]
+                                                  ['header']['nokasbon'],
+                                              ket: _foundUsers[index]['header']
                                                   ['ket'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              requestor: dataaa[index]['header']
-                                                  ['requestor'],
-                                              requestorname: dataaa[index]
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
+                                              requestorname: _foundUsers[index]
                                                   ['header']['requestorname'],
-                                              updstatus: dataaa[index]['header']
-                                                  ['updstatus'],
-                                              kasir: dataaa[index]['header']
-                                                  ['kasir'],
-                                              kasirname: dataaa[index]['header']
-                                                  ['kasirname'],
+                                              updstatus: _foundUsers[index]
+                                                  ['header']['updstatus'],
+                                              kasir: _foundUsers[index]
+                                                  ['header']['kasir'],
+                                              kasirname: _foundUsers[index]
+                                                  ['header']['kasirname'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -357,6 +375,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
       // final data = caConfirmData['data'];
       setState(() {
         dataaa = caConfirmData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + caConfirmData.toString());

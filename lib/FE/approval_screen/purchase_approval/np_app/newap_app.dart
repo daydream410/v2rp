@@ -27,11 +27,28 @@ class _NpAppState extends State<NpApp> {
   static TextControllers textControllers = Get.put(TextControllers());
 
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -196,12 +213,7 @@ class _NpAppState extends State<NpApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -250,43 +262,49 @@ class _NpAppState extends State<NpApp> {
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   // itemCount: _dataaa.length,
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          dataaa[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(dataaa[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(NpApp2(
-                                            seckey: dataaa[index]['seckey'],
-                                            reffno: dataaa[index]['header']
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            reffno: _foundUsers[index]['header']
                                                 ['reffno'],
-                                            ket: dataaa[index]['header']
+                                            ket: _foundUsers[index]['header']
                                                 ['reason'],
-                                            tanggal: dataaa[index]['header']
-                                                ['tanggal'],
-                                            supplier: dataaa[index]['header']
-                                                ['supplier_id'],
-                                            invdate: dataaa[index]['header']
-                                                ['invdate'],
-                                            ccy: dataaa[index]['header']['ccy'],
-                                            duedate: dataaa[index]['header']
-                                                ['duedate'],
-                                            amount: dataaa[index]['header']
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            supplier: _foundUsers[index]
+                                                ['header']['supplier_id'],
+                                            invdate: _foundUsers[index]
+                                                ['header']['invdate'],
+                                            ccy: _foundUsers[index]['header']
+                                                ['ccy'],
+                                            duedate: _foundUsers[index]
+                                                ['header']['duedate'],
+                                            amount: _foundUsers[index]['header']
                                                 ['amount'],
-                                            inIDR: dataaa[index]['header']
+                                            inIDR: _foundUsers[index]['header']
                                                 ['amountidr'],
                                           ));
                                         },
@@ -295,25 +313,26 @@ class _NpAppState extends State<NpApp> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(NpApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              reffno: dataaa[index]['header']
-                                                  ['reffno'],
-                                              ket: dataaa[index]['header']
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              reffno: _foundUsers[index]
+                                                  ['header']['reffno'],
+                                              ket: _foundUsers[index]['header']
                                                   ['reason'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              supplier: dataaa[index]['header']
-                                                  ['supplier_id'],
-                                              invdate: dataaa[index]['header']
-                                                  ['invdate'],
-                                              ccy: dataaa[index]['header']
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              supplier: _foundUsers[index]
+                                                  ['header']['supplier_id'],
+                                              invdate: _foundUsers[index]
+                                                  ['header']['invdate'],
+                                              ccy: _foundUsers[index]['header']
                                                   ['ccy'],
-                                              duedate: dataaa[index]['header']
-                                                  ['duedate'],
-                                              amount: dataaa[index]['header']
-                                                  ['amount'],
-                                              inIDR: dataaa[index]['header']
-                                                  ['amountidr'],
+                                              duedate: _foundUsers[index]
+                                                  ['header']['duedate'],
+                                              amount: _foundUsers[index]
+                                                  ['header']['amount'],
+                                              inIDR: _foundUsers[index]
+                                                  ['header']['amountidr'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -359,6 +378,7 @@ class _NpAppState extends State<NpApp> {
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + responseData.toString());

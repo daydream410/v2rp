@@ -26,11 +26,28 @@ class StockPriceApp extends StatefulWidget {
 class _StockPriceAppState extends State<StockPriceApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((dataaa) => dataaa['header']['apreff']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -195,12 +212,7 @@ class _StockPriceAppState extends State<StockPriceApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -248,14 +260,15 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: dataaa.length,
+                                  itemCount: _foundUsers.length,
 
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          dataaa[index]['header']['apreff'],
+                                          _foundUsers[index]['header']
+                                              ['apreff'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -263,7 +276,7 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                         subtitle: Row(
                                           children: [
                                             Text(
-                                              dataaa[index]['header']
+                                              _foundUsers[index]['header']
                                                   ['supplierName'],
                                             ),
                                             const SizedBox(
@@ -272,24 +285,39 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                             Text(
                                               NumberFormat.currency(
                                                       locale: 'eu', symbol: '')
-                                                  .format(dataaa[index]
+                                                  .format(_foundUsers[index]
                                                       ['header']['amount']),
                                             ),
                                           ],
                                         ),
+                                        onTap: () {
+                                          Get.to(StockPriceApp2(
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            apreff: _foundUsers[index]['header']
+                                                ['apreff'],
+                                            apjvno: _foundUsers[index]['header']
+                                                ['apjvno'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            supplierName: _foundUsers[index]
+                                                ['header']['supplierName'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(StockPriceApp2(
-                                              seckey: dataaa[index]['seckey'],
-                                              apreff: dataaa[index]['header']
-                                                  ['apreff'],
-                                              apjvno: dataaa[index]['header']
-                                                  ['apjvno'],
-                                              tanggal: dataaa[index]['header']
-                                                  ['tanggal'],
-                                              supplierName: dataaa[index]
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              apreff: _foundUsers[index]
+                                                  ['header']['apreff'],
+                                              apjvno: _foundUsers[index]
+                                                  ['header']['apjvno'],
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              supplierName: _foundUsers[index]
                                                   ['header']['supplierName'],
                                             ));
                                           },
@@ -337,6 +365,7 @@ class _StockPriceAppState extends State<StockPriceApp> {
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
+        _foundUsers = dataaa;
       });
 
       print("getdataaaa " + responseData.toString());

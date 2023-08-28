@@ -27,11 +27,28 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
   static late List dataaa = <CaConfirmData>[];
   static late List dataaa2 = <CaConfirmData>[];
   static late List gabung = <CaConfirmData>[];
+  static late List _foundUsers = <CaConfirmData>[];
 
   @override
   void initState() {
     super.initState();
     getDataa();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = dataaa;
+    } else {
+      results = dataaa
+          .where((gabung) => gabung['header']['reffno']
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -119,7 +136,7 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                                 elevation: 5,
                                 child: ListTile(
                                   title: Text(
-                                    dataaa[index]['header']['reffno'],
+                                    _foundUsers[index]['header']['reffno'],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -194,12 +211,7 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                       ),
                       TextField(
                         controller: textControllers.vendor1Controller.value,
-                        onSubmitted: (value) {
-                          // searchProcess();
-                          // setState(() {
-                          //   textControllers.vendor1Controller.value.clear();
-                          // });
-                        },
+                        onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
                           suffixIcon: IconButton(
@@ -247,35 +259,40 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: gabung.length,
+                                  itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          gabung[index]['header']['reffno'],
+                                          _foundUsers[index]['header']
+                                              ['reffno'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
-                                          gabung[index]['header']['requestor'] +
+                                          _foundUsers[index]['header']
+                                                  ['requestor'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.parse(gabung[index]
-                                                      ['header']['tanggal'])),
+                                                  DateTime.parse(
+                                                      _foundUsers[index]
+                                                              ['header']
+                                                          ['tanggal'])),
                                         ),
                                         onTap: () {
                                           Get.to(ItStockAdjApp2(
-                                            seckey: gabung[index]['seckey'],
-                                            reffno: gabung[index]['header']
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            reffno: _foundUsers[index]['header']
                                                 ['reffno'],
-                                            warehouse: gabung[index]['header']
-                                                ['towh'],
-                                            tanggal: gabung[index]['header']
-                                                ['tanggal'],
-                                            requestor: gabung[index]['header']
-                                                ['requestor'],
+                                            warehouse: _foundUsers[index]
+                                                ['header']['towh'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            requestor: _foundUsers[index]
+                                                ['header']['requestor'],
                                           ));
                                         },
                                         trailing: IconButton(
@@ -283,15 +300,16 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
                                             Get.to(ItStockAdjApp2(
-                                              seckey: gabung[index]['seckey'],
-                                              reffno: gabung[index]['header']
-                                                  ['reffno'],
-                                              warehouse: gabung[index]['header']
-                                                  ['towh'],
-                                              tanggal: gabung[index]['header']
-                                                  ['tanggal'],
-                                              requestor: gabung[index]['header']
-                                                  ['requestor'],
+                                              seckey: _foundUsers[index]
+                                                  ['seckey'],
+                                              reffno: _foundUsers[index]
+                                                  ['header']['reffno'],
+                                              warehouse: _foundUsers[index]
+                                                  ['header']['towh'],
+                                              tanggal: _foundUsers[index]
+                                                  ['header']['tanggal'],
+                                              requestor: _foundUsers[index]
+                                                  ['header']['requestor'],
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -347,6 +365,7 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
         dataaa = responseData['data'];
         dataaa2 = responseData2['data'];
         gabung = dataaa + dataaa2;
+        _foundUsers = gabung;
       });
 
       print("getdataaaa " + responseData.toString());
