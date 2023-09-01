@@ -53,26 +53,38 @@ class _FixAsset2State extends State<FixAsset2> {
 
   Future<String> getData() async {
     var searchValue = textControllers.fixassetController.value.text;
-    var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
-        headers: {'x-v2rp-key': '$conve'},
-        body: jsonEncode({
-          "trxid": "$trxid",
-          "datetime": "$datetime",
-          "reqid": "501001",
-          "id": "$searchValue"
-        }));
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    // var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
+    //     headers: {'x-v2rp-key': '$conve'},
+    //     body: jsonEncode({
+    //       "trxid": "$trxid",
+    //       "datetime": "$datetime",
+    //       "reqid": "501001",
+    //       "id": "$searchValue"
+    //     }));
+    var sendSearch =
+        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/assets'),
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8',
+              'kulonuwun': kulonuwun,
+              'monggo': monggo,
+            },
+            body: jsonEncode({
+              "id": searchValue,
+            }));
 
     final fixAsset = json.decode(sendSearch.body);
-    serverKeyValue = fixAsset['serverkey'];
-    var responsecode = fixAsset['responsecode'];
+    // serverKeyValue = fixAsset['serverkey'];
+    var succuss = fixAsset['success'];
     var responseMessage = fixAsset['message'];
 
-    if (responsecode == '00') {
+    if (succuss == true) {
       setState(() {
-        _dataaa = json.decode(sendSearch.body)['result'];
+        _dataaa = fixAsset['data'];
         textControllers.fixassetController.value.clear();
       });
-    } else if (responsecode == '30') {
+    } else if (succuss == false) {
       Get.snackbar(
         'Hint',
         '$responseMessage',
@@ -331,8 +343,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      _dataaa[index]
-                                                          ['fadatano'],
+                                                      _dataaa[index]['fdatano'],
                                                       style: const TextStyle(
                                                         fontSize: 15,
                                                         fontWeight:
@@ -340,8 +351,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      _dataaa[index]
-                                                          ['description'],
+                                                      _dataaa[index]['ket'],
                                                       style: const TextStyle(
                                                         fontSize: 15,
                                                       ),
@@ -585,9 +595,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                 },
                                                 child: Ink.image(
                                                   image: NetworkImage(
-                                                    'https://v2rp.net/' +
-                                                        _dataaa[index]
-                                                            ['imagedir'],
+                                                    _dataaa[index]['img'],
                                                   ),
                                                   height: 300,
                                                   width: MediaQuery.of(context)
@@ -608,8 +616,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                         const EdgeInsets.only(
                                                             left: 8, top: 10),
                                                     child: Text(
-                                                      _dataaa[index]
-                                                          ['description'],
+                                                      _dataaa[index]['ket'],
                                                       style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -722,7 +729,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                                           children: [
                                                             Text(
                                                               _dataaa[index]
-                                                                  ['fadatano'],
+                                                                  ['fdatano'],
                                                               style:
                                                                   const TextStyle(
                                                                 fontSize: 15,
@@ -732,8 +739,8 @@ class _FixAsset2State extends State<FixAsset2> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              _dataaa[index][
-                                                                  'description'],
+                                                              _dataaa[index]
+                                                                  ['ket'],
                                                               style:
                                                                   const TextStyle(
                                                                 fontSize: 15,
@@ -746,8 +753,9 @@ class _FixAsset2State extends State<FixAsset2> {
                                                               children: [
                                                                 Text(
                                                                   _dataaa[index]
-                                                                      [
-                                                                      'categoryname'],
+                                                                          [
+                                                                          'catname'] ??
+                                                                      '',
                                                                   style:
                                                                       const TextStyle(
                                                                     fontSize:
@@ -764,8 +772,9 @@ class _FixAsset2State extends State<FixAsset2> {
                                                                 ),
                                                                 Text(
                                                                   _dataaa[index]
-                                                                      [
-                                                                      'subcategoryname'],
+                                                                          [
+                                                                          'subcatname'] ??
+                                                                      '',
                                                                   style:
                                                                       const TextStyle(
                                                                     fontSize:
@@ -781,8 +790,9 @@ class _FixAsset2State extends State<FixAsset2> {
                                                               children: [
                                                                 Text(
                                                                   _dataaa[index]
-                                                                      [
-                                                                      'brandname'],
+                                                                          [
+                                                                          'brandname'] ??
+                                                                      '',
                                                                   style:
                                                                       const TextStyle(
                                                                     fontSize:
@@ -799,8 +809,9 @@ class _FixAsset2State extends State<FixAsset2> {
                                                                 ),
                                                                 Text(
                                                                   _dataaa[index]
-                                                                      [
-                                                                      'brandtipename'],
+                                                                          [
+                                                                          'tipebrandname'] ??
+                                                                      '',
                                                                   style:
                                                                       const TextStyle(
                                                                     fontSize:
@@ -811,47 +822,8 @@ class _FixAsset2State extends State<FixAsset2> {
                                                             ),
                                                             Text(
                                                               _dataaa[index][
-                                                                  'countryname'],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 15,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              _dataaa[index]
-                                                                  ['reffno'],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 15,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              _dataaa[index]
-                                                                  ['reqno'],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 15,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              _dataaa[index]
-                                                                  ['pono'],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 15,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              _dataaa[index]
-                                                                  ['requestby'],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 15,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              _dataaa[index]
-                                                                  ['serialno'],
+                                                                      'countryname'] ??
+                                                                  '',
                                                               style:
                                                                   const TextStyle(
                                                                 fontSize: 15,
@@ -859,7 +831,53 @@ class _FixAsset2State extends State<FixAsset2> {
                                                             ),
                                                             Text(
                                                               _dataaa[index][
-                                                                  'locationname'],
+                                                                      'docreffno'] ??
+                                                                  '',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                      'reqno'] ??
+                                                                  '',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                      'pono'] ??
+                                                                  '',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                      'reqby'] ??
+                                                                  '',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                      'serialno'] ??
+                                                                  '',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _dataaa[index][
+                                                                      'locationnm'] ??
+                                                                  '',
                                                               style:
                                                                   const TextStyle(
                                                                 fontSize: 15,
@@ -935,7 +953,7 @@ class _FixAsset2State extends State<FixAsset2> {
         : Get.defaultDialog(
             radius: 5,
             title: "Upload Image",
-            middleText: "Please Click Button Below",
+            middleText: "",
             backgroundColor: Colors.white,
             confirm: SizedBox(
               width: 115.0,
@@ -965,7 +983,7 @@ class _FixAsset2State extends State<FixAsset2> {
                 },
                 child: Text(
                   'Take Picture',
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
               ),
             ),
@@ -1016,7 +1034,6 @@ class _FixAsset2State extends State<FixAsset2> {
           "trxid": "$trxid",
           "datetime": "$datetime",
           "reqid": "501001",
-          // "id": "$selectedIndex",
           "id": "$tesA",
           "image": baseimage,
         }),
