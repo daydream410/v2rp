@@ -101,15 +101,7 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                           prefixInsets:
                               const EdgeInsets.only(left: 8, right: 8),
                           suffixInsets: const EdgeInsets.only(right: 8),
-                          // suffixMode: OverlayVisibilityMode.notEditing,
-                          // suffixIcon: Icon(CupertinoIcons.search),
-                          // onSuffixTap: () => Get.to(ScanFixAsset()),
-                          onSubmitted: (value) {
-                            // searchProcess();
-                            // setState(() {
-                            //   textControllers.vendor1Controller.value.clear();
-                            // });
-                          },
+                          onChanged: (value) => _runFilter(value),
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -130,30 +122,53 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
+
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "Cash Advance Number",
-                                    style: TextStyle(
+                                  title: Text(
+                                    _foundUsers[index]['header']['nokasbon'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    _foundUsers[index]['header']
+                                            ['requestorname'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])),
+                                  ),
+                                  onTap: () {
+                                    Get.to(CashAdvanceApproval2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      nokasbon: _foundUsers[index]['header']
+                                          ['nokasbon'],
+                                      ket: _foundUsers[index]['header']['ket'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      requestorname: _foundUsers[index]
+                                          ['header']['requestorname'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(CashAdvanceApproval2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        nokasbon: _foundUsers[index]['header']
+                                            ['nokasbon'],
+                                        ket: _foundUsers[index]['header']
+                                            ['ket'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        requestorname: _foundUsers[index]
+                                            ['header']['requestorname'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),

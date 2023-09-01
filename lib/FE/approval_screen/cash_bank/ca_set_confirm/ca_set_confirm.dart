@@ -97,6 +97,7 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
                       children: [
                         CupertinoSearchTextField(
                           controller: textControllers.caSetConfController.value,
+                          onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
                           prefixInsets:
@@ -122,31 +123,69 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
+
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "CADV/OSY/2023/04-0075",
-                                    style: TextStyle(
+                                  title: Text(
+                                    _foundUsers[index]['header']['nolpjk'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    _foundUsers[index]['header']
+                                            ['requestorname'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])),
+                                  ),
+                                  onTap: () {
+                                    Get.to(CaSettleConfirm2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      lpjk: _foundUsers[index]['header']
+                                          ['nolpjk'],
+                                      ket: _foundUsers[index]['header']['ket'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      requestor: _foundUsers[index]['header']
+                                          ['requestor'],
+                                      requestorname: _foundUsers[index]
+                                          ['header']['requestorname'],
+                                      updstatus: _foundUsers[index]['header']
+                                          ['updstatus'],
+                                      kasir: _foundUsers[index]['header']
+                                          ['kasir'],
+                                      kasirname: _foundUsers[index]['header']
+                                          ['kasirname'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(CaSettleConfirm2());
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(CaSettleConfirm2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        lpjk: _foundUsers[index]['header']
+                                            ['nolpjk'],
+                                        ket: _foundUsers[index]['header']
+                                            ['ket'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        requestor: _foundUsers[index]['header']
+                                            ['requestor'],
+                                        requestorname: _foundUsers[index]
+                                            ['header']['requestorname'],
+                                        updstatus: _foundUsers[index]['header']
+                                            ['updstatus'],
+                                        kasir: _foundUsers[index]['header']
+                                            ['kasir'],
+                                        kasirname: _foundUsers[index]['header']
+                                            ['kasirname'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),
@@ -190,17 +229,6 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
