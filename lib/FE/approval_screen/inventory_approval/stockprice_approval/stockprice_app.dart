@@ -297,7 +297,7 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                             apreff: _foundUsers[index]['header']
                                                 ['apreff'],
                                             apjvno: _foundUsers[index]['header']
-                                                ['apjvno'],
+                                                ['jvno'],
                                             tanggal: _foundUsers[index]
                                                 ['header']['tanggal'],
                                             supplierName: _foundUsers[index]
@@ -314,7 +314,7 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                               apreff: _foundUsers[index]
                                                   ['header']['apreff'],
                                               apjvno: _foundUsers[index]
-                                                  ['header']['apjvno'],
+                                                  ['header']['jvno'],
                                               tanggal: _foundUsers[index]
                                                   ['header']['tanggal'],
                                               supplierName: _foundUsers[index]
@@ -375,5 +375,3 @@ class _StockPriceAppState extends State<StockPriceApp> {
     }
   }
 }
-
-//test

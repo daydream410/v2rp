@@ -530,7 +530,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
                                     ),
                                   )),
                                   DataCell(Text(
-                                    e['ket'] ?? '',
+                                    e['itemnm'] ?? '',
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),
@@ -619,21 +619,61 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
                     ));
                   } else {
                     print("snapshot data " + snapshot.data.toString());
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    return Column(
                       children: [
-                        const Text(
-                          'TOTAL = ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              'TOTAL DIFF = ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              NumberFormat.currency(locale: 'eu', symbol: '')
+                                  .format(totalDiff),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          NumberFormat.currency(locale: 'eu', symbol: '')
-                              .format(totalDiff),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              'TOTAL Stock = ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              NumberFormat.currency(locale: 'eu', symbol: '')
+                                  .format(totalStock),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              'TOTAL COGS = ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              NumberFormat.currency(locale: 'eu', symbol: '')
+                                  .format(totalCogs),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     );
@@ -687,10 +727,14 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
       dataaa = caConfirmData['data']['detail'];
 
       //hitung total
-      // totalDiff = 0;
-      // for (var item in dataaa) {
-      //   totalDiff += item["amount"] as int;
-      // }
+      totalDiff = 0;
+      totalStock = 0;
+      totalCogs = 0;
+      for (var item in dataaa) {
+        totalDiff += item['amountap'] - item['qtamountgr'];
+        totalStock += item['astock'];
+        totalCogs += item['aexpend'];
+      }
 
       // });
       print("totalllll  " + totalDiff.toString());
