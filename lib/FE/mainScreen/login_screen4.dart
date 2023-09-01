@@ -307,8 +307,8 @@ class _LoginPage4State extends State<LoginPage4>
           });
         } else if (success == false) {
           Get.snackbar(
-            "Warning",
             "Error Login",
+            "Please Try Again!",
             colorText: Colors.white,
             icon: Icon(
               Icons.warning,
@@ -319,20 +319,6 @@ class _LoginPage4State extends State<LoginPage4>
             dismissDirection: DismissDirection.vertical,
           );
           success == null;
-        } else {
-          Get.snackbar(
-            "Please Wait",
-            "Connecting To Server...",
-            colorText: Colors.white,
-            icon: Icon(
-              Icons.timer,
-              color: Colors.white,
-            ),
-            backgroundColor: HexColor("#F4A62A"),
-            isDismissible: true,
-            duration: Duration(seconds: 2),
-            dismissDirection: DismissDirection.vertical,
-          );
         }
       }
     } catch (e) {
