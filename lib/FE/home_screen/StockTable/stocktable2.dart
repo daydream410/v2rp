@@ -12,6 +12,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
@@ -315,6 +316,26 @@ class _StockTable2State extends State<StockTable2> {
                       const SizedBox(
                         height: 10,
                       ),
+                      TextField(
+                        controller: textControllers.warehouseStController.value,
+                        onSubmitted: (value) {
+                          searchProcess();
+                          setState(() {
+                            textControllers.warehouseStController.value.clear();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.home_rounded),
+                          hintText: 'Warehouse (optional)',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide:
+                                  const BorderSide(color: Colors.black)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       const Divider(
                         color: Colors.black,
                         thickness: 0.8,
@@ -367,8 +388,7 @@ class _StockTable2State extends State<StockTable2> {
                                             splashColor: Colors.blue,
                                             child: Ink.image(
                                               image: NetworkImage(
-                                                'https://www.v2rp.net' +
-                                                    dataaa[index]['image'][0],
+                                                dataaa[index]['img'],
                                               ),
                                               height: MediaQuery.of(context)
                                                       .size
@@ -393,7 +413,8 @@ class _StockTable2State extends State<StockTable2> {
                                                   height: 20,
                                                 ),
                                                 Text(
-                                                  dataaa[index]['itemname'],
+                                                  dataaa[index]['itemname'] ??
+                                                      '',
                                                   style: TextStyle(
                                                       color: Colors.black),
                                                 ),
@@ -401,7 +422,8 @@ class _StockTable2State extends State<StockTable2> {
                                                   height: 5,
                                                 ),
                                                 Text(
-                                                  dataaa[index]['stockid'],
+                                                  dataaa[index]['stockid'] ??
+                                                      '',
                                                   style: TextStyle(
                                                       color: Colors.black54),
                                                 ),
@@ -640,42 +662,49 @@ class _StockTable2State extends State<StockTable2> {
   Future<String> getData() async {
     HttpOverrides.global = MyHttpOverrides();
     String? searchValue = textControllers.stocktableController.value.text;
-    String? finalConve;
-    // final SharedPreferences sharedPreferences =
-    //     await SharedPreferences.getInstance();
-    // var obtainConve = sharedPreferences.getString('conve');
-    // setState(() {
-    //   finalConve = obtainConve;
-    // });
+    String? searchValue2 = textControllers.warehouseStController.value.text;
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
 
-    print("final conve ==== " + finalConve.toString());
+    // var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
+    //     headers: {'x-v2rp-key': '$conve'},
+    //     body: jsonEncode({
+    //       "trxid": "$trxid",
+    //       "datetime": "$datetime",
+    //       "reqid": "0002",
+    //       "id": "$searchValue"
+    //     }));
+    var sendSearch =
+        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks/new'),
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8',
+              'kulonuwun': finalKulonuwun ?? kulonuwun,
+              'monggo': finalMonggo ?? monggo,
+            },
+            body: jsonEncode({
+              "itemname": searchValue,
+              "warehouse": searchValue2,
+            }));
 
-    var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
-        headers: {'x-v2rp-key': '$conve'},
-        body: jsonEncode({
-          "trxid": "$trxid",
-          "datetime": "$datetime",
-          "reqid": "0002",
-          "id": "$searchValue"
-        }));
     print(searchValue);
     final resultData = json.decode(sendSearch.body);
 
-    serverKeyValue = resultData['serverkey'];
-    var responsecode = resultData['responsecode'];
+    var succuss = resultData['success'];
     var responseMessage = resultData['message'];
     result = resultData['result'];
 
-    //jadi
+    print("response = " + resultData.toString());
 
-    print("AAAAAAAAAAAAAAAAA = " + result.toString());
-
-    if (responsecode == '00') {
+    if (succuss == '00') {
       setState(() {
         dataaa = resultData['result'];
         textControllers.stocktableController.value.clear();
       });
-    } else if (responsecode == '30') {
+    } else if (succuss == '30') {
       Get.snackbar(
         'Hint',
         '$responseMessage',
@@ -706,11 +735,9 @@ class _StockTable2State extends State<StockTable2> {
         textControllers.stocktableController.value.clear();
       });
     }
-    print(sendSearch.body);
     // print(dataaa);
     print(searchValue);
 
-    print(serverKeyValue);
     return "Successfull";
   }
 

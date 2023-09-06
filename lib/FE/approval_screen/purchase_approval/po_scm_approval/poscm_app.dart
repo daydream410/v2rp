@@ -94,21 +94,13 @@ class _PoScmAppState extends State<PoScmApp> {
                     child: Column(
                       children: [
                         CupertinoSearchTextField(
-                          controller: textControllers.caConfirmController.value,
+                          controller: textControllers.poScmAppController.value,
+                          onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
                           prefixInsets:
                               const EdgeInsets.only(left: 8, right: 8),
                           suffixInsets: const EdgeInsets.only(right: 8),
-                          // suffixMode: OverlayVisibilityMode.notEditing,
-                          // suffixIcon: Icon(CupertinoIcons.search),
-                          // onSuffixTap: () => Get.to(ScanFixAsset()),
-                          onSubmitted: (value) {
-                            // searchProcess();
-                            // setState(() {
-                            //   textControllers.vendor1Controller.value.clear();
-                            // });
-                          },
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -129,30 +121,64 @@ class _PoScmAppState extends State<PoScmApp> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "ARCP/OSY/2023/04-0018",
-                                    style: TextStyle(
+                                  title: Text(
+                                    _foundUsers[index]['header']['pono'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    _foundUsers[index]['header']
+                                            ['requestorname'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])),
+                                  ),
+                                  onTap: () {
+                                    Get.to(PoScmApp2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      pono: _foundUsers[index]['header']
+                                          ['pono'],
+                                      ket: _foundUsers[index]['header']
+                                          ['catatan'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      requestorname: _foundUsers[index]
+                                          ['header']['requestorname'],
+                                      suppliername: _foundUsers[index]['header']
+                                          ['suppliername'],
+                                      ccy: _foundUsers[index]['header']['ccy'],
+                                      disc: _foundUsers[index]['header']
+                                          ['disc'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(PoScmApp2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        pono: _foundUsers[index]['header']
+                                            ['pono'],
+                                        ket: _foundUsers[index]['header']
+                                            ['catatan'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        requestorname: _foundUsers[index]
+                                            ['header']['requestorname'],
+                                        suppliername: _foundUsers[index]
+                                            ['header']['suppliername'],
+                                        ccy: _foundUsers[index]['header']
+                                            ['ccy'],
+                                        disc: _foundUsers[index]['header']
+                                            ['disc'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),
@@ -196,22 +222,11 @@ class _PoScmAppState extends State<PoScmApp> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
+                        controller: textControllers.poScmAppController.value,
                         onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
@@ -261,14 +276,13 @@ class _PoScmAppState extends State<PoScmApp> {
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: _foundUsers.length,
-                                  // itemCount: 15,
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
                                           _foundUsers[index]['header']['pono'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),

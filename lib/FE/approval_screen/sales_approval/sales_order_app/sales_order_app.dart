@@ -95,20 +95,12 @@ class _SalesOrderApprovalState extends State<SalesOrderApproval> {
                       children: [
                         CupertinoSearchTextField(
                           controller: textControllers.caConfirmController.value,
+                          onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
                           prefixInsets:
                               const EdgeInsets.only(left: 8, right: 8),
                           suffixInsets: const EdgeInsets.only(right: 8),
-                          // suffixMode: OverlayVisibilityMode.notEditing,
-                          // suffixIcon: Icon(CupertinoIcons.search),
-                          // onSuffixTap: () => Get.to(ScanFixAsset()),
-                          onSubmitted: (value) {
-                            // searchProcess();
-                            // setState(() {
-                            //   textControllers.vendor1Controller.value.clear();
-                            // });
-                          },
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -129,30 +121,94 @@ class _SalesOrderApprovalState extends State<SalesOrderApproval> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
+
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "CADV/OSY/2023/04-0075",
-                                    style: TextStyle(
+                                  title: Text(
+                                    _foundUsers[index]['header']['reffno'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    _foundUsers[index]['header']['requestor'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])) +
+                                        " || " +
+                                        _foundUsers[index]['header']
+                                            ['client_id'],
+                                  ),
+                                  onTap: () {
+                                    Get.to(SalesOrderApproval2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      reffno: _foundUsers[index]['header']
+                                          ['reffno'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      invdate: _foundUsers[index]['header']
+                                          ['invdate'],
+                                      duedate: _foundUsers[index]['header']
+                                          ['duedate'],
+                                      client_id: _foundUsers[index]['header']
+                                          ['client_id'],
+                                      warehouse: _foundUsers[index]['header']
+                                          ['warehouse'],
+                                      bankid: _foundUsers[index]['header']
+                                          ['bankid'],
+                                      ppn: _foundUsers[index]['header']
+                                          ['reffno'],
+                                      artype: _foundUsers[index]['header']
+                                          ['ar_type'],
+                                      ccy: _foundUsers[index]['header']['ccy'],
+                                      discount: _foundUsers[index]['header']
+                                          ['disc'],
+                                      tax: _foundUsers[index]['header']['tax'],
+                                      rate: _foundUsers[index]['header']
+                                          ['forex_rate'],
+                                      notes: _foundUsers[index]['header']
+                                          ['reason'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(SalesOrderApproval2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        reffno: _foundUsers[index]['header']
+                                            ['reffno'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        invdate: _foundUsers[index]['header']
+                                            ['invdate'],
+                                        duedate: _foundUsers[index]['header']
+                                            ['duedate'],
+                                        client_id: _foundUsers[index]['header']
+                                            ['client_id'],
+                                        warehouse: _foundUsers[index]['header']
+                                            ['warehouse'],
+                                        bankid: _foundUsers[index]['header']
+                                            ['bankid'],
+                                        ppn: _foundUsers[index]['header']
+                                            ['reffno'],
+                                        artype: _foundUsers[index]['header']
+                                            ['ar_type'],
+                                        ccy: _foundUsers[index]['header']
+                                            ['ccy'],
+                                        discount: _foundUsers[index]['header']
+                                            ['disc'],
+                                        tax: _foundUsers[index]['header']
+                                            ['tax'],
+                                        rate: _foundUsers[index]['header']
+                                            ['forex_rate'],
+                                        notes: _foundUsers[index]['header']
+                                            ['reason'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),

@@ -95,21 +95,14 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                     child: Column(
                       children: [
                         CupertinoSearchTextField(
-                          controller: textControllers.caConfirmController.value,
+                          controller:
+                              textControllers.itstockadjAppController.value,
+                          onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
                           prefixInsets:
                               const EdgeInsets.only(left: 8, right: 8),
                           suffixInsets: const EdgeInsets.only(right: 8),
-                          // suffixMode: OverlayVisibilityMode.notEditing,
-                          // suffixIcon: Icon(CupertinoIcons.search),
-                          // onSuffixTap: () => Get.to(ScanFixAsset()),
-                          onSubmitted: (value) {
-                            // searchProcess();
-                            // setState(() {
-                            //   textControllers.vendor1Controller.value.clear();
-                            // });
-                          },
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -130,28 +123,52 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            itemCount: dataaa.length,
+                            itemCount: _foundUsers.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
                                   title: Text(
                                     _foundUsers[index]['header']['reffno'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    _foundUsers[index]['header']['requestor'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])),
+                                  ),
+                                  onTap: () {
+                                    Get.to(ItStockAdjApp2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      reffno: _foundUsers[index]['header']
+                                          ['reffno'],
+                                      warehouse: _foundUsers[index]['header']
+                                          ['towh'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      requestor: _foundUsers[index]['header']
+                                          ['requestor'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(ItStockAdjApp2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        reffno: _foundUsers[index]['header']
+                                            ['reffno'],
+                                        warehouse: _foundUsers[index]['header']
+                                            ['towh'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        requestor: _foundUsers[index]['header']
+                                            ['requestor'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),
@@ -195,22 +212,12 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
+                        controller:
+                            textControllers.itstockadjAppController.value,
                         onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),

@@ -94,21 +94,13 @@ class _DpReqAppState extends State<DpReqApp> {
                     child: Column(
                       children: [
                         CupertinoSearchTextField(
-                          controller: textControllers.caConfirmController.value,
+                          controller: textControllers.dpreqAppController.value,
+                          onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
                           prefixInsets:
                               const EdgeInsets.only(left: 8, right: 8),
                           suffixInsets: const EdgeInsets.only(right: 8),
-                          // suffixMode: OverlayVisibilityMode.notEditing,
-                          // suffixIcon: Icon(CupertinoIcons.search),
-                          // onSuffixTap: () => Get.to(ScanFixAsset()),
-                          onSubmitted: (value) {
-                            // searchProcess();
-                            // setState(() {
-                            //   textControllers.vendor1Controller.value.clear();
-                            // });
-                          },
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -129,30 +121,91 @@ class _DpReqAppState extends State<DpReqApp> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "ARCP/OSY/2023/04-0018",
-                                    style: TextStyle(
+                                  title: Text(
+                                    _foundUsers[index]['header']['reffno'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    _foundUsers[index]['header']['requestor'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])) +
+                                        " || " +
+                                        _foundUsers[index]['header']['amount']
+                                            .toString(),
+                                  ),
+                                  onTap: () {
+                                    Get.to(DpReqApp2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      reffno: _foundUsers[index]['header']
+                                          ['reffno'],
+                                      ket: _foundUsers[index]['header']
+                                          ['reason'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      duedate: _foundUsers[index]['header']
+                                          ['duedate'],
+                                      requestor: _foundUsers[index]['header']
+                                          ['requestor'],
+                                      supplier: _foundUsers[index]['header']
+                                          ['supplier_id'],
+                                      kasir: _foundUsers[index]['header']
+                                          ['kasir'],
+                                      paidby: _foundUsers[index]['header']
+                                          ['paidby'],
+                                      ccy: _foundUsers[index]['header']
+                                          ['curr_id'],
+                                      ap_type: _foundUsers[index]['header']
+                                          ['ap_type'],
+                                      amount: _foundUsers[index]['header']
+                                          ['amount'],
+                                      amtidr: _foundUsers[index]['header']
+                                          ['amtidr'],
+                                      frate: _foundUsers[index]['header']
+                                          ['forexrate'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(DpReqApp2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        reffno: _foundUsers[index]['header']
+                                            ['reffno'],
+                                        ket: _foundUsers[index]['header']
+                                            ['reason'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        duedate: _foundUsers[index]['header']
+                                            ['duedate'],
+                                        requestor: _foundUsers[index]['header']
+                                            ['requestor'],
+                                        supplier: _foundUsers[index]['header']
+                                            ['supplier_id'],
+                                        kasir: _foundUsers[index]['header']
+                                            ['kasir'],
+                                        paidby: _foundUsers[index]['header']
+                                            ['paidby'],
+                                        ccy: _foundUsers[index]['header']
+                                            ['curr_id'],
+                                        ap_type: _foundUsers[index]['header']
+                                            ['ap_type'],
+                                        amount: _foundUsers[index]['header']
+                                            ['amount'],
+                                        amtidr: _foundUsers[index]['header']
+                                            ['amtidr'],
+                                        frate: _foundUsers[index]['header']
+                                            ['forexrate'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),
@@ -200,7 +253,7 @@ class _DpReqAppState extends State<DpReqApp> {
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
+                        controller: textControllers.dpreqAppController.value,
                         onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
@@ -257,13 +310,11 @@ class _DpReqAppState extends State<DpReqApp> {
                                         title: Text(
                                           _foundUsers[index]['header']
                                               ['reffno'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            // Text(__foundUsers[index]['stockid']),
-                                            Text(
+                                        subtitle: Text(
                                           _foundUsers[index]['header']
                                                   ['requestor'] +
                                               " || " +
@@ -277,6 +328,38 @@ class _DpReqAppState extends State<DpReqApp> {
                                                       ['amount']
                                                   .toString(),
                                         ),
+                                        onTap: () {
+                                          Get.to(DpReqApp2(
+                                            seckey: _foundUsers[index]
+                                                ['seckey'],
+                                            reffno: _foundUsers[index]['header']
+                                                ['reffno'],
+                                            ket: _foundUsers[index]['header']
+                                                ['reason'],
+                                            tanggal: _foundUsers[index]
+                                                ['header']['tanggal'],
+                                            duedate: _foundUsers[index]
+                                                ['header']['duedate'],
+                                            requestor: _foundUsers[index]
+                                                ['header']['requestor'],
+                                            supplier: _foundUsers[index]
+                                                ['header']['supplier_id'],
+                                            kasir: _foundUsers[index]['header']
+                                                ['kasir'],
+                                            paidby: _foundUsers[index]['header']
+                                                ['paidby'],
+                                            ccy: _foundUsers[index]['header']
+                                                ['curr_id'],
+                                            ap_type: _foundUsers[index]
+                                                ['header']['ap_type'],
+                                            amount: _foundUsers[index]['header']
+                                                ['amount'],
+                                            amtidr: _foundUsers[index]['header']
+                                                ['amtidr'],
+                                            frate: _foundUsers[index]['header']
+                                                ['forexrate'],
+                                          ));
+                                        },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),

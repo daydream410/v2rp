@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
@@ -237,6 +238,14 @@ class _LoginPage4State extends State<LoginPage4>
                       TextButton(
                         onPressed: () async {
                           // _isButtonDisabled ? null : loginNEW();
+                          final SharedPreferences sharedPreferences =
+                              await SharedPreferences.getInstance();
+                          sharedPreferences.setString('email',
+                              textControllers.emailController.value.text);
+                          sharedPreferences.setString('username',
+                              textControllers.usernameController.value.text);
+                          sharedPreferences.setString('password',
+                              textControllers.passwordController.value.text);
                           Get.snackbar(
                             "Please Wait",
                             "Connecting To Server...",
@@ -255,7 +264,6 @@ class _LoginPage4State extends State<LoginPage4>
                           _timer =
                               Timer(const Duration(milliseconds: 2000), (() {
                             loginNEW();
-                            // success = null;
                           }));
                         },
                         style: TextButton.styleFrom(
@@ -282,7 +290,6 @@ class _LoginPage4State extends State<LoginPage4>
   }
 
   Future<void> loginNEW() async {
-    // MsgHeader.loginProcessNEW();
     success = MsgHeader.success;
     try {
       if (_formKey.currentState!.validate()) {
@@ -300,7 +307,6 @@ class _LoginPage4State extends State<LoginPage4>
             dismissDirection: DismissDirection.vertical,
           );
 
-          // Get.to(() => Navbar());
           Get.offAll(const Navbar());
           setState(() {
             textControllers.passwordController.value.clear();

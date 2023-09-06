@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:video_player/video_player.dart';
@@ -21,12 +22,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _controller;
 
+  static String? finalEmail;
   static String? finalUsername;
-  // static String? finalIp;
-  // static String? finalConve;
-  // static String? finalTrx;
-  // static String? finalTime;
   static String? finalPassword;
+
+  static String? finalKulonuwun;
+  static String? finalMonggo;
+  // static String? finalTime;
   // late StreamSubscription subscription;
 
   @override
@@ -51,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(
           const Duration(seconds: 3),
           () => Get.to(
-              finalUsername == null ? const LoginPage4() : const Navbar()));
+              finalKulonuwun == null ? const LoginPage4() : const Navbar()));
     });
   }
 
@@ -71,28 +73,29 @@ class _SplashScreenState extends State<SplashScreen> {
   // }
 
   Future getValidationData() async {
-    // final SharedPreferences sharedPreferences =
-    //     await SharedPreferences.getInstance();
-    // var obtainUsername = sharedPreferences.getString('username');
-    // // var obtainIp = sharedPreferences.getString('ip');
-    // // var obtainConve = sharedPreferences.getString('conve');
-    // // var obtainTrx = sharedPreferences.getString('trxid');
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obtainEmail = sharedPreferences.getString('email');
+    var obtainUsername = sharedPreferences.getString('username');
+    var obtainPassword = sharedPreferences.getString('password');
+    var obtainKulonuwun = sharedPreferences.getString('kulonuwun');
+    var obtainMonggo = sharedPreferences.getString('monggo');
     // // var obtainTime = sharedPreferences.getString('datetime');
-    // var obtainPassword = sharedPreferences.getString('password');
 
     setState(() {
-      // finalUsername = obtainUsername;
-      // finalIp = obtainIp;
-      // finalConve = obtainConve;
-      // finalTrx = obtainTrx;
+      finalEmail = obtainEmail;
+      finalUsername = obtainUsername;
+      finalPassword = obtainPassword;
+      finalKulonuwun = obtainKulonuwun;
+      finalMonggo = obtainMonggo;
       // finalTime = obtainTime;
-      // finalPassword = obtainPassword;
     });
+    print(finalEmail);
     print(finalUsername);
-    // print(finalTime);
-    // print(finalConve);
-    // print(finalTrx);
     print(finalPassword);
+    print(finalKulonuwun);
+    print(finalMonggo);
+    // print(finalTrx);
   }
 
   void _playVideo() async {

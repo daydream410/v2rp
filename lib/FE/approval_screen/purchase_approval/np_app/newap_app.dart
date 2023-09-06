@@ -95,21 +95,13 @@ class _NpAppState extends State<NpApp> {
                     child: Column(
                       children: [
                         CupertinoSearchTextField(
-                          controller: textControllers.caConfirmController.value,
+                          controller: textControllers.newapAppController.value,
+                          onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
                           prefixInsets:
                               const EdgeInsets.only(left: 8, right: 8),
                           suffixInsets: const EdgeInsets.only(right: 8),
-                          // suffixMode: OverlayVisibilityMode.notEditing,
-                          // suffixIcon: Icon(CupertinoIcons.search),
-                          // onSuffixTap: () => Get.to(ScanFixAsset()),
-                          onSubmitted: (value) {
-                            // searchProcess();
-                            // setState(() {
-                            //   textControllers.vendor1Controller.value.clear();
-                            // });
-                          },
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -130,30 +122,71 @@ class _NpAppState extends State<NpApp> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "ARCP/OSY/2023/04-0018",
-                                    style: TextStyle(
+                                  title: Text(
+                                    _foundUsers[index]['header']['reffno'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Text(
+                                    _foundUsers[index]['header']['requestor'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])),
+                                  ),
+                                  onTap: () {
+                                    Get.to(NpApp2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      reffno: _foundUsers[index]['header']
+                                          ['reffno'],
+                                      ket: _foundUsers[index]['header']
+                                          ['reason'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      supplier: _foundUsers[index]['header']
+                                          ['supplier_id'],
+                                      invdate: _foundUsers[index]['header']
+                                          ['invdate'],
+                                      ccy: _foundUsers[index]['header']['ccy'],
+                                      duedate: _foundUsers[index]['header']
+                                          ['duedate'],
+                                      amount: _foundUsers[index]['header']
+                                          ['amount'],
+                                      inIDR: _foundUsers[index]['header']
+                                          ['amountidr'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(NpApp2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        reffno: _foundUsers[index]['header']
+                                            ['reffno'],
+                                        ket: _foundUsers[index]['header']
+                                            ['reason'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        supplier: _foundUsers[index]['header']
+                                            ['supplier_id'],
+                                        invdate: _foundUsers[index]['header']
+                                            ['invdate'],
+                                        ccy: _foundUsers[index]['header']
+                                            ['ccy'],
+                                        duedate: _foundUsers[index]['header']
+                                            ['duedate'],
+                                        amount: _foundUsers[index]['header']
+                                            ['amount'],
+                                        inIDR: _foundUsers[index]['header']
+                                            ['amountidr'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),
@@ -197,22 +230,11 @@ class _NpAppState extends State<NpApp> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
+                        controller: textControllers.newapAppController.value,
                         onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
@@ -261,7 +283,6 @@ class _NpAppState extends State<NpApp> {
                                     );
                                   },
                                   physics: const BouncingScrollPhysics(),
-                                  // itemCount: _dataaa.length,
                                   itemCount: _foundUsers.length,
                                   itemBuilder: (context, index) {
                                     return Card(

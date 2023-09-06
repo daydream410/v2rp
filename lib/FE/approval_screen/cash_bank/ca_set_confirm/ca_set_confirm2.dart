@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_confirm/ca_set_confirm.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -634,7 +635,10 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
 
   Future<dynamic> getDataa() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     try {
@@ -643,8 +647,8 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
             '/api/v1/mobile/confirmation/lpjk/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
       final response = json.decode(getData.body);
@@ -668,7 +672,10 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
 
   Future<void> sendConfirm() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     var status;
@@ -684,8 +691,8 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
         ),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
       final response = json.decode(getData.body);

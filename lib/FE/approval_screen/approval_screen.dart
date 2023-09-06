@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/gr_approval/gr_app.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/it_approval/it_app.dart';
@@ -26,6 +27,7 @@ import '../../BE/controller.dart';
 import '../../BE/reqip.dart';
 import '../../BE/resD.dart';
 import '../../main.dart';
+import '../mainScreen/login_screen4.dart';
 import 'cash_bank/ca_set_approval/ca_set_app.dart';
 import 'cash_bank/ca_set_confirm/ca_set_confirm.dart';
 import 'cash_bank/cash_advance_approval/ca_app.dart';
@@ -2764,7 +2766,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   Future<void> getDataa() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     try {
@@ -2773,8 +2778,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         Uri.http('156.67.217.113', '/api/v1/mobile/notif'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
 
@@ -2880,78 +2885,35 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
           totalSTSA += 1;
         }
       }
-      //  if (totalSC == 0) {
-      //     true = false;
-      //   } else if (totalSA == 0) {
-      //     notZero = false;
-      //   } else if (totalPA == 0) {
-      //     notZero = false;
-      //   } else if (totalPOE == 0) {
-      //     notZero = false;
-      //   } else if (totalPNE == 0) {
-      //     notZero = false;
-      //   } else if (totalKC == 0) {
-      //     notZero = false;
-      //   } else if (totalKA == 0) {
-      //     notZero = false;
-      //   } else if (totalKDA == 0) {
-      //     notZero = false;
-      //   } else if (totalKD == 0) {
-      //     notZero = false;
-      //   } else if (totalLC == 0) {
-      //     notZero = false;
-      //   } else if (totalLA == 0) {
-      //     notZero = false;
-      //   } else if (totalMUA == 0) {
-      //     notZero = false;
-      //   } else if (totalITA == 0) {
-      //     notZero = false;
-      //   } else if (totalMRA == 0) {
-      //     notZero = false;
-      //   } else if (totalGRA == 0) {
-      //     notZero = false;
-      //   } else if (totalSTA == 0) {
-      //     notZero = false;
-      //   } else if (totalSMA == 0) {
-      //     notZero = false;
-      //   } else if (totalSAA == 0) {
-      //     notZero = false;
-      //   } else if (totalSPA == 0) {
-      //     notZero = false;
-      //   } else if (totalMMU == 0) {
-      //     notZero = false;
-      //   } else if (totalSTUA == 0) {
-      //     notZero = false;
-      //   } else if (totalDNA == 0) {
-      //     notZero = false;
-      //   } else if (totalAPRA == 0) {
-      //     notZero = false;
-      //   } else if (totalDPA == 0) {
-      //     notZero = false;
-      //   } else if (totalSOA == 0) {
-      //     notZero = false;
-      //   } else if (totalAPAA == 0) {
-      //     notZero = false;
-      //   } else if (totalAA == 0) {
-      //     notZero = false;
-      //   } else if (totalNA == 0) {
-      //     notZero = false;
-      //   } else if (totalARRA == 0) {
-      //     notZero = false;
-      //   } else if (totalITSA == 0) {
-      //     notZero = false;
-      //   } else if (totalSTSA == 0) {
-      //     notZero = false;
-      //   } else {
-      //     setState(() {
-      //       notZero = true;
-      //     });
-      //   }
 
       print("totalLA = " + totalLA.toString());
       print("dataaaa = " + dataaa.toString());
     } catch (e) {
       print(e);
     }
+  }
+
+  Future autoLogout() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.remove('username');
+    sharedPreferences.remove('email');
+    sharedPreferences.remove('password');
+    sharedPreferences.remove('kulonuwun');
+    sharedPreferences.remove('monggo');
+    await sharedPreferences.clear();
+    Get.offAll(() => const LoginPage4());
+    Get.snackbar(
+      "Session Time Out",
+      "Please Re-login",
+      colorText: Colors.white,
+      icon: const Icon(
+        Icons.logout,
+        color: Colors.white,
+      ),
+      backgroundColor: Colors.red,
+      isDismissible: true,
+      dismissDirection: DismissDirection.vertical,
+    );
   }
 }

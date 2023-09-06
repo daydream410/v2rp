@@ -71,7 +71,13 @@ class _ScanFixAssetState extends State<ScanFixAsset> {
             // allowDuplicates: false,
             controller: cameraController,
             onDetect: (capture) {
-              codeBarcode = capture.raw;
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                codeBarcode = barcode.rawValue;
+                debugPrint(
+                    'Barcode found! raw valuee ====== ${barcode.rawValue}');
+              }
+              // codeBarcode = bar.rawValue;
               debugPrint('Barcode found! $codeBarcode');
               Get.snackbar(
                 "Barcode Found!",

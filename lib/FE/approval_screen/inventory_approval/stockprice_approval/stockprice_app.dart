@@ -94,21 +94,14 @@ class _StockPriceAppState extends State<StockPriceApp> {
                     child: Column(
                       children: [
                         CupertinoSearchTextField(
-                          controller: textControllers.caConfirmController.value,
+                          controller:
+                              textControllers.stockpriceAppController.value,
+                          onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
                           prefixInsets:
                               const EdgeInsets.only(left: 8, right: 8),
                           suffixInsets: const EdgeInsets.only(right: 8),
-                          // suffixMode: OverlayVisibilityMode.notEditing,
-                          // suffixIcon: Icon(CupertinoIcons.search),
-                          // onSuffixTap: () => Get.to(ScanFixAsset()),
-                          onSubmitted: (value) {
-                            // searchProcess();
-                            // setState(() {
-                            //   textControllers.vendor1Controller.value.clear();
-                            // });
-                          },
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -129,30 +122,62 @@ class _StockPriceAppState extends State<StockPriceApp> {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
-                                    // _dataaa[index]['itemname'],
-                                    "ARCP/OSY/2023/04-0018",
-                                    style: TextStyle(
+                                  title: Text(
+                                    _foundUsers[index]['header']['apreff'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle: Row(
+                                    children: [
+                                      Text(
+                                        _foundUsers[index]['header']
+                                            ['supplierName'],
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(_foundUsers[index]['header']
+                                                ['amount']),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    Get.to(StockPriceApp2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      apreff: _foundUsers[index]['header']
+                                          ['apreff'],
+                                      apjvno: _foundUsers[index]['header']
+                                          ['jvno'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      supplierName: _foundUsers[index]['header']
+                                          ['supplierName'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(StockPriceApp2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        apreff: _foundUsers[index]['header']
+                                            ['apreff'],
+                                        apjvno: _foundUsers[index]['header']
+                                            ['jvno'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        supplierName: _foundUsers[index]
+                                            ['header']['supplierName'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),
@@ -196,22 +221,12 @@ class _StockPriceAppState extends State<StockPriceApp> {
                   ),
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     // Text(
-                      //     //   'Vendor Barcode Registration',
-                      //     //   textAlign: TextAlign.center,
-                      //     //   overflow: TextOverflow.ellipsis,
-                      //     //   style: TextStyle(fontWeight: FontWeight.bold),
-                      //     // ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.vendor1Controller.value,
+                        controller:
+                            textControllers.stockpriceAppController.value,
                         onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
@@ -261,7 +276,6 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                   },
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: _foundUsers.length,
-
                                   itemBuilder: (context, index) {
                                     return Card(
                                       elevation: 5,

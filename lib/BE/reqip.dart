@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/resD.dart';
 // import 'package:v2rp1/BE/controller.dart';
@@ -160,6 +161,7 @@ class MsgHeader {
     print('Email =======' + emailVal);
     print('role =======' + userVal);
     print('pw =======' + passVal);
+
     try {
       // http://156.67.217.113/api/v1/mobile
       var sendLogin =
@@ -181,6 +183,11 @@ class MsgHeader {
       // print('status' + status);
       // print('kulooo = ' + kulonuwun);
       // print('monggo = ' + monggo);
+
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setString('kulonuwun', kulonuwun);
+      sharedPreferences.setString('monggo', monggo);
     } catch (e) {
       print(e);
     }

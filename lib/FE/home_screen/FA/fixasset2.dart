@@ -4,17 +4,20 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/home_screen/FA/fixasset_scanner.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'dart:async';
 
 class FixAsset2 extends StatefulWidget {
@@ -47,28 +50,25 @@ class _FixAsset2State extends State<FixAsset2> {
 
   @override
   void dispose() {
-    textControllers.dispose();
+    // textControllers.dispose();
     super.dispose();
   }
 
   Future<String> getData() async {
     var searchValue = textControllers.fixassetController.value.text;
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
-    // var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
-    //     headers: {'x-v2rp-key': '$conve'},
-    //     body: jsonEncode({
-    //       "trxid": "$trxid",
-    //       "datetime": "$datetime",
-    //       "reqid": "501001",
-    //       "id": "$searchValue"
-    //     }));
+
     var sendSearch =
         await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/assets'),
             headers: {
               'Content-Type': 'application/json; charset=utf-8',
-              'kulonuwun': kulonuwun,
-              'monggo': monggo,
+              'kulonuwun': finalKulonuwun ?? kulonuwun,
+              'monggo': finalMonggo ?? monggo,
             },
             body: jsonEncode({
               "id": searchValue,
@@ -87,7 +87,7 @@ class _FixAsset2State extends State<FixAsset2> {
     } else if (succuss == false) {
       Get.snackbar(
         'Hint',
-        '$responseMessage',
+        'Keywords At Least 3 Characters',
         colorText: Colors.white,
         icon: Icon(
           Icons.tips_and_updates,
@@ -1023,47 +1023,74 @@ class _FixAsset2State extends State<FixAsset2> {
   }
 
   Future<void> sendImage() async {
-    var tesA = _dataaa[selectedIndex]['fadatano'];
+    var tesA = _dataaa[selectedIndex]['fdatano'];
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encoded = stringToBase64.encode(tesA);
+    print("encoded = " + encoded);
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    String tipe = "FA";
+    final dioo = dio.Dio();
     try {
-      List<int> imageBytes = uploadImage.readAsBytesSync();
-      String baseimage = base64Encode(imageBytes);
-      var sendSearch = await http.post(
-        Uri.https('www.v2rp.net', '/codebase/php/uploadfmmobile.php'),
-        headers: {'x-v2rp-key': '$conve'},
-        body: jsonEncode({
-          "trxid": "$trxid",
-          "datetime": "$datetime",
-          "reqid": "501001",
-          "id": "$tesA",
-          "image": baseimage,
+      String fileName = uploadImage.path.split('/').last;
+      print('filename = ' + fileName);
+      print('upload image path = ' + uploadImage.path);
+
+      dio.FormData formData = new dio.FormData.fromMap({
+        "image": await dio.MultipartFile.fromFile(
+          uploadImage.path,
+          filename: fileName,
+          contentType: new MediaType('image', 'jpg'),
+        ),
+      });
+      dio.Response response = await dioo.post(
+        'http://156.67.217.113/api/v1/mobile/uploader/$tipe/$encoded',
+        // '156.67.217.113/api/v1/mobile/uploader/' + tipe + '/' + encoded,
+        data: formData,
+        options: dio.Options(headers: {
+          'Content-Type': 'multipart/form-data',
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         }),
       );
-      var hasil = json.decode(sendSearch.body);
-      print(hasil);
-      var responseCode = hasil['responsecode'];
-      print(responseCode);
-      if (responseCode == '00') {
+      print('connect to server');
+      print(response.data);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
         Get.snackbar(
           "Success",
-          "Successfull Uploading Image",
-          icon: Icon(Icons.check),
-          backgroundColor: Color.fromARGB(255, 58, 245, 11),
+          "Image is Uploaded",
+          colorText: Colors.white,
+          icon: Icon(
+            Icons.check,
+            color: Colors.white,
+          ),
+          backgroundColor: Colors.green,
           isDismissible: true,
           dismissDirection: DismissDirection.vertical,
         );
+
+        Get.offAll(const Navbar());
       } else {
         Get.snackbar(
-          "Error",
-          "Failed Uploading Image!!",
-          icon: Icon(Icons.close),
+          "Failed",
+          "Please Try Again!",
+          colorText: Colors.white,
+          icon: Icon(
+            Icons.warning,
+            color: Colors.white,
+          ),
           backgroundColor: Colors.red,
           isDismissible: true,
           dismissDirection: DismissDirection.vertical,
         );
       }
-      print(tesA);
     } catch (e) {
-      // print("Failed Connect To Server");
+      print('Error connect to server');
     }
   }
 

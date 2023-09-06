@@ -24,6 +24,7 @@ class TextControllers extends GetxController {
 
   //stock table
   Rx<TextEditingController> stocktableController = TextEditingController().obs;
+  Rx<TextEditingController> warehouseStController = TextEditingController().obs;
 
   //fix assets
   Rx<TextEditingController> fixassetController = TextEditingController().obs;

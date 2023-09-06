@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -18,7 +24,7 @@ class SettingScreen extends StatelessWidget {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Are You sure?'),
-            content: const Text('Do you want to exit the App?'),
+            content: const Text('Do you want to exit V2RP Mobile?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -38,7 +44,6 @@ class SettingScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 80.0),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InkWell(
                   onDoubleTap: () {
@@ -69,7 +74,7 @@ class SettingScreen extends StatelessWidget {
                 ),
                 const Text(
                   // "$finalUsername",
-                  "Hai",
+                  "Hai ",
                   style: TextStyle(fontSize: 20.0),
                 ),
                 const SizedBox(
@@ -77,21 +82,26 @@ class SettingScreen extends StatelessWidget {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                    foregroundColor: Colors.teal,
+                    foregroundColor: Colors.red,
                   ),
                   onPressed: () async {
-                    // final SharedPreferences sharedPreferences =
-                    //     await SharedPreferences.getInstance();
-                    // sharedPreferences.remove('username');
-                    // // sharedPreferences.remove('conve');
-                    // // sharedPreferences.remove('trxid');
-                    // // sharedPreferences.remove('datetime');
-                    // sharedPreferences.remove('password');
-                    // await sharedPreferences.clear();
+                    final SharedPreferences sharedPreferences =
+                        await SharedPreferences.getInstance();
+                    sharedPreferences.remove('username');
+                    sharedPreferences.remove('email');
+                    sharedPreferences.remove('password');
+                    sharedPreferences.remove('kulonuwun');
+                    sharedPreferences.remove('monggo');
+                    await sharedPreferences.clear();
 
                     Get.offAll(() => const LoginPage4());
                   },
-                  child: const Text("LOGOUT"),
+                  child: const Text(
+                    "LOGOUT",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               ],
             ),
