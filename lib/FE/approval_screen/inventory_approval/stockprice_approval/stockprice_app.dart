@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:http/http.dart' as http;
 import 'package:v2rp1/BE/resD.dart';
@@ -360,7 +361,10 @@ class _StockPriceAppState extends State<StockPriceApp> {
 
   Future<void> getDataa() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     try {
@@ -370,8 +374,8 @@ class _StockPriceAppState extends State<StockPriceApp> {
             '156.67.217.113', '/api/v1/mobile/approval/stockpriceadjustment'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
       final responseData = json.decode(getData.body);

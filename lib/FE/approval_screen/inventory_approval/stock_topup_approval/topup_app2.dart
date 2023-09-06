@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -736,7 +737,10 @@ class _StockTopupApp2State extends State<StockTopupApp2> {
 
   Future<dynamic> getDataa() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     try {
@@ -745,8 +749,8 @@ class _StockTopupApp2State extends State<StockTopupApp2> {
             '/api/v1/mobile/approval/stocktopup/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
       final caConfirmData = json.decode(getData.body);
@@ -770,7 +774,10 @@ class _StockTopupApp2State extends State<StockTopupApp2> {
 
   Future<void> sendConfirm() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     var status;
@@ -789,8 +796,8 @@ class _StockTopupApp2State extends State<StockTopupApp2> {
         ),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
       final response = json.decode(getData.body);

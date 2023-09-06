@@ -16,6 +16,15 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  String? finalEmail = '';
+  String? finalUsername = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getEmail();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -72,10 +81,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                const Text(
-                  // "$finalUsername",
-                  "Hai ",
-                  style: TextStyle(fontSize: 20.0),
+                Text(
+                  "$finalEmail ",
+                  style: const TextStyle(fontSize: 20.0),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Text(
+                  "$finalUsername ",
+                  style: const TextStyle(fontSize: 20.0),
                 ),
                 const SizedBox(
                   height: 50,
@@ -126,5 +141,14 @@ class _SettingScreenState extends State<SettingScreen> {
         },
       ),
     );
+  }
+
+  Future getEmail() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    setState(() {
+      finalEmail = sharedPreferences.getString('email');
+      finalUsername = sharedPreferences.getString('username');
+    });
   }
 }

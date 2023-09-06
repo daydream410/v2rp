@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/itstock_adj_approval/itstock_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
@@ -756,7 +757,10 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
 
   Future<dynamic> getDataa() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
 
@@ -770,8 +774,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
               '/api/v1/mobile/approval/itadjustment/' + widget.seckey),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            'kulonuwun': kulonuwun,
-            'monggo': monggo,
+            'kulonuwun': finalKulonuwun ?? kulonuwun,
+            'monggo': finalMonggo ?? monggo,
           },
         );
         final responseData = json.decode(getData.body);
@@ -790,8 +794,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
               '/api/v1/mobile/approval/stadjustment/' + widget.seckey),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            'kulonuwun': kulonuwun,
-            'monggo': monggo,
+            'kulonuwun': finalKulonuwun ?? kulonuwun,
+            'monggo': finalMonggo ?? monggo,
           },
         );
         final responseData = json.decode(getData.body);
@@ -807,7 +811,10 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
 
   Future<void> sendConfirm() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     var status;
@@ -829,8 +836,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           ),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            'kulonuwun': kulonuwun,
-            'monggo': monggo,
+            'kulonuwun': finalKulonuwun ?? kulonuwun,
+            'monggo': finalMonggo ?? monggo,
           },
         );
 
@@ -879,8 +886,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           ),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            'kulonuwun': kulonuwun,
-            'monggo': monggo,
+            'kulonuwun': finalKulonuwun ?? kulonuwun,
+            'monggo': finalMonggo ?? monggo,
           },
         );
 

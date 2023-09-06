@@ -9,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/resD.dart';
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
@@ -374,7 +375,10 @@ class _AssemblingAppState extends State<AssemblingApp> {
 
   Future<void> getDataa() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     try {
@@ -383,8 +387,8 @@ class _AssemblingAppState extends State<AssemblingApp> {
         Uri.http('156.67.217.113', '/api/v1/mobile/approval/assembling'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
       final caConfirmData = json.decode(getData.body);

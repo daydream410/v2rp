@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/stock_trf_approval/stocktrf_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 // import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -584,7 +585,10 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
 
   Future<dynamic> getDataa() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     try {
@@ -593,8 +597,8 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
             '/api/v1/mobile/approval/stocktransfer/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
       );
       final caConfirmData = json.decode(getData.body);
@@ -610,7 +614,10 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
 
   Future<void> sendConfirm() async {
     HttpOverrides.global = MyHttpOverrides();
-
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     var status;
@@ -629,8 +636,8 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
         ),
         headers: {
           // 'Content-Type': 'application/json; charset=utf-8',
-          'kulonuwun': kulonuwun,
-          'monggo': monggo,
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         },
         body: {
           'estrcvd': currentDate.toString(),
