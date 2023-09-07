@@ -72,13 +72,22 @@ class _ScanSTableState extends State<ScanSTable> {
             // allowDuplicates: false,
             controller: cameraController,
             onDetect: (capture) {
-              codeBarcode = capture.raw;
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                codeBarcode = barcode.rawValue;
+                debugPrint(
+                    'Barcode found! raw valuee ====== ${barcode.rawValue}');
+              }
+              // codeBarcode = bar.rawValue;
               debugPrint('Barcode found! $codeBarcode');
               Get.snackbar(
                 "Barcode Found!",
                 "$codeBarcode",
                 icon: const Icon(Icons.qr_code),
                 backgroundColor: Colors.green,
+                isDismissible: true,
+                dismissDirection: DismissDirection.vertical,
+                snackPosition: SnackPosition.BOTTOM,
               );
               Get.to(() => const StockTable2());
               setState(() {

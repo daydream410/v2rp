@@ -20,6 +20,9 @@ import 'package:v2rp1/BE/resD.dart';
 import 'package:v2rp1/FE/home_screen/StockTable/stocktable_scanner.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
+import 'package:http_parser/http_parser.dart';
+
 import 'dart:async';
 
 import '../../../main.dart';
@@ -388,7 +391,8 @@ class _StockTable2State extends State<StockTable2> {
                                             splashColor: Colors.blue,
                                             child: Ink.image(
                                               image: NetworkImage(
-                                                dataaa[index]['img'],
+                                                // 'https://cdn.discordapp.com/attachments/1107474085279187014/1149186183583256667/4x.webp',
+                                                dataaa[index]['image'][0],
                                               ),
                                               height: MediaQuery.of(context)
                                                       .size
@@ -413,8 +417,7 @@ class _StockTable2State extends State<StockTable2> {
                                                   height: 20,
                                                 ),
                                                 Text(
-                                                  dataaa[index]['itemname'] ??
-                                                      '',
+                                                  dataaa[index]['ket'] ?? '',
                                                   style: TextStyle(
                                                       color: Colors.black),
                                                 ),
@@ -585,44 +588,65 @@ class _StockTable2State extends State<StockTable2> {
 
   Future<void> sendImage() async {
     var tesA = dataaa[selectedIndex]['stockid'];
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encoded = stringToBase64.encode(tesA);
+    print("stockid = " + tesA);
+    print("encoded = " + encoded);
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    String tipe = "ST";
+    final dioo = dio.Dio();
     try {
-      List<int> imageBytes = uploadImage.readAsBytesSync();
-      String baseimage = base64Encode(imageBytes);
-      var sendSearch = await http.post(
-        Uri.https('www.v2rp.net', '/codebase/php/uploadfmmobile.php'),
-        headers: {'x-v2rp-key': '$conve'},
-        body: jsonEncode({
-          "trxid": "$trxid",
-          "datetime": "$datetime",
-          "reqid": "0002",
-          // "id": "$selectedIndex",
-          "id": "$tesA",
-          "image": baseimage,
+      String fileName = uploadImage.path.split('/').last;
+      print('filename = ' + fileName);
+      print('upload image path = ' + uploadImage.path);
+      print('tipe = ' + tipe);
+
+      dio.FormData formData = new dio.FormData.fromMap({
+        "image": await dio.MultipartFile.fromFile(
+          uploadImage.path,
+          filename: fileName,
+          contentType: new MediaType('image', 'jpg'),
+        ),
+      });
+      dio.Response response = await dioo.post(
+        'http://156.67.217.113/api/v1/mobile/uploader/$tipe/$encoded',
+        data: formData,
+        options: dio.Options(headers: {
+          'Content-Type': 'multipart/form-data',
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
         }),
       );
-      var hasil = json.decode(sendSearch.body);
-      print(hasil);
-      print(tesA);
-      var responseCode = hasil['responsecode'];
-      print(responseCode);
-      if (responseCode == '00') {
+      print('connect to server');
+      print(response.data);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
         Get.snackbar(
           "Success",
-          "Successfull Uploading Image",
+          "Image is Uploaded",
+          colorText: Colors.white,
           icon: Icon(
             Icons.check,
             color: Colors.white,
           ),
-          backgroundColor: Color.fromARGB(255, 58, 245, 11),
+          backgroundColor: Colors.green,
           isDismissible: true,
           dismissDirection: DismissDirection.vertical,
         );
+
+        Get.offAll(const Navbar());
       } else {
         Get.snackbar(
-          "Error",
-          "Failed Uploading Image!!",
+          "Failed",
+          "Please Try Again!",
+          colorText: Colors.white,
           icon: Icon(
-            Icons.close,
+            Icons.warning,
             color: Colors.white,
           ),
           backgroundColor: Colors.red,
@@ -631,9 +655,73 @@ class _StockTable2State extends State<StockTable2> {
         );
       }
     } catch (e) {
-      // print("Failed Connect To Server");
+      print('Error connect to server');
+      Get.snackbar(
+        "Error Connect To Server",
+        "Please Try Again!",
+        colorText: Colors.white,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.red,
+        isDismissible: true,
+        dismissDirection: DismissDirection.vertical,
+      );
     }
   }
+
+  // Future<void> sendImage() async {
+  //   var tesA = dataaa[selectedIndex]['stockid'];
+  //   try {
+  //     List<int> imageBytes = uploadImage.readAsBytesSync();
+  //     String baseimage = base64Encode(imageBytes);
+  //     var sendSearch = await http.post(
+  //       Uri.https('www.v2rp.net', '/codebase/php/uploadfmmobile.php'),
+  //       headers: {'x-v2rp-key': '$conve'},
+  //       body: jsonEncode({
+  //         "trxid": "$trxid",
+  //         "datetime": "$datetime",
+  //         "reqid": "0002",
+  //         // "id": "$selectedIndex",
+  //         "id": "$tesA",
+  //         "image": baseimage,
+  //       }),
+  //     );
+  //     var hasil = json.decode(sendSearch.body);
+  //     print(hasil);
+  //     print(tesA);
+  //     var responseCode = hasil['responsecode'];
+  //     print(responseCode);
+  //     if (responseCode == '00') {
+  //       Get.snackbar(
+  //         "Success",
+  //         "Successfull Uploading Image",
+  //         icon: Icon(
+  //           Icons.check,
+  //           color: Colors.white,
+  //         ),
+  //         backgroundColor: Color.fromARGB(255, 58, 245, 11),
+  //         isDismissible: true,
+  //         dismissDirection: DismissDirection.vertical,
+  //       );
+  //     } else {
+  //       Get.snackbar(
+  //         "Error",
+  //         "Failed Uploading Image!!",
+  //         icon: Icon(
+  //           Icons.close,
+  //           color: Colors.white,
+  //         ),
+  //         backgroundColor: Colors.red,
+  //         isDismissible: true,
+  //         dismissDirection: DismissDirection.vertical,
+  //       );
+  //     }
+  //   } catch (e) {
+  //     // print("Failed Connect To Server");
+  //   }
+  // }
 
   Future<void> searchProcess() async {
     var searchResult = textControllers.stocktableController.value.text;
@@ -679,7 +767,7 @@ class _StockTable2State extends State<StockTable2> {
     //       "id": "$searchValue"
     //     }));
     var sendSearch =
-        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks/new'),
+        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks'),
             headers: {
               'Content-Type': 'application/json; charset=utf-8',
               'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -695,19 +783,19 @@ class _StockTable2State extends State<StockTable2> {
 
     var succuss = resultData['success'];
     var responseMessage = resultData['message'];
-    result = resultData['result'];
+    result = resultData['data'];
 
     print("response = " + resultData.toString());
 
-    if (succuss == '00') {
+    if (succuss == true) {
       setState(() {
-        dataaa = resultData['result'];
+        dataaa = resultData['data'];
         textControllers.stocktableController.value.clear();
       });
-    } else if (succuss == '30') {
+    } else if (succuss == false) {
       Get.snackbar(
         'Hint',
-        '$responseMessage',
+        'Keywords At Least 3 Characters',
         colorText: Colors.white,
         icon: Icon(
           Icons.tips_and_updates,
@@ -782,8 +870,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
               builder: (context, index) {
                 final dataGambar = widget.urlImages;
                 return PhotoViewGalleryPageOptions(
-                  imageProvider:
-                      NetworkImage("https://www.v2rp.net" + dataGambar[index]),
+                  imageProvider: NetworkImage(dataGambar[index]),
                   minScale: PhotoViewComputedScale.contained,
                   maxScale: PhotoViewComputedScale.contained * 4,
                 );
@@ -797,8 +884,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
               builder: (context, index) {
                 final dataGambar = widget.urlImages;
                 return PhotoViewGalleryPageOptions(
-                  imageProvider:
-                      NetworkImage("https://www.v2rp.net" + dataGambar[index]),
+                  imageProvider: NetworkImage(dataGambar[index]),
                   minScale: PhotoViewComputedScale.contained,
                   maxScale: PhotoViewComputedScale.contained * 4,
                 );
