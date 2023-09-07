@@ -2789,6 +2789,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         dataaa = responseData['data'];
         // totalSC = dataaa.length;
       });
+      if (responseData['kode'] == '77') {
+        autoLogout();
+      }
       totalSC = 0;
       totalSA = 0;
       totalPA = 0;
