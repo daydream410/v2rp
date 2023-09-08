@@ -45,14 +45,15 @@ class _FixAsset2State extends State<FixAsset2> {
     super.initState();
     if (textControllers.fixassetController.value.text != null) {
       getData();
+      print('null = ' + textControllers.fixassetController.value.text);
     }
   }
 
-  @override
-  void dispose() {
-    // textControllers.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // textControllers.dispose();
+  //   super.dispose();
+  // }
 
   Future<String> getData() async {
     var searchValue = textControllers.fixassetController.value.text;

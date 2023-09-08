@@ -10,12 +10,10 @@ import '../../../additional/qr_overlay.dart';
 class ScanVb extends StatefulWidget {
   final idstock;
   final itemname;
-  final serverKeyVal;
   const ScanVb({
     Key? key,
     required this.idstock,
     required this.itemname,
-    required this.serverKeyVal,
   }) : super(key: key);
 
   @override
@@ -100,8 +98,12 @@ class _ScanVbState extends State<ScanVb> {
             controller: cameraController,
             // onDetect: (barcode, args) {
             onDetect: (capture) {
-              codeBarcode = capture.raw;
-              debugPrint('Barcode found! $codeBarcode');
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                codeBarcode = barcode.rawValue;
+                debugPrint(
+                    'Barcode found! raw valuee ====== ${barcode.rawValue}');
+              }
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.white,
@@ -135,7 +137,6 @@ class _ScanVbState extends State<ScanVb> {
                 barcodeResult: codeBarcode,
                 idstock2: widget.idstock,
                 itemname2: widget.itemname,
-                serverKeyVal2: widget.serverKeyVal,
               ));
               // Get.to(Testinggg());
 

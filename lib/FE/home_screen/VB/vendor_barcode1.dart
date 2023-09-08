@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, unused_field, unrelated_type_equality_checks, unnecessary_new, prefer_typing_uninitialized_variables, unnecessary_string_interpolations, unnecessary_null_comparison, prefer_const_constructors
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/BE/resD.dart';
@@ -15,6 +17,8 @@ import 'package:v2rp1/FE/home_screen/VB/vendor_scanner.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+
+import 'package:v2rp1/main.dart';
 
 class VendorBarcode1 extends StatefulWidget {
   const VendorBarcode1({Key? key}) : super(key: key);
@@ -35,38 +39,93 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
   late List _dataaa = <ResultData>[];
 
   Future<String> getData() async {
+    HttpOverrides.global = MyHttpOverrides();
     var searchValue = textControllers.vendor1Controller.value.text;
-    var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
-        headers: {'x-v2rp-key': '$conve'},
-        body: jsonEncode({
-          "trxid": "$trxid",
-          "datetime": "$datetime",
-          "reqid": "0002",
-          "id": "$searchValue"
-        }));
-    // final resultDataa = resultDataFromMap(sendSearch.body);
+
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    // var sendSearch = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
+    //     headers: {'x-v2rp-key': '$conve'},
+    //     body: jsonEncode({
+    //       "trxid": "$trxid",
+    //       "datetime": "$datetime",
+    //       "reqid": "0002",
+    //       "id": "$searchValue"
+    //     }));
+
+    var sendSearch =
+        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks'),
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8',
+              'kulonuwun': finalKulonuwun ?? kulonuwun,
+              'monggo': finalMonggo ?? monggo,
+            },
+            body: jsonEncode({
+              "itemname": searchValue,
+            }));
+
     final resultData = json.decode(sendSearch.body);
-    serverKeyValue = resultData['serverkey'];
-    var responsecode = resultData['responsecode'];
+    var succuss = resultData['success'];
     var responseMessage = resultData['message'];
 
-    if (responsecode == '00') {
+    if (succuss == true) {
       setState(() {
-        _dataaa = json.decode(sendSearch.body)['result'];
+        _dataaa = resultData['data'];
+        textControllers.stocktableController.value.clear();
       });
+    } else if (succuss == false) {
+      Get.snackbar(
+        'Hint',
+        'Keywords At Least 3 Characters',
+        colorText: Colors.white,
+        icon: Icon(
+          Icons.tips_and_updates,
+          color: Colors.white,
+        ),
+        backgroundColor: HexColor('#F4A62A'),
+        isDismissible: true,
+        dismissDirection: DismissDirection.vertical,
+      );
     } else {
       Get.snackbar(
-        'Failed!',
+        'Failed',
         '$responseMessage',
-        icon: Icon(Icons.warning),
+        colorText: Colors.white,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
         backgroundColor: Colors.red,
         isDismissible: true,
         dismissDirection: DismissDirection.vertical,
       );
       setState(() {
         _dataaa.clear();
+        textControllers.stocktableController.value.clear();
       });
     }
+
+    // if (responsecode == '00') {
+    //   setState(() {
+    //     _dataaa = json.decode(sendSearch.body)['result'];
+    //   });
+    // } else {
+    //   Get.snackbar(
+    //     'Failed!',
+    //     '$responseMessage',
+    //     icon: Icon(Icons.warning),
+    //     backgroundColor: Colors.red,
+    //     isDismissible: true,
+    //     dismissDirection: DismissDirection.vertical,
+    //   );
+    //   setState(() {
+    //     _dataaa.clear();
+    //   });
+    // }
 
     print(sendSearch.body);
 
@@ -162,7 +221,7 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
                                 elevation: 5,
                                 child: ListTile(
                                   title: Text(
-                                    _dataaa[index]['itemname'],
+                                    _dataaa[index]['ket'],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -173,8 +232,7 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
                                     onPressed: () {
                                       Get.to(ScanVb(
                                         idstock: _dataaa[index]['stockid'],
-                                        itemname: _dataaa[index]['itemname'],
-                                        serverKeyVal: serverKeyValue,
+                                        itemname: _dataaa[index]['ket'],
                                       ));
                                     },
                                     color: HexColor('#F4A62A'),
@@ -294,22 +352,22 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          _dataaa[index]['itemname'],
+                                          _dataaa[index]['ket'] ?? '',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        subtitle:
-                                            Text(_dataaa[index]['stockid']),
+                                        subtitle: Text(
+                                            _dataaa[index]['stockid'] ?? ''),
                                         trailing: IconButton(
                                           icon: const Icon(Icons.qr_code_2),
                                           onPressed: () {
                                             Get.to(ScanVb(
                                               idstock: _dataaa[index]
-                                                  ['stockid'],
-                                              itemname: _dataaa[index]
-                                                  ['itemname'],
-                                              serverKeyVal: serverKeyValue,
+                                                      ['stockid'] ??
+                                                  '',
+                                              itemname:
+                                                  _dataaa[index]['ket'] ?? '',
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),

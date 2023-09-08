@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:v2rp1/FE/home_screen/VB/dialog_box_vb.dart';
@@ -17,14 +18,12 @@ class VendorBarcode2 extends StatefulWidget {
   final barcodeResult;
   final idstock2;
   final itemname2;
-  final serverKeyVal2;
   final message2;
   const VendorBarcode2({
     Key? key,
     required this.barcodeResult,
     this.idstock2,
     this.itemname2,
-    this.serverKeyVal2,
     this.message2,
   }) : super(key: key);
 
@@ -33,10 +32,7 @@ class VendorBarcode2 extends StatefulWidget {
 }
 
 class _VendorBarcode2State extends State<VendorBarcode2> {
-  static var conve = MsgHeader.conve;
-  static var trxid = MsgHeader.trxid;
-  static var datetime = MsgHeader.datetime;
-  static var responsecode;
+  static var success;
   static TextControllers textControllers = Get.put(TextControllers());
   @override
   Widget build(BuildContext context) {
@@ -201,7 +197,7 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
             ),
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: HexColor('#E6BF00'),
+              backgroundColor: HexColor("#F4A62A"),
             ),
           ),
         ),
@@ -211,23 +207,46 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
 
   Future updateData() async {
     var remarks = textControllers.remarksController.value.text;
-    var sendUpdate = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
-        headers: {'x-v2rp-key': conve},
-        body: jsonEncode({
-          "trxid": trxid,
-          "datetime": datetime,
-          "reqid": "0002",
-          "id": widget.idstock2,
-          "barcode": widget.barcodeResult,
-          "serverkey": widget.serverKeyVal2,
-          "remarks": remarks,
-        }));
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var finalKulonuwun = sharedPreferences.getString('kulonuwun');
+    var finalMonggo = sharedPreferences.getString('monggo');
+    var kulonuwun = MsgHeader.kulonuwun;
+    var monggo = MsgHeader.monggo;
+    // var sendUpdate = await http.post(Uri.https('www.v2rp.net', '/ptemp/'),
+    //     headers: {'x-v2rp-key': conve},
+    //     body: jsonEncode({
+    //       "trxid": trxid,
+    //       "datetime": datetime,
+    //       "reqid": "0002",
+    //       "id": widget.idstock2,
+    //       "barcode": widget.barcodeResult,
+    //       "serverkey": widget.serverKeyVal2,
+    //       "remarks": remarks,
+    //     }));
+    var sendUpdate = await http.post(
+      Uri.http('156.67.217.113', '/api/v1/mobile/stocks/barcode'),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'kulonuwun': finalKulonuwun ?? kulonuwun,
+        'monggo': finalMonggo ?? monggo,
+      },
+      body: jsonEncode({
+        'id': widget.idstock2,
+        'barcode': widget.barcodeResult,
+        'remarks': remarks,
+      }),
+    );
     print(sendUpdate.body);
     final resultData = json.decode(sendUpdate.body);
-    responsecode = resultData['responsecode'];
+    success = resultData['success'];
     var responseMessage = resultData['message'];
+    var responseMessage2 = resultData['data']['message'];
+    print('id stock = ' + widget.idstock2);
+    print('remarks = ' + remarks);
+    print('barcode = ' + widget.barcodeResult);
 
-    if (responsecode == '00') {
+    if (success == true) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -242,11 +261,28 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
               img: Image.asset("images/success.gif"),
             );
           });
-    } else {
+    } else if (success == false) {
       Get.snackbar(
         'Failed!',
+        '$responseMessage2',
+        colorText: Colors.white,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.red,
+        isDismissible: true,
+        dismissDirection: DismissDirection.vertical,
+      );
+    } else {
+      Get.snackbar(
+        'ERROR!!',
         '$responseMessage',
-        icon: Icon(Icons.warning),
+        colorText: Colors.white,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
         backgroundColor: Colors.red,
         isDismissible: true,
         dismissDirection: DismissDirection.vertical,

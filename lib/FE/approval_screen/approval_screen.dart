@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -95,7 +96,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   @override
   void initState() {
     super.initState();
+    // Timer(const Duration(seconds: 2), () {
     getDataa();
+    // });
   }
 
   @override
@@ -2785,10 +2788,12 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
       final responseData = json.decode(getData.body);
       print("getdataaaa " + responseData.toString());
-      setState(() {
-        dataaa = responseData['data'];
-        // totalSC = dataaa.length;
-      });
+      if (mounted) {
+        setState(() {
+          dataaa = responseData['data'];
+          // totalSC = dataaa.length;
+        });
+      }
       if (responseData['kode'] == '77') {
         autoLogout();
       }

@@ -20,6 +20,7 @@ class _ScanSTableState extends State<ScanSTable> {
   MobileScannerController cameraController = MobileScannerController();
 
   static var codeBarcode;
+  static var codeBarcode2;
   static TextControllers textControllers = Get.put(TextControllers());
 
   @override
@@ -75,11 +76,12 @@ class _ScanSTableState extends State<ScanSTable> {
               final List<Barcode> barcodes = capture.barcodes;
               for (final barcode in barcodes) {
                 codeBarcode = barcode.rawValue;
+                codeBarcode2 = codeBarcode.split('|').last;
                 debugPrint(
                     'Barcode found! raw valuee ====== ${barcode.rawValue}');
               }
               // codeBarcode = bar.rawValue;
-              debugPrint('Barcode found! $codeBarcode');
+              debugPrint('Barcode found! $codeBarcode2');
               Get.snackbar(
                 "Barcode Found!",
                 "$codeBarcode",
@@ -92,7 +94,7 @@ class _ScanSTableState extends State<ScanSTable> {
               Get.to(() => const StockTable2());
               setState(() {
                 cameraController.stop();
-                textControllers.stocktableController.value.text = codeBarcode;
+                textControllers.stocktableController.value.text = codeBarcode2;
               });
             },
           ),
