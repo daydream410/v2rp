@@ -65,7 +65,7 @@ class _LoginPage4State extends State<LoginPage4>
             }
           });
     _animatedController.forward();
-    MsgHeader.Reqip();
+    // MsgHeader.Reqip();
     _isButtonDisabled = false;
     super.initState();
   }
@@ -183,12 +183,12 @@ class _LoginPage4State extends State<LoginPage4>
                         },
                       ),
                       TextFormField(
-                        onChanged: (String) {
-                          _timer =
-                              Timer(const Duration(milliseconds: 1000), (() {
-                            MsgHeader.Reqip();
-                          }));
-                        },
+                        // onChanged: (String) {
+                        //   _timer =
+                        //       Timer(const Duration(milliseconds: 1000), (() {
+                        //     MsgHeader.Reqip();
+                        //   }));
+                        // },
                         obscureText: _obsecuredText,
                         controller: textControllers.passwordController.value,
                         style: const TextStyle(color: Colors.white),

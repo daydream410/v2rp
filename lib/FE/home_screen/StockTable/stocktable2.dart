@@ -517,10 +517,10 @@ class _StockTable2State extends State<StockTable2> {
         : Get.defaultDialog(
             radius: 5,
             title: "Upload Image",
-            middleText: "Please Click Button Below",
+            middleText: "",
             backgroundColor: Colors.white,
             confirm: SizedBox(
-              width: 125.0,
+              width: 115.0,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: HexColor('#F4A62A'),
@@ -536,10 +536,10 @@ class _StockTable2State extends State<StockTable2> {
               ),
             ),
             cancel: SizedBox(
-              width: 125.0,
+              width: 115.0,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: HexColor('#F4A62A'),
+                  foregroundColor: HexColor('#F4A62A'),
                 ),
                 onPressed: () {
                   takeImage();
@@ -547,7 +547,7 @@ class _StockTable2State extends State<StockTable2> {
                 },
                 child: Text(
                   'Take Picture',
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
               ),
             ),
@@ -571,8 +571,8 @@ class _StockTable2State extends State<StockTable2> {
   }
 
   Future<void> takeImage() async {
-    var choosedimage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+    var choosedimage = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 25);
     if (choosedimage == null) return;
     setState(() {
       uploadImage = File(choosedimage.path);

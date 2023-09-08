@@ -1007,8 +1007,8 @@ class _FixAsset2State extends State<FixAsset2> {
   }
 
   Future<void> takeImage() async {
-    var choosedimage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+    var choosedimage = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 25);
     if (choosedimage == null) return;
     setState(() {
       uploadImage = File(choosedimage.path);
@@ -1091,6 +1091,18 @@ class _FixAsset2State extends State<FixAsset2> {
       }
     } catch (e) {
       print('Error connect to server');
+      Get.snackbar(
+        "Error Connect To Server",
+        "Please Try Again!",
+        colorText: Colors.white,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.red,
+        isDismissible: true,
+        dismissDirection: DismissDirection.vertical,
+      );
     }
   }
 

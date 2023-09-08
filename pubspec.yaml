@@ -37,7 +37,7 @@ dependencies:
   hexcolor: ^2.0.5
   flutter_launcher_icons: ^0.13.1
   curved_navigation_bar: ^1.0.3
-  mobile_scanner: ^3.3.0
+  mobile_scanner: ^3.4.1
   flutter_slidable: ^3.0.0
   flutter_custom_dialog: ^1.2.0
   cached_network_image: ^3.2.0
@@ -45,7 +45,7 @@ dependencies:
   get: ^4.6.1
   http: ^0.13.4
   intl: ^0.18.1
-  image_picker: ^0.8.5+3
+  image_picker: ^0.8.6
   path: ^1.8.1
   full_screen_image_null_safe: ^2.0.0
   modal_bottom_sheet: ^2.1.0
