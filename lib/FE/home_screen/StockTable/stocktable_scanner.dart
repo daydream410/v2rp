@@ -94,7 +94,7 @@ class _ScanSTableState extends State<ScanSTable> {
               Get.to(() => const StockTable2());
               setState(() {
                 cameraController.stop();
-                textControllers.stocktableController.value.text = codeBarcode2;
+                textControllers.barcodeStController.value.text = codeBarcode2;
               });
             },
           ),

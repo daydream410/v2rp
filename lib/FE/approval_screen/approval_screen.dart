@@ -1622,7 +1622,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             vertical:
                                 size.height * 0.02, //atur lokasi kotak putih
                           ),
-                          height: size.height * 0.63, //atur panjang kotak putih
+                          height: size.height * 0.50, //atur panjang kotak putih
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: const BorderRadius.all(
@@ -2657,101 +2657,102 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 24, right: 24, top: 24),
-                                child: Row(
-                                  // mainAxisAlignment:
-                                  //     MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 12),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          badges.Badge(
-                                            position:
-                                                badges.BadgePosition.topEnd(
-                                                    top: -10, end: -12),
-                                            showBadge: false,
-                                            ignorePointer: false,
-                                            badgeContent: Text(
-                                              totalSA.toString(),
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10.0,
-                                              ),
-                                            ),
-                                            badgeAnimation: const badges
-                                                .BadgeAnimation.rotation(
-                                              animationDuration:
-                                                  Duration(seconds: 1),
-                                              colorChangeAnimationDuration:
-                                                  Duration(seconds: 1),
-                                              loopAnimation: false,
-                                              curve: Curves.fastOutSlowIn,
-                                              colorChangeAnimationCurve:
-                                                  Curves.easeInCubic,
-                                            ),
-                                            badgeStyle: badges.BadgeStyle(
-                                              shape: badges.BadgeShape.square,
-                                              badgeColor: Colors.red,
-                                              padding: const EdgeInsets.all(5),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              borderSide: const BorderSide(
-                                                  color: Colors.white,
-                                                  width: 2),
-                                              elevation: 0,
-                                            ),
-                                            child: Material(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              clipBehavior:
-                                                  Clip.antiAliasWithSaveLayer,
-                                              child: Ink.image(
-                                                image: const AssetImage(
-                                                    'images/stockmerger.png'),
-                                                height: size.height * 0.05,
-                                                width: size.width * 0.15,
-                                                // fit: BoxFit.fill,
-                                                child: InkWell(
-                                                  splashColor: Colors.black38,
-                                                  onTap: () async {
-                                                    // Get.to(() => CashBank1());
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const Column(
-                                            children: [
-                                              Text(
-                                                'Stock',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Merger',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Approval',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // stock merger
+                              // Padding(
+                              //   padding: const EdgeInsets.only(
+                              //       left: 24, right: 24, top: 24),
+                              //   child: Row(
+                              //     // mainAxisAlignment:
+                              //     //     MainAxisAlignment.spaceAround,
+                              //     children: [
+                              //       Padding(
+                              //         padding: const EdgeInsets.only(left: 12),
+                              //         child: Column(
+                              //           mainAxisSize: MainAxisSize.min,
+                              //           children: [
+                              //             badges.Badge(
+                              //               position:
+                              //                   badges.BadgePosition.topEnd(
+                              //                       top: -10, end: -12),
+                              //               showBadge: false,
+                              //               ignorePointer: false,
+                              //               badgeContent: Text(
+                              //                 totalSA.toString(),
+                              //                 style: const TextStyle(
+                              //                   color: Colors.white,
+                              //                   fontSize: 10.0,
+                              //                 ),
+                              //               ),
+                              //               badgeAnimation: const badges
+                              //                   .BadgeAnimation.rotation(
+                              //                 animationDuration:
+                              //                     Duration(seconds: 1),
+                              //                 colorChangeAnimationDuration:
+                              //                     Duration(seconds: 1),
+                              //                 loopAnimation: false,
+                              //                 curve: Curves.fastOutSlowIn,
+                              //                 colorChangeAnimationCurve:
+                              //                     Curves.easeInCubic,
+                              //               ),
+                              //               badgeStyle: badges.BadgeStyle(
+                              //                 shape: badges.BadgeShape.square,
+                              //                 badgeColor: Colors.red,
+                              //                 padding: const EdgeInsets.all(5),
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(20),
+                              //                 borderSide: const BorderSide(
+                              //                     color: Colors.white,
+                              //                     width: 2),
+                              //                 elevation: 0,
+                              //               ),
+                              //               child: Material(
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(20),
+                              //                 clipBehavior:
+                              //                     Clip.antiAliasWithSaveLayer,
+                              //                 child: Ink.image(
+                              //                   image: const AssetImage(
+                              //                       'images/stockmerger.png'),
+                              //                   height: size.height * 0.05,
+                              //                   width: size.width * 0.15,
+                              //                   // fit: BoxFit.fill,
+                              //                   child: InkWell(
+                              //                     splashColor: Colors.black38,
+                              //                     onTap: () async {
+                              //                       // Get.to(() => CashBank1());
+                              //                     },
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //             const Column(
+                              //               children: [
+                              //                 Text(
+                              //                   'Stock',
+                              //                   style: TextStyle(
+                              //                     fontSize: 12,
+                              //                   ),
+                              //                 ),
+                              //                 Text(
+                              //                   'Merger',
+                              //                   style: TextStyle(
+                              //                     fontSize: 12,
+                              //                   ),
+                              //                 ),
+                              //                 Text(
+                              //                   'Approval',
+                              //                   style: TextStyle(
+                              //                     fontSize: 12,
+                              //                   ),
+                              //                 ),
+                              //               ],
+                              //             )
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

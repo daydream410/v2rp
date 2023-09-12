@@ -50,7 +50,7 @@ class _NavbarState extends State<Navbar> {
         ],
         color: HexColor("#F4A62A"),
         buttonBackgroundColor: HexColor('##F4A62A'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         animationCurve: Curves.easeInOutBack,
         animationDuration: const Duration(milliseconds: 400),
         height: 70,

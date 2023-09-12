@@ -751,6 +751,7 @@ class _StockTable2State extends State<StockTable2> {
     HttpOverrides.global = MyHttpOverrides();
     String? searchValue = textControllers.stocktableController.value.text;
     String? searchValue2 = textControllers.warehouseStController.value.text;
+    String? barcodeValue = textControllers.barcodeStController.value.text;
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var finalKulonuwun = sharedPreferences.getString('kulonuwun');
@@ -776,9 +777,11 @@ class _StockTable2State extends State<StockTable2> {
             body: jsonEncode({
               "itemname": searchValue,
               "warehouse": searchValue2,
+              "barcode": barcodeValue,
             }));
-
+    // print("barcodeee = 0" + barcodeValue);
     print(searchValue);
+    print(barcodeValue);
     final resultData = json.decode(sendSearch.body);
 
     var succuss = resultData['success'];
