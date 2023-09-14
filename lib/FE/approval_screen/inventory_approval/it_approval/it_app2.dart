@@ -403,7 +403,7 @@ class _ItApp2State extends State<ItApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -460,7 +460,7 @@ class _ItApp2State extends State<ItApp2> {
                                 ),
                               ],
                             ),
-                            size: ColumnSize.M,
+                            size: ColumnSize.L,
                           ),
                           DataColumn2(
                             label: Column(
@@ -664,7 +664,9 @@ class _ItApp2State extends State<ItApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113',
+        // Uri.http('156.67.217.113',
+        //     '/api/v1/mobile/approval/internaltransfer/' + widget.seckey),
+        Uri.https('v2rp.net',
             '/api/v1/mobile/approval/internaltransfer/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -706,8 +708,15 @@ class _ItApp2State extends State<ItApp2> {
     Get.to(const Navbar());
     try {
       var getData = await http.put(
-        Uri.http(
-          '156.67.217.113',
+        // Uri.http(
+        //   '156.67.217.113',
+        //   '/api/v1/mobile/approval/internaltransfer/' +
+        //       widget.seckey +
+        //       '/' +
+        //       updstatus,
+        // ),
+        Uri.https(
+          'v2rp.net',
           '/api/v1/mobile/approval/internaltransfer/' +
               widget.seckey +
               '/' +

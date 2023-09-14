@@ -171,8 +171,7 @@ class _StockTable2State extends State<StockTable2> {
                                       splashColor: Colors.blue,
                                       child: Ink.image(
                                         image: NetworkImage(
-                                          'https://www.v2rp.net' +
-                                              dataaa[index]['image'][0],
+                                          dataaa[index]['image'][0],
                                         ),
                                         height:
                                             MediaQuery.of(context).size.height *
@@ -195,7 +194,7 @@ class _StockTable2State extends State<StockTable2> {
                                             height: 20,
                                           ),
                                           Text(
-                                            dataaa[index]['itemname'],
+                                            dataaa[index]['ket'] ?? '',
                                             style:
                                                 TextStyle(color: Colors.black),
                                           ),
@@ -203,7 +202,7 @@ class _StockTable2State extends State<StockTable2> {
                                             height: 5,
                                           ),
                                           Text(
-                                            dataaa[index]['stockid'],
+                                            dataaa[index]['stockid'] ?? '',
                                             style: TextStyle(
                                                 color: Colors.black54),
                                           ),
@@ -614,7 +613,8 @@ class _StockTable2State extends State<StockTable2> {
         ),
       });
       dio.Response response = await dioo.post(
-        'http://156.67.217.113/api/v1/mobile/uploader/$tipe/$encoded',
+        // 'http://156.67.217.113/api/v1/mobile/uploader/$tipe/$encoded',
+        'https://v2rp.net/api/v1/mobile/uploader/$tipe/$encoded',
         data: formData,
         options: dio.Options(headers: {
           'Content-Type': 'multipart/form-data',
@@ -768,7 +768,8 @@ class _StockTable2State extends State<StockTable2> {
     //       "id": "$searchValue"
     //     }));
     var sendSearch =
-        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks'),
+        // await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks'),
+        await http.post(Uri.https('v2rp.net', '/api/v1/mobile/stocks'),
             headers: {
               'Content-Type': 'application/json; charset=utf-8',
               'kulonuwun': finalKulonuwun ?? kulonuwun,

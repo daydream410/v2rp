@@ -342,7 +342,8 @@ class _CaSetApprovalState extends State<CaSetApproval> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        Uri.http('156.67.217.113', '/api/v1/mobile/approval/lpjk'),
+        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/lpjk'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/lpjk'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

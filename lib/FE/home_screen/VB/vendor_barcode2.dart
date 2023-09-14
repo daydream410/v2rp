@@ -225,7 +225,8 @@ class _VendorBarcode2State extends State<VendorBarcode2> {
     //       "remarks": remarks,
     //     }));
     var sendUpdate = await http.post(
-      Uri.http('156.67.217.113', '/api/v1/mobile/stocks/barcode'),
+      // Uri.http('156.67.217.113', '/api/v1/mobile/stocks/barcode'),
+      Uri.https('v2rp.net', '/api/v1/mobile/stocks/barcode'),
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         'kulonuwun': finalKulonuwun ?? kulonuwun,

@@ -384,7 +384,8 @@ class _AssemblingAppState extends State<AssemblingApp> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        Uri.http('156.67.217.113', '/api/v1/mobile/approval/assembling'),
+        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/assembling'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/assembling'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

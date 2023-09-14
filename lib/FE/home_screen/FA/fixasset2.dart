@@ -65,7 +65,8 @@ class _FixAsset2State extends State<FixAsset2> {
     var monggo = MsgHeader.monggo;
 
     var sendSearch =
-        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/assets'),
+        // await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/assets'),
+        await http.post(Uri.https('v2rp.net', '/api/v1/mobile/assets'),
             headers: {
               'Content-Type': 'application/json; charset=utf-8',
               'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -216,8 +217,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                         },
                                         child: Ink.image(
                                           image: NetworkImage(
-                                            'https://v2rp.net/' +
-                                                _dataaa[index]['imagedir'],
+                                            _dataaa[index]['img'],
                                           ),
                                           height: 300,
                                           width: MediaQuery.of(context)
@@ -237,7 +237,7 @@ class _FixAsset2State extends State<FixAsset2> {
                                             padding: const EdgeInsets.only(
                                                 left: 8, top: 10),
                                             child: Text(
-                                              _dataaa[index]['description'],
+                                              _dataaa[index]['ket'],
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black,
@@ -364,7 +364,8 @@ class _FixAsset2State extends State<FixAsset2> {
                                                       children: [
                                                         Text(
                                                           _dataaa[index]
-                                                              ['categoryname'],
+                                                                  ['catname'] ??
+                                                              '',
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 15,
@@ -378,7 +379,8 @@ class _FixAsset2State extends State<FixAsset2> {
                                                         ),
                                                         Text(
                                                           _dataaa[index][
-                                                              'subcategoryname'],
+                                                                  'subcatname'] ??
+                                                              '',
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 12,
@@ -392,8 +394,9 @@ class _FixAsset2State extends State<FixAsset2> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          _dataaa[index]
-                                                              ['brandname'],
+                                                          _dataaa[index][
+                                                                  'brandname'] ??
+                                                              '',
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 15,
@@ -406,8 +409,9 @@ class _FixAsset2State extends State<FixAsset2> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          _dataaa[index]
-                                                              ['brandtipename'],
+                                                          _dataaa[index][
+                                                                  'tipebrandname'] ??
+                                                              '',
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 12,
@@ -417,46 +421,53 @@ class _FixAsset2State extends State<FixAsset2> {
                                                     ),
                                                     Text(
                                                       _dataaa[index]
-                                                          ['countryname'],
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      _dataaa[index]['reffno'],
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      _dataaa[index]['reqno'],
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      _dataaa[index]['pono'],
+                                                              ['countryname'] ??
+                                                          '',
                                                       style: const TextStyle(
                                                         fontSize: 15,
                                                       ),
                                                     ),
                                                     Text(
                                                       _dataaa[index]
-                                                          ['requestby'],
+                                                              ['docreffno'] ??
+                                                          '',
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]['reqno'] ??
+                                                          '',
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]['pono'] ??
+                                                          '',
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _dataaa[index]['reqby'] ??
+                                                          '',
                                                       style: const TextStyle(
                                                         fontSize: 15,
                                                       ),
                                                     ),
                                                     Text(
                                                       _dataaa[index]
-                                                          ['serialno'],
+                                                              ['serialno'] ??
+                                                          '',
                                                       style: const TextStyle(
                                                         fontSize: 15,
                                                       ),
                                                     ),
                                                     Text(
                                                       _dataaa[index]
-                                                          ['locationname'],
+                                                              ['locationnm'] ??
+                                                          '',
                                                       style: const TextStyle(
                                                         fontSize: 15,
                                                       ),
@@ -1049,7 +1060,8 @@ class _FixAsset2State extends State<FixAsset2> {
         ),
       });
       dio.Response response = await dioo.post(
-        'http://156.67.217.113/api/v1/mobile/uploader/$tipe/$encoded',
+        // 'http://156.67.217.113/api/v1/mobile/uploader/$tipe/$encoded',
+        'https://v2rp.net/api/v1/mobile/uploader/$tipe/$encoded',
         // '156.67.217.113/api/v1/mobile/uploader/' + tipe + '/' + encoded,
         data: formData,
         options: dio.Options(headers: {

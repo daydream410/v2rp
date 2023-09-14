@@ -593,7 +593,9 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113',
+        // Uri.http('156.67.217.113',
+        //     '/api/v1/mobile/approval/stocktransfer/' + widget.seckey),
+        Uri.https('v2rp.net',
             '/api/v1/mobile/approval/stocktransfer/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -627,8 +629,15 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
     Get.to(const Navbar());
     try {
       var getData = await http.put(
-        Uri.http(
-          '156.67.217.113',
+        // Uri.http(
+        //   '156.67.217.113',
+        //   '/api/v1/mobile/approval/stocktransfer/' +
+        //       widget.seckey +
+        //       '/' +
+        //       updstatus,
+        // ),
+        Uri.https(
+          'v2rp.net',
           '/api/v1/mobile/approval/stocktransfer/' +
               widget.seckey +
               '/' +

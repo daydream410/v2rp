@@ -901,8 +901,10 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113',
-            '/api/v1/mobile/approval/salesorder/' + widget.seckey),
+        // Uri.http('156.67.217.113',
+        //     '/api/v1/mobile/approval/salesorder/' + widget.seckey),
+        Uri.https(
+            'v2rp.net', '/api/v1/mobile/approval/salesorder/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

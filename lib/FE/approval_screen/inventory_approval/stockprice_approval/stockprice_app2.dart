@@ -131,6 +131,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
                   ],
                 ),
                 child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
                   child: Column(
                     children: [
                       const SizedBox(height: 10.0),
@@ -153,16 +154,21 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
                                     ),
                                     Text(
                                       widget.apreff ?? "",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
                                         color: Colors.white,
                                       ),
                                     ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 Row(
                                   children: [
@@ -718,7 +724,9 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113',
+        // Uri.http('156.67.217.113',
+        //     '/api/v1/mobile/approval/stockpriceadjustment/' + widget.seckey),
+        Uri.https('v2rp.net',
             '/api/v1/mobile/approval/stockpriceadjustment/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -764,8 +772,15 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
     Get.to(const Navbar());
     try {
       var getData = await http.put(
-        Uri.http(
-          '156.67.217.113',
+        // Uri.http(
+        //   '156.67.217.113',
+        //   '/api/v1/mobile/approval/stockpriceadjustment/' +
+        //       widget.seckey +
+        //       '/' +
+        //       updstatus,
+        // ),
+        Uri.https(
+          'v2rp.net',
           '/api/v1/mobile/approval/stockpriceadjustment/' +
               widget.seckey +
               '/' +

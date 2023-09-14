@@ -486,9 +486,11 @@ class _NpApp2State extends State<NpApp2> {
                           children: [
                             Expanded(
                               child: DataTable2(
-                                columnSpacing: 12,
-                                horizontalMargin: 12,
-                                minWidth: 600,
+                                columnSpacing: 10,
+                                horizontalMargin: 10,
+                                minWidth: 900,
+                                dataRowHeight: 100,
+                                // bottomMargin: 100,
                                 columns: const [
                                   DataColumn2(
                                     label: Column(
@@ -950,8 +952,10 @@ class _NpApp2State extends State<NpApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113',
-            '/api/v1/mobile/approval/newpayable/' + widget.seckey),
+        // Uri.http('156.67.217.113',
+        //     '/api/v1/mobile/approval/newpayable/' + widget.seckey),
+        Uri.https(
+            'v2rp.net', '/api/v1/mobile/approval/newpayable/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -975,19 +979,24 @@ class _NpApp2State extends State<NpApp2> {
         // dTTL += item["disc"] * (item["qty"] * item["harga"]) / 100;
         sTAX += item["taxAmount"];
         dTAX = item["tax"];
+
         var listtax = dTAX.split(",");
+
         for (var xx = 0; xx < listtax.length; xx++) {
           var snil = listtax[xx].split(":");
-          if (snil.isNotEmpty) {
-            if (snil[0].substring(0, 1) == "0") {
-              ppn += double.parse(snil[1]);
-            } else if (snil[0].substring(0, 1) == "1") {
-              pph += double.parse(snil[1]);
-            } else {
-              otax += double.parse(snil[1]);
+          if (dTAX != "") {
+            if (snil.isNotEmpty) {
+              if (snil[0].substring(0, 1) == "0") {
+                ppn += double.parse(snil[1]);
+              } else if (snil[0].substring(0, 1) == "1") {
+                pph += double.parse(snil[1]);
+              } else {
+                otax += double.parse(snil[1]);
+              }
             }
           }
         }
+
         nTTL = sTTL; //sTTL
         gTTL = nTTL + sTAX; //nTTL + sTAX
       }
@@ -1017,8 +1026,15 @@ class _NpApp2State extends State<NpApp2> {
     Get.to(const Navbar());
     try {
       var getData = await http.put(
-        Uri.http(
-          '156.67.217.113',
+        // Uri.http(
+        //   '156.67.217.113',
+        //   '/api/v1/mobile/approval/newpayable/' +
+        //       widget.seckey +
+        //       '/' +
+        //       updstatus,
+        // ),
+        Uri.https(
+          'v2rp.net',
           '/api/v1/mobile/approval/newpayable/' +
               widget.seckey +
               '/' +

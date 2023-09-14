@@ -770,7 +770,9 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       print('contain');
       try {
         var getData = await http.get(
-          Uri.http('156.67.217.113',
+          // Uri.http('156.67.217.113',
+          //     '/api/v1/mobile/approval/itadjustment/' + widget.seckey),
+          Uri.https('v2rp.net',
               '/api/v1/mobile/approval/itadjustment/' + widget.seckey),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
@@ -790,7 +792,9 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       print('not');
       try {
         var getData = await http.get(
-          Uri.http('156.67.217.113',
+          // Uri.http('156.67.217.113',
+          //     '/api/v1/mobile/approval/stadjustment/' + widget.seckey),
+          Uri.https('v2rp.net',
               '/api/v1/mobile/approval/stadjustment/' + widget.seckey),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
@@ -827,8 +831,15 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
     if (reffnoo.contains(contain)) {
       try {
         var getData = await http.put(
-          Uri.http(
-            '156.67.217.113',
+          // Uri.http(
+          //   '156.67.217.113',
+          //   '/api/v1/mobile/approval/itadjustment/' +
+          //       widget.seckey +
+          //       '/' +
+          //       updstatus,
+          // ),
+          Uri.https(
+            'v2rp.net',
             '/api/v1/mobile/approval/itadjustment/' +
                 widget.seckey +
                 '/' +
@@ -877,8 +888,15 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
     } else {
       try {
         var getData = await http.put(
-          Uri.http(
-            '156.67.217.113',
+          // Uri.http(
+          //   '156.67.217.113',
+          //   '/api/v1/mobile/approval/stadjustment/' +
+          //       widget.seckey +
+          //       '/' +
+          //       updstatus,
+          // ),
+          Uri.https(
+            'v2rp.net',
             '/api/v1/mobile/approval/stadjustment/' +
                 widget.seckey +
                 '/' +

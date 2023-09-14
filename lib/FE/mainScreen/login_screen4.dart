@@ -294,9 +294,12 @@ class _LoginPage4State extends State<LoginPage4>
     try {
       if (_formKey.currentState!.validate()) {
         if (success == true) {
+          final SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          var finalUsername = sharedPreferences.getString('username');
           Get.snackbar(
             "Success",
-            "Logged In",
+            "Logged In As $finalUsername",
             colorText: Colors.white,
             icon: Icon(
               Icons.check,

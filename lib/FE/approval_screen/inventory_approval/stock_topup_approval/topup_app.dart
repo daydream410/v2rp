@@ -367,7 +367,8 @@ class _StockTopupAppState extends State<StockTopupApp> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        Uri.http('156.67.217.113', '/api/v1/mobile/approval/stocktopup'),
+        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/stocktopup'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/stocktopup'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

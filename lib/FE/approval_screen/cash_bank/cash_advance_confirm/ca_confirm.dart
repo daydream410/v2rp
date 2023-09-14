@@ -387,7 +387,8 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/kasbon/'),
+        // Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/kasbon/'),
+        Uri.https('v2rp.net', '/api/v1/mobile/confirmation/kasbon/'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

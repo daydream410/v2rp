@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ///////////////////row pertama
                       SizedBox(height: 10.0),
                       Text(
-                        'Main Menu',
+                        'Entry Menu',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),

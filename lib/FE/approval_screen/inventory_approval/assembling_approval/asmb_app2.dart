@@ -496,8 +496,15 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
     Get.to(const Navbar());
     try {
       var getData = await http.put(
-        Uri.http(
-          '156.67.217.113',
+        // Uri.http(
+        //   '156.67.217.113',
+        //   '/api/v1/mobile/approval/assembling/' +
+        //       widget.seckey +
+        //       '/' +
+        //       updstatus,
+        // ),
+        Uri.https(
+          'v2rp.net',
           '/api/v1/mobile/approval/assembling/' +
               widget.seckey +
               '/' +

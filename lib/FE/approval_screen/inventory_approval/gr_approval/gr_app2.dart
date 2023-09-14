@@ -371,7 +371,8 @@ class _GrApp2State extends State<GrApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 1000,
+                        dataRowHeight: 80,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -390,7 +391,7 @@ class _GrApp2State extends State<GrApp2> {
                                 ),
                               ],
                             ),
-                            size: ColumnSize.M,
+                            size: ColumnSize.L,
                           ),
                           DataColumn2(
                             label: Column(
@@ -409,7 +410,7 @@ class _GrApp2State extends State<GrApp2> {
                                 ),
                               ],
                             ),
-                            size: ColumnSize.M,
+                            size: ColumnSize.L,
                           ),
                           DataColumn2(
                             label: Column(
@@ -492,7 +493,8 @@ class _GrApp2State extends State<GrApp2> {
                                 ),
                               ],
                             ),
-                            size: ColumnSize.M,
+                            numeric: true,
+                            size: ColumnSize.S,
                           ),
                           DataColumn2(
                             label: Column(
@@ -649,7 +651,7 @@ class _GrApp2State extends State<GrApp2> {
                                   DataCell(Text(
                                     e['ket'] ?? '',
                                     style: const TextStyle(
-                                      fontSize: 9,
+                                      fontSize: 10,
                                     ),
                                   )),
                                   DataCell(Text(
@@ -756,8 +758,10 @@ class _GrApp2State extends State<GrApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113',
-            '/api/v1/mobile/approval/goodreceive/' + widget.seckey),
+        // Uri.http('156.67.217.113',
+        //     '/api/v1/mobile/approval/goodreceive/' + widget.seckey),
+        Uri.https(
+            'v2rp.net', '/api/v1/mobile/approval/goodreceive/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -798,8 +802,15 @@ class _GrApp2State extends State<GrApp2> {
     Get.to(const Navbar());
     try {
       var getData = await http.put(
-        Uri.http(
-          '156.67.217.113',
+        // Uri.http(
+        //   '156.67.217.113',
+        //   '/api/v1/mobile/approval/goodreceive/' +
+        //       widget.seckey +
+        //       '/' +
+        //       updstatus,
+        // ),
+        Uri.https(
+          'v2rp.net',
           '/api/v1/mobile/approval/goodreceive/' +
               widget.seckey +
               '/' +

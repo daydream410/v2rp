@@ -58,7 +58,8 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
     //     }));
 
     var sendSearch =
-        await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks'),
+        // await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/stocks'),
+        await http.post(Uri.https('v2rp.net', '/api/v1/mobile/stocks'),
             headers: {
               'Content-Type': 'application/json; charset=utf-8',
               'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -221,18 +222,20 @@ class _VendorBarcode1State extends State<VendorBarcode1> {
                                 elevation: 5,
                                 child: ListTile(
                                   title: Text(
-                                    _dataaa[index]['ket'],
+                                    _dataaa[index]['ket'] ?? '',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  subtitle: Text(_dataaa[index]['stockid']),
+                                  subtitle:
+                                      Text(_dataaa[index]['stockid'] ?? ''),
                                   trailing: IconButton(
                                     icon: const Icon(Icons.qr_code_2),
                                     onPressed: () {
                                       Get.to(ScanVb(
-                                        idstock: _dataaa[index]['stockid'],
-                                        itemname: _dataaa[index]['ket'],
+                                        idstock:
+                                            _dataaa[index]['stockid'] ?? '',
+                                        itemname: _dataaa[index]['ket'] ?? '',
                                       ));
                                     },
                                     color: HexColor('#F4A62A'),

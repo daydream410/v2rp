@@ -342,7 +342,7 @@ class _MuApp2State extends State<MuApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 1000,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -628,7 +628,9 @@ class _MuApp2State extends State<MuApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113',
+        // Uri.http('156.67.217.113',
+        //     '/api/v1/mobile/approval/materialused/' + widget.seckey),
+        Uri.https('v2rp.net',
             '/api/v1/mobile/approval/materialused/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -670,8 +672,15 @@ class _MuApp2State extends State<MuApp2> {
     Get.to(const Navbar());
     try {
       var getData = await http.put(
-        Uri.http(
-          '156.67.217.113',
+        // Uri.http(
+        //   '156.67.217.113',
+        //   '/api/v1/mobile/approval/materialused/' +
+        //       widget.seckey +
+        //       '/' +
+        //       updstatus,
+        // ),
+        Uri.https(
+          'v2rp.net',
           '/api/v1/mobile/approval/materialused/' +
               widget.seckey +
               '/' +

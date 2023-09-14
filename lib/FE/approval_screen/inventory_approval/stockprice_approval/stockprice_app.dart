@@ -293,16 +293,19 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                             Text(
                                               _foundUsers[index]['header']
                                                   ['supplierName'],
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                              ),
                                             ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(
-                                              NumberFormat.currency(
-                                                      locale: 'eu', symbol: '')
-                                                  .format(_foundUsers[index]
-                                                      ['header']['amount']),
-                                            ),
+                                            // const SizedBox(
+                                            //   width: 10,
+                                            // ),
+                                            // Text(
+                                            //   NumberFormat.currency(
+                                            //           locale: 'eu', symbol: '')
+                                            //       .format(_foundUsers[index]
+                                            //           ['header']['amount']),
+                                            // ),
                                           ],
                                         ),
                                         onTap: () {
@@ -370,8 +373,9 @@ class _StockPriceAppState extends State<StockPriceApp> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        Uri.http(
-            '156.67.217.113', '/api/v1/mobile/approval/stockpriceadjustment'),
+        // Uri.http(
+        //     '156.67.217.113', '/api/v1/mobile/approval/stockpriceadjustment'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/stockpriceadjustment'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

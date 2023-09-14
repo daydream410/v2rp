@@ -353,7 +353,8 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.http('156.67.217.113', '/api/v1/mobile/approval/itadjustment'),
+        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/itadjustment'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/itadjustment'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

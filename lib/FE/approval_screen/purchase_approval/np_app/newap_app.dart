@@ -391,7 +391,8 @@ class _NpAppState extends State<NpApp> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        Uri.http('156.67.217.113', '/api/v1/mobile/approval/newpayable/'),
+        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/newpayable/'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/newpayable/'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
