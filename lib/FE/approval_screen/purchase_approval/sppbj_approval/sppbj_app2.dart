@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:intl/intl.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_approval/sppbj_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -706,12 +707,19 @@ class _SppbjApp2State extends State<SppbjApp2> {
     var status;
     // var reffno;
     var message;
+    var messageError;
 
     var body = json.encode({
       "urutan": selectedDetails,
     });
 
-    Get.to(const Navbar());
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Submitting your data',
+      barrierDismissible: false,
+    );
     try {
       var sendData = await http.put(
         // Uri.http(
@@ -737,33 +745,70 @@ class _SppbjApp2State extends State<SppbjApp2> {
       print(response.toString());
       setState(() {
         status = response['success'];
-        // reffno = response['data']['reffno'] ?? '';
-        message = response['data']['message'];
-        // messageDetail = response['data']['message'];
+        messageError = response['message'];
       });
       if (status == true) {
-        Get.snackbar(
-          '$message Data!',
-          widget.sppbjno,
-          icon: const Icon(Icons.check),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
-        );
+        setState(() {
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   '$message Data!',
+        //   widget.sppbjno,
+        //   icon: const Icon(Icons.check),
+        //   backgroundColor: Colors.green,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: 'Success $message Data!',
+            barrierDismissible: false,
+            // confirmBtnText: 'OK',
+            onConfirmBtnTap: () async {
+              Get.to(SppbjApp());
+            },
+            showCancelBtn: true,
+            cancelBtnText: 'Home',
+            onCancelBtnTap: () async {
+              Get.to(const Navbar());
+            });
       } else {
-        Get.snackbar(
-          'Failed! ' + widget.sppbjno,
-          message,
-          icon: const Icon(Icons.warning),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
+        setState(() {
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   'Failed! ' + widget.sppbjno,
+        //   message,
+        //   icon: const Icon(Icons.warning),
+        //   backgroundColor: Colors.red,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Failed! ' + widget.sppbjno,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
         );
       }
     } catch (e) {
       print(e);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        title: 'Error! ' + widget.sppbjno,
+        text: '$messageError',
+        onConfirmBtnTap: () async {
+          Get.to(const Navbar());
+        },
+      );
     }
   }
 }

@@ -27,7 +27,10 @@ class PoExApp extends StatefulWidget {
 class _PoExAppState extends State<PoExApp> {
   static TextControllers textControllers = Get.put(TextControllers());
   static late List dataaa = <CaConfirmData>[];
+  static late List dataaa2 = <CaConfirmData>[];
+  static late List gabung = <CaConfirmData>[];
   static late List _foundUsers = <CaConfirmData>[];
+  static late var tipe;
 
   @override
   void initState() {
@@ -162,6 +165,7 @@ class _PoExAppState extends State<PoExApp> {
                                       budgetavailable: _foundUsers[index]
                                               ['header']['budget']
                                           ['budgetavailable'],
+                                      tipe: tipe,
                                     ));
                                   },
                                   trailing: IconButton(
@@ -189,6 +193,7 @@ class _PoExAppState extends State<PoExApp> {
                                         budgetavailable: _foundUsers[index]
                                                 ['header']['budget']
                                             ['budgetavailable'],
+                                        tipe: tipe,
                                       ));
                                     },
                                     color: HexColor('#F4A62A'),
@@ -330,6 +335,7 @@ class _PoExAppState extends State<PoExApp> {
                                             budgetavailable: _foundUsers[index]
                                                     ['header']['budget']
                                                 ['budgetavailable'],
+                                            tipe: tipe,
                                           ));
                                         },
                                         trailing: IconButton(
@@ -359,6 +365,7 @@ class _PoExAppState extends State<PoExApp> {
                                                   _foundUsers[index]['header']
                                                           ['budget']
                                                       ['budgetavailable'],
+                                              tipe: tipe,
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -392,8 +399,8 @@ class _PoExAppState extends State<PoExApp> {
     var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
+
     try {
-      // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/approval/exeption/poscm/'),
         Uri.https('v2rp.net', '/api/v1/mobile/approval/exeption/poscm/'),
@@ -403,16 +410,42 @@ class _PoExAppState extends State<PoExApp> {
           'monggo': finalMonggo ?? monggo,
         },
       );
+      var getData2 = await http.get(
+        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/exeption/poscm/'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/exeption/pononscm/'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
+        },
+      );
       final responseData = json.decode(getData.body);
+      final responseData2 = json.decode(getData2.body);
 
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
-        _foundUsers = dataaa;
+        dataaa2 = responseData2['data'];
+        gabung = dataaa + dataaa2;
+        _foundUsers = gabung;
+        tipe = '0';
       });
+
+      if (dataaa.isNotEmpty) {
+        setState(() {
+          tipe = '0';
+        });
+      } else {
+        setState(() {
+          tipe = '1';
+        });
+      }
 
       // print("getdataaaa " + responseData.toString());
       print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+      print("data2 " + dataaa2.toString());
+      print("gabung " + gabung.toString());
+      print("tipe " + tipe.toString());
     } catch (e) {
       print(e);
     }

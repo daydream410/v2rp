@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -718,14 +719,22 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     var status;
-    // var reffno;
+    var messageError;
     var message;
 
     var body = json.encode({
       "urutan": selectedDetails,
     });
 
-    Get.to(const Navbar());
+    // Get.to(const Navbar());
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Submitting your data',
+      // autoCloseDuration: const Duration(seconds: 10),
+      barrierDismissible: false,
+    );
     try {
       var sendData = await http.put(
         // Uri.http(
@@ -751,33 +760,70 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
       print(response.toString());
       setState(() {
         status = response['success'];
-        // reffno = response['data']['reffno'] ?? '';
-        message = response['data']['message'];
-        // messageDetail = response['data']['message'];
+        messageError = response['message'];
       });
       if (status == true) {
-        Get.snackbar(
-          'Success $message Data!',
-          widget.nokasbon,
-          icon: const Icon(Icons.check),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
-        );
+        setState(() {
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   'Success $message Data!',
+        //   widget.nokasbon,
+        //   icon: const Icon(Icons.check),
+        //   backgroundColor: Colors.green,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: 'Success $message Data!',
+            barrierDismissible: false,
+            // confirmBtnText: 'OK',
+            onConfirmBtnTap: () async {
+              Get.to(CashAdvanceApproval());
+            },
+            showCancelBtn: true,
+            cancelBtnText: 'Home',
+            onCancelBtnTap: () async {
+              Get.to(const Navbar());
+            });
       } else {
-        Get.snackbar(
-          'Failed! ' + widget.nokasbon,
-          message,
-          icon: const Icon(Icons.warning),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
+        setState(() {
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   'Failed! ' + widget.nokasbon,
+        //   message,
+        //   icon: const Icon(Icons.warning),
+        //   backgroundColor: Colors.red,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Failed! ' + widget.nokasbon,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
         );
       }
     } catch (e) {
       print(e);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        title: 'Error! ' + widget.nokasbon,
+        text: '$messageError',
+        onConfirmBtnTap: () async {
+          Get.to(const Navbar());
+        },
+      );
     }
   }
 }

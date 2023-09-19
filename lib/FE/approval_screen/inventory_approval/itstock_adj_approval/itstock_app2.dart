@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/itstock_adj_approval/itstock_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -827,7 +828,13 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
     String reffnoo = widget.reffno;
     String contain = 'STRF';
 
-    Get.to(const Navbar());
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Submitting your data',
+      barrierDismissible: false,
+    );
     if (reffnoo.contains(contain)) {
       try {
         var getData = await http.put(
@@ -862,24 +869,51 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           setState(() {
             message = response['data']['message'];
           });
-          Get.snackbar(
-            'Success $message Data!',
-            widget.reffno,
-            icon: const Icon(Icons.check),
-            backgroundColor: Colors.green,
-            isDismissible: true,
-            dismissDirection: DismissDirection.vertical,
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Success $message Data!',
+          //   widget.reffno,
+          //   icon: const Icon(Icons.check),
+          //   backgroundColor: Colors.green,
+          //   isDismissible: true,
+          //   dismissDirection: DismissDirection.vertical,
+          //   colorText: Colors.white,
+          // );
+          QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              text: 'Success $message Data!',
+              barrierDismissible: false,
+              // confirmBtnText: 'OK',
+              onConfirmBtnTap: () async {
+                Get.to(ItStockAdjApp());
+              },
+              showCancelBtn: true,
+              cancelBtnText: 'Home',
+              onCancelBtnTap: () async {
+                Get.to(const Navbar());
+              });
         } else {
-          Get.snackbar(
-            'Failed! ' + widget.reffno,
-            '$messageError',
-            icon: const Icon(Icons.warning),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-            dismissDirection: DismissDirection.vertical,
-            colorText: Colors.white,
+          setState(() {
+            message = response['data']['message'];
+          });
+          // Get.snackbar(
+          //   'Failed! ' + widget.reffno,
+          //   '$messageError',
+          //   icon: const Icon(Icons.warning),
+          //   backgroundColor: Colors.red,
+          //   isDismissible: true,
+          //   dismissDirection: DismissDirection.vertical,
+          //   colorText: Colors.white,
+          // );
+          await Future.delayed(const Duration(milliseconds: 1000));
+          await QuickAlert.show(
+            context: context,
+            type: QuickAlertType.error,
+            title: 'Failed! ' + widget.reffno,
+            text: '$messageError',
+            onConfirmBtnTap: () async {
+              Get.to(const Navbar());
+            },
           );
         }
       } catch (e) {
@@ -919,28 +953,64 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           setState(() {
             message = response['data']['message'];
           });
-          Get.snackbar(
-            'Success $message Data!',
-            widget.reffno,
-            icon: const Icon(Icons.check),
-            backgroundColor: Colors.green,
-            isDismissible: true,
-            dismissDirection: DismissDirection.vertical,
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Success $message Data!',
+          //   widget.reffno,
+          //   icon: const Icon(Icons.check),
+          //   backgroundColor: Colors.green,
+          //   isDismissible: true,
+          //   dismissDirection: DismissDirection.vertical,
+          //   colorText: Colors.white,
+          // );
+          QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              text: 'Success $message Data!',
+              barrierDismissible: false,
+              // confirmBtnText: 'OK',
+              onConfirmBtnTap: () async {
+                Get.to(ItStockAdjApp());
+              },
+              showCancelBtn: true,
+              cancelBtnText: 'Home',
+              onCancelBtnTap: () async {
+                Get.to(const Navbar());
+              });
         } else {
-          Get.snackbar(
-            'Failed! ' + widget.reffno,
-            '$messageError',
-            icon: const Icon(Icons.warning),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-            dismissDirection: DismissDirection.vertical,
-            colorText: Colors.white,
+          setState(() {
+            message = response['data']['message'];
+          });
+          // Get.snackbar(
+          //   'Failed! ' + widget.reffno,
+          //   '$messageError',
+          //   icon: const Icon(Icons.warning),
+          //   backgroundColor: Colors.red,
+          //   isDismissible: true,
+          //   dismissDirection: DismissDirection.vertical,
+          //   colorText: Colors.white,
+          // );
+          await Future.delayed(const Duration(milliseconds: 1000));
+          await QuickAlert.show(
+            context: context,
+            type: QuickAlertType.error,
+            title: 'Failed! ' + widget.reffno,
+            text: '$messageError',
+            onConfirmBtnTap: () async {
+              Get.to(const Navbar());
+            },
           );
         }
       } catch (e) {
         print(e);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'Error! ' + widget.reffno,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
+        );
       }
     }
   }

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_approval/ca_set_app.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -684,12 +685,19 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
     var status;
     // var reffno;
     var message;
+    var messageError;
 
     var body = json.encode({
       "urutan": selectedDetails,
     });
 
-    Get.to(const Navbar());
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Submitting your data',
+      barrierDismissible: false,
+    );
     try {
       var sendData = await http.put(
         // Uri.http(
@@ -715,33 +723,70 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
       print(response.toString());
       setState(() {
         status = response['success'];
-        // reffno = response['data']['reffno'] ?? '';
-        message = response['data']['message'];
-        // messageDetail = response['data']['message'];
+        messageError = response['message'];
       });
       if (status == true) {
-        Get.snackbar(
-          '$message Data!',
-          widget.lpjk,
-          icon: const Icon(Icons.check),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
-        );
+        setState(() {
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   '$message Data!',
+        //   widget.lpjk,
+        //   icon: const Icon(Icons.check),
+        //   backgroundColor: Colors.green,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: 'Success $message Data!',
+            barrierDismissible: false,
+            // confirmBtnText: 'OK',
+            onConfirmBtnTap: () async {
+              Get.to(CaSetApproval());
+            },
+            showCancelBtn: true,
+            cancelBtnText: 'Home',
+            onCancelBtnTap: () async {
+              Get.to(const Navbar());
+            });
       } else {
-        Get.snackbar(
-          'Failed! ' + widget.lpjk,
-          message,
-          icon: const Icon(Icons.warning),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
+        setState(() {
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   'Failed! ' + widget.lpjk,
+        //   message,
+        //   icon: const Icon(Icons.warning),
+        //   backgroundColor: Colors.red,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Failed! ' + widget.lpjk,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
         );
       }
     } catch (e) {
       print(e);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        title: 'Error! ' + widget.lpjk,
+        text: '$messageError',
+        onConfirmBtnTap: () async {
+          Get.to(const Navbar());
+        },
+      );
     }
   }
 }

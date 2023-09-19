@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:intl/intl.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/dpreq_approval/dpreq_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -853,8 +854,15 @@ class _DpReqApp2State extends State<DpReqApp2> {
     var status;
     var reffno;
     var message;
+    var messageError;
 
-    Get.to(const Navbar());
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Submitting your data',
+      barrierDismissible: false,
+    );
     try {
       var getData = await http.put(
         // Uri.http(
@@ -881,32 +889,72 @@ class _DpReqApp2State extends State<DpReqApp2> {
       print(response.toString());
       setState(() {
         status = response['success'];
-        reffno = response['data']['reffno'];
-        message = response['data']['message'];
+        messageError = response['message'];
       });
       if (status == true) {
-        Get.snackbar(
-          'Success $message Data!',
-          '$reffno',
-          icon: const Icon(Icons.check),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
-        );
+        setState(() {
+          reffno = response['data']['reffno'];
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   'Success $message Data!',
+        //   '$reffno',
+        //   icon: const Icon(Icons.check),
+        //   backgroundColor: Colors.green,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: 'Success $message Data!',
+            barrierDismissible: false,
+            // confirmBtnText: 'OK',
+            onConfirmBtnTap: () async {
+              Get.to(DpReqApp());
+            },
+            showCancelBtn: true,
+            cancelBtnText: 'Home',
+            onCancelBtnTap: () async {
+              Get.to(const Navbar());
+            });
       } else {
-        Get.snackbar(
-          'Failed!',
-          '$reffno',
-          icon: const Icon(Icons.warning),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
+        setState(() {
+          reffno = response['data']['reffno'];
+          message = response['data']['message'];
+        });
+        // Get.snackbar(
+        //   'Failed!',
+        //   '$reffno',
+        //   icon: const Icon(Icons.warning),
+        //   backgroundColor: Colors.red,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Failed! ' + reffno,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
         );
       }
     } catch (e) {
       print(e);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        title: 'Error! ' + reffno,
+        text: '$messageError',
+        onConfirmBtnTap: () async {
+          Get.to(const Navbar());
+        },
+      );
     }
   }
 }

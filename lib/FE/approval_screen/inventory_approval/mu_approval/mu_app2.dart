@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:intl/intl.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/mu_approval/mu_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -643,10 +644,10 @@ class _MuApp2State extends State<MuApp2> {
       dataaa = caConfirmData['data']['detail'];
 
       //hitung total
-      totalPrice = 0;
-      for (var item in dataaa) {
-        totalPrice += item["amount"] as int;
-      }
+      // totalPrice = 0;
+      // for (var item in dataaa) {
+      //   totalPrice += item["amount"] as int;
+      // }
 
       // });
       print("totalllll  " + totalPrice.toString());
@@ -669,7 +670,13 @@ class _MuApp2State extends State<MuApp2> {
     var message;
     var messageError;
 
-    Get.to(const Navbar());
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Submitting your data',
+      barrierDismissible: false,
+    );
     try {
       var getData = await http.put(
         // Uri.http(
@@ -702,28 +709,61 @@ class _MuApp2State extends State<MuApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        Get.snackbar(
-          'Success $message Data!',
-          widget.dono,
-          icon: const Icon(Icons.check),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
-        );
+        // Get.snackbar(
+        //   'Success $message Data!',
+        //   widget.dono,
+        //   icon: const Icon(Icons.check),
+        //   backgroundColor: Colors.green,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: 'Success $message Data!',
+            barrierDismissible: false,
+            // confirmBtnText: 'OK',
+            onConfirmBtnTap: () async {
+              Get.to(MuApp());
+            },
+            showCancelBtn: true,
+            cancelBtnText: 'Home',
+            onCancelBtnTap: () async {
+              Get.to(const Navbar());
+            });
       } else {
-        Get.snackbar(
-          'Failed! ' + widget.dono,
-          '$messageError',
-          icon: const Icon(Icons.warning),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
+        // Get.snackbar(
+        //   'Failed! ' + widget.dono,
+        //   '$messageError',
+        //   icon: const Icon(Icons.warning),
+        //   backgroundColor: Colors.red,
+        //   isDismissible: true,
+        //   dismissDirection: DismissDirection.vertical,
+        //   colorText: Colors.white,
+        // );
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Failed! ' + widget.dono,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
         );
       }
     } catch (e) {
       print(e);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        title: 'Error! ' + widget.dono,
+        text: '$messageError',
+        onConfirmBtnTap: () async {
+          Get.to(const Navbar());
+        },
+      );
     }
   }
 }

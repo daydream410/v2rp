@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -8,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:intl/intl.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/po_ex_approval/poex_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -28,6 +31,7 @@ class PoExApp2 extends StatefulWidget {
   final poamount;
   final different;
   final budgetavailable;
+  final tipe;
 
   PoExApp2({
     Key? key,
@@ -41,6 +45,7 @@ class PoExApp2 extends StatefulWidget {
     required this.poamount,
     required this.different,
     required this.budgetavailable,
+    required this.tipe,
   }) : super(key: key);
 
   @override
@@ -452,7 +457,8 @@ class _PoExApp2State extends State<PoExApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
+                        dataRowHeight: 100,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -770,12 +776,13 @@ class _PoExApp2State extends State<PoExApp2> {
     var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
+
     try {
       var getData = await http.get(
         // Uri.http('156.67.217.113',
         //     '/api/v1/mobile/approval/exeption/poscm/' + widget.seckey),
         Uri.https('v2rp.net',
-            '/api/v1/mobile/approval/exeption/poscm/' + widget.seckey),
+            '/api/v1/mobile/approval/exeption/pononscm/' + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -784,19 +791,25 @@ class _PoExApp2State extends State<PoExApp2> {
       );
       final caConfirmData = json.decode(getData.body);
       print("response " + caConfirmData.toString());
-
-      // setState(() {
       dataaa = caConfirmData['data']['details'];
       print("dataaa " + dataaa.toString());
-
-      //hitung total
-      totalPrice = 0;
-      for (var item in dataaa) {
-        totalPrice += item["amount"] as int;
+      if (dataaa.isEmpty) {
+        var getData = await http.get(
+          // Uri.http('156.67.217.113',
+          //     '/api/v1/mobile/approval/exeption/poscm/' + widget.seckey),
+          Uri.https('v2rp.net',
+              '/api/v1/mobile/approval/exeption/poscm/' + widget.seckey),
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'kulonuwun': finalKulonuwun ?? kulonuwun,
+            'monggo': finalMonggo ?? monggo,
+          },
+        );
+        final caConfirmData = json.decode(getData.body);
+        print("response " + caConfirmData.toString());
+        dataaa = caConfirmData['data']['details'];
+        print("dataaa " + dataaa.toString());
       }
-
-      // });
-      print("totalllll  " + totalPrice.toString());
       return dataaa;
     } catch (e) {
       print(e);
@@ -813,72 +826,163 @@ class _PoExApp2State extends State<PoExApp2> {
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
     var status;
-    // var reffno;
     var message;
+    var messageError;
 
     var body = json.encode({
       "urutan": selectedDetails,
     });
 
-    Get.to(const Navbar());
-    try {
-      var sendData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/exeption/poscm/' +
-        //       widget.seckey +
-        //       '/' +
-        //       valueButton,
-        // ),
-        Uri.https(
-          'v2rp.net',
-          '/api/v1/mobile/approval/exeption/poscm/' +
-              widget.seckey +
-              '/' +
-              valueButton,
-        ),
-        body: body,
-        headers: {
-          'Content-type': 'application/json',
-          'kulonuwun': finalKulonuwun ?? kulonuwun,
-          'monggo': finalMonggo ?? monggo,
-        },
-      );
-      print("selected = " +
-          selectedDetails.toString() +
-          selectedDetails.runtimeType.toString());
-      // print("urutan = " + urutan.toString() + urutan.runtimeType.toString());
-      final response = json.decode(sendData.body);
-      print(response.toString());
-      setState(() {
-        status = response['success'];
-        // reffno = response['data']['reffno'] ?? '';
-        message = response['data']['message'];
-        // messageDetail = response['data']['message'];
-      });
-      if (status == true) {
-        Get.snackbar(
-          'Success $message Data!',
-          widget.pono,
-          icon: const Icon(Icons.check),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Submitting your data',
+      barrierDismissible: false,
+    );
+    print("tipeeee = " + widget.tipe);
+    if (widget.tipe == '0') {
+      try {
+        var sendData = await http.put(
+          Uri.https(
+            'v2rp.net',
+            '/api/v1/mobile/approval/exeption/poscm/' +
+                widget.seckey +
+                '/' +
+                valueButton,
+          ),
+          body: body,
+          headers: {
+            'Content-type': 'application/json',
+            'kulonuwun': finalKulonuwun ?? kulonuwun,
+            'monggo': finalMonggo ?? monggo,
+          },
         );
-      } else {
-        Get.snackbar(
-          'Failed! ' + widget.pono,
-          message,
-          icon: const Icon(Icons.warning),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-          dismissDirection: DismissDirection.vertical,
-          colorText: Colors.white,
+        print("selected = " +
+            selectedDetails.toString() +
+            selectedDetails.runtimeType.toString());
+        final response = json.decode(sendData.body);
+        print(response.toString());
+        setState(() {
+          status = response['success'];
+          messageError = response['message'];
+        });
+        if (status == true) {
+          setState(() {
+            message = response['data']['message'];
+          });
+          QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              text: 'Success $message Data!',
+              barrierDismissible: false,
+              // confirmBtnText: 'OK',
+              onConfirmBtnTap: () async {
+                Get.to(PoExApp());
+              },
+              showCancelBtn: true,
+              cancelBtnText: 'Home',
+              onCancelBtnTap: () async {
+                Get.to(const Navbar());
+              });
+        } else {
+          setState(() {
+            message = response['data']['message'];
+          });
+          await Future.delayed(const Duration(milliseconds: 1000));
+          await QuickAlert.show(
+            context: context,
+            type: QuickAlertType.error,
+            title: 'Failed! ' + widget.pono,
+            text: '$messageError',
+            onConfirmBtnTap: () async {
+              Get.to(const Navbar());
+            },
+          );
+        }
+      } catch (e) {
+        print(e);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'Error! ' + widget.pono,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
         );
       }
-    } catch (e) {
-      print(e);
+    } else {
+      try {
+        var sendData = await http.put(
+          Uri.https(
+            'v2rp.net',
+            '/api/v1/mobile/approval/exeption/pononscm/' +
+                widget.seckey +
+                '/' +
+                valueButton,
+          ),
+          body: body,
+          headers: {
+            'Content-type': 'application/json',
+            'kulonuwun': finalKulonuwun ?? kulonuwun,
+            'monggo': finalMonggo ?? monggo,
+          },
+        );
+        print("selected = " +
+            selectedDetails.toString() +
+            selectedDetails.runtimeType.toString());
+        final response = json.decode(sendData.body);
+        print(response.toString());
+        setState(() {
+          status = response['success'];
+          messageError = response['message'];
+        });
+        if (status == true) {
+          setState(() {
+            message = response['data']['message'];
+          });
+          QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              text: 'Success $message Data!',
+              barrierDismissible: false,
+              // confirmBtnText: 'OK',
+              onConfirmBtnTap: () async {
+                Get.to(PoExApp());
+              },
+              showCancelBtn: true,
+              cancelBtnText: 'Home',
+              onCancelBtnTap: () async {
+                Get.to(const Navbar());
+              });
+        } else {
+          setState(() {
+            message = response['data']['message'];
+          });
+          await Future.delayed(const Duration(milliseconds: 1000));
+          await QuickAlert.show(
+            context: context,
+            type: QuickAlertType.error,
+            title: 'Failed! ' + widget.pono,
+            text: '$messageError',
+            onConfirmBtnTap: () async {
+              Get.to(const Navbar());
+            },
+          );
+        }
+      } catch (e) {
+        print(e);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'Error! ' + widget.pono,
+          text: '$messageError',
+          onConfirmBtnTap: () async {
+            Get.to(const Navbar());
+          },
+        );
+      }
     }
   }
 }
