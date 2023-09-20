@@ -840,80 +840,33 @@ class _PoExApp2State extends State<PoExApp2> {
       text: 'Submitting your data',
       barrierDismissible: false,
     );
-    print("tipeeee = " + widget.tipe);
-    if (widget.tipe == '0') {
-      try {
-        var sendData = await http.put(
-          Uri.https(
-            'v2rp.net',
-            '/api/v1/mobile/approval/exeption/poscm/' +
-                widget.seckey +
-                '/' +
-                valueButton,
-          ),
-          body: body,
-          headers: {
-            'Content-type': 'application/json',
-            'kulonuwun': finalKulonuwun ?? kulonuwun,
-            'monggo': finalMonggo ?? monggo,
-          },
-        );
-        print("selected = " +
-            selectedDetails.toString() +
-            selectedDetails.runtimeType.toString());
-        final response = json.decode(sendData.body);
-        print(response.toString());
-        setState(() {
-          status = response['success'];
-          messageError = response['message'];
-        });
-        if (status == true) {
-          setState(() {
-            message = response['data']['message'];
-          });
-          QuickAlert.show(
-              context: context,
-              type: QuickAlertType.success,
-              text: 'Success $message Data!',
-              barrierDismissible: false,
-              // confirmBtnText: 'OK',
-              onConfirmBtnTap: () async {
-                Get.to(PoExApp());
-              },
-              showCancelBtn: true,
-              cancelBtnText: 'Home',
-              onCancelBtnTap: () async {
-                Get.to(const Navbar());
-              });
-        } else {
-          setState(() {
-            message = response['data']['message'];
-          });
-          await Future.delayed(const Duration(milliseconds: 1000));
-          await QuickAlert.show(
-            context: context,
-            type: QuickAlertType.error,
-            title: 'Failed! ' + widget.pono,
-            text: '$messageError',
-            onConfirmBtnTap: () async {
-              Get.to(const Navbar());
-            },
-          );
-        }
-      } catch (e) {
-        print(e);
-        QuickAlert.show(
-          context: context,
-          type: QuickAlertType.warning,
-          title: 'Error! ' + widget.pono,
-          text: '$messageError',
-          onConfirmBtnTap: () async {
-            Get.to(const Navbar());
-          },
-        );
-      }
-    } else {
-      try {
+    try {
+      var sendData = await http.put(
+        Uri.https(
+          'v2rp.net',
+          '/api/v1/mobile/approval/exeption/poscm/' +
+              widget.seckey +
+              '/' +
+              valueButton,
+        ),
+        body: body,
+        headers: {
+          'Content-type': 'application/json',
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
+        },
+      );
+      print("selected = " +
+          selectedDetails.toString() +
+          selectedDetails.runtimeType.toString());
+      final response = json.decode(sendData.body);
+      print(response.toString());
+      setState(() {
+        status = response['success'];
+        messageError = response['message'];
+        message = response['data']['message'] ?? '';
+      });
+      if (status == false) {
         var sendData = await http.put(
           Uri.https(
             'v2rp.net',
@@ -929,60 +882,130 @@ class _PoExApp2State extends State<PoExApp2> {
             'monggo': finalMonggo ?? monggo,
           },
         );
-        print("selected = " +
-            selectedDetails.toString() +
-            selectedDetails.runtimeType.toString());
         final response = json.decode(sendData.body);
         print(response.toString());
         setState(() {
           status = response['success'];
           messageError = response['message'];
+          message = response['data']['message'] ?? '';
         });
-        if (status == true) {
-          setState(() {
-            message = response['data']['message'];
-          });
-          QuickAlert.show(
-              context: context,
-              type: QuickAlertType.success,
-              text: 'Success $message Data!',
-              barrierDismissible: false,
-              // confirmBtnText: 'OK',
-              onConfirmBtnTap: () async {
-                Get.to(PoExApp());
-              },
-              showCancelBtn: true,
-              cancelBtnText: 'Home',
-              onCancelBtnTap: () async {
-                Get.to(const Navbar());
-              });
-        } else {
-          setState(() {
-            message = response['data']['message'];
-          });
-          await Future.delayed(const Duration(milliseconds: 1000));
-          await QuickAlert.show(
-            context: context,
-            type: QuickAlertType.error,
-            title: 'Failed! ' + widget.pono,
-            text: '$messageError',
-            onConfirmBtnTap: () async {
-              Get.to(const Navbar());
-            },
-          );
-        }
-      } catch (e) {
-        print(e);
+      }
+      if (status == true) {
+        // setState(() {
+        //   message = response['data']['message'];
+        // });
         QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: 'Success $message Data!',
+            barrierDismissible: false,
+            // confirmBtnText: 'OK',
+            onConfirmBtnTap: () async {
+              Get.to(PoExApp());
+            },
+            showCancelBtn: true,
+            cancelBtnText: 'Home',
+            onCancelBtnTap: () async {
+              Get.to(const Navbar());
+            });
+      } else {
+        setState(() {
+          message = response['data']['message'];
+        });
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await QuickAlert.show(
           context: context,
-          type: QuickAlertType.warning,
-          title: 'Error! ' + widget.pono,
-          text: '$messageError',
+          type: QuickAlertType.error,
+          title: 'Failed! ' + widget.pono,
+          text: '$message',
+          barrierDismissible: false,
           onConfirmBtnTap: () async {
             Get.to(const Navbar());
           },
         );
       }
+    } catch (e) {
+      print(e);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        title: 'Error! ' + widget.pono,
+        text: '$messageError',
+        onConfirmBtnTap: () async {
+          Get.to(const Navbar());
+        },
+      );
     }
+
+    // try {
+    //   var sendData = await http.put(
+    //     Uri.https(
+    //       'v2rp.net',
+    //       '/api/v1/mobile/approval/exeption/pononscm/' +
+    //           widget.seckey +
+    //           '/' +
+    //           valueButton,
+    //     ),
+    //     body: body,
+    //     headers: {
+    //       'Content-type': 'application/json',
+    //       'kulonuwun': finalKulonuwun ?? kulonuwun,
+    //       'monggo': finalMonggo ?? monggo,
+    //     },
+    //   );
+    //   print("selected = " +
+    //       selectedDetails.toString() +
+    //       selectedDetails.runtimeType.toString());
+    //   final response = json.decode(sendData.body);
+    //   print(response.toString());
+    //   setState(() {
+    //     status = response['success'];
+    //     messageError = response['message'];
+    //   });
+    //   if (status == true) {
+    //     setState(() {
+    //       message = response['data']['message'];
+    //     });
+    //     QuickAlert.show(
+    //         context: context,
+    //         type: QuickAlertType.success,
+    //         text: 'Success $message Data!',
+    //         barrierDismissible: false,
+    //         // confirmBtnText: 'OK',
+    //         onConfirmBtnTap: () async {
+    //           Get.to(PoExApp());
+    //         },
+    //         showCancelBtn: true,
+    //         cancelBtnText: 'Home',
+    //         onCancelBtnTap: () async {
+    //           Get.to(const Navbar());
+    //         });
+    //   } else {
+    //     setState(() {
+    //       message = response['data']['message'];
+    //     });
+    //     await Future.delayed(const Duration(milliseconds: 1000));
+    //     await QuickAlert.show(
+    //       context: context,
+    //       type: QuickAlertType.error,
+    //       title: 'Failed! ' + widget.pono,
+    //       text: '$messageError',
+    //       onConfirmBtnTap: () async {
+    //         Get.to(const Navbar());
+    //       },
+    //     );
+    //   }
+    // } catch (e) {
+    //   print(e);
+    //   QuickAlert.show(
+    //     context: context,
+    //     type: QuickAlertType.warning,
+    //     title: 'Error! ' + widget.pono,
+    //     text: '$messageError',
+    //     onConfirmBtnTap: () async {
+    //       Get.to(const Navbar());
+    //     },
+    //   );
+    // }
   }
 }

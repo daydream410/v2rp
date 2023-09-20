@@ -652,7 +652,7 @@ class _MuApp2State extends State<MuApp2> {
       // });
       print("totalllll  " + totalPrice.toString());
       print("dataaa " + dataaa.toString());
-      return dataaa;
+      // return dataaa;
     } catch (e) {
       print(e);
     }
@@ -759,7 +759,7 @@ class _MuApp2State extends State<MuApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.dono,
-        text: '$messageError',
+        text: messageError ?? 'Cannot Reach Server!',
         onConfirmBtnTap: () async {
           Get.to(const Navbar());
         },
