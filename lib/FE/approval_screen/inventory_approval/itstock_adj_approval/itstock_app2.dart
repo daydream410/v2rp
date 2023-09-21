@@ -893,9 +893,9 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
                 Get.to(const Navbar());
               });
         } else {
-          setState(() {
-            message = response['data']['message'];
-          });
+          // setState(() {
+          //   message = response['data']['message'];
+          // });
           // Get.snackbar(
           //   'Failed! ' + widget.reffno,
           //   '$messageError',

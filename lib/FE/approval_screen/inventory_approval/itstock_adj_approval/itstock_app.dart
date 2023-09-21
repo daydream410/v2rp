@@ -362,7 +362,7 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
         },
       );
       var getData2 = await http.get(
-        Uri.http('156.67.217.113', '/api/v1/mobile/approval/stadjustment'),
+        Uri.http('v2rp.net', '/api/v1/mobile/approval/stadjustment'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

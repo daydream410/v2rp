@@ -979,7 +979,13 @@ class _NpApp2State extends State<NpApp2> {
         sTTL += item["amount_forex"];
         // dTTL += item["disc"] * (item["qty"] * item["harga"]) / 100;
         sTAX += item["taxAmount"];
-        dTAX = item["tax"];
+        if (item["tax"] == ':0') {
+          dTAX == '0';
+          print("dTaxzzzzzzz  " + dTAX.toString());
+        } else {
+          dTAX = item["tax"];
+          print("dTaxx  " + dTAX.toString());
+        }
 
         var listtax = dTAX.split(",");
 

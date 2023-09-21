@@ -867,7 +867,7 @@ class _StockTopupApp2State extends State<StockTopupApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(const Navbar());
           },

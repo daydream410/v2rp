@@ -705,6 +705,7 @@ class _ItApp2State extends State<ItApp2> {
     var status;
     var message;
     var messageError;
+    DateTime dateNow = DateTime.now();
 
     QuickAlert.show(
       context: context,
@@ -713,6 +714,11 @@ class _ItApp2State extends State<ItApp2> {
       text: 'Submitting your data',
       barrierDismissible: false,
     );
+    if (updstatus == '-1') {
+      setState(() {
+        currentDate = dateNow.toString();
+      });
+    }
     try {
       var getData = await http.put(
         // Uri.http(
@@ -773,9 +779,6 @@ class _ItApp2State extends State<ItApp2> {
               Get.to(const Navbar());
             });
       } else {
-        setState(() {
-          message = response['data']['message'];
-        });
         // setState(() {
         //   message = response['data']['message'];
         // });

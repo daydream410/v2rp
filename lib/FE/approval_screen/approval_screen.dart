@@ -91,6 +91,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   int totalITSA = 0;
   int totalSTSA = 0;
   int poGabung = 0;
+  int itGabung = 0;
 
   static late List dataaa = <CaConfirmData>[];
 
@@ -2417,10 +2418,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                           position: badges.BadgePosition.topEnd(
                                               top: -10, end: -12),
                                           showBadge:
-                                              totalITSA == 0 ? false : true,
+                                              itGabung == 0 ? false : true,
                                           ignorePointer: false,
                                           badgeContent: Text(
-                                            totalITSA.toString(),
+                                            itGabung.toString(),
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 10.0,
@@ -2897,7 +2898,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         }
       }
       poGabung = totalPOE + totalPNE;
-      print("totalLA = " + totalLA.toString());
+      itGabung = totalITSA + totalSTSA;
+      print("totalITSA = " + totalITSA.toString());
+      print("totalSTSA = " + totalSTSA.toString());
       print("dataaaa = " + dataaa.toString());
     } catch (e) {
       print(e);

@@ -626,6 +626,7 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
     var status;
     var message;
     var messageError;
+    DateTime dateNow = DateTime.now();
 
     QuickAlert.show(
       context: context,
@@ -634,6 +635,13 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
       text: 'Submitting your data',
       barrierDismissible: false,
     );
+
+    if (updstatus == '-1') {
+      setState(() {
+        currentDate = dateNow.toString();
+      });
+    }
+
     try {
       var getData = await http.put(
         // Uri.http(
@@ -694,9 +702,6 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
               Get.to(const Navbar());
             });
       } else {
-        setState(() {
-          message = response['data']['message'];
-        });
         // setState(() {
         //   message = response['data']['message'];
         // });

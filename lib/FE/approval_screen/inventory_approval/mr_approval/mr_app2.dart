@@ -280,12 +280,6 @@ class _MrApp2State extends State<MrApp2> {
                                               isVisible = true;
                                               print("updstatus " +
                                                   updstatus.toString());
-                                            } else if (valueStatus ==
-                                                "Send To Draft") {
-                                              updstatus = "-9";
-                                              isVisible = true;
-                                              print("updstatus " +
-                                                  updstatus.toString());
                                             } else {
                                               updstatus = "-1";
                                               isVisible = true;
@@ -569,10 +563,10 @@ class _MrApp2State extends State<MrApp2> {
       dataaa = caConfirmData['data']['detail'];
 
       //hitung total
-      totalPrice = 0;
-      for (var item in dataaa) {
-        totalPrice += item["amount"] as int;
-      }
+      // totalPrice = 0;
+      // for (var item in dataaa) {
+      //   totalPrice += item["amount"] as int;
+      // }
 
       // });
       print("totalllll  " + totalPrice.toString());
@@ -687,7 +681,7 @@ class _MrApp2State extends State<MrApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.reffno,
-        text: '$messageError',
+        text: messageError ?? 'Cannot Connect To Server!',
         onConfirmBtnTap: () async {
           Get.to(const Navbar());
         },
