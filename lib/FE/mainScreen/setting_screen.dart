@@ -60,7 +60,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: const Text('User List'),
+                            title: const Text('Company List'),
                             content: setupAlertDialoadContainer(),
                           );
                         });
@@ -135,7 +135,7 @@ class _SettingScreenState extends State<SettingScreen> {
         itemCount: 4,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            title: const Text('vindo3'),
+            title: const Text('test'),
             onTap: () {},
           );
         },

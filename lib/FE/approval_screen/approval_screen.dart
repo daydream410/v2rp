@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/gr_approval/gr_app.dart';
@@ -335,8 +336,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() =>
-                                                      CashAdvanceConfirm());
+                                                  totalKC == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          CashAdvanceConfirm());
                                                 },
                                               ),
                                             ),
@@ -417,8 +420,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() =>
-                                                      CashAdvanceApproval());
+                                                  totalKA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          CashAdvanceApproval());
                                                 },
                                               ),
                                             ),
@@ -499,8 +504,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() =>
-                                                      const CaSettleConfirm());
+                                                  totalLC == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          const CaSettleConfirm());
 
                                                   // Get.to(() => StockTable2());
                                                   // Get.offAll(() => const StockTable2());
@@ -584,7 +591,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => CaSetApproval());
+                                                  totalLA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          CaSetApproval());
                                                 },
                                               ),
                                             ),
@@ -720,7 +730,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => ArApproval());
+                                                  totalARRA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => ArApproval());
                                                 },
                                               ),
                                             ),
@@ -798,8 +811,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() =>
-                                                      SalesOrderApproval());
+                                                  totalSOA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          SalesOrderApproval());
                                                 },
                                               ),
                                             ),
@@ -930,7 +945,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => SppbjConfirm());
+                                                  totalSC == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => SppbjConfirm());
                                                 },
                                               ),
                                             ),
@@ -1005,7 +1023,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => SppbjApp());
+                                                  totalSA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => SppbjApp());
                                                 },
                                               ),
                                             ),
@@ -1080,7 +1101,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => PoScmApp());
+                                                  totalPA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => PoScmApp());
                                                   // Get.offAll(() => const StockTable2());
                                                 },
                                               ),
@@ -1156,7 +1180,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => NpApp());
+                                                  totalNA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() => NpApp());
                                                 },
                                               ),
                                             ),
@@ -1241,7 +1267,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => DpReqApp());
+                                                  totalDPA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => DpReqApp());
                                                 },
                                               ),
                                             ),
@@ -1322,7 +1351,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => ApRefundApp());
+                                                  totalAPRA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => ApRefundApp());
                                                 },
                                               ),
                                             ),
@@ -1403,7 +1435,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => ApAdjApp());
+                                                  totalAPAA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => ApAdjApp());
 
                                                   // Get.to(() => StockTable2());
                                                   // Get.offAll(() => const StockTable2());
@@ -1487,7 +1522,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => DebitNotesApp());
+                                                  totalDNA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          DebitNotesApp());
                                                 },
                                               ),
                                             ),
@@ -1582,7 +1620,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                                 child: InkWell(
                                                   splashColor: Colors.black38,
                                                   onTap: () async {
-                                                    Get.to(() => PoExApp());
+                                                    poGabung == 0
+                                                        ? wakwaw()
+                                                        : Get.to(
+                                                            () => PoExApp());
                                                   },
                                                 ),
                                               ),
@@ -1714,7 +1755,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => MuApp());
+                                                  totalMUA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() => MuApp());
                                                 },
                                               ),
                                             ),
@@ -1795,7 +1838,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => GrApp());
+                                                  totalGRA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() => GrApp());
                                                 },
                                               ),
                                             ),
@@ -1876,7 +1921,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => ItApp());
+                                                  totalITA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() => ItApp());
                                                   // Get.offAll(() => const StockTable2());
                                                 },
                                               ),
@@ -1958,7 +2005,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => SmApp());
+                                                  totalSMA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() => SmApp());
                                                 },
                                               ),
                                             ),
@@ -2049,7 +2098,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => StockAdjApp());
+                                                  totalSAA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => StockAdjApp());
                                                 },
                                               ),
                                             ),
@@ -2130,7 +2182,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => StockTopupApp());
+                                                  totalSTUA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          StockTopupApp());
                                                 },
                                               ),
                                             ),
@@ -2211,7 +2266,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => AssemblingApp());
+                                                  totalAA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          AssemblingApp());
                                                   // Get.offAll(() => const StockTable2());
                                                 },
                                               ),
@@ -2290,7 +2348,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => MrApp());
+                                                  totalMRA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() => MrApp());
                                                 },
                                               ),
                                             ),
@@ -2381,7 +2441,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => StockTrfApp());
+                                                  totalSTA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(
+                                                          () => StockTrfApp());
                                                 },
                                               ),
                                             ),
@@ -2462,7 +2525,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => ItStockAdjApp());
+                                                  itGabung == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          ItStockAdjApp());
                                                 },
                                               ),
                                             ),
@@ -2543,7 +2609,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(() => StockPriceApp());
+                                                  totalSPA == 0
+                                                      ? wakwaw()
+                                                      : Get.to(() =>
+                                                          StockPriceApp());
                                                   // Get.offAll(() => const StockTable2());
                                                 },
                                               ),
@@ -2625,8 +2694,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               child: InkWell(
                                                 splashColor: Colors.black38,
                                                 onTap: () async {
-                                                  Get.to(
-                                                      () => UpdateMinMaxApp());
+                                                  Get.to(totalMMU == 0
+                                                      ? wakwaw()
+                                                      : () =>
+                                                          UpdateMinMaxApp());
                                                 },
                                               ),
                                             ),
@@ -2928,6 +2999,16 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
       backgroundColor: Colors.red,
       isDismissible: true,
       dismissDirection: DismissDirection.vertical,
+    );
+  }
+
+  Future wakwaw() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.info,
+      text: 'No Approval Data',
+      barrierDismissible: false,
+      confirmBtnText: 'Okay',
     );
   }
 }
