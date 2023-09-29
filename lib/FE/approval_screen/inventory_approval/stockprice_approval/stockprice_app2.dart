@@ -230,13 +230,10 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
                                         color: Colors.white,
                                       ),
                                     ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
                                   ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                const SizedBox(
-                                  height: 10,
                                 ),
                               ],
                             ),

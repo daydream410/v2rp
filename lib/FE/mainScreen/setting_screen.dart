@@ -56,14 +56,14 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 InkWell(
                   onDoubleTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Company List'),
-                            content: setupAlertDialoadContainer(),
-                          );
-                        });
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return AlertDialog(
+                    //         title: const Text('Company List'),
+                    //         content: setupAlertDialoadContainer(),
+                    //       );
+                    //     });
                   },
                   borderRadius: BorderRadius.circular(100),
                   splashColor: HexColor('#F4A62A').withOpacity(0.5),
@@ -110,6 +110,18 @@ class _SettingScreenState extends State<SettingScreen> {
                     await sharedPreferences.clear();
 
                     Get.offAll(() => const LoginPage4());
+                    Get.snackbar(
+                      "Success Logout",
+                      "From V2RP Mobile",
+                      colorText: Colors.white,
+                      icon: const Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.red,
+                      isDismissible: true,
+                      dismissDirection: DismissDirection.vertical,
+                    );
                   },
                   child: const Text(
                     "LOGOUT",
