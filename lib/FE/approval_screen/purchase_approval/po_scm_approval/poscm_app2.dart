@@ -431,7 +431,8 @@ class _PoScmApp2State extends State<PoScmApp2> {
                               child: DataTable2(
                                 columnSpacing: 12,
                                 horizontalMargin: 12,
-                                minWidth: 600,
+                                minWidth: 900,
+                                dataRowHeight: 90,
                                 columns: const [
                                   DataColumn2(
                                     label: Column(
@@ -692,13 +693,31 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                               fontSize: 11,
                                             ),
                                           )),
+                                          // DataCell(Text(
+                                          //   NumberFormat.currency(
+                                          //           locale: 'eu', symbol: '')
+                                          //       .format(
+                                          //           (e['qty'] * e['harga']) -
+                                          //               ((e['amount']) /
+                                          //                   e['disc'])),
+                                          //   style: const TextStyle(
+                                          //     fontSize: 11,
+                                          //   ),
+                                          // )),
+                                          // DataCell(Text(
+                                          //   NumberFormat.currency(
+                                          //           locale: 'eu', symbol: '')
+                                          //       .format(e['amount'] -
+                                          //           (e['amount'] / e['disc'])),
+                                          //   style: const TextStyle(
+                                          //     fontSize: 11,
+                                          //   ),
+                                          // )),
+
                                           DataCell(Text(
                                             NumberFormat.currency(
                                                     locale: 'eu', symbol: '')
-                                                .format(
-                                                    (e['qty'] * e['harga']) -
-                                                        ((e['amount']) /
-                                                            e['disc'])),
+                                                .format(e['amount']),
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),
@@ -706,12 +725,12 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                           DataCell(Text(
                                             NumberFormat.currency(
                                                     locale: 'eu', symbol: '')
-                                                .format(e['amount'] -
-                                                    (e['amount'] / e['disc'])),
+                                                .format(e['amtidr']),
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),
                                           )),
+
                                           DataCell(Text(
                                             e['appstatus'].toString(),
                                             style: const TextStyle(
@@ -1121,12 +1140,8 @@ class _PoScmApp2State extends State<PoScmApp2> {
       // setState(() {
       dataaa = caConfirmData['data']['detail'];
       // dataHead = caConfirmData['data'];
+      print("dataaa " + dataaa.toString());
 
-      //hitung other expen
-      // othexpen = 0;
-      // for (int i = 0; i < dataHead.length; i++) {
-      //   othexpen += dataHead[i]['header']['othexpen'];
-      // }
       //hitung total
       sTTL = 0;
       dTTL = 0;
@@ -1140,17 +1155,26 @@ class _PoScmApp2State extends State<PoScmApp2> {
         dTTL += item["disc"] * (item["qty"] * item["harga"]) / 100;
         sTAX += item["taxAmount"];
 
-        dTAX = item["tax"];
+        if (item["tax"] == ':0') {
+          dTAX == '0';
+          print("dTaxzzzzzzz  " + dTAX.toString());
+        } else {
+          dTAX = item["tax"];
+          print("dTaxx  " + dTAX.toString());
+        }
+
         var listtax = dTAX.split(",");
         for (var xx = 0; xx < listtax.length; xx++) {
           var snil = listtax[xx].split(":");
-          if (snil.isNotEmpty) {
-            if (snil[0].substring(0, 1) == "0") {
-              ppn += double.parse(snil[1]);
-            } else if (snil[0].substring(0, 1) == "1") {
-              pph += double.parse(snil[1]);
-            } else {
-              otax += double.parse(snil[1]);
+          if (dTAX != "") {
+            if (snil.isNotEmpty) {
+              if (snil[0].substring(0, 1) == "0") {
+                ppn += double.parse(snil[1]);
+              } else if (snil[0].substring(0, 1) == "1") {
+                pph += double.parse(snil[1]);
+              } else {
+                otax += double.parse(snil[1]);
+              }
             }
           }
         }
@@ -1160,8 +1184,6 @@ class _PoScmApp2State extends State<PoScmApp2> {
 
       // });
 
-      print("dTax  " + dTAX.toString());
-      print("dataaa " + dataaa.toString());
       return dataaa;
     } catch (e) {
       print(e);
