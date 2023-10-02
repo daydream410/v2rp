@@ -717,7 +717,9 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                           DataCell(Text(
                                             NumberFormat.currency(
                                                     locale: 'eu', symbol: '')
-                                                .format(e['amount']),
+                                                .format(
+                                                    (e['qty'] * e['harga']) +
+                                                        e['taxAmount']),
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),
