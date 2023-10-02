@@ -59,6 +59,7 @@ dependencies:
   badges: ^3.1.1
   dio: ^5.3.2
   quickalert: ^1.0.2
+  upgrader: ^8.1.0
   # webview_flutter: ^3.0.4
   # badges: ^2.0.3
   # flutter_background_service: ^2.4.3
