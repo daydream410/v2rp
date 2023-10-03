@@ -680,7 +680,8 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                           DataCell(Text(
                                             NumberFormat.currency(
                                                     locale: 'eu', symbol: '%')
-                                                .format(e['disc'] / 100),
+                                                .format(e['disc']),
+                                            // .format(e['disc']/100),
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),
@@ -718,7 +719,9 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                             NumberFormat.currency(
                                                     locale: 'eu', symbol: '')
                                                 .format(
-                                                    (e['qty'] * e['harga']) +
+                                                    (e['qty'] * e['harga']) *
+                                                            (100 - e['disc']) /
+                                                            100 +
                                                         e['taxAmount']),
                                             style: const TextStyle(
                                               fontSize: 11,
@@ -782,7 +785,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
                         child: DataTable2(
                           columnSpacing: 12,
                           horizontalMargin: 12,
-                          minWidth: 600,
+                          minWidth: 900,
                           columns: const [
                             DataColumn2(
                               label: Column(
