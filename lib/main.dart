@@ -40,6 +40,10 @@ class MyApp extends StatelessWidget {
       home: UpgradeAlert(
           upgrader: Upgrader(
             dialogStyle: UpgradeDialogStyle.cupertino,
+            // debugDisplayAlways: true,
+            showLater: false,
+            showIgnore: false,
+            minAppVersion: '1.2.0',
           ),
           child: const SplashScreen()),
     );
