@@ -132,29 +132,55 @@ class _CaSetApprovalState extends State<CaSetApproval> {
                             },
                             physics: const BouncingScrollPhysics(),
                             // itemCount: _dataaa.length,
-                            itemCount: 5,
+                            itemCount: _foundUsers.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: const Text(
+                                  title: Text(
                                     // _dataaa[index]['itemname'],
-                                    "Cash Advance Number",
-                                    style: TextStyle(
+                                    _foundUsers[index]['header']['nolpjk'],
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // subtitle: Text(_dataaa[index]['stockid']),
-                                  subtitle: const Text("Requestor || Date"),
+                                  subtitle:
+                                      // Text(__foundUsers[index]['stockid']),
+                                      Text(
+                                    _foundUsers[index]['header']
+                                            ['requestorname'] +
+                                        " || " +
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(_foundUsers[index]
+                                                ['header']['tanggal'])),
+                                  ),
+                                  onTap: () {
+                                    Get.to(CaSetApproval2(
+                                      seckey: _foundUsers[index]['seckey'],
+                                      lpjk: _foundUsers[index]['header']
+                                          ['nolpjk'],
+                                      ket: _foundUsers[index]['header']['ket'],
+                                      tanggal: _foundUsers[index]['header']
+                                          ['tanggal'],
+                                      requestorname: _foundUsers[index]
+                                          ['header']['requestorname'],
+                                    ));
+                                  },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      // Get.to(ScanVb(
-                                      //   idstock: _dataaa[index]['stockid'],
-                                      //   itemname: _dataaa[index]['itemname'],
-                                      //   serverKeyVal: serverKeyValue,
-                                      // ));
+                                      Get.to(CaSetApproval2(
+                                        seckey: _foundUsers[index]['seckey'],
+                                        lpjk: _foundUsers[index]['header']
+                                            ['nolpjk'],
+                                        ket: _foundUsers[index]['header']
+                                            ['ket'],
+                                        tanggal: _foundUsers[index]['header']
+                                            ['tanggal'],
+                                        requestorname: _foundUsers[index]
+                                            ['header']['requestorname'],
+                                      ));
                                     },
                                     color: HexColor('#F4A62A'),
                                     hoverColor: HexColor('#F4A62A'),

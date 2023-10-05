@@ -190,7 +190,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
                                     Text(
                                       widget.requestorname ?? "",
                                       style: const TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 13.0,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -308,7 +308,8 @@ class _SppbjApp2State extends State<SppbjApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
+                        dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -365,7 +366,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
                                 ),
                               ],
                             ),
-                            size: ColumnSize.M,
+                            size: ColumnSize.L,
                           ),
                           DataColumn2(
                             label: Column(

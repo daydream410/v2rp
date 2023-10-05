@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             // debugDisplayAlways: true,
             showLater: false,
             showIgnore: false,
-            minAppVersion: '1.2.0',
+            minAppVersion: '1.2.1',
           ),
           child: const SplashScreen()),
     );

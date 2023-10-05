@@ -83,7 +83,7 @@ class _PoExAppState extends State<PoExApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("SPPBJ Approval"),
+                middle: const Text("PO Exception Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {

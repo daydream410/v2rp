@@ -677,29 +677,30 @@ class _PoExApp2State extends State<PoExApp2> {
                                         ),
                                       )),
                                       DataCell(Text(
-                                        // NumberFormat.currency(
-                                        //         locale: 'eu', symbol: '')
-                                        //     .format(e['harga']),
-                                        e['harga'].toString(),
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(double.parse(e['harga'])),
+                                        // e['harga'].toString(),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
                                       )),
                                       DataCell(Text(
-                                        // NumberFormat.currency(
-                                        //         locale: 'eu', symbol: '')
-                                        //     .format(e['amount']),
-                                        e['amount'].toString(),
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(double.parse(e['amount'])),
+                                        // e['amount'].toString(),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
                                       )),
                                       DataCell(Text(
-                                        // NumberFormat.currency(
-                                        //         locale: 'eu', symbol: '')
-                                        //     .format(e['disc'] / 100),
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(
+                                                double.parse(e['disc']) / 100),
                                         // e['disc'].toString(),
-                                        e['disc'].substring(0, 4),
+                                        // e['disc'].substring(0, 4),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
@@ -707,17 +708,19 @@ class _PoExApp2State extends State<PoExApp2> {
                                       DataCell(Text(
                                         // NumberFormat.currency(
                                         //         locale: 'eu', symbol: '')
-                                        //     .format(e['taxAmount'].toString()),
+                                        //     .format(double.parse(e['taxAmount'])
+                                        //         .toString()),
                                         e['tax'].toString(),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
                                       )),
                                       DataCell(Text(
-                                        // NumberFormat.currency(
-                                        //         locale: 'eu', symbol: '')
-                                        //     .format(e['qty'] * e['harga']),
-                                        e['amount'].toString(),
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(double.parse(e['qty']) *
+                                                double.parse(e['harga'])),
+                                        // e['amount'].toString(),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),

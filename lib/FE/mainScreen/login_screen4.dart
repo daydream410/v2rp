@@ -115,171 +115,170 @@ class _LoginPage4State extends State<LoginPage4>
               key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: AutofillGroup(
-                  child: ListView(
-                    children: [
-                      SizedBox(
-                        height: size.height * 0.1,
-                      ),
-                      SizedBox(
-                        height: 150,
-                        child: Image.asset('images/kctgroupasli.png'),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: textControllers.emailController.value,
-                        style: const TextStyle(color: Colors.white),
-                        autofillHints: const [AutofillHints.email],
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.email),
-                          prefixIconColor: HexColor("#F4A62A"),
-                          hintText: "Email",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.cyan),
-                          ),
-                          errorBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
+                child: ListView(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.1,
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: Image.asset('images/kctgroupasli.png'),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: textControllers.emailController.value,
+                      style: const TextStyle(color: Colors.white),
+                      autofillHints: const [AutofillHints.email],
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.email),
+                        prefixIconColor: HexColor("#F4A62A"),
+                        hintText: "Email",
+                        hintStyle: const TextStyle(color: Colors.white),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Email';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        controller: textControllers.usernameController.value,
-                        style: const TextStyle(color: Colors.white),
-                        autofillHints: const [AutofillHints.username],
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person),
-                          prefixIconColor: HexColor("#F4A62A"),
-                          hintText: "Username",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.cyan),
-                          ),
-                          errorBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.cyan),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Username';
-                          }
-                          return null;
-                        },
+                        errorBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
                       ),
-                      TextFormField(
-                        // onChanged: (String) {
-                        //   _timer =
-                        //       Timer(const Duration(milliseconds: 1000), (() {
-                        //     MsgHeader.Reqip();
-                        //   }));
-                        // },
-                        obscureText: _obsecuredText,
-                        controller: textControllers.passwordController.value,
-                        style: const TextStyle(color: Colors.white),
-                        autofillHints: const [AutofillHints.password],
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.password_rounded),
-                          prefixIconColor: HexColor("#F4A62A"),
-                          hintText: "Password",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obsecuredText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Enter Email';
+                        }
+                        return null;
+                      },
+                    ),
+                    AutofillGroup(
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            controller:
+                                textControllers.usernameController.value,
+                            style: const TextStyle(color: Colors.white),
+                            autofillHints: const [AutofillHints.username],
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.person),
+                              prefixIconColor: HexColor("#F4A62A"),
+                              hintText: "Username",
+                              hintStyle: const TextStyle(color: Colors.white),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.cyan),
+                              ),
+                              errorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red),
+                              ),
                             ),
-                            onPressed: () {
-                              setState(() {
-                                _obsecuredText = !_obsecuredText;
-                              });
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please Enter Username';
+                              }
+                              return null;
                             },
                           ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.cyan),
-                          ),
-                          errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                        ),
-                        onEditingComplete: () =>
-                            TextInput.finishAutofillContext(),
-                        validator: (value) {
-                          if (value!.isEmpty || value.length < 3) {
-                            // setState(() {
-                            //   _passwordController.clear();
-                            // });
-                            return 'Please Enter a valid password';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          // _isButtonDisabled ? null : loginNEW();
-                          final SharedPreferences sharedPreferences =
-                              await SharedPreferences.getInstance();
-                          sharedPreferences.setString('email',
-                              textControllers.emailController.value.text);
-                          sharedPreferences.setString('username',
-                              textControllers.usernameController.value.text);
-                          sharedPreferences.setString('password',
-                              textControllers.passwordController.value.text);
-                          Get.snackbar(
-                            "Please Wait",
-                            "Connecting To Server...",
-                            colorText: Colors.white,
-                            icon: Icon(
-                              Icons.timer,
-                              color: Colors.white,
+                          TextFormField(
+                            obscureText: _obsecuredText,
+                            controller:
+                                textControllers.passwordController.value,
+                            style: const TextStyle(color: Colors.white),
+                            autofillHints: const [AutofillHints.password],
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.password_rounded),
+                              prefixIconColor: HexColor("#F4A62A"),
+                              hintText: "Password",
+                              hintStyle: const TextStyle(color: Colors.white),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obsecuredText
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obsecuredText = !_obsecuredText;
+                                  });
+                                },
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.cyan),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red),
+                              ),
                             ),
-                            backgroundColor: HexColor("#F4A62A"),
-                            isDismissible: true,
-                            duration: Duration(seconds: 2),
-                            dismissDirection: DismissDirection.vertical,
-                          );
-                          MsgHeader.loginProcessNEW();
-
-                          _timer =
-                              Timer(const Duration(milliseconds: 2000), (() {
-                            loginNEW();
-                          }));
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: HexColor("#F4A62A"),
-                          foregroundColor: Colors.white,
-                        ),
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
+                            onEditingComplete: () =>
+                                TextInput.finishAutofillContext(),
+                            validator: (value) {
+                              if (value!.isEmpty || value.length < 3) {
+                                // setState(() {
+                                //   _passwordController.clear();
+                                // });
+                                return 'Please Enter a valid password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        // _isButtonDisabled ? null : loginNEW();
+                        final SharedPreferences sharedPreferences =
+                            await SharedPreferences.getInstance();
+                        sharedPreferences.setString('email',
+                            textControllers.emailController.value.text);
+                        sharedPreferences.setString('username',
+                            textControllers.usernameController.value.text);
+                        sharedPreferences.setString('password',
+                            textControllers.passwordController.value.text);
+                        Get.snackbar(
+                          "Please Wait",
+                          "Connecting To Server...",
+                          colorText: Colors.white,
+                          icon: Icon(
+                            Icons.timer,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: HexColor("#F4A62A"),
+                          isDismissible: true,
+                          duration: Duration(seconds: 2),
+                          dismissDirection: DismissDirection.vertical,
+                        );
+                        MsgHeader.loginProcessNEW();
+
+                        _timer = Timer(const Duration(milliseconds: 2000), (() {
+                          loginNEW();
+                        }));
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: HexColor("#F4A62A"),
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             )
@@ -317,7 +316,7 @@ class _LoginPage4State extends State<LoginPage4>
         } else if (success == false) {
           Get.snackbar(
             "Error Login",
-            "Please Try Again!",
+            "Please Check Your Data Again!",
             colorText: Colors.white,
             icon: Icon(
               Icons.warning,
