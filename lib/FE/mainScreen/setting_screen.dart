@@ -1,10 +1,14 @@
+// import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+// import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:upgrader/upgrader.dart';
+// import 'package:url_launcher/url_launcher.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 
@@ -95,9 +99,10 @@ class _SettingScreenState extends State<SettingScreen> {
                 const SizedBox(
                   height: 50,
                 ),
-                TextButton(
+                ElevatedButton(
                   style: TextButton.styleFrom(
-                    foregroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.red,
                   ),
                   onPressed: () async {
                     final SharedPreferences sharedPreferences =
@@ -130,6 +135,45 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                // TextButton(
+                //   style: TextButton.styleFrom(
+                //     foregroundColor: HexColor("#F4A62A"),
+                //   ),
+                //   onPressed: () async {
+                //     // QuickAlert.show(
+                //     //   context: context,
+                //     //   type: QuickAlertType.info,
+                //     //   title: 'Checking App Version...',
+                //     //   barrierDismissible: false,
+                //     //   customAsset: 'images/loading.gif',
+                //     //   headerBackgroundColor: HexColor("#F4A62A"),
+                //     //   confirmBtnColor: HexColor("#F4A62A"),
+                //     // );
+                //     // Future.delayed(const Duration(seconds: 3), () {
+                //     //   _checkUpdate();
+                //     // });
+                //     UpgradeCard(
+                //         upgrader: Upgrader(
+                //       durationUntilAlertAgain: const Duration(seconds: 5),
+                //       dialogStyle: Platform.isIOS
+                //           ? UpgradeDialogStyle.cupertino
+                //           : UpgradeDialogStyle.material,
+                //       debugDisplayAlways: true,
+                //       showIgnore: false,
+                //       showLater: false,
+                //       canDismissDialog: true,
+                //     ));
+                //   },
+                //   child: const Text(
+                //     "CHECK UPDATE",
+                //     style: TextStyle(
+                //       fontSize: 20,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -137,6 +181,59 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
     );
   }
+
+  // Future<void> _checkUpdate() async {
+  //   var versionApp = '1.2.1';
+
+  //   if (versionApp != '1.2.2') {
+  //     if (Platform.isAndroid) {
+  //       QuickAlert.show(
+  //         context: context,
+  //         type: QuickAlertType.info,
+  //         title: 'New Version Is Available',
+  //         text: 'Please Download Our Latest App Version.',
+  //         barrierDismissible: false,
+  //         disableBackBtn: true,
+  //         headerBackgroundColor: HexColor("#F4A62A"),
+  //         confirmBtnText: 'Download',
+  //         onConfirmBtnTap: () async {
+  //           final Uri url = Uri.parse(
+  //               'https://drive.google.com/drive/folders/1Xa4MAJi5Ia12x2i1K-R7DzY6Ypv1Co4M?usp=sharing');
+  //           if (!await launchUrl(url)) {
+  //             throw Exception('Could not launch $url');
+  //           }
+  //         },
+  //       );
+  //     } else if (Platform.isIOS) {
+  //       QuickAlert.show(
+  //         context: context,
+  //         type: QuickAlertType.info,
+  //         title: 'New Version Is Available',
+  //         text: 'Please Update Our Latest App Version in App Store.',
+  //         barrierDismissible: false,
+  //         disableBackBtn: true,
+  //         headerBackgroundColor: HexColor("#F4A62A"),
+  //         confirmBtnText: 'Update',
+  //         onConfirmBtnTap: () async {
+  //           final Uri url = Uri.parse(
+  //               'https://apps.apple.com/us/app/v2rp-mobile/id1668962103');
+  //           if (!await launchUrl(url)) {
+  //             throw Exception('Could not launch $url');
+  //           }
+  //         },
+  //       );
+  //     }
+  //   } else {
+  //     QuickAlert.show(
+  //       context: context,
+  //       type: QuickAlertType.error,
+  //       title: 'No update available!',
+  //       barrierDismissible: false,
+  //       disableBackBtn: true,
+  //       headerBackgroundColor: HexColor("#F4A62A"),
+  //     );
+  //   }
+  // }
 
   Widget setupAlertDialoadContainer() {
     return SizedBox(

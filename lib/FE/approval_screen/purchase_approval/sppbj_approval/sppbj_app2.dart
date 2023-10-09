@@ -779,21 +779,13 @@ class _SppbjApp2State extends State<SppbjApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.sppbjno,
-        //   message,
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
+        print(message);
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.sppbjno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(const Navbar());
           },

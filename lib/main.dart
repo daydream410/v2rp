@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 import 'additional/splash.dart';
-import 'package:upgrader/upgrader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,15 +36,7 @@ class MyApp extends StatelessWidget {
         // '/Second': (context) => const SecondScreen()
       },
       debugShowCheckedModeBanner: false,
-      home: UpgradeAlert(
-          upgrader: Upgrader(
-            dialogStyle: UpgradeDialogStyle.cupertino,
-            // debugDisplayAlways: true,
-            showLater: false,
-            showIgnore: false,
-            minAppVersion: '1.2.1',
-          ),
-          child: const SplashScreen()),
+      home: const SplashScreen(),
     );
   }
 }

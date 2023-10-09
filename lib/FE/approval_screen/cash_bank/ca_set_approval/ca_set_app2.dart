@@ -305,7 +305,8 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
+                        dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
                             label: Column(

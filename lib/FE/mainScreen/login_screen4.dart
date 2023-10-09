@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/controller.dart';
@@ -31,22 +32,16 @@ class _LoginPage4State extends State<LoginPage4>
   static TextControllers textControllers = Get.put(TextControllers());
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  bool isButtonActive = true;
 
   // static var userVal = textControllers.usernameController.value.text;
   // static var passVal = textControllers.passwordController.value.text;
   // static var emailVal = textControllers.emailController.value.text;
   static var responseCodeResult;
   static var _timer;
-  late bool _isButtonDisabled;
   static var kulonuwun;
   static var monggo;
   static var success;
-
-  @override
-  void dispose() {
-    _animatedController.dispose();
-    super.dispose();
-  }
 
   @override
   void initState() {
@@ -66,8 +61,14 @@ class _LoginPage4State extends State<LoginPage4>
           });
     _animatedController.forward();
     // MsgHeader.Reqip();
-    _isButtonDisabled = false;
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animatedController.dispose();
+    super.dispose();
   }
 
   @override
@@ -130,6 +131,7 @@ class _LoginPage4State extends State<LoginPage4>
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       controller: textControllers.emailController.value,
+                      onChanged: (value) => isButtonActive = true,
                       style: const TextStyle(color: Colors.white),
                       autofillHints: const [AutofillHints.email],
                       decoration: InputDecoration(
@@ -158,9 +160,10 @@ class _LoginPage4State extends State<LoginPage4>
                       child: Column(
                         children: [
                           TextFormField(
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.name,
                             controller:
                                 textControllers.usernameController.value,
+                            onChanged: (value) => isButtonActive = true,
                             style: const TextStyle(color: Colors.white),
                             autofillHints: const [AutofillHints.username],
                             decoration: InputDecoration(
@@ -187,8 +190,10 @@ class _LoginPage4State extends State<LoginPage4>
                           ),
                           TextFormField(
                             obscureText: _obsecuredText,
+                            keyboardType: TextInputType.visiblePassword,
                             controller:
                                 textControllers.passwordController.value,
+                            onChanged: (value) => isButtonActive = true,
                             style: const TextStyle(color: Colors.white),
                             autofillHints: const [AutofillHints.password],
                             decoration: InputDecoration(
@@ -237,36 +242,50 @@ class _LoginPage4State extends State<LoginPage4>
                       height: 40,
                     ),
                     TextButton(
-                      onPressed: () async {
-                        // _isButtonDisabled ? null : loginNEW();
-                        final SharedPreferences sharedPreferences =
-                            await SharedPreferences.getInstance();
-                        sharedPreferences.setString('email',
-                            textControllers.emailController.value.text);
-                        sharedPreferences.setString('username',
-                            textControllers.usernameController.value.text);
-                        sharedPreferences.setString('password',
-                            textControllers.passwordController.value.text);
-                        Get.snackbar(
-                          "Please Wait",
-                          "Connecting To Server...",
-                          colorText: Colors.white,
-                          icon: Icon(
-                            Icons.timer,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: HexColor("#F4A62A"),
-                          isDismissible: true,
-                          duration: Duration(seconds: 2),
-                          dismissDirection: DismissDirection.vertical,
-                        );
-                        MsgHeader.loginProcessNEW();
+                      onPressed: isButtonActive
+                          ? () async {
+                              setState(() {
+                                isButtonActive = false;
+                              });
+                              // _isButtonDisabled ? null : loginNEW();
+                              final SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              sharedPreferences.setString('email',
+                                  textControllers.emailController.value.text);
+                              sharedPreferences.setString(
+                                  'username',
+                                  textControllers
+                                      .usernameController.value.text);
+                              sharedPreferences.setString(
+                                  'password',
+                                  textControllers
+                                      .passwordController.value.text);
+                              Get.snackbar(
+                                "Please Wait",
+                                "Connecting To Server...",
+                                colorText: Colors.white,
+                                icon: Icon(
+                                  Icons.timer,
+                                  color: Colors.white,
+                                ),
+                                backgroundColor: HexColor("#F4A62A"),
+                                isDismissible: true,
+                                duration: Duration(seconds: 2),
+                                dismissDirection: DismissDirection.vertical,
+                              );
 
-                        _timer = Timer(const Duration(milliseconds: 2000), (() {
-                          loginNEW();
-                        }));
-                      },
+                              MsgHeader.loginProcessNEW();
+
+                              _timer = Timer(const Duration(milliseconds: 2000),
+                                  (() {
+                                loginNEW();
+                              }));
+                            }
+                          : null,
                       style: TextButton.styleFrom(
+                        disabledForegroundColor: Colors.white70,
+                        disabledBackgroundColor:
+                            HexColor("#F4A62A").withOpacity(0.5),
                         backgroundColor: HexColor("#F4A62A"),
                         foregroundColor: Colors.white,
                       ),
@@ -308,23 +327,18 @@ class _LoginPage4State extends State<LoginPage4>
             isDismissible: true,
             dismissDirection: DismissDirection.vertical,
           );
-
           Get.offAll(const Navbar());
           setState(() {
+            textControllers.usernameController.value.clear();
             textControllers.passwordController.value.clear();
           });
         } else if (success == false) {
-          Get.snackbar(
-            "Error Login",
-            "Please Check Your Data Again!",
-            colorText: Colors.white,
-            icon: Icon(
-              Icons.warning,
-              color: Colors.white,
-            ),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-            dismissDirection: DismissDirection.vertical,
+          QuickAlert.show(
+            context: context,
+            type: QuickAlertType.error,
+            title: 'Failed Login',
+            text: 'Incorrect Email / Username / Password',
+            barrierDismissible: true,
           );
           success == null;
         }
