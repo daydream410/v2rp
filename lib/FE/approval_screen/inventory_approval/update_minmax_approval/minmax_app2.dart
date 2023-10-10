@@ -610,9 +610,9 @@ class _UpdateMinMaxApp2State extends State<UpdateMinMaxApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(UpdateMinMaxApp());
           },
         );
       }
@@ -624,7 +624,7 @@ class _UpdateMinMaxApp2State extends State<UpdateMinMaxApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(UpdateMinMaxApp());
         },
       );
     }

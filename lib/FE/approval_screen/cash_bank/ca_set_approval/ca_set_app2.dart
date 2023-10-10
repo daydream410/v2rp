@@ -773,7 +773,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
           title: 'Failed! ' + widget.lpjk,
           text: '$messageError',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(CaSetApproval());
           },
         );
       }
@@ -785,7 +785,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
         title: 'Error! ' + widget.lpjk,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(CaSetApproval());
         },
       );
     }

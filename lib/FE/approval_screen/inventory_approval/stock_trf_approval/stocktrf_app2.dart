@@ -702,9 +702,9 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
               Get.to(const Navbar());
             });
       } else {
-        // setState(() {
-        //   message = response['data']['message'];
-        // });
+        setState(() {
+          message = response['data']['message'];
+        });
         // Get.snackbar(
         //   'Failed! ' + widget.reffno,
         //   message ?? messageError,
@@ -719,9 +719,9 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(StockTrfApp());
           },
         );
       }
@@ -733,7 +733,7 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(StockTrfApp());
         },
       );
     }

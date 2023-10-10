@@ -850,9 +850,9 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(SppbjConfirm());
           },
         );
       }
@@ -864,7 +864,7 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
         title: 'Error! ',
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(SppbjConfirm());
         },
       );
     }

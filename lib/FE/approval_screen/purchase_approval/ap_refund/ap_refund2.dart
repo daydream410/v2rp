@@ -842,9 +842,9 @@ class _ApRefundApp2State extends State<ApRefundApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(ApRefundApp());
           },
         );
       }
@@ -856,7 +856,7 @@ class _ApRefundApp2State extends State<ApRefundApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(ApRefundApp());
         },
       );
     }

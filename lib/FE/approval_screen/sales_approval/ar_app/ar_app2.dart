@@ -947,9 +947,9 @@ class _ArApproval2State extends State<ArApproval2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(ArApproval());
           },
         );
       }
@@ -961,7 +961,7 @@ class _ArApproval2State extends State<ArApproval2> {
         title: 'Error! ',
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(ArApproval());
         },
       );
     }

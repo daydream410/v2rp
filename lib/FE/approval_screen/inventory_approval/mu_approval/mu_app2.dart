@@ -733,6 +733,9 @@ class _MuApp2State extends State<MuApp2> {
               Get.to(const Navbar());
             });
       } else {
+        setState(() {
+          message = response['data']['message'];
+        });
         // Get.snackbar(
         //   'Failed! ' + widget.dono,
         //   '$messageError',
@@ -747,9 +750,9 @@ class _MuApp2State extends State<MuApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.dono,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(MuApp());
           },
         );
       }
@@ -761,7 +764,7 @@ class _MuApp2State extends State<MuApp2> {
         title: 'Error! ' + widget.dono,
         text: messageError ?? 'Cannot Reach Server!',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(MuApp());
         },
       );
     }

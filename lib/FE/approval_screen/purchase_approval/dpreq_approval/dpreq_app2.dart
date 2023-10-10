@@ -938,9 +938,9 @@ class _DpReqApp2State extends State<DpReqApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(DpReqApp());
           },
         );
       }
@@ -952,7 +952,7 @@ class _DpReqApp2State extends State<DpReqApp2> {
         title: 'Error! ' + reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(DpReqApp());
         },
       );
     }

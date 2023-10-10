@@ -765,7 +765,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
           title: 'Failed! ' + reffno,
           text: '$messageError',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(const CaSettleConfirm());
           },
         );
       }
@@ -777,7 +777,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
         title: 'Error! ',
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(const CaSettleConfirm());
         },
       );
     }

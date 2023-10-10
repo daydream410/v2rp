@@ -893,9 +893,9 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
                 Get.to(const Navbar());
               });
         } else {
-          // setState(() {
-          //   message = response['data']['message'];
-          // });
+          setState(() {
+            message = response['data']['message'];
+          });
           // Get.snackbar(
           //   'Failed! ' + widget.reffno,
           //   '$messageError',
@@ -910,9 +910,9 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
             context: context,
             type: QuickAlertType.error,
             title: 'Failed! ' + widget.reffno,
-            text: '$messageError',
+            text: '$message',
             onConfirmBtnTap: () async {
-              Get.to(const Navbar());
+              Get.to(ItStockAdjApp());
             },
           );
         }
@@ -996,7 +996,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
             title: 'Failed! ' + widget.reffno,
             text: '$messageError',
             onConfirmBtnTap: () async {
-              Get.to(const Navbar());
+              Get.to(ItStockAdjApp());
             },
           );
         }
@@ -1008,7 +1008,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           title: 'Error! ' + widget.reffno,
           text: '$messageError',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(ItStockAdjApp());
           },
         );
       }

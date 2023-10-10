@@ -787,7 +787,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
           title: 'Failed! ' + widget.sppbjno,
           text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(SppbjApp());
           },
         );
       }
@@ -799,7 +799,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
         title: 'Error! ' + widget.sppbjno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(SppbjApp());
         },
       );
     }

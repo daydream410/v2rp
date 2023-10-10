@@ -1284,9 +1284,9 @@ class _PoScmApp2State extends State<PoScmApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(PoScmApp());
           },
         );
       }
@@ -1298,7 +1298,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
         title: 'Error! ' + reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(PoScmApp());
         },
       );
     }

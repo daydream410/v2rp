@@ -1026,9 +1026,9 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(SalesOrderApproval());
           },
         );
       }
@@ -1040,7 +1040,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
         title: 'Error! ',
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(SalesOrderApproval());
         },
       );
     }

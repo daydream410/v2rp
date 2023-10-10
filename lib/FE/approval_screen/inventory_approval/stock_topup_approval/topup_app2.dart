@@ -869,7 +869,7 @@ class _StockTopupApp2State extends State<StockTopupApp2> {
           title: 'Failed! ' + widget.reffno,
           text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(StockTopupApp());
           },
         );
       }
@@ -881,7 +881,7 @@ class _StockTopupApp2State extends State<StockTopupApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(StockTopupApp());
         },
       );
     }

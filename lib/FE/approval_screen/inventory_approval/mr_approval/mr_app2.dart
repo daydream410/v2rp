@@ -669,9 +669,9 @@ class _MrApp2State extends State<MrApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(MrApp());
           },
         );
       }
@@ -683,7 +683,7 @@ class _MrApp2State extends State<MrApp2> {
         title: 'Error! ' + widget.reffno,
         text: messageError ?? 'Cannot Connect To Server!',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(MrApp());
         },
       );
     }

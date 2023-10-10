@@ -847,9 +847,9 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.apreff,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(StockPriceApp());
           },
         );
       }
@@ -861,7 +861,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
         title: 'Error! ' + widget.apreff,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(StockPriceApp());
         },
       );
     }

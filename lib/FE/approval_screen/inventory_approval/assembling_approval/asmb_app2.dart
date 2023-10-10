@@ -576,7 +576,7 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
           title: 'Failed! ' + widget.reffno,
           text: '$messageError',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(AssemblingApp());
           },
         );
       }
@@ -588,7 +588,7 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(AssemblingApp());
         },
       );
     }

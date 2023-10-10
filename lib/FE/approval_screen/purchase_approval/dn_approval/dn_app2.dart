@@ -766,9 +766,9 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(DebitNotesApp());
           },
         );
       }
@@ -780,7 +780,7 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(DebitNotesApp());
         },
       );
     }

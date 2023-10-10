@@ -882,7 +882,7 @@ class _GrApp2State extends State<GrApp2> {
           title: 'Failed! ' + widget.grno,
           text: '$messageError',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(GrApp());
           },
         );
       }
@@ -894,7 +894,7 @@ class _GrApp2State extends State<GrApp2> {
         title: 'Error! ' + widget.grno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(GrApp());
         },
       );
     }

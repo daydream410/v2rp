@@ -832,7 +832,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
           title: 'Failed! ' + widget.nokasbon,
           text: '$messageError',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(CashAdvanceConfirm());
           },
         );
       }
@@ -844,7 +844,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         title: 'Error! ' + widget.nokasbon,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(CashAdvanceConfirm());
         },
       );
     }

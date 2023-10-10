@@ -923,7 +923,7 @@ class _PoExApp2State extends State<PoExApp2> {
           text: '$message',
           barrierDismissible: false,
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(PoExApp());
           },
         );
       }
@@ -935,7 +935,7 @@ class _PoExApp2State extends State<PoExApp2> {
         title: 'Error! ' + widget.pono,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(PoExApp());
         },
       );
     }

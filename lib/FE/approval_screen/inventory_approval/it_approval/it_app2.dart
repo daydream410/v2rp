@@ -798,7 +798,7 @@ class _ItApp2State extends State<ItApp2> {
           title: 'Failed! ' + widget.reffno,
           text: '$messageError',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(ItApp());
           },
         );
       }
@@ -810,7 +810,7 @@ class _ItApp2State extends State<ItApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(ItApp());
         },
       );
     }

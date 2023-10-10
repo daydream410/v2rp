@@ -725,9 +725,9 @@ class _ApAdjApp2State extends State<ApAdjApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
-            Get.to(const Navbar());
+            Get.to(ApAdjApp());
           },
         );
       }
@@ -739,7 +739,7 @@ class _ApAdjApp2State extends State<ApAdjApp2> {
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
-          Get.to(const Navbar());
+          Get.to(ApAdjApp());
         },
       );
     }
