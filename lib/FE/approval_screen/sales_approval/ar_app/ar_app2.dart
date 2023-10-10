@@ -647,8 +647,10 @@ class _ArApproval2State extends State<ArApproval2> {
                         rows: dataaa
                             .map((e) => DataRow(cells: [
                                   DataCell(Text(
-                                    // e['tipe'].toString(),
-                                    tipee[3].toString(),
+                                    e['tipe'] == 0
+                                        ? 'Invoice Payment'
+                                        : 'Other Expenses',
+                                    // tipee.toString(),
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),
@@ -809,41 +811,10 @@ class _ArApproval2State extends State<ArApproval2> {
       //hitung total
       totalPrice = 0;
       totalPrice2 = 0;
-      // tipe = 0;
       for (var item in dataaa) {
         totalPrice += item["amount_forex"];
         totalPrice2 += item["amount_base"];
-        var tipe = item['tipe'];
-        print("tipeeeeeeeeeeeeeeeeee  " + tipe.toString());
-        if (tipe == 0) {
-          setState(() {
-            tipee.add('Invoice Payment');
-          });
-        } else if (tipe == 2) {
-          setState(() {
-            tipee.add('Other Income/Expenses');
-          });
-        }
-        print("tipeeeeeeeeeeeeeeeeee222222  " + tipee[0]);
       }
-      // if (tipe == 0) {
-      //   setState(() {
-      //     tipee = 'Invoice Payment';
-      //   });
-      // } else if (tipe == 2) {
-      //   setState(() {
-      //     tipee = 'Other Income/Expenses';
-      //   });
-      // }
-      // print("tipeeeeeeeeeeeeeeeeee222222  " + tipee.toString());
-      // dataaa.forEach((key, value) {
-      //   if (valuess) {
-
-      //   }
-      // });
-
-      // });
-
       print("totalllll  " + totalPrice.toString());
       print("dataaa " + dataaa.toString());
       return dataaa;
