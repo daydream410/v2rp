@@ -649,7 +649,7 @@ class _ArApproval2State extends State<ArApproval2> {
                                   DataCell(Text(
                                     e['tipe'] == 0
                                         ? 'Invoice Payment'
-                                        : 'Other Expenses',
+                                        : 'Other Income/Expenses',
                                     // tipee.toString(),
                                     style: const TextStyle(
                                       fontSize: 11,
