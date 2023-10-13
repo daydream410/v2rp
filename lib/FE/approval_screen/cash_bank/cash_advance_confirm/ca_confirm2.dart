@@ -375,7 +375,8 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
+                        dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -830,7 +831,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.nokasbon,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(CashAdvanceConfirm());
           },

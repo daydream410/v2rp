@@ -321,7 +321,8 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 1000,
+                        dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -536,7 +537,8 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                                         ),
                                       )),
                                       DataCell(Text(
-                                        e['tipe'].toString(),
+                                        e['tipe'] == 0 ? 'Bugdet' : 'Item',
+                                        // e['tipe'].toString(),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
@@ -807,7 +809,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.nokasbon,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(CashAdvanceApproval());
           },

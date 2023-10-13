@@ -185,7 +185,8 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
                                       ),
                                     ),
                                     Text(
-                                      widget.sppbjtype.toString(),
+                                      widget.sppbjtype == 0 ? 'SCM' : 'Non SCM',
+                                      // widget.sppbjtype.toString(),
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
@@ -415,7 +416,8 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
+                        dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -820,7 +822,7 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
-            text: 'Success $message Data!',
+            text: '$message Data!',
             barrierDismissible: false,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {

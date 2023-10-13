@@ -747,7 +747,8 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
                         rows: dataaa
                             .map((e) => DataRow(cells: [
                                   DataCell(Text(
-                                    e['tipe'].toString(),
+                                    e['tipe'] == 0 ? 'Item' : 'Non Item',
+                                    // e['tipe'].toString(),
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),

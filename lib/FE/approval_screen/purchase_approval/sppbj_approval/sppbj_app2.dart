@@ -372,19 +372,6 @@ class _SppbjApp2State extends State<SppbjApp2> {
                             label: Column(
                               children: [
                                 Text(
-                                  'Type',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            size: ColumnSize.M,
-                          ),
-                          DataColumn2(
-                            label: Column(
-                              children: [
-                                Text(
                                   'Acc',
                                   style: TextStyle(
                                     fontSize: 11,
@@ -404,7 +391,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
                             label: Column(
                               children: [
                                 Text(
-                                  'Desc',
+                                  'Description',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
@@ -519,12 +506,6 @@ class _SppbjApp2State extends State<SppbjApp2> {
                                       )),
                                       DataCell(Text(
                                         e['requestorname'] ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        e['tipe'].toString(),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
@@ -684,7 +665,8 @@ class _SppbjApp2State extends State<SppbjApp2> {
       //hitung total
       totalPrice = 0;
       for (var item in dataaa) {
-        totalPrice += item["amount"] as int;
+        // totalPrice += item["amount"] as int;
+        totalPrice += item["amount"];
       }
 
       // });

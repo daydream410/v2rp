@@ -334,7 +334,8 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
+                        dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -763,7 +764,7 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(const CaSettleConfirm());
           },

@@ -323,7 +323,8 @@ class _ApAdjApp2State extends State<ApAdjApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 600,
+                        minWidth: 900,
+                        dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -477,7 +478,10 @@ class _ApAdjApp2State extends State<ApAdjApp2> {
                                     ),
                                   )),
                                   DataCell(Text(
-                                    e['tipe'].toString(),
+                                    e['tipe'] == 0
+                                        ? 'Account Payable'
+                                        : 'Other Expenses',
+                                    // e['tipe'].toString(),
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),

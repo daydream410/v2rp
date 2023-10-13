@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //   print("New connectivity status: $result");
     // });
     _controller = VideoPlayerController.asset(
-      'images/v2rp.mp4',
+      'images/newsplash.mp4',
     )
       ..initialize().then((value) {
         setState(() {});
