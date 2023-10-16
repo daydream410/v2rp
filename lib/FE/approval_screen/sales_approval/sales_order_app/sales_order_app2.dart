@@ -84,7 +84,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
 
     List listStatus = [
       "Pending",
-      "Confirm",
+      "Approve",
       "Reject",
       "Send To Draft",
     ];
@@ -492,7 +492,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
                                               print("updstatus " +
                                                   updstatus.toString());
                                             } else if (valueStatus ==
-                                                "Confirm") {
+                                                "Approve") {
                                               updstatus = "1";
                                               isVisible = true;
                                               print("updstatus " +
