@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:v2rp1/FE/approval_screen/purchase_approval/np_app/newap_app2.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/FE/approval_screen/purchase_approval/poscm_unapproved/poscm_unapproved2.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
@@ -17,18 +17,20 @@ import '../../../../BE/resD.dart';
 import '../../../../main.dart';
 import '../../../navbar/navbar.dart';
 
-class NpApp extends StatefulWidget {
-  NpApp({Key? key}) : super(key: key);
+class PoUnapproved extends StatefulWidget {
+  PoUnapproved({Key? key}) : super(key: key);
 
   @override
-  State<NpApp> createState() => _NpAppState();
+  State<PoUnapproved> createState() => _PoUnapprovedState();
 }
 
-class _NpAppState extends State<NpApp> {
+class _PoUnapprovedState extends State<PoUnapproved> {
   static TextControllers textControllers = Get.put(TextControllers());
-
   static late List dataaa = <CaConfirmData>[];
+  static late List dataaa2 = <CaConfirmData>[];
+  static late List gabung = <CaConfirmData>[];
   static late List _foundUsers = <CaConfirmData>[];
+  static late var tipe;
 
   @override
   void initState() {
@@ -42,7 +44,7 @@ class _NpAppState extends State<NpApp> {
       results = dataaa;
     } else {
       results = dataaa
-          .where((dataaa) => dataaa['header']['reffno']
+          .where((dataaa) => dataaa['header']['pono']
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
           .toList();
@@ -81,7 +83,7 @@ class _NpAppState extends State<NpApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("New Payable Approval"),
+                middle: const Text("PO Supplier Unapproved Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {
@@ -96,7 +98,8 @@ class _NpAppState extends State<NpApp> {
                     child: Column(
                       children: [
                         CupertinoSearchTextField(
-                          controller: textControllers.newapAppController.value,
+                          controller:
+                              textControllers.PoUnapprovedController.value,
                           onChanged: (value) => _runFilter(value),
                           itemSize: 30,
                           itemColor: HexColor('#F4A62A'),
@@ -129,64 +132,58 @@ class _NpAppState extends State<NpApp> {
                                 elevation: 5,
                                 child: ListTile(
                                   title: Text(
-                                    _foundUsers[index]['header']['reffno'],
+                                    _foundUsers[index]['header']['pono'],
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   subtitle: Text(
-                                    _foundUsers[index]['header']['requestor'] +
+                                    _foundUsers[index]['header']
+                                            ['requestorname'] +
                                         " || " +
                                         DateFormat('yyyy-MM-dd').format(
                                             DateTime.parse(_foundUsers[index]
-                                                ['header']['tanggal'])),
+                                                ['header']['tanggal'])) +
+                                        " || " +
+                                        _foundUsers[index]['header']
+                                            ['suppliername'],
                                   ),
                                   onTap: () {
-                                    Get.to(NpApp2(
+                                    Get.to(PoUnapproved2(
                                       seckey: _foundUsers[index]['seckey'],
-                                      reffno: _foundUsers[index]['header']
-                                          ['reffno'],
-                                      ket: _foundUsers[index]['header']
-                                          ['reason'],
+                                      pono: _foundUsers[index]['header']
+                                          ['pono'],
                                       tanggal: _foundUsers[index]['header']
                                           ['tanggal'],
+                                      requestorname: _foundUsers[index]
+                                          ['header']['requestorname'],
                                       supplier: _foundUsers[index]['header']
-                                          ['supplier_id'],
-                                      invdate: _foundUsers[index]['header']
-                                          ['invdate'],
+                                          ['suppliername'],
                                       ccy: _foundUsers[index]['header']['ccy'],
-                                      duedate: _foundUsers[index]['header']
-                                          ['duedate'],
-                                      amount: _foundUsers[index]['header']
-                                          ['amount'],
-                                      inIDR: _foundUsers[index]['header']
-                                          ['amountidr'],
+                                      disc: _foundUsers[index]['header']
+                                          ['disc'],
+                                      tipe: tipe,
                                     ));
                                   },
                                   trailing: IconButton(
                                     icon: const Icon(
                                         Icons.arrow_forward_ios_rounded),
                                     onPressed: () {
-                                      Get.to(NpApp2(
+                                      Get.to(PoUnapproved2(
                                         seckey: _foundUsers[index]['seckey'],
-                                        reffno: _foundUsers[index]['header']
-                                            ['reffno'],
-                                        ket: _foundUsers[index]['header']
-                                            ['reason'],
+                                        pono: _foundUsers[index]['header']
+                                            ['pono'],
                                         tanggal: _foundUsers[index]['header']
                                             ['tanggal'],
+                                        requestorname: _foundUsers[index]
+                                            ['header']['requestorname'],
                                         supplier: _foundUsers[index]['header']
-                                            ['supplier_id'],
-                                        invdate: _foundUsers[index]['header']
-                                            ['invdate'],
+                                            ['suppliername'],
                                         ccy: _foundUsers[index]['header']
                                             ['ccy'],
-                                        duedate: _foundUsers[index]['header']
-                                            ['duedate'],
-                                        amount: _foundUsers[index]['header']
-                                            ['amount'],
-                                        inIDR: _foundUsers[index]['header']
-                                            ['amountidr'],
+                                        disc: _foundUsers[index]['header']
+                                            ['disc'],
+                                        tipe: tipe,
                                       ));
                                     },
                                     color: HexColor('#F4A62A'),
@@ -208,7 +205,7 @@ class _NpAppState extends State<NpApp> {
             )
           : Scaffold(
               appBar: AppBar(
-                title: const Text("New Payable Approval"),
+                title: const Text("PO Supplier Unapproved Approval"),
                 centerTitle: true,
                 backgroundColor: HexColor("#F4A62A"),
                 foregroundColor: Colors.white,
@@ -235,7 +232,8 @@ class _NpAppState extends State<NpApp> {
                         height: 15,
                       ),
                       TextField(
-                        controller: textControllers.newapAppController.value,
+                        controller:
+                            textControllers.PoUnapprovedController.value,
                         onChanged: (value) => _runFilter(value),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.assignment),
@@ -247,7 +245,7 @@ class _NpAppState extends State<NpApp> {
                             tooltip: 'Search',
                             hoverColor: HexColor('#F4A62A'),
                           ),
-                          hintText: 'Invoice No.',
+                          hintText: 'PO No.',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
@@ -290,71 +288,63 @@ class _NpAppState extends State<NpApp> {
                                       elevation: 5,
                                       child: ListTile(
                                         title: Text(
-                                          _foundUsers[index]['header']
-                                              ['reffno'],
+                                          _foundUsers[index]['header']['pono'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         subtitle: Text(
                                           _foundUsers[index]['header']
-                                                  ['requestor'] +
+                                                  ['requestorname'] +
                                               " || " +
                                               DateFormat('yyyy-MM-dd').format(
                                                   DateTime.parse(
                                                       _foundUsers[index]
                                                               ['header']
-                                                          ['tanggal'])),
+                                                          ['tanggal'])) +
+                                              " || " +
+                                              _foundUsers[index]['header']
+                                                  ['suppliername'],
                                         ),
                                         onTap: () {
-                                          Get.to(NpApp2(
+                                          Get.to(PoUnapproved2(
                                             seckey: _foundUsers[index]
                                                 ['seckey'],
-                                            reffno: _foundUsers[index]['header']
-                                                ['reffno'],
-                                            ket: _foundUsers[index]['header']
-                                                ['reason'],
+                                            pono: _foundUsers[index]['header']
+                                                ['pono'],
                                             tanggal: _foundUsers[index]
                                                 ['header']['tanggal'],
+                                            requestorname: _foundUsers[index]
+                                                ['header']['requestorname'],
                                             supplier: _foundUsers[index]
-                                                ['header']['supplier_id'],
-                                            invdate: _foundUsers[index]
-                                                ['header']['invdate'],
+                                                ['header']['suppliername'],
                                             ccy: _foundUsers[index]['header']
                                                 ['ccy'],
-                                            duedate: _foundUsers[index]
-                                                ['header']['duedate'],
-                                            amount: _foundUsers[index]['header']
-                                                ['amount'],
-                                            inIDR: _foundUsers[index]['header']
-                                                ['amountidr'],
+                                            disc: _foundUsers[index]['header']
+                                                ['disc'],
+                                            tipe: tipe,
                                           ));
                                         },
                                         trailing: IconButton(
                                           icon: const Icon(
                                               Icons.arrow_forward_rounded),
                                           onPressed: () {
-                                            Get.to(NpApp2(
+                                            Get.to(PoUnapproved2(
                                               seckey: _foundUsers[index]
                                                   ['seckey'],
-                                              reffno: _foundUsers[index]
-                                                  ['header']['reffno'],
-                                              ket: _foundUsers[index]['header']
-                                                  ['reason'],
+                                              pono: _foundUsers[index]['header']
+                                                  ['pono'],
                                               tanggal: _foundUsers[index]
                                                   ['header']['tanggal'],
+                                              requestorname: _foundUsers[index]
+                                                  ['header']['requestorname'],
                                               supplier: _foundUsers[index]
-                                                  ['header']['supplier_id'],
-                                              invdate: _foundUsers[index]
-                                                  ['header']['invdate'],
+                                                  ['header']['suppliername'],
                                               ccy: _foundUsers[index]['header']
                                                   ['ccy'],
-                                              duedate: _foundUsers[index]
-                                                  ['header']['duedate'],
-                                              amount: _foundUsers[index]
-                                                  ['header']['amount'],
-                                              inIDR: _foundUsers[index]
-                                                  ['header']['amountidr'],
+                                              disc: _foundUsers[index]['header']
+                                                  ['disc'],
+                                              tipe: tipe,
                                             ));
                                           },
                                           color: HexColor('#F4A62A'),
@@ -388,11 +378,18 @@ class _NpAppState extends State<NpApp> {
     var finalMonggo = sharedPreferences.getString('monggo');
     var kulonuwun = MsgHeader.kulonuwun;
     var monggo = MsgHeader.monggo;
+
     try {
-      // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/newpayable/'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/newpayable/'),
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/supplier/poscm'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'kulonuwun': finalKulonuwun ?? kulonuwun,
+          'monggo': finalMonggo ?? monggo,
+        },
+      );
+      var getData2 = await http.get(
+        Uri.https('v2rp.net', '/api/v1/mobile/approval/supplier/pononscm'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -400,15 +397,32 @@ class _NpAppState extends State<NpApp> {
         },
       );
       final responseData = json.decode(getData.body);
+      final responseData2 = json.decode(getData2.body);
 
       // final data = responseData['data'];
       setState(() {
         dataaa = responseData['data'];
-        _foundUsers = dataaa;
+        dataaa2 = responseData2['data'];
+        gabung = dataaa + dataaa2;
+        _foundUsers = gabung;
+        tipe = '0';
       });
 
-      print("getdataaaa " + responseData.toString());
+      if (dataaa.isNotEmpty) {
+        setState(() {
+          tipe = '0';
+        });
+      } else {
+        setState(() {
+          tipe = '1';
+        });
+      }
+
+      // print("getdataaaa " + responseData.toString());
       print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+      print("data2 " + dataaa2.toString());
+      print("gabung " + gabung.toString());
+      print("tipe " + tipe.toString());
     } catch (e) {
       print(e);
     }

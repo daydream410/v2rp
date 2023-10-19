@@ -152,4 +152,8 @@ class TextControllers extends GetxController {
   //stock merger app
   Rx<TextEditingController> stockmergerAppController =
       TextEditingController().obs;
+
+  //po supplier unapproved app
+  Rx<TextEditingController> PoUnapprovedController =
+      TextEditingController().obs;
 }

@@ -21,6 +21,7 @@ import 'package:v2rp1/FE/approval_screen/purchase_approval/dn_approval/dn_app.da
 import 'package:v2rp1/FE/approval_screen/purchase_approval/dpreq_approval/dpreq_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/np_app/newap_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/po_ex_approval/poex_app.dart';
+import 'package:v2rp1/FE/approval_screen/purchase_approval/poscm_unapproved/poscm_unapproved.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_approval/sppbj_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_confirm/sppbj_confirm.dart';
 import 'package:v2rp1/FE/approval_screen/sales_approval/ar_app/ar_app.dart';
@@ -693,7 +694,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   padding: const EdgeInsets.only(
                                       left: 34, right: 24, top: 24),
                                   child: Row(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -775,9 +777,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                           )
                                         ],
                                       ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
+                                      // const SizedBox(
+                                      //   width: 20,
+                                      // ),
                                       Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
@@ -858,6 +860,14 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                           )
                                         ],
                                       ),
+                                      Column(
+                                        //colum buat ngisi space kosong
+                                        children: [
+                                          SizedBox(
+                                            width: size.width * 0.37,
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -876,7 +886,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   size.height * 0.02, //atur lokasi kotak putih
                             ),
                             height:
-                                size.height * 0.43, //atur panjang kotak putih
+                                size.height * 0.50, //atur panjang kotak putih
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: const BorderRadius.all(
@@ -1599,92 +1609,183 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   padding: const EdgeInsets.only(
                                       left: 24, right: 24, top: 24),
                                   child: Row(
-                                    // mainAxisAlignment:
-                                    //     MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 8),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            badges.Badge(
-                                              position:
-                                                  badges.BadgePosition.topEnd(
-                                                      top: -10, end: -12),
-                                              showBadge:
-                                                  poGabung == 0 ? false : true,
-                                              ignorePointer: false,
-                                              badgeContent: Text(
-                                                poGabung.toString(),
-                                                style: const TextStyle(
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          badges.Badge(
+                                            position:
+                                                badges.BadgePosition.topEnd(
+                                                    top: -10, end: -12),
+                                            showBadge:
+                                                poGabung == 0 ? false : true,
+                                            ignorePointer: false,
+                                            badgeContent: Text(
+                                              poGabung.toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                              ),
+                                            ),
+                                            badgeAnimation: const badges
+                                                .BadgeAnimation.rotation(
+                                              animationDuration:
+                                                  Duration(seconds: 1),
+                                              colorChangeAnimationDuration:
+                                                  Duration(seconds: 1),
+                                              loopAnimation: false,
+                                              curve: Curves.fastOutSlowIn,
+                                              colorChangeAnimationCurve:
+                                                  Curves.easeInCubic,
+                                            ),
+                                            badgeStyle: badges.BadgeStyle(
+                                              shape: badges.BadgeShape.square,
+                                              badgeColor: Colors.red,
+                                              padding: const EdgeInsets.all(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: const BorderSide(
                                                   color: Colors.white,
-                                                  fontSize: 10.0,
-                                                ),
-                                              ),
-                                              badgeAnimation: const badges
-                                                  .BadgeAnimation.rotation(
-                                                animationDuration:
-                                                    Duration(seconds: 1),
-                                                colorChangeAnimationDuration:
-                                                    Duration(seconds: 1),
-                                                loopAnimation: false,
-                                                curve: Curves.fastOutSlowIn,
-                                                colorChangeAnimationCurve:
-                                                    Curves.easeInCubic,
-                                              ),
-                                              badgeStyle: badges.BadgeStyle(
-                                                shape: badges.BadgeShape.square,
-                                                badgeColor: Colors.red,
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                borderSide: const BorderSide(
-                                                    color: Colors.white,
-                                                    width: 2),
-                                                elevation: 0,
-                                              ),
-                                              child: Material(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                clipBehavior:
-                                                    Clip.antiAliasWithSaveLayer,
-                                                child: Ink.image(
-                                                  image: const AssetImage(
-                                                      'images/poexception.png'),
-                                                  height: size.height * 0.05,
-                                                  width: size.width * 0.15,
-                                                  // fit: BoxFit.fill,
-                                                  child: InkWell(
-                                                    splashColor: Colors.black38,
-                                                    onTap: () async {
-                                                      poGabung == 0
-                                                          ? wakwaw()
-                                                          : Get.to(
-                                                              () => PoExApp());
-                                                    },
-                                                  ),
+                                                  width: 2),
+                                              elevation: 0,
+                                            ),
+                                            child: Material(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              child: Ink.image(
+                                                image: const AssetImage(
+                                                    'images/poexception.png'),
+                                                height: size.height * 0.05,
+                                                width: size.width * 0.15,
+                                                // fit: BoxFit.fill,
+                                                child: InkWell(
+                                                  splashColor: Colors.black38,
+                                                  onTap: () async {
+                                                    poGabung == 0
+                                                        ? wakwaw()
+                                                        : Get.to(
+                                                            () => PoExApp());
+                                                  },
                                                 ),
                                               ),
                                             ),
-                                            const Column(
-                                              children: [
-                                                Text(
-                                                  'PO Exception',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  ),
+                                          ),
+                                          const Column(
+                                            children: [
+                                              Text(
+                                                'PO Exception',
+                                                style: TextStyle(
+                                                  fontSize: 12,
                                                 ),
-                                                Text(
-                                                  'Approval',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  ),
+                                              ),
+                                              Text(
+                                                'Approval',
+                                                style: TextStyle(
+                                                  fontSize: 12,
                                                 ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          badges.Badge(
+                                            position:
+                                                badges.BadgePosition.topEnd(
+                                                    top: -10, end: -12),
+                                            showBadge:
+                                                poGabung == 0 ? false : true,
+                                            ignorePointer: false,
+                                            badgeContent: Text(
+                                              poGabung.toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                              ),
+                                            ),
+                                            badgeAnimation: const badges
+                                                .BadgeAnimation.rotation(
+                                              animationDuration:
+                                                  Duration(seconds: 1),
+                                              colorChangeAnimationDuration:
+                                                  Duration(seconds: 1),
+                                              loopAnimation: false,
+                                              curve: Curves.fastOutSlowIn,
+                                              colorChangeAnimationCurve:
+                                                  Curves.easeInCubic,
+                                            ),
+                                            badgeStyle: badges.BadgeStyle(
+                                              shape: badges.BadgeShape.square,
+                                              badgeColor: Colors.red,
+                                              padding: const EdgeInsets.all(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: const BorderSide(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                              elevation: 0,
+                                            ),
+                                            child: Material(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              child: Ink.image(
+                                                image: const AssetImage(
+                                                    'images/supplier.png'),
+                                                height: size.height * 0.05,
+                                                width: size.width * 0.15,
+                                                // fit: BoxFit.fill,
+                                                child: InkWell(
+                                                  splashColor: Colors.black38,
+                                                  onTap: () async {
+                                                    // poGabung == 0
+                                                    //     ? wakwaw()
+                                                    //     : Get.to(
+                                                    //         () => PoExApp());
+                                                    Get.to(PoUnapproved());
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Column(
+                                            children: [
+                                              Text(
+                                                'PO SCM',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Supplier Unapp',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                'roved Approval',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        //colum buat ngisi space kosong
+                                        children: [
+                                          SizedBox(
+                                            width: size.width * 0.37,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
