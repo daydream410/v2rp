@@ -95,6 +95,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   int totalSTSA = 0;
   int poGabung = 0;
   int itGabung = 0;
+  int totalPOS = 0;
+  int totalPNS = 0;
+  int supplierGabung = 0;
 
   static late List dataaa = <CaConfirmData>[];
 
@@ -1699,11 +1702,12 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             position:
                                                 badges.BadgePosition.topEnd(
                                                     top: -10, end: -12),
-                                            showBadge:
-                                                poGabung == 0 ? false : true,
+                                            showBadge: supplierGabung == 0
+                                                ? false
+                                                : true,
                                             ignorePointer: false,
                                             badgeContent: Text(
-                                              poGabung.toString(),
+                                              supplierGabung.toString(),
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 10.0,
@@ -1745,11 +1749,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                                 child: InkWell(
                                                   splashColor: Colors.black38,
                                                   onTap: () async {
-                                                    // poGabung == 0
-                                                    //     ? wakwaw()
-                                                    //     : Get.to(
-                                                    //         () => PoExApp());
-                                                    Get.to(PoUnapproved());
+                                                    supplierGabung == 0
+                                                        ? wakwaw()
+                                                        : Get.to(() =>
+                                                            PoUnapproved());
                                                   },
                                                 ),
                                               ),
@@ -3081,6 +3084,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
       totalITSA = 0;
       totalSTSA = 0;
       poGabung = 0;
+      totalPOS = 0;
+      totalPNS = 0;
+      supplierGabung = 0;
       for (var item in dataaa) {
         if (item['tipe'] == 'SC') {
           totalSC += 1;
@@ -3144,10 +3150,18 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
           totalITSA += 1;
         } else if (item['tipe'] == 'STSA') {
           totalSTSA += 1;
+        } else if (item['tipe'] == 'POS') {
+          totalPOS += 1;
+        } else if (item['tipe'] == 'PNS') {
+          totalPNS += 1;
         }
       }
       poGabung = totalPOE + totalPNE;
       itGabung = totalITSA + totalSTSA;
+      supplierGabung = totalPOS + totalPNS;
+      // print("totalPOS = " + totalPOS.toString());
+      // print("totalPNS = " + totalPNS.toString());
+      // print("supplierGabung = " + supplierGabung.toString());
       await QuickAlert.show(
         context: context,
         type: QuickAlertType.success,
@@ -3229,6 +3243,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
       totalITSA = 0;
       totalSTSA = 0;
       poGabung = 0;
+      totalPOS = 0;
+      totalPNS = 0;
+      supplierGabung = 0;
       for (var item in dataaa) {
         if (item['tipe'] == 'SC') {
           totalSC += 1;
@@ -3292,10 +3309,18 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
           totalITSA += 1;
         } else if (item['tipe'] == 'STSA') {
           totalSTSA += 1;
+        } else if (item['tipe'] == 'POS') {
+          totalPOS += 1;
+        } else if (item['tipe'] == 'PNS') {
+          totalPNS += 1;
         }
       }
       poGabung = totalPOE + totalPNE;
       itGabung = totalITSA + totalSTSA;
+      supplierGabung = totalPOS + totalPNS;
+      // print("totalPOS = " + totalPOS.toString());
+      // print("totalPNS = " + totalPNS.toString());
+      // print("supplierGabung = " + supplierGabung.toString());
     } catch (e) {
       print(e);
     }
