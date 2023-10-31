@@ -80,7 +80,7 @@ class _PoScmAppState extends State<PoScmApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("A/R Receipt Approval"),
+                middle: const Text("PO SCM Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {

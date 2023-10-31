@@ -80,7 +80,7 @@ class _MrAppState extends State<MrApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("A/R Receipt Approval"),
+                middle: const Text("Material Return Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {

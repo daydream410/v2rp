@@ -79,7 +79,7 @@ class _StockAdjAppState extends State<StockAdjApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("A/R Receipt Approval"),
+                middle: const Text("Stock Adjustment Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {

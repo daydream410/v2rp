@@ -81,7 +81,7 @@ class _SmAppState extends State<SmApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("A/R Receipt Approval"),
+                middle: const Text("Stock Movement Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {

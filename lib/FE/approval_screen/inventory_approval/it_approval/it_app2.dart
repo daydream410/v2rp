@@ -779,9 +779,9 @@ class _ItApp2State extends State<ItApp2> {
               Get.to(const Navbar());
             });
       } else {
-        // setState(() {
-        //   message = response['data']['message'];
-        // });
+        setState(() {
+          message = response['data']['message'];
+        });
         // Get.snackbar(
         //   'Failed! ' + widget.reffno,
         //   message ?? messageError,
@@ -796,7 +796,7 @@ class _ItApp2State extends State<ItApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(ItApp());
           },

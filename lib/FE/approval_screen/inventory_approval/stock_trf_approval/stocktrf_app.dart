@@ -81,7 +81,7 @@ class _StockTrfAppState extends State<StockTrfApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("Internal Transfer Approval"),
+                middle: const Text("Stock Transfer Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {

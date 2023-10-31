@@ -80,7 +80,7 @@ class _StockTopupAppState extends State<StockTopupApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("Stock Price Adjustment Approval"),
+                middle: const Text("Stock Top-up Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {

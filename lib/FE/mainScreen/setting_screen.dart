@@ -97,6 +97,13 @@ class _SettingScreenState extends State<SettingScreen> {
                   style: const TextStyle(fontSize: 20.0),
                 ),
                 const SizedBox(
+                  height: 15.0,
+                ),
+                const Text(
+                  "Versi : 1.2.3 ",
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                const SizedBox(
                   height: 50,
                 ),
                 ElevatedButton(

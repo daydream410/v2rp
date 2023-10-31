@@ -771,7 +771,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.lpjk,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(CaSetApproval());
           },

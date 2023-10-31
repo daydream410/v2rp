@@ -994,7 +994,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
             context: context,
             type: QuickAlertType.error,
             title: 'Failed! ' + widget.reffno,
-            text: '$messageError',
+            text: '$message',
             onConfirmBtnTap: () async {
               Get.to(ItStockAdjApp());
             },

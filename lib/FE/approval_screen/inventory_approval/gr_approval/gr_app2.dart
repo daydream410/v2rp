@@ -880,7 +880,7 @@ class _GrApp2State extends State<GrApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.grno,
-          text: '$messageError',
+          text: '$message',
           onConfirmBtnTap: () async {
             Get.to(GrApp());
           },

@@ -81,7 +81,7 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
           ? CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
                 transitionBetweenRoutes: true,
-                middle: const Text("Internal Transfer Approval"),
+                middle: const Text("IT/Stock Adjustment Approval"),
                 leading: GestureDetector(
                   child: const Icon(CupertinoIcons.back),
                   onTap: () {
