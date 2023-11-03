@@ -457,7 +457,7 @@ class _PoExApp2State extends State<PoExApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 900,
+                        minWidth: 1400,
                         dataRowHeight: 100,
                         columns: const [
                           DataColumn2(
@@ -490,6 +490,25 @@ class _PoExApp2State extends State<PoExApp2> {
                                 ),
                                 Text(
                                   'COA',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.L,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Item',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Name',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
@@ -654,6 +673,12 @@ class _PoExApp2State extends State<PoExApp2> {
                                       )),
                                       DataCell(Text(
                                         e['itemcoa'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['itemname'] ?? '',
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),

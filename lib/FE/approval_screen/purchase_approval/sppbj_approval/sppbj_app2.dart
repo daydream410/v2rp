@@ -308,7 +308,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 900,
+                        minWidth: 1300,
                         dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
@@ -372,7 +372,26 @@ class _SppbjApp2State extends State<SppbjApp2> {
                             label: Column(
                               children: [
                                 Text(
-                                  'Acc',
+                                  'Account/',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Item',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.M,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Item',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
@@ -512,6 +531,12 @@ class _SppbjApp2State extends State<SppbjApp2> {
                                       )),
                                       DataCell(Text(
                                         e['itemcoa'],
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e['itemname'],
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),

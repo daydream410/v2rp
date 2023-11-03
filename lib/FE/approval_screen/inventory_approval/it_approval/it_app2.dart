@@ -404,7 +404,7 @@ class _ItApp2State extends State<ItApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 900,
+                        minWidth: 1100,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -467,7 +467,7 @@ class _ItApp2State extends State<ItApp2> {
                             label: Column(
                               children: [
                                 Text(
-                                  'Desc',
+                                  'Description',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),

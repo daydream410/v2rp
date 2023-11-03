@@ -294,7 +294,7 @@ class _StockPriceAppState extends State<StockPriceApp> {
                                               _foundUsers[index]['header']
                                                   ['supplierName'],
                                               style: const TextStyle(
-                                                fontSize: 13,
+                                                fontSize: 12,
                                               ),
                                             ),
                                             // const SizedBox(

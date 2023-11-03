@@ -372,8 +372,8 @@ class _GrApp2State extends State<GrApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 1000,
-                        dataRowHeight: 80,
+                        minWidth: 1400,
+                        dataRowHeight: 110,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -392,7 +392,7 @@ class _GrApp2State extends State<GrApp2> {
                                 ),
                               ],
                             ),
-                            size: ColumnSize.L,
+                            size: ColumnSize.S,
                           ),
                           DataColumn2(
                             label: Column(
@@ -411,31 +411,25 @@ class _GrApp2State extends State<GrApp2> {
                                 ),
                               ],
                             ),
-                            size: ColumnSize.L,
+                            size: ColumnSize.M,
                           ),
                           DataColumn2(
                             label: Column(
                               children: [
                                 Text(
-                                  'Item',
+                                  'Item Name',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
                                 ),
                                 Text(
-                                  'Name &',
+                                  '&',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
                                 ),
                                 Text(
-                                  'SPPBJ',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Text(
-                                  'Remarks',
+                                  'SPPBJ Remarks',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
@@ -652,7 +646,7 @@ class _GrApp2State extends State<GrApp2> {
                                   DataCell(Text(
                                     e['ket'] ?? '',
                                     style: const TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 9,
                                     ),
                                   )),
                                   DataCell(Text(

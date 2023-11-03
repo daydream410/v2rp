@@ -416,7 +416,7 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 900,
+                        minWidth: 1200,
                         dataRowHeight: 90,
                         columns: const [
                           DataColumn2(
@@ -461,13 +461,32 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
                             label: Column(
                               children: [
                                 Text(
-                                  'Item/Acc',
+                                  'Item',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
                                 ),
                                 Text(
-                                  'Name',
+                                  'Account No',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            size: ColumnSize.L,
+                          ),
+                          DataColumn2(
+                            label: Column(
+                              children: [
+                                Text(
+                                  'Item/',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  'Account Name',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),
@@ -593,6 +612,12 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
                                   )),
                                   DataCell(Text(
                                     e['itemcoa'] ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  )),
+                                  DataCell(Text(
+                                    e['itemname'] ?? '',
                                     style: const TextStyle(
                                       fontSize: 11,
                                     ),

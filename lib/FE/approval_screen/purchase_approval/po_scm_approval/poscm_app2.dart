@@ -239,7 +239,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                       Text(
                                         widget.suppliername ?? "",
                                         style: const TextStyle(
-                                          fontSize: 15.0,
+                                          fontSize: 12.0,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -431,8 +431,8 @@ class _PoScmApp2State extends State<PoScmApp2> {
                               child: DataTable2(
                                 columnSpacing: 12,
                                 horizontalMargin: 12,
-                                minWidth: 900,
-                                dataRowHeight: 90,
+                                minWidth: 1400,
+                                dataRowHeight: 80,
                                 columns: const [
                                   DataColumn2(
                                     label: Column(
@@ -464,6 +464,25 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                         ),
                                         Text(
                                           'ID',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    size: ColumnSize.M,
+                                  ),
+                                  DataColumn2(
+                                    label: Column(
+                                      children: [
+                                        Text(
+                                          'Item',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Name',
                                           style: TextStyle(
                                             fontSize: 11,
                                           ),
@@ -625,8 +644,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                         ),
                                       ],
                                     ),
-                                    numeric: true,
-                                    size: ColumnSize.S,
+                                    size: ColumnSize.M,
                                   ),
                                 ],
                                 rows: dataaa
@@ -639,6 +657,12 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                           )),
                                           DataCell(Text(
                                             e['itemcoa'] ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 11,
+                                            ),
+                                          )),
+                                          DataCell(Text(
+                                            e['itemname'] ?? '',
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),
@@ -735,9 +759,11 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                               fontSize: 11,
                                             ),
                                           )),
-
                                           DataCell(Text(
-                                            e['appstatus'].toString(),
+                                            e['appstatus'] == 0
+                                                ? 'Approval Process'
+                                                : '',
+                                            // e['appstatus'].toString(),
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),

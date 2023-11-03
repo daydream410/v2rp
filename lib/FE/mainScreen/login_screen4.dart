@@ -275,10 +275,10 @@ class _LoginPage4State extends State<LoginPage4>
                               );
 
                               MsgHeader.loginProcessNEW();
-
                               _timer = Timer(const Duration(milliseconds: 2000),
                                   (() {
                                 loginNEW();
+                                TextInput.finishAutofillContext();
                               }));
                             }
                           : null,

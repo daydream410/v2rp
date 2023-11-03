@@ -345,7 +345,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
                         columnSpacing: 12,
                         dataRowHeight: 70,
                         // horizontalMargin: 12,
-                        minWidth: 1000,
+                        minWidth: 1300,
                         columns: const [
                           DataColumn2(
                             label: Column(
@@ -408,7 +408,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
                             label: Column(
                               children: [
                                 Text(
-                                  'Desc',
+                                  'Description',
                                   style: TextStyle(
                                     fontSize: 11,
                                   ),

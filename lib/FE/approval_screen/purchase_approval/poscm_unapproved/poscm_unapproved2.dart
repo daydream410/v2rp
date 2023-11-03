@@ -426,7 +426,7 @@ class _PoUnapproved2State extends State<PoUnapproved2> {
                                         ),
                                       ],
                                     ),
-                                    size: ColumnSize.M,
+                                    size: ColumnSize.S,
                                   ),
                                   DataColumn2(
                                     label: Column(
@@ -465,6 +465,25 @@ class _PoUnapproved2State extends State<PoUnapproved2> {
                                       ],
                                     ),
                                     size: ColumnSize.M,
+                                  ),
+                                  DataColumn2(
+                                    label: Column(
+                                      children: [
+                                        Text(
+                                          'Item',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Name',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    size: ColumnSize.L,
                                   ),
                                   DataColumn2(
                                     label: Column(
@@ -646,6 +665,12 @@ class _PoUnapproved2State extends State<PoUnapproved2> {
                                           )),
                                           DataCell(Text(
                                             e['itemcoa'] ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 11,
+                                            ),
+                                          )),
+                                          DataCell(Text(
+                                            e['itemname'] ?? '',
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),

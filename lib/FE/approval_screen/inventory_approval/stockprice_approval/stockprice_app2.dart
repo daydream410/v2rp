@@ -133,114 +133,117 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10.0),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: size.width * 0.05),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Inv No : ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.0,
-                                        color: Colors.white70,
+                  child: SizedBox(
+                    width: 600,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: size.width * 0.05),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Inv No : ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.0,
+                                          color: Colors.white70,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      widget.apreff ?? "",
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.0,
-                                        color: Colors.white,
+                                      Text(
+                                        widget.apreff ?? "",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.0,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Date : ',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white70,
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    Text(
-                                      DateFormat('yyyy-MM-dd').format(
-                                          DateTime.parse(widget.tanggal)),
-                                      style: const TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Date : ',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white70,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Supplier : ',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white70,
+                                      Text(
+                                        DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(widget.tanggal)),
+                                        style: const TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      widget.supplierName ?? "",
-                                      style: const TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Supplier : ',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white70,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'A/P JV No : ',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white70,
+                                      Text(
+                                        widget.supplierName ?? "",
+                                        style: const TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      widget.apjvno ?? "",
-                                      style: const TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.white,
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'A/P JV No : ',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white70,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                      Text(
+                                        widget.apjvno ?? "",
+                                        style: const TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -269,7 +272,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
                       child: DataTable2(
                         columnSpacing: 12,
                         horizontalMargin: 12,
-                        minWidth: 1000,
+                        minWidth: 1300,
                         columns: const [
                           DataColumn2(
                             label: Column(
