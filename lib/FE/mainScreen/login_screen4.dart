@@ -128,44 +128,44 @@ class _LoginPage4State extends State<LoginPage4>
                     const SizedBox(
                       height: 40,
                     ),
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: textControllers.emailController.value,
-                      onChanged: (value) => isButtonActive = true,
-                      style: const TextStyle(color: Colors.white),
-                      autofillHints: const [AutofillHints.email],
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.email),
-                        prefixIconColor: HexColor("#F4A62A"),
-                        hintText: "Email",
-                        hintStyle: const TextStyle(color: Colors.white),
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.cyan),
-                        ),
-                        errorBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please Enter Email';
-                        }
-                        return null;
-                      },
-                    ),
                     AutofillGroup(
                       child: Column(
                         children: [
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: textControllers.emailController.value,
+                            onChanged: (value) => isButtonActive = true,
+                            style: const TextStyle(color: Colors.white),
+                            autofillHints: const [AutofillHints.email],
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.email),
+                              prefixIconColor: HexColor("#F4A62A"),
+                              hintText: "Email",
+                              hintStyle: const TextStyle(color: Colors.white),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.cyan),
+                              ),
+                              errorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please Enter Email';
+                              }
+                              return null;
+                            },
+                          ),
                           TextFormField(
                             keyboardType: TextInputType.name,
                             controller:
                                 textControllers.usernameController.value,
                             onChanged: (value) => isButtonActive = true,
                             style: const TextStyle(color: Colors.white),
-                            autofillHints: const [AutofillHints.username],
+                            // autofillHints: const [AutofillHints.username],
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.person),
                               prefixIconColor: HexColor("#F4A62A"),
