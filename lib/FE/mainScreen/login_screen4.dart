@@ -160,7 +160,7 @@ class _LoginPage4State extends State<LoginPage4>
                             },
                           ),
                           TextFormField(
-                            keyboardType: TextInputType.name,
+                            keyboardType: TextInputType.text,
                             controller:
                                 textControllers.usernameController.value,
                             onChanged: (value) => isButtonActive = true,
