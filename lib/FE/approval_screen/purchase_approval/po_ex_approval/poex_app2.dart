@@ -61,6 +61,7 @@ class _PoExApp2State extends State<PoExApp2> {
     dataFuture = getDataa();
   }
 
+  String dTax = '';
   List selectedDetails = [];
   bool selectedGak = false;
   double totalPrice = 0;
@@ -627,25 +628,6 @@ class _PoExApp2State extends State<PoExApp2> {
                             numeric: true,
                             size: ColumnSize.L,
                           ),
-                          DataColumn(
-                            label: Column(
-                              children: [
-                                Text(
-                                  'Buget',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Text(
-                                  'Avail',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            numeric: true,
-                          ),
                         ],
                         rows: dataaa
                             .map((e) => DataRow2(
@@ -731,11 +713,11 @@ class _PoExApp2State extends State<PoExApp2> {
                                         ),
                                       )),
                                       DataCell(Text(
-                                        // NumberFormat.currency(
-                                        //         locale: 'eu', symbol: '')
-                                        //     .format(double.parse(e['taxAmount'])
-                                        //         .toString()),
-                                        e['tax'].toString(),
+                                        NumberFormat.currency(
+                                                locale: 'eu', symbol: '')
+                                            .format(double.parse(
+                                                e['taxAmount'].toString())),
+                                        // e['tax'],
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
@@ -744,17 +726,10 @@ class _PoExApp2State extends State<PoExApp2> {
                                         NumberFormat.currency(
                                                 locale: 'eu', symbol: '')
                                             .format(double.parse(e['qty']) *
-                                                double.parse(e['harga'])),
+                                                    double.parse(e['harga']) +
+                                                double.parse(
+                                                    e['taxAmount'].toString())),
                                         // e['amount'].toString(),
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                        ),
-                                      )),
-                                      DataCell(Text(
-                                        NumberFormat.currency(
-                                                locale: 'eu', symbol: '')
-                                            .format(
-                                                e['budget']['budgetavailable']),
                                         style: const TextStyle(
                                           fontSize: 10,
                                         ),
@@ -837,7 +812,23 @@ class _PoExApp2State extends State<PoExApp2> {
         print("response " + caConfirmData.toString());
         dataaa = caConfirmData['data']['details'];
         print("dataaa " + dataaa.toString());
+
+        dTax = '';
+        for (var item in dataaa) {
+          dTax = item["tax"];
+          print('before ' + dTax);
+          var listtax = dTax.split(",");
+          for (var xx = 0; xx < listtax.length; xx++) {
+            var snil = listtax[xx].split(":");
+            if (dTax != "") {
+              dTax = snil[1];
+              print(snil);
+              print('after ' + dTax);
+            }
+          }
+        }
       }
+      print(dTax);
       return dataaa;
     } catch (e) {
       print(e);
@@ -964,76 +955,5 @@ class _PoExApp2State extends State<PoExApp2> {
         },
       );
     }
-
-    // try {
-    //   var sendData = await http.put(
-    //     Uri.https(
-    //       'v2rp.net',
-    //       '/api/v1/mobile/approval/exeption/pononscm/' +
-    //           widget.seckey +
-    //           '/' +
-    //           valueButton,
-    //     ),
-    //     body: body,
-    //     headers: {
-    //       'Content-type': 'application/json',
-    //       'kulonuwun': finalKulonuwun ?? kulonuwun,
-    //       'monggo': finalMonggo ?? monggo,
-    //     },
-    //   );
-    //   print("selected = " +
-    //       selectedDetails.toString() +
-    //       selectedDetails.runtimeType.toString());
-    //   final response = json.decode(sendData.body);
-    //   print(response.toString());
-    //   setState(() {
-    //     status = response['success'];
-    //     messageError = response['message'];
-    //   });
-    //   if (status == true) {
-    //     setState(() {
-    //       message = response['data']['message'];
-    //     });
-    //     QuickAlert.show(
-    //         context: context,
-    //         type: QuickAlertType.success,
-    //         text: 'Success $message Data!',
-    //         barrierDismissible: false,
-    //         // confirmBtnText: 'OK',
-    //         onConfirmBtnTap: () async {
-    //           Get.to(PoExApp());
-    //         },
-    //         showCancelBtn: true,
-    //         cancelBtnText: 'Home',
-    //         onCancelBtnTap: () async {
-    //           Get.to(const Navbar());
-    //         });
-    //   } else {
-    //     setState(() {
-    //       message = response['data']['message'];
-    //     });
-    //     await Future.delayed(const Duration(milliseconds: 1000));
-    //     await QuickAlert.show(
-    //       context: context,
-    //       type: QuickAlertType.error,
-    //       title: 'Failed! ' + widget.pono,
-    //       text: '$messageError',
-    //       onConfirmBtnTap: () async {
-    //         Get.to(const Navbar());
-    //       },
-    //     );
-    //   }
-    // } catch (e) {
-    //   print(e);
-    //   QuickAlert.show(
-    //     context: context,
-    //     type: QuickAlertType.warning,
-    //     title: 'Error! ' + widget.pono,
-    //     text: '$messageError',
-    //     onConfirmBtnTap: () async {
-    //       Get.to(const Navbar());
-    //     },
-    //   );
-    // }
   }
 }
