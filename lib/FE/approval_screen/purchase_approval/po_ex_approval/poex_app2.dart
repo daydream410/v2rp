@@ -61,7 +61,7 @@ class _PoExApp2State extends State<PoExApp2> {
     dataFuture = getDataa();
   }
 
-  String dTax = '';
+  // String dTax = '';
   List selectedDetails = [];
   bool selectedGak = false;
   double totalPrice = 0;
@@ -703,7 +703,7 @@ class _PoExApp2State extends State<PoExApp2> {
                                       )),
                                       DataCell(Text(
                                         NumberFormat.currency(
-                                                locale: 'eu', symbol: '')
+                                                locale: 'eu', symbol: '%')
                                             .format(
                                                 double.parse(e['disc']) / 100),
                                         // e['disc'].toString(),
@@ -813,22 +813,22 @@ class _PoExApp2State extends State<PoExApp2> {
         dataaa = caConfirmData['data']['details'];
         print("dataaa " + dataaa.toString());
 
-        dTax = '';
-        for (var item in dataaa) {
-          dTax = item["tax"];
-          print('before ' + dTax);
-          var listtax = dTax.split(",");
-          for (var xx = 0; xx < listtax.length; xx++) {
-            var snil = listtax[xx].split(":");
-            if (dTax != "") {
-              dTax = snil[1];
-              print(snil);
-              print('after ' + dTax);
-            }
-          }
-        }
+        // dTax = '';
+        // for (var item in dataaa) {
+        //   dTax = item["tax"];
+        //   print('before ' + dTax);
+        //   var listtax = dTax.split(",");
+        //   for (var xx = 0; xx < listtax.length; xx++) {
+        //     var snil = listtax[xx].split(":");
+        //     if (dTax != "") {
+        //       dTax = snil[1];
+        //       print(snil);
+        //       print('after ' + dTax);
+        //     }
+        //   }
+        // }
       }
-      print(dTax);
+      // print(dTax);
       return dataaa;
     } catch (e) {
       print(e);
