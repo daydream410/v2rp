@@ -13,6 +13,7 @@ import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_confirm/ca_set_confirm
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -57,11 +58,13 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
     dataFuture = getDataa();
   }
 
+  static TextControllers textControllers = Get.put(TextControllers());
   var valueChooseRequest = "";
   var valueStatus = "";
   var updstatus = "0";
   double totalPrice = 0;
   bool isVisible = false;
+  String reasonValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -621,8 +624,12 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                // Get.to(const Navbar());
-                sendConfirm();
+                print('updstatus ' + updstatus.toString());
+                if (updstatus == '-9' || updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -687,24 +694,23 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
     var message;
     var messageError;
 
-    // Get.to(const Navbar());
+    var body = json.encode({
+      "reason": textControllers.caSetConfControllerReason.value.text,
+    });
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
       title: 'Loading',
       text: 'Submitting your data',
-      // autoCloseDuration: const Duration(seconds: 10),
       barrierDismissible: false,
     );
     try {
       var getData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/confirmation/lpjk/' + widget.seckey + '/' + updstatus,
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/confirmation/lpjk/' + widget.seckey + '/' + updstatus,
         ),
+        body: body,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -722,15 +728,6 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
           reffno = response['data']['reffno'];
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   '$message Data!',
-        //   '$reffno',
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -750,15 +747,6 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
           reffno = response['data']['reffno'];
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! $reffno',
-        //   message,
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -782,5 +770,31 @@ class _CaSettleConfirm2State extends State<CaSettleConfirm2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.caSetConfControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.caSetConfControllerReason.value.text);
+        sendConfirm();
+        textControllers.caSetConfControllerReason.value.clear();
+      },
+    );
   }
 }

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_confirm/ca_confirm.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
@@ -58,11 +59,13 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
     dataFuture = getDataa();
   }
 
+  static TextControllers textControllers = Get.put(TextControllers());
   var valueChooseRequest = "";
   var valueStatus = "";
   var updstatus = "0";
   double totalPrice = 0;
   bool isVisible = false;
+  String reasonValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -681,10 +684,13 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                // sendConfirm();
                 print('updstatus ' + updstatus.toString());
-
-                // Get.to(const Navbar());
+                if (updstatus == '-9' || updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -749,7 +755,9 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
     var message;
     var messageError;
 
-    // Get.to(const Navbar());
+    var body = json.encode({
+      "reason": textControllers.caConfirmControllerReason.value.text,
+    });
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
@@ -759,13 +767,6 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
     );
     try {
       var getData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/confirmation/kasbon/' +
-        //       widget.seckey +
-        //       '/' +
-        //       updstatus,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/confirmation/kasbon/' +
@@ -773,6 +774,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
               '/' +
               updstatus,
         ),
+        body: body,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -789,16 +791,6 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Success $message Data!',
-        //   widget.nokasbon,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
-        // await Future.delayed(const Duration(milliseconds: 1000));
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -817,15 +809,6 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.nokasbon,
-        //   '$messageError',
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -849,5 +832,31 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.caConfirmControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.caConfirmControllerReason.value.text);
+        sendConfirm();
+        textControllers.caConfirmControllerReason.value.clear();
+      },
+    );
   }
 }

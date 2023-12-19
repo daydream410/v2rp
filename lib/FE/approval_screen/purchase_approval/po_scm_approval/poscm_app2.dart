@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/po_scm_approval/poscm_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -56,6 +57,8 @@ class _PoScmApp2State extends State<PoScmApp2> {
     dataFuture = getDataa();
   }
 
+  static TextControllers textControllers = Get.put(TextControllers());
+  String reasonValue = '';
   var valueChooseRequest = "";
   var valueStatus = "";
   var updstatus = "0";
@@ -718,27 +721,6 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                               fontSize: 11,
                                             ),
                                           )),
-                                          // DataCell(Text(
-                                          //   NumberFormat.currency(
-                                          //           locale: 'eu', symbol: '')
-                                          //       .format(
-                                          //           (e['qty'] * e['harga']) -
-                                          //               ((e['amount']) /
-                                          //                   e['disc'])),
-                                          //   style: const TextStyle(
-                                          //     fontSize: 11,
-                                          //   ),
-                                          // )),
-                                          // DataCell(Text(
-                                          //   NumberFormat.currency(
-                                          //           locale: 'eu', symbol: '')
-                                          //       .format(e['amount'] -
-                                          //           (e['amount'] / e['disc'])),
-                                          //   style: const TextStyle(
-                                          //     fontSize: 11,
-                                          //   ),
-                                          // )),
-
                                           DataCell(Text(
                                             NumberFormat.currency(
                                                     locale: 'eu', symbol: '')
@@ -1134,8 +1116,13 @@ class _PoScmApp2State extends State<PoScmApp2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                // sendConfirm();
                 print('updstatus ' + updstatus.toString());
+                if (updstatus == '-9' || updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -1233,7 +1220,9 @@ class _PoScmApp2State extends State<PoScmApp2> {
     var reffno;
     var message;
     var messageError;
-
+    var body = json.encode({
+      "reason": textControllers.poScmAppControllerReason.value.text,
+    });
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
@@ -1243,14 +1232,11 @@ class _PoScmApp2State extends State<PoScmApp2> {
     );
     try {
       var getData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/poscm/' + widget.seckey + '/' + updstatus,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/poscm/' + widget.seckey + '/' + updstatus,
         ),
+        body: body,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -1268,15 +1254,6 @@ class _PoScmApp2State extends State<PoScmApp2> {
           reffno = response['data']['reffno'];
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Success $message Data!',
-        //   '$reffno',
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -1296,15 +1273,6 @@ class _PoScmApp2State extends State<PoScmApp2> {
           reffno = response['data']['reffno'];
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed!',
-        //   '$reffno',
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -1328,5 +1296,31 @@ class _PoScmApp2State extends State<PoScmApp2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.poScmAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.poScmAppControllerReason.value.text);
+        sendConfirm();
+        textControllers.poScmAppControllerReason.value.clear();
+      },
+    );
   }
 }

@@ -14,6 +14,7 @@ import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../main.dart';
 import 'gr_app.dart';
@@ -52,6 +53,8 @@ class _GrApp2State extends State<GrApp2> {
     dataFuture = getDataa();
   }
 
+  String reasonValue = '';
+  static TextControllers textControllers = Get.put(TextControllers());
   var valueChooseRequest = "";
   var valueStatus = "";
   var updstatus = "0";
@@ -729,8 +732,13 @@ class _GrApp2State extends State<GrApp2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                // sendConfirm();
                 print('updstatus ' + updstatus.toString());
+                if (updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -753,8 +761,6 @@ class _GrApp2State extends State<GrApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        // Uri.http('156.67.217.113',
-        //     '/api/v1/mobile/approval/goodreceive/' + widget.seckey),
         Uri.https(
             'v2rp.net', '/api/v1/mobile/approval/goodreceive/' + widget.seckey),
         headers: {
@@ -764,16 +770,7 @@ class _GrApp2State extends State<GrApp2> {
         },
       );
       final caConfirmData = json.decode(getData.body);
-      // setState(() {
       dataaa = caConfirmData['data']['detail'];
-
-      //hitung total
-      // totalPrice = 0;
-      // for (var item in dataaa) {
-      //   totalPrice += item["amount"] as int;
-      // }
-
-      // });
       print("totalllll  " + totalPrice.toString());
       print("dataaa " + dataaa.toString());
       return dataaa;
@@ -794,6 +791,9 @@ class _GrApp2State extends State<GrApp2> {
     var message;
     var messageError;
 
+    var body = json.encode({
+      "reason": textControllers.grAppControllerReason.value.text,
+    });
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
@@ -803,13 +803,6 @@ class _GrApp2State extends State<GrApp2> {
     );
     try {
       var getData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/goodreceive/' +
-        //       widget.seckey +
-        //       '/' +
-        //       updstatus,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/goodreceive/' +
@@ -817,6 +810,7 @@ class _GrApp2State extends State<GrApp2> {
               '/' +
               updstatus,
         ),
+        body: body,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -833,15 +827,6 @@ class _GrApp2State extends State<GrApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Success $message Data!',
-        //   widget.grno,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -860,15 +845,6 @@ class _GrApp2State extends State<GrApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.grno,
-        //   '$messageError',
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -892,5 +868,31 @@ class _GrApp2State extends State<GrApp2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.grAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.grAppControllerReason.value.text);
+        sendConfirm();
+        textControllers.grAppControllerReason.value.clear();
+      },
+    );
   }
 }

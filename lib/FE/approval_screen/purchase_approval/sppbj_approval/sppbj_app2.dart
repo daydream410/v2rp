@@ -10,6 +10,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:intl/intl.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:v2rp1/BE/controller.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/sppbj_approval/sppbj_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
@@ -46,10 +47,12 @@ class _SppbjApp2State extends State<SppbjApp2> {
     dataFuture = getDataa();
   }
 
+  static TextControllers textControllers = Get.put(TextControllers());
   List selectedDetails = [];
   bool selectedGak = false;
   double totalPrice = 0;
   var valueButton;
+  String reasonValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +246,8 @@ class _SppbjApp2State extends State<SppbjApp2> {
                             valueButton = '-1';
                           });
                           print("value button " + valueButton);
-                          submitData();
+                          // submitData();
+                          reason();
                         },
                         child: const Text(
                           'Reject Selected',
@@ -268,7 +272,8 @@ class _SppbjApp2State extends State<SppbjApp2> {
                             valueButton = '-9';
                           });
                           print("value button " + valueButton);
-                          submitData();
+                          // submitData();
+                          reason();
                         },
                         child: const Text(
                           'Send To Draft (ALL)',
@@ -719,6 +724,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
 
     var body = json.encode({
       "urutan": selectedDetails,
+      "reason": textControllers.sppbjAppControllerReason.value.text,
     });
 
     QuickAlert.show(
@@ -730,10 +736,6 @@ class _SppbjApp2State extends State<SppbjApp2> {
     );
     try {
       var sendData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/sppbj/' + widget.seckey + '/' + valueButton,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/sppbj/' + widget.seckey + '/' + valueButton,
@@ -759,15 +761,6 @@ class _SppbjApp2State extends State<SppbjApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   '$message Data!',
-        //   widget.sppbjno,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -810,5 +803,31 @@ class _SppbjApp2State extends State<SppbjApp2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.sppbjAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.sppbjAppControllerReason.value.text);
+        submitData();
+        textControllers.sppbjAppControllerReason.value.clear();
+      },
+    );
   }
 }

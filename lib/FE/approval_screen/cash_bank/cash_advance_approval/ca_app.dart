@@ -94,7 +94,7 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
               child: LiquidPullToRefresh(
                 onRefresh: getDataa2,
                 color: HexColor("#F4A62A"),
-                height: 150,
+                height: 140,
                 showChildOpacityTransition: false,
                 child: ListView(
                   children: [
@@ -130,7 +130,15 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                                 return const Center(
                                     child: Column(
                                   children: [
-                                    Text('Loading...'),
+                                    DefaultTextStyle(
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                      child: Text(
+                                        'Loading...',
+                                      ),
+                                    ),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -138,7 +146,13 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    Text('Please Kindly Waiting...'),
+                                    DefaultTextStyle(
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        ),
+                                        child:
+                                            Text('Please Kindly Waiting...')),
                                   ],
                                 ));
                               } else {

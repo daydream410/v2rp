@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import '../../../../BE/reqip.dart';
 import '../../../../main.dart';
 import '../../../../BE/resD.dart';
+import 'package:v2rp1/BE/controller.dart';
 
 class MrApp2 extends StatefulWidget {
   final seckey;
@@ -55,6 +56,8 @@ class _MrApp2State extends State<MrApp2> {
   var updstatus = "0";
   double totalPrice = 0;
   bool isVisible = false;
+  String reasonValue = '';
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -524,8 +527,13 @@ class _MrApp2State extends State<MrApp2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                // sendConfirm();
                 print('updstatus ' + updstatus.toString());
+                if (updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -548,8 +556,6 @@ class _MrApp2State extends State<MrApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        // Uri.http('156.67.217.113',
-        //     '/api/v1/mobile/approval/materialreturn/' + widget.seckey),
         Uri.https('v2rp.net',
             '/api/v1/mobile/approval/materialreturn/' + widget.seckey),
         headers: {
@@ -559,16 +565,8 @@ class _MrApp2State extends State<MrApp2> {
         },
       );
       final caConfirmData = json.decode(getData.body);
-      // setState(() {
       dataaa = caConfirmData['data']['detail'];
 
-      //hitung total
-      // totalPrice = 0;
-      // for (var item in dataaa) {
-      //   totalPrice += item["amount"] as int;
-      // }
-
-      // });
       print("totalllll  " + totalPrice.toString());
       print("dataaa " + dataaa.toString());
       return dataaa;
@@ -589,6 +587,9 @@ class _MrApp2State extends State<MrApp2> {
     var message;
     var messageError;
 
+    var body = json.encode({
+      "reason": textControllers.mrAppControllerReason.value.text,
+    });
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
@@ -598,13 +599,6 @@ class _MrApp2State extends State<MrApp2> {
     );
     try {
       var getData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/materialreturn/' +
-        //       widget.seckey +
-        //       '/' +
-        //       updstatus,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/materialreturn/' +
@@ -612,6 +606,7 @@ class _MrApp2State extends State<MrApp2> {
               '/' +
               updstatus,
         ),
+        body: body,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -628,15 +623,6 @@ class _MrApp2State extends State<MrApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Success $message Data!',
-        //   widget.reffno,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -655,15 +641,6 @@ class _MrApp2State extends State<MrApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.reffno,
-        //   '$messageError',
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -687,5 +664,31 @@ class _MrApp2State extends State<MrApp2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.mrAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.mrAppControllerReason.value.text);
+        sendConfirm();
+        textControllers.mrAppControllerReason.value.clear();
+      },
+    );
   }
 }

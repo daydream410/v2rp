@@ -15,6 +15,7 @@ import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app.
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -49,23 +50,12 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
     dataFuture = getDataa();
   }
 
-  // List<Details> details = [
-  //   Details(
-  //     cano: 'CADV/NEP/2023/02-0161',
-  //     jobproject: 'SMALL MARINE',
-  //     account: 'Sepatu Bekas',
-  //     requestor: 'Developer 3',
-  //     qty: 5,
-  //     price: 20,
-  //     amount: 3000,
-  //     budgetavail: 200000,
-  //   ),
-  // ];
-
+  static TextControllers textControllers = Get.put(TextControllers());
   List selectedDetails = [];
   bool selectedGak = false;
   double totalPrice = 0;
   var valueButton;
+  String reasonValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -259,7 +249,8 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                             valueButton = '-1';
                           });
                           print("value button " + valueButton);
-                          submitData();
+                          // submitData();
+                          reason();
                         },
                         child: const Text(
                           'Reject Selected',
@@ -284,7 +275,8 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                             valueButton = '-9';
                           });
                           print("value button " + valueButton);
-                          submitData();
+                          // submitData();
+                          reason();
                         },
                         child: const Text(
                           'Send To Draft (ALL)',
@@ -726,23 +718,18 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
 
     var body = json.encode({
       "urutan": selectedDetails,
+      "reason": textControllers.caApprovalControllerReason.value.text,
     });
 
-    // Get.to(const Navbar());
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
       title: 'Loading',
       text: 'Submitting your data',
-      // autoCloseDuration: const Duration(seconds: 10),
       barrierDismissible: false,
     );
     try {
       var sendData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/kasbon/' + widget.seckey + '/' + valueButton,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/kasbon/' + widget.seckey + '/' + valueButton,
@@ -768,15 +755,6 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Success $message Data!',
-        //   widget.nokasbon,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -795,15 +773,6 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.nokasbon,
-        //   message,
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -827,5 +796,31 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.caApprovalControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.caApprovalControllerReason.value.text);
+        submitData();
+        textControllers.caApprovalControllerReason.value.clear();
+      },
+    );
   }
 }

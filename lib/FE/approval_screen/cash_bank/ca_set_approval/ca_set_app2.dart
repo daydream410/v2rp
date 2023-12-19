@@ -13,6 +13,7 @@ import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_approval/ca_set_app.da
 import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -50,6 +51,8 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
   bool selectedGak = false;
   double totalPrice = 0;
   var valueButton;
+  static TextControllers textControllers = Get.put(TextControllers());
+  String reasonValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +246,8 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                             valueButton = '-1';
                           });
                           print("value button " + valueButton);
-                          submitData();
+                          // submitData();
+                          reason();
                         },
                         child: const Text(
                           'Reject Selected',
@@ -268,7 +272,8 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
                             valueButton = '-9';
                           });
                           print("value button " + valueButton);
-                          submitData();
+                          // submitData();
+                          reason();
                         },
                         child: const Text(
                           'Send To Draft (ALL)',
@@ -690,6 +695,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
 
     var body = json.encode({
       "urutan": selectedDetails,
+      "reason": textControllers.caSetAppControllerReason.value.text,
     });
 
     QuickAlert.show(
@@ -701,10 +707,6 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
     );
     try {
       var sendData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/lpjk/' + widget.seckey + '/' + valueButton,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/lpjk/' + widget.seckey + '/' + valueButton,
@@ -730,15 +732,6 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   '$message Data!',
-        //   widget.lpjk,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -757,15 +750,6 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.lpjk,
-        //   message,
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -789,5 +773,31 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.caSetAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.caSetAppControllerReason.value.text);
+        submitData();
+        textControllers.caSetAppControllerReason.value.clear();
+      },
+    );
   }
 }

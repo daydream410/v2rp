@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
 import '../../../../main.dart';
+import 'package:v2rp1/BE/controller.dart';
 
 class ItStockAdjApp2 extends StatefulWidget {
   final seckey;
@@ -38,8 +39,6 @@ class ItStockAdjApp2 extends StatefulWidget {
 
 class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
   static late List dataaa = <CaConfirmData>[];
-  // static late List dataaa2 = <CaConfirmData>[];
-  // static late List gabung = <CaConfirmData>[];
   late Future dataFuture;
 
   @override
@@ -54,6 +53,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
   var updstatus = "0";
   double totalPrice = 0;
   bool isVisible = false;
+  String reasonValue = '';
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -742,8 +743,13 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                // sendConfirm();
                 print('updstatus ' + updstatus.toString());
+                if (updstatus == '-9') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -771,8 +777,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       print('contain');
       try {
         var getData = await http.get(
-          // Uri.http('156.67.217.113',
-          //     '/api/v1/mobile/approval/itadjustment/' + widget.seckey),
           Uri.https('v2rp.net',
               '/api/v1/mobile/approval/itadjustment/' + widget.seckey),
           headers: {
@@ -793,8 +797,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       print('not');
       try {
         var getData = await http.get(
-          // Uri.http('156.67.217.113',
-          //     '/api/v1/mobile/approval/stadjustment/' + widget.seckey),
           Uri.https('v2rp.net',
               '/api/v1/mobile/approval/stadjustment/' + widget.seckey),
           headers: {
@@ -828,6 +830,9 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
     String reffnoo = widget.reffno;
     String contain = 'STRF';
 
+    var body = json.encode({
+      "reason": textControllers.itstockadjAppControllerReason.value.text,
+    });
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
@@ -838,13 +843,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
     if (reffnoo.contains(contain)) {
       try {
         var getData = await http.put(
-          // Uri.http(
-          //   '156.67.217.113',
-          //   '/api/v1/mobile/approval/itadjustment/' +
-          //       widget.seckey +
-          //       '/' +
-          //       updstatus,
-          // ),
           Uri.https(
             'v2rp.net',
             '/api/v1/mobile/approval/itadjustment/' +
@@ -852,6 +850,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
                 '/' +
                 updstatus,
           ),
+          body: body,
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -869,15 +868,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           setState(() {
             message = response['data']['message'];
           });
-          // Get.snackbar(
-          //   'Success $message Data!',
-          //   widget.reffno,
-          //   icon: const Icon(Icons.check),
-          //   backgroundColor: Colors.green,
-          //   isDismissible: true,
-          //   dismissDirection: DismissDirection.vertical,
-          //   colorText: Colors.white,
-          // );
           QuickAlert.show(
               context: context,
               type: QuickAlertType.success,
@@ -896,15 +886,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           setState(() {
             message = response['data']['message'];
           });
-          // Get.snackbar(
-          //   'Failed! ' + widget.reffno,
-          //   '$messageError',
-          //   icon: const Icon(Icons.warning),
-          //   backgroundColor: Colors.red,
-          //   isDismissible: true,
-          //   dismissDirection: DismissDirection.vertical,
-          //   colorText: Colors.white,
-          // );
           await Future.delayed(const Duration(milliseconds: 1000));
           await QuickAlert.show(
             context: context,
@@ -922,13 +903,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
     } else {
       try {
         var getData = await http.put(
-          // Uri.http(
-          //   '156.67.217.113',
-          //   '/api/v1/mobile/approval/stadjustment/' +
-          //       widget.seckey +
-          //       '/' +
-          //       updstatus,
-          // ),
           Uri.https(
             'v2rp.net',
             '/api/v1/mobile/approval/stadjustment/' +
@@ -936,6 +910,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
                 '/' +
                 updstatus,
           ),
+          body: body,
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -953,15 +928,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           setState(() {
             message = response['data']['message'];
           });
-          // Get.snackbar(
-          //   'Success $message Data!',
-          //   widget.reffno,
-          //   icon: const Icon(Icons.check),
-          //   backgroundColor: Colors.green,
-          //   isDismissible: true,
-          //   dismissDirection: DismissDirection.vertical,
-          //   colorText: Colors.white,
-          // );
           QuickAlert.show(
               context: context,
               type: QuickAlertType.success,
@@ -980,15 +946,6 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           setState(() {
             message = response['data']['message'];
           });
-          // Get.snackbar(
-          //   'Failed! ' + widget.reffno,
-          //   '$messageError',
-          //   icon: const Icon(Icons.warning),
-          //   backgroundColor: Colors.red,
-          //   isDismissible: true,
-          //   dismissDirection: DismissDirection.vertical,
-          //   colorText: Colors.white,
-          // );
           await Future.delayed(const Duration(milliseconds: 1000));
           await QuickAlert.show(
             context: context,
@@ -1013,5 +970,31 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
         );
       }
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.itstockadjAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.itstockadjAppControllerReason.value.text);
+        sendConfirm();
+        textControllers.itstockadjAppControllerReason.value.clear();
+      },
+    );
   }
 }

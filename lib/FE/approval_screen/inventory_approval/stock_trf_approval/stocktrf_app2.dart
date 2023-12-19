@@ -14,6 +14,7 @@ import 'package:v2rp1/FE/navbar/navbar.dart';
 // import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -58,6 +59,8 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
   var updstatus = "0";
   double totalPrice = 0;
   bool isVisible = false;
+  String reasonValue = '';
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -570,8 +573,13 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                // sendConfirm();
                 print('updstatus ' + updstatus.toString());
+                if (updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -644,13 +652,6 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
 
     try {
       var getData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/stocktransfer/' +
-        //       widget.seckey +
-        //       '/' +
-        //       updstatus,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/stocktransfer/' +
@@ -659,12 +660,12 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
               updstatus,
         ),
         headers: {
-          // 'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
           'monggo': finalMonggo ?? monggo,
         },
         body: {
           'estrcvd': currentDate.toString(),
+          "reason": textControllers.stocktransferAppControllerReason.value.text,
         },
       );
       // print
@@ -678,15 +679,6 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Success $message Data!',
-        //   widget.reffno,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -705,15 +697,6 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.reffno,
-        //   message ?? messageError,
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -737,5 +720,31 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.stocktransferAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.stocktransferAppControllerReason.value.text);
+        sendConfirm();
+        textControllers.stocktransferAppControllerReason.value.clear();
+      },
+    );
   }
 }

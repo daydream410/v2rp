@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/po_ex_approval/poex_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -62,6 +63,8 @@ class _PoExApp2State extends State<PoExApp2> {
   }
 
   // String dTax = '';
+  String reasonValue = '';
+  static TextControllers textControllers = Get.put(TextControllers());
   List selectedDetails = [];
   bool selectedGak = false;
   double totalPrice = 0;
@@ -348,25 +351,6 @@ class _PoExApp2State extends State<PoExApp2> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                // Container(
-                                //   // margin: const EdgeInsets.all(15.0),
-                                //   padding: const EdgeInsets.all(3.0),
-                                //   width: size.width * 0.8,
-                                //   height: size.height * 0.1,
-                                //   decoration: BoxDecoration(
-                                //       border: Border.all(
-                                //     color: Colors.white,
-                                //   )),
-                                //   child: Text(
-                                //     widget.ket ?? "",
-                                //     style: const TextStyle(
-                                //       color: Colors.white,
-                                //     ),
-                                //   ),
-                                // ),
-                                // const SizedBox(
-                                //   height: 10,
-                                // ),
                               ],
                             ),
                           ),
@@ -381,30 +365,6 @@ class _PoExApp2State extends State<PoExApp2> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // Expanded(
-                    //   child: ElevatedButton(
-                    //     style: ButtonStyle(
-                    //       backgroundColor:
-                    //           MaterialStateProperty.all(Colors.red),
-                    //     ),
-                    //     onPressed: () {
-                    //       setState(() {
-                    //         valueButton = '-1';
-                    //       });
-                    //       print("value button " + valueButton);
-                    //       submitData();
-                    //     },
-                    //     child: const Text(
-                    //       'Reject Selected',
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   width: 20,
-                    // ),
                     Expanded(
                       child: ElevatedButton(
                         style: ButtonStyle(
@@ -417,7 +377,8 @@ class _PoExApp2State extends State<PoExApp2> {
                             valueButton = '-9';
                           });
                           print("value button " + valueButton);
-                          submitData();
+                          // submitData();
+                          reason();
                         },
                         child: const Text(
                           'Send To Draft (ALL)',
@@ -798,8 +759,6 @@ class _PoExApp2State extends State<PoExApp2> {
       print("dataaa " + dataaa.toString());
       if (dataaa.isEmpty) {
         var getData = await http.get(
-          // Uri.http('156.67.217.113',
-          //     '/api/v1/mobile/approval/exeption/poscm/' + widget.seckey),
           Uri.https('v2rp.net',
               '/api/v1/mobile/approval/exeption/poscm/' + widget.seckey),
           headers: {
@@ -812,21 +771,6 @@ class _PoExApp2State extends State<PoExApp2> {
         print("response " + caConfirmData.toString());
         dataaa = caConfirmData['data']['details'];
         print("dataaa " + dataaa.toString());
-
-        // dTax = '';
-        // for (var item in dataaa) {
-        //   dTax = item["tax"];
-        //   print('before ' + dTax);
-        //   var listtax = dTax.split(",");
-        //   for (var xx = 0; xx < listtax.length; xx++) {
-        //     var snil = listtax[xx].split(":");
-        //     if (dTax != "") {
-        //       dTax = snil[1];
-        //       print(snil);
-        //       print('after ' + dTax);
-        //     }
-        //   }
-        // }
       }
       // print(dTax);
       return dataaa;
@@ -850,6 +794,7 @@ class _PoExApp2State extends State<PoExApp2> {
 
     var body = json.encode({
       "urutan": selectedDetails,
+      "reason": textControllers.poexAppControllerReason.value.text,
     });
 
     QuickAlert.show(
@@ -910,9 +855,6 @@ class _PoExApp2State extends State<PoExApp2> {
         });
       }
       if (status == true) {
-        // setState(() {
-        //   message = response['data']['message'];
-        // });
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -955,5 +897,31 @@ class _PoExApp2State extends State<PoExApp2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.poexAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.poexAppControllerReason.value.text);
+        submitData();
+        textControllers.poexAppControllerReason.value.clear();
+      },
+    );
   }
 }

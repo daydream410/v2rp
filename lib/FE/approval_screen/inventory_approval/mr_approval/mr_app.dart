@@ -93,7 +93,7 @@ class _MrAppState extends State<MrApp> {
               child: LiquidPullToRefresh(
                 onRefresh: getDataa2,
                 color: HexColor("#F4A62A"),
-                height: 150,
+                height: 140,
                 showChildOpacityTransition: false,
                 child: ListView(
                   children: [
@@ -128,7 +128,15 @@ class _MrAppState extends State<MrApp> {
                                 return const Center(
                                     child: Column(
                                   children: [
-                                    Text('Loading...'),
+                                    DefaultTextStyle(
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                      child: Text(
+                                        'Loading...',
+                                      ),
+                                    ),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -136,7 +144,13 @@ class _MrAppState extends State<MrApp> {
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    Text('Please Kindly Waiting...'),
+                                    DefaultTextStyle(
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        ),
+                                        child:
+                                            Text('Please Kindly Waiting...')),
                                   ],
                                 ));
                               } else {

@@ -14,6 +14,7 @@ import 'package:v2rp1/FE/approval_screen/inventory_approval/stockadj_approval/st
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
 import '../../../../BE/resD.dart';
+import 'package:v2rp1/BE/controller.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../main.dart';
@@ -55,6 +56,8 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
   var updstatus = "0";
   double totalPrice = 0;
   bool isVisible = false;
+  String reasonValue = '';
+  static TextControllers textControllers = Get.put(TextControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -585,8 +588,13 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                // sendConfirm();
                 print('updstatus ' + updstatus.toString());
+                if (updstatus == '-9' || updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -609,8 +617,6 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        // Uri.http('156.67.217.113',
-        //     '/api/v1/mobile/approval/stockadjustment/' + widget.seckey),
         Uri.https('v2rp.net',
             '/api/v1/mobile/approval/stockadjustment/' + widget.seckey),
         headers: {
@@ -650,6 +656,9 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
     var message;
     var messageError;
 
+    var body = json.encode({
+      "reason": textControllers.stockadjAppControllerReason.value.text,
+    });
     QuickAlert.show(
       context: context,
       type: QuickAlertType.loading,
@@ -659,13 +668,6 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
     );
     try {
       var getData = await http.put(
-        // Uri.http(
-        //   '156.67.217.113',
-        //   '/api/v1/mobile/approval/stockadjustment/' +
-        //       widget.seckey +
-        //       '/' +
-        //       updstatus,
-        // ),
         Uri.https(
           'v2rp.net',
           '/api/v1/mobile/approval/stockadjustment/' +
@@ -673,6 +675,7 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
               '/' +
               updstatus,
         ),
+        body: body,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -689,15 +692,6 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   '$message ',
-        //   widget.reffno,
-        //   icon: const Icon(Icons.check),
-        //   backgroundColor: Colors.green,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
@@ -716,15 +710,6 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
         setState(() {
           message = response['data']['message'];
         });
-        // Get.snackbar(
-        //   'Failed! ' + widget.reffno,
-        //   '$messageError',
-        //   icon: const Icon(Icons.warning),
-        //   backgroundColor: Colors.red,
-        //   isDismissible: true,
-        //   dismissDirection: DismissDirection.vertical,
-        //   colorText: Colors.white,
-        // );
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
@@ -748,5 +733,31 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
         },
       );
     }
+  }
+
+  Future<void> reason() async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.custom,
+      confirmBtnText: 'S U B M I T',
+      confirmBtnColor: HexColor("#ffc947"),
+      widget: TextFormField(
+        decoration: const InputDecoration(
+          alignLabelWithHint: true,
+          hintText: 'Enter Your Reason',
+          prefixIcon: Icon(
+            Icons.text_snippet_rounded,
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
+        controller: textControllers.stockadjAppControllerReason.value,
+      ),
+      onConfirmBtnTap: () {
+        print(textControllers.stockadjAppControllerReason.value.text);
+        sendConfirm();
+        textControllers.stockadjAppControllerReason.value.clear();
+      },
+    );
   }
 }
