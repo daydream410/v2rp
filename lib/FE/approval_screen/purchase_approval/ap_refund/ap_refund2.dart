@@ -785,6 +785,7 @@ class _ApRefundApp2State extends State<ApRefundApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -814,6 +815,7 @@ class _ApRefundApp2State extends State<ApRefundApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(ApRefundApp());
@@ -831,6 +833,7 @@ class _ApRefundApp2State extends State<ApRefundApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -844,6 +847,7 @@ class _ApRefundApp2State extends State<ApRefundApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.reffno,
+        disableBackBtn: true,
         text: '$messageError',
         onConfirmBtnTap: () async {
           Get.to(ApRefundApp());
@@ -873,8 +877,8 @@ class _ApRefundApp2State extends State<ApRefundApp2> {
       onConfirmBtnTap: () {
         print(textControllers.aprefundAppControllerReason.value.text);
         sendConfirm();
-        textControllers.aprefundAppControllerReason.value.clear();
       },
     );
+    textControllers.aprefundAppControllerReason.value.clear();
   }
 }

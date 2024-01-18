@@ -811,6 +811,7 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -842,6 +843,7 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
+            disableBackBtn: true,
             text: '$message Data!',
             barrierDismissible: false,
             // confirmBtnText: 'OK',
@@ -862,6 +864,7 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -874,6 +877,7 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ',
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -904,8 +908,8 @@ class _SppbjConfirm2State extends State<SppbjConfirm2> {
       onConfirmBtnTap: () {
         print(textControllers.sppbjConfirmControllerReason.value.text);
         sendConfirm();
-        textControllers.sppbjConfirmControllerReason.value.clear();
       },
     );
+    textControllers.sppbjConfirmControllerReason.value.clear();
   }
 }

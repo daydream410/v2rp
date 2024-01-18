@@ -665,6 +665,7 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -697,6 +698,7 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(StockAdjApp());
@@ -715,6 +717,7 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
+          disableBackBtn: true,
           text: '$message',
           onConfirmBtnTap: () async {
             Get.to(StockAdjApp());
@@ -727,6 +730,7 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.reffno,
+        disableBackBtn: true,
         text: '$messageError',
         onConfirmBtnTap: () async {
           Get.to(StockAdjApp());
@@ -756,8 +760,8 @@ class _StockAdjApp2State extends State<StockAdjApp2> {
       onConfirmBtnTap: () {
         print(textControllers.stockadjAppControllerReason.value.text);
         sendConfirm();
-        textControllers.stockadjAppControllerReason.value.clear();
       },
     );
+    textControllers.stockadjAppControllerReason.value.clear();
   }
 }

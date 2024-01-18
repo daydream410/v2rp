@@ -596,6 +596,7 @@ class _MrApp2State extends State<MrApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -628,6 +629,7 @@ class _MrApp2State extends State<MrApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(MrApp());
@@ -645,6 +647,7 @@ class _MrApp2State extends State<MrApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -658,6 +661,7 @@ class _MrApp2State extends State<MrApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.reffno,
+        disableBackBtn: true,
         text: messageError ?? 'Cannot Connect To Server!',
         onConfirmBtnTap: () async {
           Get.to(MrApp());
@@ -687,8 +691,8 @@ class _MrApp2State extends State<MrApp2> {
       onConfirmBtnTap: () {
         print(textControllers.mrAppControllerReason.value.text);
         sendConfirm();
-        textControllers.mrAppControllerReason.value.clear();
       },
     );
+    textControllers.mrAppControllerReason.value.clear();
   }
 }

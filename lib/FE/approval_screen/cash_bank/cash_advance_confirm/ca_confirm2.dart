@@ -764,6 +764,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -796,6 +797,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(CashAdvanceConfirm());
@@ -814,6 +816,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.nokasbon,
+          disableBackBtn: true,
           text: '$message',
           onConfirmBtnTap: () async {
             Get.to(CashAdvanceConfirm());
@@ -826,6 +829,7 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.nokasbon,
+        disableBackBtn: true,
         text: '$messageError',
         onConfirmBtnTap: () async {
           Get.to(CashAdvanceConfirm());
@@ -855,8 +859,8 @@ class _CashAdvanceConfirm2State extends State<CashAdvanceConfirm2> {
       onConfirmBtnTap: () {
         print(textControllers.caConfirmControllerReason.value.text);
         sendConfirm();
-        textControllers.caConfirmControllerReason.value.clear();
       },
     );
+    textControllers.caConfirmControllerReason.value.clear();
   }
 }

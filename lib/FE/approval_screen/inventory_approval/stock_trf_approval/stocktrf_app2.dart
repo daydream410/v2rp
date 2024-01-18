@@ -642,6 +642,7 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
 
     if (updstatus == '-1') {
@@ -684,6 +685,7 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(StockTrfApp());
@@ -701,6 +703,7 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -713,6 +716,7 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -743,8 +747,8 @@ class _StockTrfApp2State extends State<StockTrfApp2> {
       onConfirmBtnTap: () {
         print(textControllers.stocktransferAppControllerReason.value.text);
         sendConfirm();
-        textControllers.stocktransferAppControllerReason.value.clear();
       },
     );
+    textControllers.stocktransferAppControllerReason.value.clear();
   }
 }

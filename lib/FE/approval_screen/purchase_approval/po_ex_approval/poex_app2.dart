@@ -803,6 +803,7 @@ class _PoExApp2State extends State<PoExApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var sendData = await http.put(
@@ -858,6 +859,7 @@ class _PoExApp2State extends State<PoExApp2> {
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
+            disableBackBtn: true,
             text: 'Success $message Data!',
             barrierDismissible: false,
             // confirmBtnText: 'OK',
@@ -877,6 +879,7 @@ class _PoExApp2State extends State<PoExApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.pono,
           text: '$message',
           barrierDismissible: false,
@@ -890,6 +893,7 @@ class _PoExApp2State extends State<PoExApp2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.pono,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -920,8 +924,8 @@ class _PoExApp2State extends State<PoExApp2> {
       onConfirmBtnTap: () {
         print(textControllers.poexAppControllerReason.value.text);
         submitData();
-        textControllers.poexAppControllerReason.value.clear();
       },
     );
+    textControllers.poexAppControllerReason.value.clear();
   }
 }

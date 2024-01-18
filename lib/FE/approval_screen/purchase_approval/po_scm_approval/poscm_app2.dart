@@ -1229,6 +1229,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -1257,6 +1258,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
+            disableBackBtn: true,
             text: 'Success $message Data!',
             barrierDismissible: false,
             // confirmBtnText: 'OK',
@@ -1277,6 +1279,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -1289,6 +1292,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -1319,8 +1323,8 @@ class _PoScmApp2State extends State<PoScmApp2> {
       onConfirmBtnTap: () {
         print(textControllers.poScmAppControllerReason.value.text);
         sendConfirm();
-        textControllers.poScmAppControllerReason.value.clear();
       },
     );
+    textControllers.poScmAppControllerReason.value.clear();
   }
 }

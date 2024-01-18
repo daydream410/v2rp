@@ -500,6 +500,7 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -547,6 +548,7 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(AssemblingApp());
@@ -574,6 +576,7 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
+          disableBackBtn: true,
           text: '$message',
           onConfirmBtnTap: () async {
             Get.to(AssemblingApp());
@@ -587,6 +590,7 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
+        disableBackBtn: true,
         onConfirmBtnTap: () async {
           Get.to(AssemblingApp());
         },

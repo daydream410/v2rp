@@ -733,6 +733,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var sendData = await http.put(
@@ -764,6 +765,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
+            disableBackBtn: true,
             text: 'Success $message Data!',
             barrierDismissible: false,
             // confirmBtnText: 'OK',
@@ -784,6 +786,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.sppbjno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -796,6 +799,7 @@ class _SppbjApp2State extends State<SppbjApp2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.sppbjno,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -826,8 +830,8 @@ class _SppbjApp2State extends State<SppbjApp2> {
       onConfirmBtnTap: () {
         print(textControllers.sppbjAppControllerReason.value.text);
         submitData();
-        textControllers.sppbjAppControllerReason.value.clear();
       },
     );
+    textControllers.sppbjAppControllerReason.value.clear();
   }
 }

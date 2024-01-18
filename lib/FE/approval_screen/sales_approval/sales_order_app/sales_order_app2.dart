@@ -962,6 +962,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -993,6 +994,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
         QuickAlert.show(
             context: context,
             type: QuickAlertType.success,
+            disableBackBtn: true,
             text: 'Success $message Data!',
             barrierDismissible: false,
             // confirmBtnText: 'OK',
@@ -1013,6 +1015,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -1025,6 +1028,7 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ',
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -1055,8 +1059,9 @@ class _SalesOrderApproval2State extends State<SalesOrderApproval2> {
       onConfirmBtnTap: () {
         print(textControllers.salesAppControllerReason.value.text);
         sendConfirm();
-        textControllers.salesAppControllerReason.value.clear();
       },
     );
+    textControllers.salesAppControllerReason.value.clear();
   }
 }
+// APDN/NEP/2024/01-0015

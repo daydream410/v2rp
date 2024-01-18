@@ -839,6 +839,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     if (reffnoo.contains(contain)) {
       try {
@@ -873,6 +874,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
               type: QuickAlertType.success,
               text: 'Success $message Data!',
               barrierDismissible: false,
+              disableBackBtn: true,
               // confirmBtnText: 'OK',
               onConfirmBtnTap: () async {
                 Get.to(ItStockAdjApp());
@@ -892,6 +894,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
             type: QuickAlertType.error,
             title: 'Failed! ' + widget.reffno,
             text: '$message',
+            disableBackBtn: true,
             onConfirmBtnTap: () async {
               Get.to(ItStockAdjApp());
             },
@@ -933,6 +936,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
               type: QuickAlertType.success,
               text: 'Success $message Data!',
               barrierDismissible: false,
+              disableBackBtn: true,
               // confirmBtnText: 'OK',
               onConfirmBtnTap: () async {
                 Get.to(ItStockAdjApp());
@@ -952,6 +956,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
             type: QuickAlertType.error,
             title: 'Failed! ' + widget.reffno,
             text: '$message',
+            disableBackBtn: true,
             onConfirmBtnTap: () async {
               Get.to(ItStockAdjApp());
             },
@@ -964,6 +969,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
           type: QuickAlertType.warning,
           title: 'Error! ' + widget.reffno,
           text: '$messageError',
+          disableBackBtn: true,
           onConfirmBtnTap: () async {
             Get.to(ItStockAdjApp());
           },
@@ -993,8 +999,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       onConfirmBtnTap: () {
         print(textControllers.itstockadjAppControllerReason.value.text);
         sendConfirm();
-        textControllers.itstockadjAppControllerReason.value.clear();
       },
     );
+    textControllers.itstockadjAppControllerReason.value.clear();
   }
 }

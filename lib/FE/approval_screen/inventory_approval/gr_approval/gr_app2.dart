@@ -800,6 +800,7 @@ class _GrApp2State extends State<GrApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -832,6 +833,7 @@ class _GrApp2State extends State<GrApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(GrApp());
@@ -849,6 +851,7 @@ class _GrApp2State extends State<GrApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.grno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -861,6 +864,7 @@ class _GrApp2State extends State<GrApp2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.grno,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -891,8 +895,8 @@ class _GrApp2State extends State<GrApp2> {
       onConfirmBtnTap: () {
         print(textControllers.grAppControllerReason.value.text);
         sendConfirm();
-        textControllers.grAppControllerReason.value.clear();
       },
     );
+    textControllers.grAppControllerReason.value.clear();
   }
 }

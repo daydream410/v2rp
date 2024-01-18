@@ -704,6 +704,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var sendData = await http.put(
@@ -737,6 +738,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(CaSetApproval());
@@ -754,6 +756,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.lpjk,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -766,6 +769,7 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.lpjk,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -796,8 +800,8 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
       onConfirmBtnTap: () {
         print(textControllers.caSetAppControllerReason.value.text);
         submitData();
-        textControllers.caSetAppControllerReason.value.clear();
       },
     );
+    textControllers.caSetAppControllerReason.value.clear();
   }
 }

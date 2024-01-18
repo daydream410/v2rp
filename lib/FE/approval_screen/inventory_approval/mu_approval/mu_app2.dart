@@ -677,6 +677,7 @@ class _MuApp2State extends State<MuApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -709,6 +710,7 @@ class _MuApp2State extends State<MuApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(MuApp());
@@ -727,6 +729,7 @@ class _MuApp2State extends State<MuApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.dono,
+          disableBackBtn: true,
           text: '$message',
           onConfirmBtnTap: () async {
             Get.to(MuApp());
@@ -739,6 +742,7 @@ class _MuApp2State extends State<MuApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.dono,
+        disableBackBtn: true,
         text: messageError ?? 'Cannot Reach Server!',
         onConfirmBtnTap: () async {
           Get.to(MuApp());
@@ -768,8 +772,8 @@ class _MuApp2State extends State<MuApp2> {
       onConfirmBtnTap: () {
         print(textControllers.muAppControllerReason.value.text);
         sendConfirm();
-        textControllers.muAppControllerReason.value.clear();
       },
     );
+    textControllers.muAppControllerReason.value.clear();
   }
 }

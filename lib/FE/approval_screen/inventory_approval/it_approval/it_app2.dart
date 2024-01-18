@@ -709,6 +709,7 @@ class _ItApp2State extends State<ItApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     if (updstatus == '-1') {
       setState(() {
@@ -749,6 +750,7 @@ class _ItApp2State extends State<ItApp2> {
             text: 'Success $message Data!',
             barrierDismissible: false,
             // confirmBtnText: 'OK',
+            disableBackBtn: true,
             onConfirmBtnTap: () async {
               Get.to(ItApp());
             },
@@ -765,6 +767,7 @@ class _ItApp2State extends State<ItApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -777,6 +780,7 @@ class _ItApp2State extends State<ItApp2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -807,8 +811,8 @@ class _ItApp2State extends State<ItApp2> {
       onConfirmBtnTap: () {
         print(textControllers.itAppControllerReason.value.text);
         sendConfirm();
-        textControllers.itAppControllerReason.value.clear();
       },
     );
+    textControllers.itAppControllerReason.value.clear();
   }
 }

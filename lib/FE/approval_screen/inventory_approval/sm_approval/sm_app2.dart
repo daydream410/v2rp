@@ -600,6 +600,7 @@ class _SmApp2State extends State<SmApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -647,6 +648,7 @@ class _SmApp2State extends State<SmApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(SmApp());
@@ -673,6 +675,7 @@ class _SmApp2State extends State<SmApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -684,6 +687,7 @@ class _SmApp2State extends State<SmApp2> {
       print(e);
       QuickAlert.show(
         context: context,
+        disableBackBtn: true,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.reffno,
         text: '$messageError',

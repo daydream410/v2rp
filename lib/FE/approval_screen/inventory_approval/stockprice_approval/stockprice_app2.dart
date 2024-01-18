@@ -776,6 +776,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -823,6 +824,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(StockPriceApp());
@@ -850,6 +852,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.apreff,
+          disableBackBtn: true,
           text: '$message',
           onConfirmBtnTap: () async {
             Get.to(StockPriceApp());
@@ -862,6 +865,7 @@ class _StockPriceApp2State extends State<StockPriceApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.apreff,
+        disableBackBtn: true,
         text: '$messageError',
         onConfirmBtnTap: () async {
           Get.to(StockPriceApp());

@@ -542,6 +542,7 @@ class _UpdateMinMaxApp2State extends State<UpdateMinMaxApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -583,6 +584,7 @@ class _UpdateMinMaxApp2State extends State<UpdateMinMaxApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(UpdateMinMaxApp());
@@ -610,6 +612,7 @@ class _UpdateMinMaxApp2State extends State<UpdateMinMaxApp2> {
           context: context,
           type: QuickAlertType.error,
           title: 'Failed! ' + widget.reffno,
+          disableBackBtn: true,
           text: '$message',
           onConfirmBtnTap: () async {
             Get.to(UpdateMinMaxApp());
@@ -622,6 +625,7 @@ class _UpdateMinMaxApp2State extends State<UpdateMinMaxApp2> {
         context: context,
         type: QuickAlertType.warning,
         title: 'Error! ' + widget.reffno,
+        disableBackBtn: true,
         text: '$messageError',
         onConfirmBtnTap: () async {
           Get.to(UpdateMinMaxApp());

@@ -727,6 +727,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var sendData = await http.put(
@@ -760,6 +761,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(CashAdvanceApproval());
@@ -777,6 +779,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.nokasbon,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -789,6 +792,7 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.nokasbon,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -819,8 +823,8 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
       onConfirmBtnTap: () {
         print(textControllers.caApprovalControllerReason.value.text);
         submitData();
-        textControllers.caApprovalControllerReason.value.clear();
       },
     );
+    textControllers.caApprovalControllerReason.value.clear();
   }
 }

@@ -624,7 +624,11 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
                 child: Text('S U B M I T'),
               ),
               onPressed: () async {
-                sendConfirm();
+                if (updstatus == '-9' || updstatus == '-1') {
+                  reason();
+                } else {
+                  sendConfirm();
+                }
                 print('updstatus ' + updstatus.toString());
               },
               style: TextButton.styleFrom(
@@ -698,6 +702,7 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
       title: 'Loading',
       text: 'Submitting your data',
       barrierDismissible: false,
+      disableBackBtn: true,
     );
     try {
       var getData = await http.put(
@@ -730,6 +735,7 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
             type: QuickAlertType.success,
             text: 'Success $message Data!',
             barrierDismissible: false,
+            disableBackBtn: true,
             // confirmBtnText: 'OK',
             onConfirmBtnTap: () async {
               Get.to(DebitNotesApp());
@@ -747,6 +753,7 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
         await QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
+          disableBackBtn: true,
           title: 'Failed! ' + widget.reffno,
           text: '$message',
           onConfirmBtnTap: () async {
@@ -759,6 +766,7 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
+        disableBackBtn: true,
         title: 'Error! ' + widget.reffno,
         text: '$messageError',
         onConfirmBtnTap: () async {
@@ -789,8 +797,8 @@ class _DebitNotesApp2State extends State<DebitNotesApp2> {
       onConfirmBtnTap: () {
         print(textControllers.debitnotesAppControllerReason.value.text);
         sendConfirm();
-        textControllers.debitnotesAppControllerReason.value.clear();
       },
     );
+    textControllers.debitnotesAppControllerReason.value.clear();
   }
 }
