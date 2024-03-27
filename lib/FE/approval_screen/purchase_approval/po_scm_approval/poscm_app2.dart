@@ -647,7 +647,20 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                         ),
                                       ],
                                     ),
-                                    size: ColumnSize.M,
+                                    size: ColumnSize.L,
+                                  ),
+                                  DataColumn2(
+                                    label: Column(
+                                      children: [
+                                        Text(
+                                          'Project/Job',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    size: ColumnSize.L,
                                   ),
                                 ],
                                 rows: dataaa
@@ -745,6 +758,13 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                             e['appstatus'] == 0
                                                 ? 'Approval Process'
                                                 : '',
+                                            // e['appstatus'].toString(),
+                                            style: const TextStyle(
+                                              fontSize: 11,
+                                            ),
+                                          )),
+                                          DataCell(Text(
+                                            e['projectid'].toString(),
                                             // e['appstatus'].toString(),
                                             style: const TextStyle(
                                               fontSize: 11,

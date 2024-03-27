@@ -212,7 +212,7 @@ class _DpReqAppState extends State<DpReqApp> {
                                               requestor: _foundUsers[index]
                                                   ['header']['requestor'],
                                               supplier: _foundUsers[index]
-                                                  ['header']['supplier_id'],
+                                                  ['header']['supplier_name'],
                                               kasir: _foundUsers[index]
                                                   ['header']['kasir'],
                                               paidby: _foundUsers[index]
@@ -247,7 +247,7 @@ class _DpReqAppState extends State<DpReqApp> {
                                                 requestor: _foundUsers[index]
                                                     ['header']['requestor'],
                                                 supplier: _foundUsers[index]
-                                                    ['header']['supplier_id'],
+                                                    ['header']['supplier_name'],
                                                 kasir: _foundUsers[index]
                                                     ['header']['kasir'],
                                                 paidby: _foundUsers[index]
@@ -443,7 +443,7 @@ class _DpReqAppState extends State<DpReqApp> {
                                                             ['requestor'],
                                                     supplier: _foundUsers[index]
                                                             ['header']
-                                                        ['supplier_id'],
+                                                        ['supplier_name'],
                                                     kasir: _foundUsers[index]
                                                         ['header']['kasir'],
                                                     paidby: _foundUsers[index]
@@ -486,7 +486,7 @@ class _DpReqAppState extends State<DpReqApp> {
                                                       supplier:
                                                           _foundUsers[index]
                                                                   ['header']
-                                                              ['supplier_id'],
+                                                              ['supplier_name'],
                                                       kasir: _foundUsers[index]
                                                           ['header']['kasir'],
                                                       paidby: _foundUsers[index]

@@ -205,7 +205,7 @@ class _NpAppState extends State<NpApp> {
                                               tanggal: _foundUsers[index]
                                                   ['header']['tanggal'],
                                               supplier: _foundUsers[index]
-                                                  ['header']['supplier_id'],
+                                                  ['header']['supplier_name'],
                                               invdate: _foundUsers[index]
                                                   ['header']['invdate'],
                                               ccy: _foundUsers[index]['header']
@@ -232,7 +232,7 @@ class _NpAppState extends State<NpApp> {
                                                 tanggal: _foundUsers[index]
                                                     ['header']['tanggal'],
                                                 supplier: _foundUsers[index]
-                                                    ['header']['supplier_id'],
+                                                    ['header']['supplier_name'],
                                                 invdate: _foundUsers[index]
                                                     ['header']['invdate'],
                                                 ccy: _foundUsers[index]
@@ -412,7 +412,7 @@ class _NpAppState extends State<NpApp> {
                                                         ['header']['tanggal'],
                                                     supplier: _foundUsers[index]
                                                             ['header']
-                                                        ['supplier_id'],
+                                                        ['supplier_name'],
                                                     invdate: _foundUsers[index]
                                                         ['header']['invdate'],
                                                     ccy: _foundUsers[index]
@@ -443,7 +443,7 @@ class _NpAppState extends State<NpApp> {
                                                       supplier:
                                                           _foundUsers[index]
                                                                   ['header']
-                                                              ['supplier_id'],
+                                                              ['supplier_name'],
                                                       invdate:
                                                           _foundUsers[index]
                                                                   ['header']
