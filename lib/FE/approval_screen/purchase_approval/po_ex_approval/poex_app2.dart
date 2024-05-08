@@ -872,9 +872,9 @@ class _PoExApp2State extends State<PoExApp2> {
               Get.to(const Navbar());
             });
       } else {
-        setState(() {
-          message = response['data']['message'];
-        });
+        // setState(() {
+        //   message = response['data']['message'];
+        // });
         await Future.delayed(const Duration(milliseconds: 1000));
         await QuickAlert.show(
           context: context,
