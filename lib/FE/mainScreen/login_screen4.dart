@@ -4,7 +4,6 @@ import 'dart:async';
 // import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -99,14 +98,21 @@ class _LoginPage4State extends State<LoginPage4>
         key: _scaffoldKey,
         body: Stack(
           children: [
-            CachedNetworkImage(
-              imageUrl:
-                  "https://cdn.discordapp.com/attachments/993359273776140308/1222481345507495976/vessel.png?ex=66165f79&is=6603ea79&hm=6a2164350471fb4518a6160ff8dd3ca0f0eeb583068e488f03915ab95e2c440f&",
-              placeholder: (context, url) => Image.asset(
-                'images/vessel.png',
-                fit: BoxFit.fill,
-              ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+            // CachedNetworkImage(
+            //   imageUrl:
+            //       "https://cdn.discordapp.com/attachments/99335927377610308/1222481345507495976/vessel.png?ex=66165f79&is=6603ea79&hm=6a2164350471fb4518a6160ff8dd3ca0f0eeb583068e488f03915ab95e2c440f&",
+            //   placeholder: (context, url) => Image.asset(
+            //     'images/vessel.png',
+            //     fit: BoxFit.fill,
+            //   ),
+            //   errorWidget: (context, url, error) => const Icon(Icons.error),
+            //   height: double.infinity,
+            //   width: double.infinity,
+            //   fit: BoxFit.cover,
+            //   alignment: FractionalOffset(_animation.value, 0),
+            // ),
+            Image.asset(
+              'images/vessel.png',
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
