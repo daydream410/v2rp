@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_confirm/ca_set_confirm2.dart';
 import 'package:http/http.dart' as http;
 import 'package:v2rp1/BE/resD.dart';
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
@@ -60,8 +61,8 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
     bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     return WillPopScope(
-      onWillPop: () {
-        showDialog(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Are You sure?'),
@@ -72,13 +73,16 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
                 child: const Text('No'),
               ),
               TextButton(
-                onPressed: () => SystemNavigator.pop(),
+                onPressed: () => Navigator.of(context).pop(true),
                 child: const Text('Yes'),
               ),
             ],
           ),
         );
-        throw (e);
+        if (shouldPop == true) {
+          SystemNavigator.pop();
+        }
+        return false;
       },
       child: isIOS
           ? CupertinoPageScaffold(
@@ -505,25 +509,46 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/lpjk'),
-        Uri.https('v2rp.net', '/api/v1/mobile/confirmation/lpjk'),
+        Uri.https(ApiName.v2rp, ApiName.lpjkConfirm),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
           'monggo': finalMonggo ?? monggo,
+        },
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
         },
       );
       final response = json.decode(getData.body);
 
       // final data = response['data'];
       setState(() {
-        dataaa = response['data'];
+        dataaa = response['data'] ?? [];
         _foundUsers = dataaa;
       });
 
       print("getdataaaa " + response.toString());
       print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } on TimeoutException catch (e) {
+      print('Timeout error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
+    } on SocketException catch (e) {
+      print('Network error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     } catch (e) {
-      print(e);
+      print('Error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     }
   }
 
@@ -539,25 +564,46 @@ class _CaSettleConfirmState extends State<CaSettleConfirm> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/lpjk'),
-        Uri.https('v2rp.net', '/api/v1/mobile/confirmation/lpjk'),
+        Uri.https(ApiName.v2rp, ApiName.lpjkConfirm),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
           'monggo': finalMonggo ?? monggo,
+        },
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
         },
       );
       final response = json.decode(getData.body);
 
       // final data = response['data'];
       setState(() {
-        dataaa = response['data'];
+        dataaa = response['data'] ?? [];
         _foundUsers = dataaa;
       });
 
       print("getdataaaa " + response.toString());
       print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } on TimeoutException catch (e) {
+      print('Timeout error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
+    } on SocketException catch (e) {
+      print('Network error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     } catch (e) {
-      print(e);
+      print('Error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     }
   }
 }

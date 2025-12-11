@@ -208,4 +208,10 @@ class TextControllers extends GetxController {
       TextEditingController().obs;
   Rx<TextEditingController> PoUnapprovedControllerReason =
       TextEditingController().obs;
+
+  // wo approval
+  Rx<TextEditingController> woAppController = TextEditingController().obs;
+  Rx<TextEditingController> WoCompletedController = TextEditingController().obs;
+  // Rx<TextEditingController> PoUnapprovedControllerReason =
+  //     TextEditingController().obs;
 }

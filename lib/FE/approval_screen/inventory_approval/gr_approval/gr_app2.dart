@@ -12,6 +12,7 @@ import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/routes/api_name.dart';
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
 import 'package:v2rp1/BE/controller.dart';
@@ -761,8 +762,7 @@ class _GrApp2State extends State<GrApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.https(
-            'v2rp.net', '/api/v1/mobile/approval/goodreceive/' + widget.seckey),
+        Uri.https(ApiName.v2rp, ApiName.grApp + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -805,11 +805,8 @@ class _GrApp2State extends State<GrApp2> {
     try {
       var getData = await http.put(
         Uri.https(
-          'v2rp.net',
-          '/api/v1/mobile/approval/goodreceive/' +
-              widget.seckey +
-              '/' +
-              updstatus,
+          ApiName.v2rp,
+          ApiName.grApp + widget.seckey + '/' + updstatus,
         ),
         body: body,
         headers: {

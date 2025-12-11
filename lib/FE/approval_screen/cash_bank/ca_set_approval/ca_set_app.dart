@@ -11,6 +11,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/ca_set_approval/ca_set_app2.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
@@ -466,8 +467,8 @@ class _CaSetApprovalState extends State<CaSetApproval> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/lpjk'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/lpjk'),
+        // Uri.http('156.67.217.113', ApiName.lpjkApp),
+        Uri.https(ApiName.v2rp, ApiName.lpjkApp),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -501,7 +502,7 @@ class _CaSetApprovalState extends State<CaSetApproval> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/approval/lpjk'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/lpjk'),
+        Uri.https(ApiName.v2rp, ApiName.lpjkApp),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

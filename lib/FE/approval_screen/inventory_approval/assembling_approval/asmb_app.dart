@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/resD.dart';
+import 'package:v2rp1/routes/api_name.dart';
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
 import '../../../../main.dart';
@@ -499,7 +500,7 @@ class _AssemblingAppState extends State<AssemblingApp> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/approval/assembling'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/assembling'),
+        Uri.https(ApiName.v2rp, ApiName.assembling),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -533,7 +534,7 @@ class _AssemblingAppState extends State<AssemblingApp> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/approval/assembling'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/assembling'),
+        Uri.https(ApiName.v2rp, ApiName.assembling),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

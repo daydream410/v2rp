@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/resD.dart';
+import 'package:v2rp1/routes/api_name.dart';
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
 import '../../../../main.dart';
@@ -460,8 +461,8 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/itadjustment'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/itadjustment'),
+        // Uri.http('156.67.217.113', ApiName.itAdj),
+        Uri.https(ApiName.v2rp, ApiName.itAdj),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -469,7 +470,7 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
         },
       );
       var getData2 = await http.get(
-        Uri.http('v2rp.net', '/api/v1/mobile/approval/stadjustment'),
+        Uri.http(ApiName.v2rp, ApiName.stockAdj),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -505,8 +506,8 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/itadjustment'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/itadjustment'),
+        // Uri.http('156.67.217.113', ApiName.itAdj),
+        Uri.https(ApiName.v2rp, ApiName.itAdj),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -514,7 +515,7 @@ class _ItStockAdjAppState extends State<ItStockAdjApp> {
         },
       );
       var getData2 = await http.get(
-        Uri.http('v2rp.net', '/api/v1/mobile/approval/stadjustment'),
+        Uri.http(ApiName.v2rp, ApiName.stockAdj),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

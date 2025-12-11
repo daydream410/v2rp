@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/assembling_approval/asmb_app.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/routes/api_name.dart';
 // import '../../../../BE/resD.dart';
 
 import '../../../../BE/reqip.dart';
@@ -512,11 +513,8 @@ class _AssemblingApp2State extends State<AssemblingApp2> {
         //       updstatus,
         // ),
         Uri.https(
-          'v2rp.net',
-          '/api/v1/mobile/approval/assembling/' +
-              widget.seckey +
-              '/' +
-              updstatus,
+          ApiName.v2rp,
+          ApiName.assembling + widget.seckey + '/' + updstatus,
         ),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',

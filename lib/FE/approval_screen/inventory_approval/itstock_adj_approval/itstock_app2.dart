@@ -13,6 +13,7 @@ import 'package:v2rp1/FE/approval_screen/inventory_approval/itstock_adj_approval
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:v2rp1/routes/api_name.dart';
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
 import '../../../../main.dart';
@@ -777,8 +778,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       print('contain');
       try {
         var getData = await http.get(
-          Uri.https('v2rp.net',
-              '/api/v1/mobile/approval/itadjustment/' + widget.seckey),
+          Uri.https(ApiName.v2rp, ApiName.itAdj + widget.seckey),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -797,8 +797,7 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       print('not');
       try {
         var getData = await http.get(
-          Uri.https('v2rp.net',
-              '/api/v1/mobile/approval/stadjustment/' + widget.seckey),
+          Uri.https(ApiName.v2rp, ApiName.stockAdj + widget.seckey),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -845,11 +844,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       try {
         var getData = await http.put(
           Uri.https(
-            'v2rp.net',
-            '/api/v1/mobile/approval/itadjustment/' +
-                widget.seckey +
-                '/' +
-                updstatus,
+            ApiName.v2rp,
+            ApiName.itAdj + widget.seckey + '/' + updstatus,
           ),
           body: body,
           headers: {
@@ -907,11 +903,8 @@ class _ItStockAdjApp2State extends State<ItStockAdjApp2> {
       try {
         var getData = await http.put(
           Uri.https(
-            'v2rp.net',
-            '/api/v1/mobile/approval/stadjustment/' +
-                widget.seckey +
-                '/' +
-                updstatus,
+            ApiName.v2rp,
+            ApiName.stockAdj + widget.seckey + '/' + updstatus,
           ),
           body: body,
           headers: {

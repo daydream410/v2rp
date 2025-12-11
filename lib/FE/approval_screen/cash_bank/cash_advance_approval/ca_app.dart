@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +11,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/cash_bank/cash_advance_approval/ca_app2.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
@@ -59,8 +60,8 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
     bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     return WillPopScope(
-      onWillPop: () {
-        showDialog(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Are You sure?'),
@@ -71,13 +72,16 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
                 child: const Text('No'),
               ),
               TextButton(
-                onPressed: () => SystemNavigator.pop(),
+                onPressed: () => Navigator.of(context).pop(true),
                 child: const Text('Yes'),
               ),
             ],
           ),
         );
-        throw (e);
+        if (shouldPop == true) {
+          SystemNavigator.pop();
+        }
+        return false;
       },
       child: isIOS
           ? CupertinoPageScaffold(
@@ -463,26 +467,46 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/kasbon/'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/kasbon/'),
+        Uri.https(ApiName.v2rp, ApiName.kasbonApp),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
           'monggo': finalMonggo ?? monggo,
+        },
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
         },
       );
       final responseData = json.decode(getData.body);
 
       // final data = responseData['data'];
       setState(() {
-        dataaa = responseData['data'];
+        dataaa = responseData['data'] ?? [];
         _foundUsers = dataaa;
       });
 
       // print("getdataaaa " + responseData.toString());
       print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } on TimeoutException catch (e) {
+      print('Timeout error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
+    } on SocketException catch (e) {
+      print('Network error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     } catch (e) {
-      print(e);
+      print('Error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     }
   }
 
@@ -498,25 +522,46 @@ class _CashAdvanceApprovalState extends State<CashAdvanceApproval> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/approval/kasbon/'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/kasbon/'),
+        Uri.https(ApiName.v2rp, ApiName.kasbonApp),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
           'monggo': finalMonggo ?? monggo,
+        },
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
         },
       );
       final responseData = json.decode(getData.body);
 
       // final data = responseData['data'];
       setState(() {
-        dataaa = responseData['data'];
+        dataaa = responseData['data'] ?? [];
         _foundUsers = dataaa;
       });
 
       // print("getdataaaa " + responseData.toString());
       print("dataaaaaaaaaaaaaaa " + dataaa.toString());
+    } on TimeoutException catch (e) {
+      print('Timeout error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
+    } on SocketException catch (e) {
+      print('Network error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     } catch (e) {
-      print(e);
+      print('Error: $e');
+      setState(() {
+        dataaa = [];
+        _foundUsers = [];
+      });
     }
   }
 }

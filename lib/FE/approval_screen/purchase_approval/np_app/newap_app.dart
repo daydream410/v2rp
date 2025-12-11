@@ -11,6 +11,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/np_app/newap_app2.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../../BE/reqip.dart';
@@ -501,8 +502,7 @@ class _NpAppState extends State<NpApp> {
     try {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
-        // Uri.http('156.67.217.113', '/api/v1/mobile/approval/newpayable/'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/newpayable/'),
+        Uri.https(ApiName.v2rp, ApiName.npapp),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -536,7 +536,7 @@ class _NpAppState extends State<NpApp> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/approval/newpayable/'),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/newpayable/'),
+        Uri.https(ApiName.v2rp, ApiName.npapp),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

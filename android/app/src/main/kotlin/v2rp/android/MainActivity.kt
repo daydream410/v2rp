@@ -1,4 +1,4 @@
-package com.example.v2rp1
+package v2rp.android
 
 import io.flutter.embedding.android.FlutterActivity
 

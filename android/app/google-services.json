@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "289702301071",
+    "project_id": "notification-project-6ebee",
+    "storage_bucket": "notification-project-6ebee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289702301071:android:14908b6a23a3b86d65cffa",
+        "android_client_info": {
+          "package_name": "v2rp.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6BpfM6_rSijWNbwdQYtauDzSoSbZAGhc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,6 +8,9 @@ import '../approval_screen/approval_screen.dart';
 import '../home_screen/home_screen.dart';
 // import '../mainScreen/setting_screen.dart';
 
+// Global variable to store navbar state reference
+_NavbarState? currentNavbarState;
+
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
 
@@ -24,6 +27,31 @@ class _NavbarState extends State<Navbar> {
   ];
   final GlobalKey _key = GlobalKey();
   GlobalKey getKey() => _key;
+
+  // Method untuk mengubah selectedIndex dari luar (untuk FCM navigation)
+  void navigateToTab(int index) {
+    if (index >= 0 && index < screen.length) {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Set global reference to this state
+    currentNavbarState = this;
+  }
+
+  @override
+  void dispose() {
+    // Clear reference when disposed
+    if (currentNavbarState == this) {
+      currentNavbarState = null;
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

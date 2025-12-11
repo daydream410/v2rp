@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/reqip.dart';
 import 'package:http/http.dart' as http;
 import 'package:v2rp1/BE/resD.dart';
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/controller.dart';
 import '../../../../main.dart';
@@ -508,7 +509,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/kasbon/'),
-        Uri.https('v2rp.net', '/api/v1/mobile/confirmation/kasbon/'),
+        Uri.https(ApiName.v2rp, ApiName.kasbonConfirm),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -543,7 +544,7 @@ class _CashAdvanceConfirmState extends State<CashAdvanceConfirm> {
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
         // Uri.http('156.67.217.113', '/api/v1/mobile/confirmation/kasbon/'),
-        Uri.https('v2rp.net', '/api/v1/mobile/confirmation/kasbon/'),
+        Uri.https(ApiName.v2rp, ApiName.kasbonConfirm),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,

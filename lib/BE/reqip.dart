@@ -1,23 +1,15 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names, unnecessary_string_interpolations, prefer_typing_uninitialized_variables, unused_local_variable, unrelated_type_equality_checks, unnecessary_this
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v2rp1/BE/resD.dart';
-// import 'package:v2rp1/BE/controller.dart';
-// import 'package:v2rp1/FE/mainScreen/login_screen4.dart';
 import 'package:v2rp1/main.dart';
 import 'package:crypto/crypto.dart' as crypto;
-
 import 'controller.dart';
-// import 'package:uuid/uuid.dart';
-// import 'package:mac_address/mac_address.dart';
 
 class MsgHeader {
   static TextControllers textControllers = Get.put(TextControllers());
@@ -37,7 +29,16 @@ class MsgHeader {
   static var messageResult;
   static var kulonuwun;
   static var monggo;
+  static var seckey;
   static var success;
+  static var otpSuccess;
+  static var otpMessage;
+  static var otpData;
+  static var rolesData;
+  static var roleSuccess;
+  static var roleMessage;
+  static var resendOtpSuccess;
+  static var resendOtpMessage;
 
   // static var uuid = const Uuid();
   // static var id;
@@ -156,41 +157,246 @@ class MsgHeader {
 
   static Future<void> loginProcessNEW() async {
     var emailVal = textControllers.emailController.value.text;
-    var userVal = textControllers.usernameController.value.text;
     var passVal = textControllers.passwordController.value.text;
-    print('Email =======' + emailVal);
-    print('role =======' + userVal);
-    print('pw =======' + passVal);
 
     try {
-      // http://156.67.217.113/api/v1/mobile
-      // https://v2rp.net/api/v1/mobile
-      var sendLogin =
-          // await http.post(Uri.http('156.67.217.113', '/api/v1/mobile/login'),
-          await http.post(Uri.https('v2rp.net', '/api/v1/mobile/login'),
-              headers: {'Content-Type': 'application/json; charset=utf-8'},
-              body: jsonEncode({
-                "email": emailVal,
-                "role": userVal,
-                "password": passVal,
-              }));
+      var sendLogin = await http
+          .post(
+        Uri.parse('https://v2rp.net/dev/api/v2/mobile/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "email": emailVal,
+          "password": passVal,
+        }),
+      )
+          .timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
+        },
+      );
 
-      print('sendlogin ===' + sendLogin.body);
-      var hasilLogin = jsonDecode(sendLogin.body);
-      var data = hasilLogin['data'];
-      success = hasilLogin['success'];
-      kulonuwun = data['kulonuwun'];
-      monggo = data['monggo'];
-      // print('status' + status);
-      // print('kulooo = ' + kulonuwun);
-      // print('monggo = ' + monggo);
+      if (sendLogin.statusCode == 200) {
+        var hasilLogin = jsonDecode(sendLogin.body);
+        var data = hasilLogin['data'];
+        success = hasilLogin['success'] ?? false;
 
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('kulonuwun', kulonuwun);
-      sharedPreferences.setString('monggo', monggo);
+        if (success == true && data != null) {
+          seckey = data.toString();
+
+          final SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          await sharedPreferences.setString('seckey', seckey);
+        } else {
+          success = false;
+        }
+      } else {
+        success = false;
+        print('Login failed with status code: ${sendLogin.statusCode}');
+      }
+    } on TimeoutException {
+      success = false;
+      rethrow;
+    } on SocketException {
+      success = false;
+      rethrow;
     } catch (e) {
-      print(e);
+      success = false;
+      print('Login error: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> verifyOtp(String seckey, String otp) async {
+    otpSuccess = false;
+    otpMessage = '';
+    otpData = '';
+
+    try {
+      var response = await http
+          .post(
+        Uri.parse('https://v2rp.net/dev/api/v2/mobile/verify/otp/$seckey'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "otp": otp,
+        }),
+      )
+          .timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
+        },
+      );
+
+      // Parse response body regardless of status code
+      try {
+        var hasil = jsonDecode(response.body);
+        otpSuccess = hasil['success'] ?? false;
+        otpMessage = hasil['message'] ?? '';
+
+        // Get error message from "data" field if success is false
+        if (otpSuccess == false && hasil['data'] != null) {
+          // Handle both string and other types
+          if (hasil['data'] is String) {
+            otpData = hasil['data'];
+          } else {
+            otpData = hasil['data'].toString();
+          }
+          // Debug: Print otpData to verify
+          print('OTP Error Data: $otpData');
+        } else {
+          otpData = '';
+        }
+
+        if (otpSuccess == true && hasil['data'] != null) {
+          // Save roles data to SharedPreferences
+          rolesData = hasil['data'];
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('otp_roles', jsonEncode(rolesData));
+        }
+
+        // If status code is not 200, still mark as failed
+        if (response.statusCode != 200) {
+          otpSuccess = false;
+        }
+      } catch (e) {
+        // If response body cannot be parsed, use default error
+        otpSuccess = false;
+        otpMessage = 'Failed to verify OTP';
+        otpData = '';
+        print('Error parsing response: $e');
+      }
+    } on TimeoutException {
+      otpSuccess = false;
+      otpMessage = 'Connection timeout. Please try again.';
+      rethrow;
+    } on SocketException {
+      otpSuccess = false;
+      otpMessage = 'No internet connection. Please check your network.';
+      rethrow;
+    } catch (e) {
+      otpSuccess = false;
+      otpMessage = 'Error verifying OTP: $e';
+      print('OTP verification error: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> resendOtp(String email, String password) async {
+    resendOtpSuccess = false;
+    resendOtpMessage = '';
+
+    try {
+      var sendLogin = await http
+          .post(
+        Uri.parse('https://v2rp.net/dev/api/v2/mobile/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+        }),
+      )
+          .timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
+        },
+      );
+
+      if (sendLogin.statusCode == 200) {
+        var hasilLogin = jsonDecode(sendLogin.body);
+        var data = hasilLogin['data'];
+        resendOtpSuccess = hasilLogin['success'] ?? false;
+        resendOtpMessage = hasilLogin['message'] ?? '';
+
+        if (resendOtpSuccess == true && data != null) {
+          // Update seckey dengan yang baru
+          seckey = data.toString();
+
+          final SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          await sharedPreferences.setString('seckey', seckey);
+        } else {
+          resendOtpSuccess = false;
+        }
+      } else {
+        resendOtpSuccess = false;
+        print('Resend OTP failed with status code: ${sendLogin.statusCode}');
+      }
+    } on TimeoutException {
+      resendOtpSuccess = false;
+      resendOtpMessage = 'Connection timeout. Please try again.';
+      rethrow;
+    } on SocketException {
+      resendOtpSuccess = false;
+      resendOtpMessage = 'No internet connection. Please check your network.';
+      rethrow;
+    } catch (e) {
+      resendOtpSuccess = false;
+      resendOtpMessage = 'Error resending OTP: $e';
+      print('Resend OTP error: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> chooseRole(
+      String seckey, String fcmToken, String platform) async {
+    roleSuccess = false;
+    roleMessage = '';
+    kulonuwun = '';
+    monggo = '';
+
+    try {
+      var response = await http
+          .post(
+        Uri.parse('https://v2rp.net/dev/api/v2/mobile/choose/role/$seckey'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "fcmtoken": fcmToken,
+          "platform": platform,
+        }),
+      )
+          .timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var hasil = jsonDecode(response.body);
+        roleSuccess = hasil['success'] ?? false;
+        roleMessage = hasil['message'] ?? '';
+
+        if (roleSuccess == true && hasil['data'] != null) {
+          var data = hasil['data'];
+          kulonuwun = data['kulonuwun'] ?? '';
+          monggo = data['monggo'] ?? '';
+
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('kulonuwun', kulonuwun);
+          await prefs.setString('monggo', monggo);
+        } else {
+          roleSuccess = false;
+        }
+      } else {
+        roleSuccess = false;
+        roleMessage = 'Failed to select role';
+        print('Choose role failed with status code: ${response.statusCode}');
+      }
+    } on TimeoutException {
+      roleSuccess = false;
+      roleMessage = 'Connection timeout. Please try again.';
+      rethrow;
+    } on SocketException {
+      roleSuccess = false;
+      roleMessage = 'No internet connection. Please check your network.';
+      rethrow;
+    } catch (e) {
+      roleSuccess = false;
+      roleMessage = 'Error selecting role: $e';
+      print('Choose role error: $e');
+      rethrow;
     }
   }
 }

@@ -15,6 +15,7 @@ import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:v2rp1/BE/controller.dart';
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -673,8 +674,7 @@ class _ItApp2State extends State<ItApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.https('v2rp.net',
-            '/api/v1/mobile/approval/internaltransfer/' + widget.seckey),
+        Uri.https(ApiName.v2rp, ApiName.itApp + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -719,11 +719,8 @@ class _ItApp2State extends State<ItApp2> {
     try {
       var getData = await http.put(
         Uri.https(
-          'v2rp.net',
-          '/api/v1/mobile/approval/internaltransfer/' +
-              widget.seckey +
-              '/' +
-              updstatus,
+          ApiName.v2rp,
+          ApiName.itApp + widget.seckey + '/' + updstatus,
         ),
         headers: {
           'kulonuwun': finalKulonuwun ?? kulonuwun,

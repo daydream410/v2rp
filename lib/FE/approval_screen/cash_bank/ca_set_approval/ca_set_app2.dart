@@ -14,6 +14,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:v2rp1/BE/controller.dart';
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -652,8 +653,8 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
     try {
       var getData = await http.get(
         // Uri.http(
-        //     '156.67.217.113', '/api/v1/mobile/approval/lpjk/' + widget.seckey),
-        Uri.https('v2rp.net', '/api/v1/mobile/approval/lpjk/' + widget.seckey),
+        //     '156.67.217.113', ApiName.lpjkApp + widget.seckey),
+        Uri.https(ApiName.v2rp, ApiName.lpjkApp + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -709,8 +710,8 @@ class _CaSetApproval2State extends State<CaSetApproval2> {
     try {
       var sendData = await http.put(
         Uri.https(
-          'v2rp.net',
-          '/api/v1/mobile/approval/lpjk/' + widget.seckey + '/' + valueButton,
+          ApiName.v2rp,
+          ApiName.lpjkApp + widget.seckey + '/' + valueButton,
         ),
         body: body,
         headers: {

@@ -434,7 +434,7 @@ class _PoScmApp2State extends State<PoScmApp2> {
                               child: DataTable2(
                                 columnSpacing: 12,
                                 horizontalMargin: 12,
-                                minWidth: 1400,
+                                minWidth: 2000,
                                 dataRowHeight: 80,
                                 columns: const [
                                   DataColumn2(
@@ -653,6 +653,19 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                     label: Column(
                                       children: [
                                         Text(
+                                          'Project ID',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    size: ColumnSize.L,
+                                  ),
+                                  DataColumn2(
+                                    label: Column(
+                                      children: [
+                                        Text(
                                           'Project/Job',
                                           style: TextStyle(
                                             fontSize: 11,
@@ -758,6 +771,13 @@ class _PoScmApp2State extends State<PoScmApp2> {
                                             e['appstatus'] == 0
                                                 ? 'Approval Process'
                                                 : '',
+                                            // e['appstatus'].toString(),
+                                            style: const TextStyle(
+                                              fontSize: 11,
+                                            ),
+                                          )),
+                                          DataCell(Text(
+                                            e['projectname'].toString(),
                                             // e['appstatus'].toString(),
                                             style: const TextStyle(
                                               fontSize: 11,

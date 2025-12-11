@@ -15,6 +15,7 @@ import 'package:v2rp1/FE/approval_screen/inventory_approval/gr_approval/gr_app.d
 import 'package:v2rp1/FE/approval_screen/inventory_approval/it_approval/it_app.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/sm_approval/sm_app.dart';
 import 'package:v2rp1/FE/approval_screen/inventory_approval/stock_trf_approval/stocktrf_app.dart';
+import 'package:v2rp1/FE/approval_screen/ppc_approval/wo_completed/we_completed.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_adjustment/apadj_app.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/ap_refund/ap_refund.dart';
 import 'package:v2rp1/FE/approval_screen/purchase_approval/dn_approval/dn_app.dart';
@@ -43,6 +44,7 @@ import 'inventory_approval/stock_topup_approval/topup_app.dart';
 import 'inventory_approval/stockadj_approval/stockadj_app.dart';
 import 'inventory_approval/stockprice_approval/stockprice_app.dart';
 import 'inventory_approval/update_minmax_approval/minmax_app.dart';
+import 'ppc_approval/wo_app/wo_app.dart';
 import 'purchase_approval/po_scm_approval/poscm_app.dart';
 
 class ApprovalScreen extends StatefulWidget {
@@ -55,13 +57,17 @@ class ApprovalScreen extends StatefulWidget {
 }
 
 class _ApprovalScreenState extends State<ApprovalScreen> {
+  Timer? _timeoutTimer;
+  bool _isFetching = false;
   bool selected = false;
-  String idSelected = "";
+  String idSelected = "0";
   bool isVisible1 = true;
   bool isVisible2 = true;
   bool isVisible3 = true;
   bool isVisible4 = true;
+  bool isVisible5 = true;
   bool notZero = true;
+  bool showTooltip = true;
   int totalSC = 0;
   int totalSA = 0;
   int totalPA = 0;
@@ -98,6 +104,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   int totalPOS = 0;
   int totalPNS = 0;
   int supplierGabung = 0;
+  int totalWoApp = 0;
+  int totalWoCompleted = 0;
 
   static late List dataaa = <CaConfirmData>[];
 
@@ -106,6 +114,14 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
     super.initState();
     Timer(const Duration(seconds: 1), () {
       getDataa();
+    });
+    // Hide tooltip after 5 seconds
+    Timer(const Duration(seconds: 5), () {
+      if (mounted) {
+        setState(() {
+          showTooltip = false;
+        });
+      }
     });
   }
 
@@ -181,6 +197,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   isVisible2 = true;
                                   isVisible3 = true;
                                   isVisible4 = true;
+                                  isVisible5 = true;
                                 });
                               },
                             ),
@@ -196,6 +213,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   isVisible2 = false;
                                   isVisible3 = false;
                                   isVisible4 = false;
+                                  isVisible5 = false;
                                 });
                               },
                             ),
@@ -211,6 +229,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   isVisible2 = true;
                                   isVisible3 = false;
                                   isVisible4 = false;
+                                  isVisible5 = false;
                                 });
                               },
                             ),
@@ -226,6 +245,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   isVisible2 = false;
                                   isVisible3 = true;
                                   isVisible4 = false;
+                                  isVisible5 = false;
                                 });
                               },
                             ),
@@ -241,6 +261,23 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   isVisible2 = false;
                                   isVisible3 = false;
                                   isVisible4 = true;
+                                  isVisible5 = false;
+                                });
+                              },
+                            ),
+                            FilterChip(
+                              label: const Text('PPC Approval'),
+                              backgroundColor: Colors.white,
+                              // checkmarkColor: HexColor("#F4A62A"),
+                              selected: (idSelected == "5") ? true : false,
+                              onSelected: (bool value) {
+                                setState(() {
+                                  idSelected = "5";
+                                  isVisible1 = false;
+                                  isVisible2 = false;
+                                  isVisible3 = false;
+                                  isVisible4 = false;
+                                  isVisible5 = true;
                                 });
                               },
                             ),
@@ -256,8 +293,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               vertical:
                                   size.height * 0.02, //atur lokasi kotak putih
                             ),
-                            height:
-                                size.height * 0.20, //atur panjang kotak putih
+                            constraints: const BoxConstraints(
+                              maxHeight: double.infinity,
+                            ), //atur panjang kotak putih
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: const BorderRadius.all(
@@ -646,6 +684,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     ],
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
                               ],
                             ),
                           ),
@@ -660,8 +701,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               vertical:
                                   size.height * 0.02, //atur lokasi kotak putih
                             ),
-                            height:
-                                size.height * 0.20, //atur panjang kotak putih
+                            constraints: const BoxConstraints(
+                              maxHeight: double.infinity,
+                            ), // atur panjang kotak putih
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: const BorderRadius.all(
@@ -874,6 +916,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     ],
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
                               ],
                             ),
                           ),
@@ -888,8 +933,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               vertical:
                                   size.height * 0.02, //atur lokasi kotak putih
                             ),
-                            height:
-                                size.height * 0.50, //atur panjang kotak putih
+                            constraints: const BoxConstraints(
+                              maxHeight: double.infinity,
+                            ), // atur panjang kotak putih
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: const BorderRadius.all(
@@ -1793,11 +1839,14 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                     ],
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
                               ],
                             ),
                           ),
                         ),
-                        //kotak putih ke empat (purchase approval)
+                        //kotak putih ke empat (inventory approval)
                         Visibility(
                           visible: isVisible4,
                           child: Container(
@@ -1807,8 +1856,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               vertical:
                                   size.height * 0.02, //atur lokasi kotak putih
                             ),
-                            height:
-                                size.height * 0.50, //atur panjang kotak putih
+                            constraints: const BoxConstraints(
+                              maxHeight: double.infinity,
+                            ), // atur panjang kotak putih
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: const BorderRadius.all(
@@ -2993,6 +3043,243 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                 //     ],
                                 //   ),
                                 // ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        //kotak putih lima (PPC approval)
+                        Visibility(
+                          visible: isVisible5,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal:
+                                  size.width * 0.03, //atur lebar kotak putih
+                              vertical:
+                                  size.height * 0.02, //atur lokasi kotak putih
+                            ),
+                            constraints: const BoxConstraints(
+                              maxHeight: double.infinity,
+                            ), // atur panjang kotak putih
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 10),
+                                  blurRadius: 60,
+                                  color: Colors.grey.withOpacity(0.40),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 10.0),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: size.width * 0.05),
+                                      child: const Text(
+                                        'PPC Approval',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20.0),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // baris pertama
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 34, right: 24, top: 24),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          badges.Badge(
+                                            position:
+                                                badges.BadgePosition.topEnd(
+                                                    top: -10, end: -12),
+                                            showBadge:
+                                                totalWoApp == 0 ? false : true,
+                                            ignorePointer: false,
+                                            badgeContent: Text(
+                                              totalWoApp.toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                              ),
+                                            ),
+                                            badgeAnimation: const badges
+                                                .BadgeAnimation.rotation(
+                                              animationDuration:
+                                                  Duration(seconds: 1),
+                                              colorChangeAnimationDuration:
+                                                  Duration(seconds: 1),
+                                              loopAnimation: false,
+                                              curve: Curves.fastOutSlowIn,
+                                              colorChangeAnimationCurve:
+                                                  Curves.easeInCubic,
+                                            ),
+                                            badgeStyle: badges.BadgeStyle(
+                                              shape: badges.BadgeShape.square,
+                                              badgeColor: Colors.red,
+                                              padding: const EdgeInsets.all(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: const BorderSide(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                              elevation: 0,
+                                            ),
+                                            child: Material(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              child: Ink.image(
+                                                image: const AssetImage(
+                                                    'images/woapp.png'),
+                                                height: size.height * 0.05,
+                                                width: size.width * 0.15,
+                                                // fit: BoxFit.fill,
+                                                child: InkWell(
+                                                  splashColor: Colors.black38,
+                                                  onTap: () async {
+                                                    totalWoApp == 0
+                                                        ? wakwaw()
+                                                        : Get.to(() => WoApp());
+                                                    // Get.to(() => WoApp());
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Column(
+                                            children: [
+                                              Text(
+                                                'Work Order',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Approval',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      // const SizedBox(
+                                      //   width: 20,
+                                      // ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          badges.Badge(
+                                            position:
+                                                badges.BadgePosition.topEnd(
+                                                    top: -10, end: -12),
+                                            showBadge: totalWoCompleted == 0
+                                                ? false
+                                                : true,
+                                            ignorePointer: false,
+                                            badgeContent: Text(
+                                              totalWoCompleted.toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                              ),
+                                            ),
+                                            badgeAnimation: const badges
+                                                .BadgeAnimation.rotation(
+                                              animationDuration:
+                                                  Duration(seconds: 1),
+                                              colorChangeAnimationDuration:
+                                                  Duration(seconds: 1),
+                                              loopAnimation: false,
+                                              curve: Curves.fastOutSlowIn,
+                                              colorChangeAnimationCurve:
+                                                  Curves.easeInCubic,
+                                            ),
+                                            badgeStyle: badges.BadgeStyle(
+                                              shape: badges.BadgeShape.square,
+                                              badgeColor: Colors.red,
+                                              padding: const EdgeInsets.all(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: const BorderSide(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                              elevation: 0,
+                                            ),
+                                            child: Material(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              child: Ink.image(
+                                                image: const AssetImage(
+                                                    'images/wocomp.png'),
+                                                height: size.height * 0.05,
+                                                width: size.width * 0.15,
+                                                // fit: BoxFit.fill,
+                                                child: InkWell(
+                                                  splashColor: Colors.black38,
+                                                  onTap: () async {
+                                                    totalWoCompleted == 0
+                                                        ? wakwaw()
+                                                        : Get.to(() =>
+                                                            WoCompleted());
+                                                    // Get.to(() => WoCompleted());
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Column(
+                                            children: [
+                                              Text(
+                                                'Work Order',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Completed',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        //colum buat ngisi space kosong
+                                        children: [
+                                          SizedBox(
+                                            width: size.width * 0.37,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
                               ],
                             ),
                           ),
@@ -3000,6 +3287,116 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                       ],
                     ),
                   ),
+                  // Tooltip for swipe down to refresh
+                  if (showTooltip)
+                    Positioned(
+                      top: 15,
+                      left: 20,
+                      right: 20,
+                      child: AnimatedScale(
+                        scale: showTooltip ? 1.0 : 0.8,
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.elasticOut,
+                        child: AnimatedOpacity(
+                          opacity: showTooltip ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 300),
+                          child: TweenAnimationBuilder(
+                            duration: const Duration(milliseconds: 1500),
+                            tween: Tween<double>(begin: 0.95, end: 1.02),
+                            builder: (context, double scale, child) {
+                              return Transform.scale(
+                                scale: scale,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        HexColor("#F4A62A"),
+                                        HexColor("#F4A62A").withOpacity(0.9),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(25),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 4),
+                                        blurRadius: 12,
+                                        color: Colors.black.withOpacity(0.15),
+                                      ),
+                                      BoxShadow(
+                                        offset: const Offset(0, 2),
+                                        blurRadius: 6,
+                                        color: HexColor("#F4A62A").withOpacity(0.3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TweenAnimationBuilder(
+                                        duration: const Duration(seconds: 2),
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        builder: (context, double value, child) {
+                                          return Transform.rotate(
+                                            angle: value * 6.28318, // 2 * pi
+                                            child: Container(
+                                              padding: const EdgeInsets.all(6),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white.withOpacity(0.2),
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              child: const Icon(
+                                                Icons.refresh_rounded,
+                                                color: Colors.white,
+                                                size: 18,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      const SizedBox(width: 12),
+                                      const Expanded(
+                                        child: Text(
+                                          'Swipe down to refresh data',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            showTooltip = false;
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white.withOpacity(0.2),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: const Icon(
+                                            Icons.close_rounded,
+                                            color: Colors.white,
+                                            size: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -3010,6 +3407,19 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   }
 
   Future<void> getDataa() async {
+    if (_isFetching) return;
+    _isFetching = true;
+    _timeoutTimer?.cancel();
+    _timeoutTimer = Timer(const Duration(minutes: 5), () {
+      if (mounted && _isFetching) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Timeout',
+          text: 'Pengambilan data melebihi 5 menit. Silakan cek koneksi atau coba lagi.',
+        );
+      }
+    });
     HttpOverrides.global = MyHttpOverrides();
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
@@ -3028,8 +3438,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         customAsset: 'images/loading.gif',
         headerBackgroundColor: HexColor("#F4A62A"),
         confirmBtnColor: HexColor("#F4A62A"),
-        // autoCloseDuration: const Duration(seconds: 5),
-        // headerBackgroundColor: Colors.white,
+        showConfirmBtn: false,
       );
       // http://156.67.217.113/api/v1/mobile
       var getData = await http.get(
@@ -3040,6 +3449,11 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
           'monggo': finalMonggo ?? monggo,
         },
       );
+
+      // Tutup QuickAlert loading setelah data didapat
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
 
       final responseData = json.decode(getData.body);
       print("getdataaaa " + responseData.toString());
@@ -3087,6 +3501,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
       totalPOS = 0;
       totalPNS = 0;
       supplierGabung = 0;
+      totalWoApp = 0;
+      totalWoCompleted = 0;
       for (var item in dataaa) {
         if (item['tipe'] == 'SC') {
           totalSC += 1;
@@ -3154,6 +3570,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
           totalPOS += 1;
         } else if (item['tipe'] == 'PNS') {
           totalPNS += 1;
+        } else if (item['tipe'] == 'WOA') {
+          totalWoApp += 1;
+        } else if (item['tipe'] == 'WOU') {
+          totalWoCompleted += 1;
         }
       }
       poGabung = totalPOE + totalPNE;
@@ -3167,20 +3587,45 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         type: QuickAlertType.success,
         text: 'Fetching Approval Data',
         barrierDismissible: false,
-        // onConfirmBtnTap: () {
-        //   Get.to(Navbar());
-        // },
-        // onConfirmBtnTap:
+        autoCloseDuration: const Duration(milliseconds: 900),
+        showConfirmBtn: false,
       );
-      // final SharedPreferences sharedPreferences =
-      //     await SharedPreferences.getInstance();
-      // sharedPreferences.setInt('totalSC', totalSC);
     } catch (e) {
       print(e);
+    } finally {
+      _timeoutTimer?.cancel();
+      _isFetching = false;
     }
   }
 
   Future<void> getDataa2() async {
+    if (_isFetching) return;
+    _isFetching = true;
+    _timeoutTimer?.cancel();
+    _timeoutTimer = Timer(const Duration(minutes: 5), () {
+      if (mounted && _isFetching) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Timeout',
+          text: 'Pengambilan data melebihi 5 menit. Silakan cek koneksi atau coba lagi.',
+        );
+      }
+    });
+    // Show tooltip briefly when refreshing
+    if (mounted) {
+      setState(() {
+        showTooltip = true;
+      });
+    }
+    // Hide tooltip after 3 seconds
+    Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          showTooltip = false;
+        });
+      }
+    });
     HttpOverrides.global = MyHttpOverrides();
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
@@ -3246,6 +3691,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
       totalPOS = 0;
       totalPNS = 0;
       supplierGabung = 0;
+      totalWoApp = 0;
+      totalWoCompleted = 0;
       for (var item in dataaa) {
         if (item['tipe'] == 'SC') {
           totalSC += 1;
@@ -3313,6 +3760,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
           totalPOS += 1;
         } else if (item['tipe'] == 'PNS') {
           totalPNS += 1;
+        } else if (item['tipe'] == 'WOA') {
+          totalWoApp += 1;
+        } else if (item['tipe'] == 'WOU') {
+          totalWoCompleted += 1;
         }
       }
       poGabung = totalPOE + totalPNE;
@@ -3323,6 +3774,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
       // print("supplierGabung = " + supplierGabung.toString());
     } catch (e) {
       print(e);
+    } finally {
+      _timeoutTimer?.cancel();
+      _isFetching = false;
     }
   }
 

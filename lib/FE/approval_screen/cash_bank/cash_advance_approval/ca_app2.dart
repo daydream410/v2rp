@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +16,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:v2rp1/FE/navbar/navbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:v2rp1/BE/controller.dart';
+import 'package:v2rp1/routes/api_name.dart';
 
 import '../../../../BE/reqip.dart';
 import '../../../../BE/resD.dart';
@@ -62,8 +63,8 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
     Size size = MediaQuery.of(context).size;
 
     return WillPopScope(
-      onWillPop: () {
-        showDialog(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Are You sure?'),
@@ -74,13 +75,16 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
                 child: const Text('No'),
               ),
               TextButton(
-                onPressed: () => SystemNavigator.pop(),
+                onPressed: () => Navigator.of(context).pop(true),
                 child: const Text('Yes'),
               ),
             ],
           ),
         );
-        throw (e);
+        if (shouldPop == true) {
+          SystemNavigator.pop();
+        }
+        return false;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -674,32 +678,52 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        // Uri.http('156.67.217.113',
-        //     '/api/v1/mobile/approval/kasbon/' + widget.seckey),
-        Uri.https(
-            'v2rp.net', '/api/v1/mobile/approval/kasbon/' + widget.seckey),
+        Uri.https(ApiName.v2rp, ApiName.kasbonApp + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
           'monggo': finalMonggo ?? monggo,
         },
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
+        },
       );
       final caConfirmData = json.decode(getData.body);
-      // setState(() {
-      dataaa = caConfirmData['data']['detail'];
+      setState(() {
+        dataaa = caConfirmData['data']['detail'] ?? [];
 
-      //hitung total
-      totalPrice = 0;
-      for (var item in dataaa) {
-        totalPrice += item["amount"] as int;
-      }
-
-      // });
+        //hitung total
+        totalPrice = 0;
+        for (var item in dataaa) {
+          totalPrice += (item["amount"] as num).toDouble();
+        }
+      });
       print("totalllll  " + totalPrice.toString());
       print("dataaa " + dataaa.toString());
       return dataaa;
+    } on TimeoutException catch (e) {
+      print('Timeout error: $e');
+      setState(() {
+        dataaa = [];
+        totalPrice = 0;
+      });
+      return [];
+    } on SocketException catch (e) {
+      print('Network error: $e');
+      setState(() {
+        dataaa = [];
+        totalPrice = 0;
+      });
+      return [];
     } catch (e) {
-      print(e);
+      print('Error: $e');
+      setState(() {
+        dataaa = [];
+        totalPrice = 0;
+      });
+      return [];
     }
   }
 
@@ -732,14 +756,19 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
     try {
       var sendData = await http.put(
         Uri.https(
-          'v2rp.net',
-          '/api/v1/mobile/approval/kasbon/' + widget.seckey + '/' + valueButton,
+          ApiName.v2rp,
+          ApiName.kasbonApp + widget.seckey + '/' + valueButton,
         ),
         body: body,
         headers: {
           'Content-type': 'application/json',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
           'monggo': finalMonggo ?? monggo,
+        },
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Connection timeout. Please try again.');
         },
       );
       print("selected = " +
@@ -787,8 +816,35 @@ class _CashAdvanceApproval2State extends State<CashAdvanceApproval2> {
           },
         );
       }
+    } on TimeoutException catch (e) {
+      print('Timeout error: $e');
+      await Future.delayed(const Duration(milliseconds: 1000));
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        disableBackBtn: true,
+        title: 'Timeout! ' + widget.nokasbon,
+        text: 'Connection timeout. Please check your internet connection and try again.',
+        onConfirmBtnTap: () async {
+          Get.to(CashAdvanceApproval());
+        },
+      );
+    } on SocketException catch (e) {
+      print('Network error: $e');
+      await Future.delayed(const Duration(milliseconds: 1000));
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        disableBackBtn: true,
+        title: 'Network Error! ' + widget.nokasbon,
+        text: 'No internet connection. Please check your network and try again.',
+        onConfirmBtnTap: () async {
+          Get.to(CashAdvanceApproval());
+        },
+      );
     } catch (e) {
-      print(e);
+      print('Error: $e');
+      await Future.delayed(const Duration(milliseconds: 1000));
       QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,

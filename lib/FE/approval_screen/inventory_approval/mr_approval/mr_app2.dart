@@ -18,6 +18,8 @@ import '../../../../main.dart';
 import '../../../../BE/resD.dart';
 import 'package:v2rp1/BE/controller.dart';
 
+import '../../../../routes/api_name.dart';
+
 class MrApp2 extends StatefulWidget {
   final seckey;
   final reffno;
@@ -556,8 +558,7 @@ class _MrApp2State extends State<MrApp2> {
     var monggo = MsgHeader.monggo;
     try {
       var getData = await http.get(
-        Uri.https('v2rp.net',
-            '/api/v1/mobile/approval/materialreturn/' + widget.seckey),
+        Uri.https(ApiName.v2rp, ApiName.mrApp + widget.seckey),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'kulonuwun': finalKulonuwun ?? kulonuwun,
@@ -601,11 +602,8 @@ class _MrApp2State extends State<MrApp2> {
     try {
       var getData = await http.put(
         Uri.https(
-          'v2rp.net',
-          '/api/v1/mobile/approval/materialreturn/' +
-              widget.seckey +
-              '/' +
-              updstatus,
+          ApiName.v2rp,
+          ApiName.mrApp + widget.seckey + '/' + updstatus,
         ),
         body: body,
         headers: {
