@@ -65,7 +65,7 @@ class _LoginPage4State extends State<LoginPage4>
     Size size = MediaQuery.of(context).size;
     bool isTablet = size.width > 600;
     double responsivePadding = isTablet ? 32.0 : 16.0;
-    double logoHeight = size.height * 0.15;
+    double logoHeight = size.height * 0.20;
 
     return WillPopScope(
       onWillPop: () async {
@@ -125,56 +125,10 @@ class _LoginPage4State extends State<LoginPage4>
                   children: [
                     SizedBox(height: size.height * 0.05),
                     SizedBox(
-                      height: logoHeight.clamp(100.0, 200.0),
-                      child: Image.asset('images/kctgroupasli.png'),
+                      height: logoHeight.clamp(150.0, 280.0),
+                      child: Image.asset('images/v2rpLogo.png'),
                     ),
-                    SizedBox(height: size.height * 0.04),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'V2RP MOBILE',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: isTablet ? 32.0 : 28.0,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(0, 2),
-                                blurRadius: 4,
-                                color: Colors.black.withOpacity(0.5),
-                              ),
-                              Shadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 2,
-                                color: Colors.black.withOpacity(0.3),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.015),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: responsivePadding),
-                      child: Text(
-                        'Welcome back! Please login to continue',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: isTablet ? 18.0 : 16.0,
-                          shadows: [
-                            Shadow(
-                              offset: Offset(0, 1),
-                              blurRadius: 3,
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.05),
+                    SizedBox(height: size.height * 0.06),
                     AutofillGroup(
                       child: Column(
                         children: [

@@ -183,7 +183,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen>
     Size size = MediaQuery.of(context).size;
     bool isTablet = size.width > 600;
     double responsivePadding = isTablet ? 32.0 : 16.0;
-    double logoHeight = size.height * 0.15;
+    double logoHeight = size.height * 0.20;
     double titleFontSize = isTablet ? 32.0 : 24.0;
     double subtitleFontSize = isTablet ? 18.0 : 16.0;
     double maxCardWidth = isTablet ? 600.0 : double.infinity;
@@ -225,8 +225,8 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen>
               children: [
                 SizedBox(height: size.height * 0.05),
                 SizedBox(
-                  height: logoHeight.clamp(100.0, 200.0),
-                  child: Image.asset('images/kctgroupasli.png'),
+                  height: logoHeight.clamp(150.0, 280.0),
+                  child: Image.asset('images/v2rpLogo.png'),
                 ),
                 SizedBox(height: size.height * 0.03),
                 Row(
