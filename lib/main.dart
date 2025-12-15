@@ -28,6 +28,46 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 // Global variable to store FCM token
 String? fcmToken;
 
+// Helper to print long strings in chunks to avoid truncation
+void _printLongString(String label, String? value) {
+  if (value == null) {
+    print('$label: null');
+    return;
+  }
+
+  const int chunkSize = 800; // Print in chunks to avoid truncation
+  if (value.length <= chunkSize) {
+    print('$label: $value');
+  } else {
+    print('$label (length: ${value.length}):');
+    for (int i = 0; i < value.length; i += chunkSize) {
+      int end = (i + chunkSize < value.length) ? i + chunkSize : value.length;
+      print('  [${i}-${end}]: ${value.substring(i, end)}');
+    }
+  }
+}
+
+// Debug helper to inspect stored credentials/tokens
+Future<void> _debugPrintAuthState({String context = 'unknown'}) async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final seckey = prefs.getString('seckey');
+    final kulonuwun = prefs.getString('kulonuwun');
+    final monggo = prefs.getString('monggo');
+    final storedFcm = prefs.getString('fcm_token');
+
+    print('[debug:$context] === AUTH STATE DEBUG ===');
+    _printLongString('[debug:$context] seckey', seckey);
+    _printLongString('[debug:$context] kulonuwun', kulonuwun);
+    _printLongString('[debug:$context] monggo', monggo);
+    _printLongString('[debug:$context] fcm_token(prefs)', storedFcm);
+    _printLongString('[debug:$context] fcmToken(var)', fcmToken);
+    print('[debug:$context] === END AUTH STATE ===');
+  } catch (e) {
+    print('[debug:$context] Failed to read auth state: $e');
+  }
+}
+
 // Global navigator key for navigation
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -51,6 +91,7 @@ void _handleNotificationNavigation(String payload) {
 
       if (kulonuwun == null || monggo == null) {
         print('User not logged in, cannot navigate');
+        _debugPrintAuthState(context: 'notification_no_login');
         return;
       }
 
@@ -143,7 +184,7 @@ void _navigateToScreen({
               print('Navigated to tab index: $targetTabIndex');
             } else {
               // If navbar not ready, navigate first then set tab
-              Get.offAll(() => Navbar());
+              Get.offAll(() => const Navbar());
               Future.delayed(const Duration(milliseconds: 500), () {
                 if (navbar_module.currentNavbarState != null) {
                   navbar_module.currentNavbarState!
@@ -266,12 +307,14 @@ void main() async {
 
       // Get and save FCM token
       await getAndSaveFcmToken();
+      await _debugPrintAuthState(context: 'startup_after_token');
 
       // Listen for token refresh
       messaging.onTokenRefresh.listen((String newToken) {
         print('FCM Token refreshed: $newToken');
         fcmToken = newToken;
         saveFcmTokenToLocal(newToken);
+        _debugPrintAuthState(context: 'token_refresh');
         // Token will be sent when user chooses role again
       });
 
@@ -292,7 +335,7 @@ void main() async {
             message.hashCode,
             message.notification?.title,
             message.notification?.body,
-            NotificationDetails(
+            const NotificationDetails(
               android: AndroidNotificationDetails(
                 'high_importance_channel',
                 'High Importance Notifications',
