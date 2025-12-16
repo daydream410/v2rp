@@ -78,11 +78,15 @@ void _handleNotificationNavigation(String payload) {
     final String? route = data['route'] as String?;
     final String? screen = data['screen'] as String?;
     final String? type = data['type'] as String?;
+    final String? company = data['company'] as String?;
+    final String? role = data['role'] as String?;
+    final String? reffno = data['reffno'] as String?;
+    final String? seckeyPayload = data['seckey'] as String?;
     final Map<String, dynamic>? extraData =
         data['data'] as Map<String, dynamic>?;
 
     print(
-        'Navigating from notification - route: $route, screen: $screen, type: $type');
+        'Navigating from notification - route: $route, screen: $screen, type: $type, company: $company, role: $role, reffno: $reffno, seckey: $seckeyPayload');
 
     // Check if user is logged in
     SharedPreferences.getInstance().then((prefs) {
@@ -104,6 +108,23 @@ void _handleNotificationNavigation(String payload) {
   } catch (e) {
     print('Error parsing notification payload: $e');
   }
+}
+
+// Normalize payload so every listener produces the same structure
+Map<String, dynamic> _normalizeFcmPayload(Map<String, dynamic> rawData) {
+  return {
+    // navigation hints
+    'route': rawData['route'] ?? rawData['screen'],
+    'screen': rawData['screen'],
+    'type': rawData['type'] ?? rawData['menu'] ?? rawData['route'],
+    // business identifiers
+    'company': rawData['company'],
+    'role': rawData['role'],
+    'reffno': rawData['reffno'] ?? rawData['refno'],
+    'seckey': rawData['seckey'],
+    // keep original data for downstream usage
+    'data': rawData,
+  };
 }
 
 // Function to navigate to specific screen
@@ -328,22 +349,32 @@ void main() async {
               'Message also contained a notification: ${message.notification}');
 
           // Prepare payload for navigation
-          String payload = jsonEncode(message.data);
+          final normalized = _normalizeFcmPayload(message.data);
+          String payload = jsonEncode(normalized);
 
-          // Show local notification when app is in foreground
+          // Show local notification when app is in foreground with the same
+          // primary color used by the approval screen (#F4A62A) so the
+          // notification visuals stay on-brand.
           flutterLocalNotificationsPlugin.show(
             message.hashCode,
             message.notification?.title,
             message.notification?.body,
-            const NotificationDetails(
+            NotificationDetails(
               android: AndroidNotificationDetails(
                 'high_importance_channel',
                 'High Importance Notifications',
                 channelDescription:
                     'This channel is used for important notifications.',
                 importance: Importance.high,
+                priority: Priority.high,
+                color: const Color(0xFFF4A62A),
+                colorized: true,
+                styleInformation: BigTextStyleInformation(
+                  message.notification?.body ?? '',
+                  contentTitle: message.notification?.title,
+                ),
               ),
-              iOS: DarwinNotificationDetails(
+              iOS: const DarwinNotificationDetails(
                 presentAlert: true,
                 presentBadge: true,
                 presentSound: true,
@@ -361,7 +392,8 @@ void main() async {
 
         // Handle navigation from background notification
         if (message.data.isNotEmpty) {
-          String payload = jsonEncode(message.data);
+          final normalized = _normalizeFcmPayload(message.data);
+          String payload = jsonEncode(normalized);
           _handleNotificationNavigation(payload);
         }
       });
@@ -374,7 +406,8 @@ void main() async {
 
         // Handle navigation from terminated state notification
         if (initialMessage.data.isNotEmpty) {
-          String payload = jsonEncode(initialMessage.data);
+          final normalized = _normalizeFcmPayload(initialMessage.data);
+          String payload = jsonEncode(normalized);
           _handleNotificationNavigation(payload);
         }
       }
@@ -420,5 +453,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-//test github baru
